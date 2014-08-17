@@ -1,0 +1,39 @@
+{
+  "name": "afterwriting",
+  "version": "0.1.0",
+  "description": "Screewriting experiments",
+  "keywords": [
+    "screenwriting",
+    "screenplay",
+    "fountain",
+    "text analysis"
+  ],
+  "author": {
+    "name": "Piotr Jamroz",
+    "email": "pm.jamroz@gmail.com",
+    "url": "http://about.me/piotr.jamroz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ifrost/afterwriting.git"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-cssmin": "^0.10.0",
+    "grunt-contrib-handlebars": "^0.8.0",
+    "grunt-contrib-requirejs": "^0.4.4",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-simple-mocha": "~0.4.0"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.0"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "licenses": {
+    "type": "MIT"
+  }
+}

@@ -1,0 +1,57 @@
+
+.dotline {
+	border-bottom: 1px dotted #111;
+}
+h1 {
+	font-size: 19px;
+	font-weight: bold;
+	margin: 20px 10px 10px 10px;
+}
+h2 {
+	font-size: 16px;
+	font-weight: bold;
+	margin: 20px 10px 20px 10px;
+}
+p {
+	margin: 10px;
+	text-indent: 10px;
+}
+a {
+	color: #777;
+}
+table {
+	margin: 10px;
+	border: 1px solid #999;
+}
+th {
+	padding: 5px;
+	border: 1px solid #999;
+	background-color: #eee;
+}
+td {
+	border: 1px solid #999;
+	padding: 5px;
+}
+tr {
+	border: 1px solid #999;
+}
+.content ul, .content ol {
+	margin-left: 40px;
+}
+.content ul {
+	list-style-type: disc;
+}
+.content ol {
+	list-style-type: decimal;
+}
+#tooltip {
+	position: absolute;
+	z-index: 100;
+	visibility: hidden;
+	background-color: #111111;
+	color: #eeeeee;
+	padding: 3px;
+	font-size: 13px;
+	border-radius: 3px;
+	border: 1px solid #777777;
+}

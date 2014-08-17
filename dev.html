@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<link rel="stylesheet" href="css/reset.css" />
+		<link rel="stylesheet" href="css/layout.css" />
+		<link rel="stylesheet" href="css/widgets.css" />
+		<link rel="stylesheet" href="css/codemirror.css" />
+		<link rel="stylesheet" href="js/libs/codemirror/addon/hint/show-hint.css" />
+		<script data-main="js/main" src="js/libs/require.js"></script>
+	</head>
+	<body>
+		<script>
+			require(['core', 'plugins/open', 'utils/layout', 'plugins/editor'], function(core, open, layout, dev_plugin, $) {
+
+				var dev_mode = false;
+				core.loaded = function() {
+
+					if (dev_mode) {
+						open.load_sample('big_fish');
+
+						core.switch_to(dev_plugin);
+
+						layout.show_options();
+						layout.open_content();
+						layout.switch_to_plugin(dev_plugin.name);
+					}
+					
+					layout.dev();
+				}
+			});
+		</script>
+	</body>
+
+</html>

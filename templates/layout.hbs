@@ -1,0 +1,91 @@
+<!--- top logo -->
+<p class="logo">
+	<span class="apostrophe">&rsquo;</span><span class="after">after</span><span class="writing">writing</span>
+</p>
+<!--- main menu -->
+<div class="menu" style="display:none">
+	<ul class="selector">
+		<li class="menu-item" plugin="info">
+			<img src="gfx/icons/info.svg" /><span>info</span>
+		</li>
+		{{#each plugins}}
+		<li class="menu-item {{name}} {{class}}" plugin="{{name}}">
+			<img src="gfx/icons/{{name}}.svg" /><span>{{title}}</span>
+		</li>{{/each}}</ul>
+</div>
+<div class="footer">version: <a href="http://www.imdb.com/title/tt1790885/" target="_blank"><span class="version">Zero</span> Dark Thrirty</a></div>
+<!--- plugin content -->
+<div class="content" style="display:none">
+	<div class="top-bar">
+		<img class="tool" src="gfx/icons/info.svg" plugin="info" />{{#each plugins}}
+		<img class="tool {{class}}" src="gfx/icons/{{name}}.svg" plugin="{{name}}" />{{/each}}
+		<img class="close-content" src="gfx/icons/close.svg" />
+	</div>
+	<div class="plugin-contents">
+		<div class="plugin-content info" plugin="info">
+			<h1>About</h1>
+			<p>
+				<em>'afterwritings</em>&nbsp;is a set of screenwriting tools. You just need a screenplay written in <a href="http://fountain.io/">Fountain screenplay format</a>. Don't have any? You can play with some <a class="switch" href="#" plugin="open">samples</a>.</p>
+			<h2>What's inside?</h2>
+			<ul>
+				<li><a href="#" class="switch" plugin="open"><img src="gfx/icons/open.svg" /></a> / <img src="gfx/icons/save.svg" /> - <a href="#" class="switch" plugin="open">open</a> a file from disk or use a sample, save as .fountain or as PDF.</li>
+				<li><img src="gfx/icons/editor.svg" /><em>Editor</em> - a basic editor for <a href="http://fountain.io/">.fountain files</a> (for words autocomplete press Ctrl-Space).</li>
+				<li><img src="gfx/icons/preview.svg" /><em>PDF Preview</em> - PDF generator (configuration not supported yet).</li>
+				<li><img src="gfx/icons/facts.svg" /><em>Facts</em> - number of pages, scenes, characters, etc.</li>
+				<li><img src="gfx/icons/stats.svg" /><em>Useless Stats</em> - some fancy graphs (more to come).</li>
+			</ul>
+			<h1>Thanks</h1>
+			<p>
+				<ul>
+					<li>Icons from
+						<a href="http://www.freepik.com" alt="Freepik.com" title="Freepik.com">Freepik</a>&nbsp;(Daniel Bruce, Icomoon, Yannick)</li>
+					<li>Sample scripts:
+						<ul>
+							<li>
+								<em>Big Fish</em>&nbsp;by
+								<a href="http://johnaugust.com/" about="_blank">John August</a>
+							</li>
+							<li>
+								<em>Brick & Steel</em>&nbsp;by
+								<a href="http://prolost.com/about/" about="_blank">Stu Maschwitz</a>
+							</li>
+						</ul>
+					</li>
+					<li>DayRoman font by <a href="http://apostrophiclab.pedroreina.net/" target="_blank">Apostrophic Laboratories</a></li>
+					<li>JS libs:
+						<ul>
+							<li>
+								<a href="https://github.com/mattdaly/Fountain.js" target="_blank">Fountain.js</a>
+							</li>
+							<li>
+								<a href="https://github.com/eligrey/FileSaver.js" target="_blank">FileSaver.js</a>
+							</li>
+							<li>
+								<a href="http://github.com/jonnyreeves/js-logger" target="_blank">js-logger</a>
+							</li>
+							<li>
+								<a href="http://parall.ax/products/jspdf" target="_blank">jsPDF</a>
+							</li>
+							<li>
+								<a href="http://codemirror.net/" target="_blank">CodeMirror</a>
+							</li>
+							<li>
+								<a href="http://jquery.com/" target="_blank">jQuery</a>
+							</li>
+							<li>
+								<a href="http://handlebarsjs.com/" target="_blank">Handlebars</a>
+							</li>
+							<li>
+								<a href="https://github.com/jrburke/almond" target="_blank">Almond</a>
+							</li>
+							<li>
+								<a href="http://requirejs.org/" target="_blank">RequireJS</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</p>
+		</div>{{#each plugins}}
+		<div class="plugin-content" plugin="{{name}}">{{{view}}}</div>{{/each}}</div>
+</div>
+<div id="tooltip"></div>
