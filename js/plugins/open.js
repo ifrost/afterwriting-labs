@@ -38,11 +38,30 @@ define(['core', 'logger', 'templates', 'jquery', 'utils/layout'], function (core
 				layout.close_content();
 				layout.show_options();
 			});
+			$('a[open-action="dropbox"]').click(function () {
+				Dropbox.choose({
+					success: function (files) {
+						$.ajax({
+							url: files[0].link
+						}).done(function (content) {
+							core.script(content);
+							layout.close_content();
+							layout.show_options();
+						});
+					},
+					linkType: 'direct',
+					multiselect: false,
+					extensions: ['*.fountain', '*.pdf']
+				});
+			});
+
 		});
 	};
 
 	plugin.activate = function () {
-		log.info('open:activate');
+		if (!(Dropbox.isBrowserSupported()) || window.location.protocol === 'file:') {
+			$('a[open-action="dropbox"]').parent().hide()
+		}
 	};
 
 	plugin.deactivate = function () {
