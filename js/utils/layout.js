@@ -30,6 +30,10 @@ define(['jquery', 'templates'], function ($, templates) {
 
 	module.init_layout = function (context) {
 
+		// load background
+		var max_backgrounds = 7;
+		$('html').css('background-image', 'url(gfx/bg' + Math.floor(Math.random() * max_backgrounds) + '.jpg)');
+		
 		var layout = templates['templates/layout.hbs'];
 		var body = layout(context);
 		$('body').append(body);
