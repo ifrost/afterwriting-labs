@@ -92,7 +92,7 @@ define(function () {
 					token.type = 'scene_heading';
 				} else if (token.text.match(regex.character)) {
 					if (i == lines_length || i == lines_length - 1 || lines[i + 1].length == 0) {
-						token.type = 'scene_heading';
+						token.type = 'shot';
 					} else {
 						state = 'dialogue'
 						token.type = 'character';
