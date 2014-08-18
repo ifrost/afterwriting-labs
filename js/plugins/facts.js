@@ -85,7 +85,7 @@ define(['core', 'logger', 'jquery'], function (core, logger, $) {
 				var location = token.text.trim();
 				console.log(location);
 				location = location.replace(/^(INT.?\/.EXT\.?)|(I\/E)|(INT\.?)|(EXT\.?)/, '');
-				var dash = location.search(/- ?NIGHT|- ?DAY|- ?DUSK|- ?DAWN/);
+				var dash = location.lastIndexOf(' - ');
 				if (dash != -1) {
 					location = location.substring(0, dash);
 				}
