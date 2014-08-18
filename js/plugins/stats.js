@@ -111,8 +111,12 @@ define(['core', 'logger', 'd3', 'jquery', 'plugins/editor'], function (core, log
 					return '#ffffff';
 				} else if (d.data.label == 'NIGHT') {
 					return '#222222';
-				} else {
+				} else if (d.data.label == 'DAWN') {
 					return '#777777';
+				} else if (d.data.label == 'DUSK') {
+					return '#444444';
+				} else {
+					return '#aaaaaa';
 				}
 			}
 			arcs.append('svg:path')
@@ -144,18 +148,27 @@ define(['core', 'logger', 'd3', 'jquery', 'plugins/editor'], function (core, log
 		var days_and_nights = {
 			night: 0,
 			day: 0,
+			dusk: 0,
+			dawn: 0,
 			other: 0,
 			sum: 0
 		};
 		core.parsed.tokens.forEach(function (token) {
 			var type;
 			if (token.type === 'scene_heading') {
-				if (token.text.search(/- ?DAY/) !== -1) {
+				var suffix = token.text.substring(token.text.lastIndexOf(' - '))
+				if (suffix.indexOf('DAY') !== -1) {
 					days_and_nights.day++;
 					type = 'day';
-				} else if (token.text.search(/- ?NIGHT/) !== -1) {
+				} else if (suffix.indexOf('NIGHT') !== -1) {
 					days_and_nights.night++;
 					type = 'night';
+				} else if (suffix.indexOf('DUSK') !== -1) {
+					days_and_nights.dusk++;
+					type = 'dusk';
+				} else if (suffix.indexOf('DAWN') !== -1) {
+					days_and_nights.dawn++;
+					type = 'dawn';
 				} else {
 					days_and_nights.other++;
 					type = 'other';
@@ -177,8 +190,16 @@ define(['core', 'logger', 'd3', 'jquery', 'plugins/editor'], function (core, log
 
 		stats.days_and_nights = [
 			{
+				label: 'DUSK',
+				value: days_and_nights.dusk
+			},
+			{
 				label: 'DAY',
 				value: days_and_nights.day
+			},
+			{
+				label: 'DAWN',
+				value: days_and_nights.dawn
 			},
 			{
 				label: 'NIGHT',
