@@ -11,9 +11,9 @@
 	</head>
 	<body>
 		<script>
-			require(['core', 'plugins/open', 'utils/layout', 'plugins/editor'], function(core, open, layout, dev_plugin, $) {
+			require(['core', 'plugins/open', 'utils/layout', 'plugins/stats'], function(core, open, layout, dev_plugin, $) {
 
-				var dev_mode = false;
+				var dev_mode = true;
 				core.loaded = function() {
 
 					if (dev_mode) {
