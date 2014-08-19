@@ -51,7 +51,7 @@ define(['core', 'logger', 'templates', 'jquery', 'utils/layout'], function (core
 					},
 					linkType: 'direct',
 					multiselect: false,
-					extensions: ['*.fountain', '*.pdf']
+					extensions: ['.fountain', '.txt']
 				});
 			});
 

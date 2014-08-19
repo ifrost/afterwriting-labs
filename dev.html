@@ -8,28 +8,9 @@
 		<link rel="stylesheet" href="css/codemirror.css" />
 		<link rel="stylesheet" href="js/libs/codemirror/addon/hint/show-hint.css" />
 		<script data-main="js/main" src="js/libs/require.js"></script>
+		<script src="js/dev.js"></script>
 	</head>
 	<body>
-		<script>
-			require(['core', 'plugins/open', 'utils/layout', 'plugins/stats'], function(core, open, layout, dev_plugin, $) {
-
-				var dev_mode = true;
-				core.loaded = function() {
-
-					if (dev_mode) {
-						open.load_sample('big_fish');
-
-						core.switch_to(dev_plugin);
-
-						layout.show_options();
-						layout.open_content();
-						layout.switch_to_plugin(dev_plugin.name);
-					}
-					
-					layout.dev();
-				}
-			});
-		</script>
 	</body>
 
 </html>

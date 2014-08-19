@@ -1,21 +1,17 @@
 <h1>Save</h1>
-<table>
-	<tr>
-		<td width="50%">.fountain</td>
-		<td>
-			<a href="#" action="save-pdf">download</a>
-		</td>
-		<td>
-			<a href="#" action="save-dropbox-fountain">save on Dropbox</a>
-		</td>
-	</tr>
-	<tr>
-		<td>.pdf</td>
-		<td>
-			<a href="#" action="save-fountain">download</a>
-		</td>
-		<td>
-			<a href="#" action="save-dropbox-pdf">save on Dropbox</a>
-		</td>
-	</tr>
+<ul>
+	<li>filename: <input id="save-filename"/>.*</li>
+	<li>as .fountain:
+		<a href="#" action="save-fountain">download</a>
+		<span>&nbsp;|&nbsp;
+			<a href="#" action="save-dropbox-fountain">send to Dropbox</a>
+		</span>
+	</li>
+	<li>as .pdf:
+		<a href="#" action="save-pdf">download</a>
+		<span>&nbsp;|&nbsp;
+			<a href="#" action="save-dropbox-pdf">send to Dropbox</a>
+		</span>
+	</li>
+</ul>
 </table>

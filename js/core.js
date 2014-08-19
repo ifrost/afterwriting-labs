@@ -36,13 +36,22 @@ define('core', ['jquery', 'templates', 'logger', 'saveAs', 'utils/fountain', 'ut
 	};
 
 	var _script = "";
+	var _tempStorage = {};
 
 	module.data = function (key, value) {
 		if (Modernizr.localstorage) {
 			if (arguments === 1) {
-				localStorage.getItem('com.afterwriting.labs.local-storage.' + key);
+				return localStorage.getItem('com.afterwriting.labs.local-storage.' + key);
 			} else {
 				window.localStorage.setItem('com.afterwriting.labs.local-storage.' + key, value);
+			}
+		}
+		else {
+			if (arguments === 1) {
+				return _tempStorage[key];
+			}
+			else {
+				_tempStorage[key] = value;
 			}
 		}
 	}
