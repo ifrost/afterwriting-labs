@@ -123,7 +123,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<h1>Save</h1>\r\n<ul>\r\n	<li><a href=\"#\" action=\"save-fountain\">save as .fountain</a></li>\r\n	<li><a href=\"#\" action=\"save-pdf\">save as .pdf</a></li>\r\n</ul>";
+  return "<h1>Save</h1>\r\n<table>\r\n	<tr>\r\n		<td width=\"50%\">.fountain</td>\r\n		<td>\r\n			<a href=\"#\" action=\"save-pdf\">download</a>\r\n		</td>\r\n		<td>\r\n			<a href=\"#\" action=\"save-dropbox-fountain\">save on Dropbox</a>\r\n		</td>\r\n	</tr>\r\n	<tr>\r\n		<td>.pdf</td>\r\n		<td>\r\n			<a href=\"#\" action=\"save-fountain\">download</a>\r\n		</td>\r\n		<td>\r\n			<a href=\"#\" action=\"save-dropbox-pdf\">save on Dropbox</a>\r\n		</td>\r\n	</tr>\r\n</table>";
   });
 
 this["JST"]["templates/plugins/stats.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
