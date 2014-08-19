@@ -184,11 +184,49 @@ em {
  @media(max-width: 800px) {
 	.content {
 		width: 100%;
+		padding: 0;
+		top: 0;
 	}
 	.logo {
-		font-size: 50px;
+		font-size: 40px;
 		margin: 60px auto 20px auto;
 		text-align: center;
 		width: auto;
+	}
+	.menu-item {
+		width: 30px;
+		height: 30px;
+		background-size: 30px 30px;
+		background-position: center;
+		background-repeat: no-repeat;
+		margin: 10px;
+		cursor: pointer;
+		float: left;
+		border-radius: 50%;
+		border: 5px solid #eee;
+		padding: 15px;
+		opacity: 0.8;
+	}
+	.menu-item img {
+		width: 30px;
+		height: 30px;
+	}
+	.selector {
+		width: 270px;
+		margin: auto;
+		overflow: hidden;
+	}
+	.tool {
+		visibility: hidden;
+	}
+	.plugin-contents {
+		padding: 0 5px 0 5px;
+		clear: both;
+	}
+	.footer {
+		visibility: hidden;
+	}
+	.menu-item-hover span {
+		visibility: hidden;
 	}
 }
