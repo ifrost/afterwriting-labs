@@ -100,7 +100,6 @@
 	-ms-transition: all 0.2s ease-in-out;
 	transition: all 0.2s ease-in-out;
 }
-
 /** content **/
  .content {
 	background-color: #ffffff;
@@ -185,5 +184,11 @@ em {
  @media(max-width: 800px) {
 	.content {
 		width: 100%;
+	}
+	.logo {
+		font-size: 50px;
+		margin: 60px auto 20px auto;
+		text-align: center;
+		width: auto;
 	}
 }
