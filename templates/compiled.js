@@ -123,7 +123,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<h1>Save</h1>\r\n<table>\r\n	<tr>\r\n		<td width=\"50%\">.fountain</td>\r\n		<td>\r\n			<a href=\"#\" action=\"save-pdf\">download</a>\r\n		</td>\r\n		<td>\r\n			<a href=\"#\" action=\"save-dropbox-fountain\">save on Dropbox</a>\r\n		</td>\r\n	</tr>\r\n	<tr>\r\n		<td>.pdf</td>\r\n		<td>\r\n			<a href=\"#\" action=\"save-fountain\">download</a>\r\n		</td>\r\n		<td>\r\n			<a href=\"#\" action=\"save-dropbox-pdf\">save on Dropbox</a>\r\n		</td>\r\n	</tr>\r\n</table>";
+  return "<h1>Save</h1>\r\n<ul>\r\n	<li>filename: <input id=\"save-filename\"/>.*</li>\r\n	<li>as .fountain:\r\n		<a href=\"#\" action=\"save-fountain\">download</a>\r\n		<span>&nbsp;|&nbsp;\r\n			<a href=\"#\" action=\"save-dropbox-fountain\">send to Dropbox</a>\r\n		</span>\r\n	</li>\r\n	<li>as .pdf:\r\n		<a href=\"#\" action=\"save-pdf\">download</a>\r\n		<span>&nbsp;|&nbsp;\r\n			<a href=\"#\" action=\"save-dropbox-pdf\">send to Dropbox</a>\r\n		</span>\r\n	</li>\r\n</ul>\r\n</table>";
   });
 
 this["JST"]["templates/plugins/stats.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
