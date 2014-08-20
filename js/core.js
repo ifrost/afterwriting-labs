@@ -1,10 +1,19 @@
 /*global define*/
-define('core', ['jquery', 'templates', 'logger', 'saveAs', 'utils/fountain', 'utils/layout', 'modernizr'], function ($, templates, logger, saveAs, fountain, layout, Modernizr) {
+define(['jquery', 'templates', 'logger', 'saveAs', 'utils/fountain', 'utils/layout', 'modernizr'], function ($, templates, logger, saveAs, fountain, layout, Modernizr) {
 
 	var log = logger.get('core');
 	var module = {};
 	var current;
 	var tooltip;
+	
+	var _ready = false;
+	var ready = function () {
+		if (!_ready) {
+			_ready = true;
+			layout.close_content();
+			layout.show_options();
+		}
+	};
 
 	module.create_plugin = function (name, title) {
 		return {
@@ -45,12 +54,10 @@ define('core', ['jquery', 'templates', 'logger', 'saveAs', 'utils/fountain', 'ut
 			} else {
 				window.localStorage.setItem('com.afterwriting.labs.local-storage.' + key, value);
 			}
-		}
-		else {
+		} else {
 			if (arguments === 1) {
 				return _tempStorage[key];
-			}
-			else {
+			} else {
 				_tempStorage[key] = value;
 			}
 		}
@@ -125,6 +132,7 @@ define('core', ['jquery', 'templates', 'logger', 'saveAs', 'utils/fountain', 'ut
 	module.script = function (value) {
 		if (arguments.length == 1) {
 			_script = value;
+			ready();
 			module.data('last', _script);
 		}
 
@@ -187,7 +195,7 @@ define('core', ['jquery', 'templates', 'logger', 'saveAs', 'utils/fountain', 'ut
 
 	module.lines_to_minutes = function (lines) {
 		return lines / module.config.lines_per_page;
-	}
+	};
 
 	module.format_time = function (total) {
 		var hours = Math.floor(total / 60);
@@ -197,11 +205,12 @@ define('core', ['jquery', 'templates', 'logger', 'saveAs', 'utils/fountain', 'ut
 		var string_time = function (value) {
 			value = value.toString();
 			return value.length == 1 ? '0' + value : value;
-		}
+		};
 
-		var result = hours ? string_time(hours) + ':' : ''
+		var result = hours ? string_time(hours) + ':' : '';
 		result += string_time(minutes) + ':' + string_time(seconds);
 		return result;
-	}
+	};
+
 	return module;
 });

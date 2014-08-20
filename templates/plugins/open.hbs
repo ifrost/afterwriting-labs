@@ -1,14 +1,48 @@
-<script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="mbtu2a0kjrj4b3q"></script>
 <h1>Start with...</h1>
 <ul>
-	<li><a href="#" open-action="open">open a script from disk</a></li>
-	<li><a href="#" open-action="new">create new empty script</a></li>
-	<li><a href="#" open-action="dropbox">open from Dropbox</a></li>
+	<li>
+		<a href="#" open-action="open">open a script from disk</a>
+	</li>
+	<li>
+		<a href="#" open-action="new">create new empty script</a>
+	</li>
+	<li>
+		<a href="#" open-action="dropbox">open from Dropbox</a>
+	</li>
 </ul>
 <h1>Samples</h1>
 <ul>
-	<li><a href="#" open-action="sample" value="big_fish"><i>Big fish</i></a> by John August</li>
-	<li><a href="#" open-action="sample" value="brick_and_steel"><i>Brick & Steel</i></a> by Stu Maschwitz</li>
+	<li>
+		<a href="#" open-action="sample" value="big_fish">
+			<i>Big fish</i>
+		</a>by John August</li>
+	<li>
+		<a href="#" open-action="sample" value="brick_and_steel">
+			<i>Brick & Steel</i>
+		</a>by Stu Maschwitz</li>
 </ul>
 <input id="open-file" type="file" style="display:none" />
+<!-- interactions -->
+<script>
+	require(['jquery', 'plugins/open'], function($, open) {
+		$('a[open-action="open"]').click(function() {
+			$("#open-file").click();
+		});
+		$("#open-file").change(function() {
+			var selected_file = $('#open-file').get(0).files[0];
+			open.open_file(selected_file);
+		});
+		$('a[open-action="new"]').click(open.create_new);
+		$('a[open-action="sample"]').click(function() {
+			var name = $(this).attr('value');
+			open.open_sample(name);
+		});
 
+		if (open.is_dropbox_available()) {
+			$('a[open-action="dropbox"]').click(open.open_from_dropbox);
+		} else {
+			$('a[open-action="dropbox"]').parent().hide();
+		}
+
+	});
+</script>

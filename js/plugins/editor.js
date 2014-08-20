@@ -1,7 +1,7 @@
 define(['core', 'logger', 'jquery', 'utils/layout',
 		'libs/codemirror/lib/codemirror',
 		'libs/codemirror/addon/selection/active-line',
-        'libs/codemirror/addon/hint/show-hint',		
+        'libs/codemirror/addon/hint/show-hint',
 		'libs/codemirror/addon/hint/anyword-hint',
 		'utils/fountainmode'
 ], function (core, logger, $, layout, cm) {
@@ -50,16 +50,18 @@ define(['core', 'logger', 'jquery', 'utils/layout',
 			line: line,
 			xRel: 0
 		};
-		plugin.data.scroll_info = null; //editor.charCoords(plugin.data.cursor);	
+		plugin.data.scroll_info = null;
 
 		core.switch_to(plugin);
 		layout.switch_to_plugin(plugin.name);
 	}
 
+	plugin.init = function () {
+		createEditor();
+	}
+
 	plugin.activate = function () {
-		if (!ready) {
-			createEditor();
-		}
+
 
 		setTimeout(function () {
 			editor.setValue(core.script() || "");
@@ -77,18 +79,6 @@ define(['core', 'logger', 'jquery', 'utils/layout',
 				if (scroll_to.top > 0) {
 					editor.scrollTo(0, scroll_to.top + scroll_to.clientHeight - editor.defaultTextHeight() * 2);
 				}
-
-				//var coords = editor.cursorCoords(plugin.data.cursor);
-				//				var scroll_to = editor.getScrollInfo();				
-				//				editor.scrollIntoView({
-				//					left: 0,
-				//					right: 0,
-				//					top: scroll_to.top + 20,
-				//					bottom: scroll_to.top + 20
-				//				});
-				//var margin = editor.getScrollInfo().clientHeight - editor.defaultTextHeight() * 10;
-				//console.log(margin);
-				//editor.scrollIntoView({line: plugin.data.cursor.line, ch: 0}, margin);
 			}
 
 
