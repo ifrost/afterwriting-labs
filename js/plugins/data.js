@@ -1,6 +1,6 @@
 define(['core', 'logger','modernizr','utils/fountain'],function (core, logger, Modernizr, fountain) {
-	var log = logger.get('sample');
-	var plugin = core.create_plugin('sample', 'sample');
+	var log = logger.get('data');
+	var plugin = core.create_plugin('data', 'data');
 	
 	var _script = "";
 	var _tempStorage = {};
