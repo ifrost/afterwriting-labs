@@ -1,4 +1,4 @@
-define(['core', 'logger', 'd3', 'jquery', 'plugins/editor'], function (core, logger, d3, $, editor) {
+define(['core', 'logger', 'd3', 'jquery', 'plugins/editor', 'utils/layout'], function (core, logger, d3, $, editor, layout) {
 	var log = logger.get('stats');
 	var plugin = core.create_plugin('stats', 'stats');
 
@@ -24,14 +24,15 @@ define(['core', 'logger', 'd3', 'jquery', 'plugins/editor'], function (core, log
 				scene.value = scene.length / (max * 1.1);
 			});
 
-			var scene_width = 590 / stats.scenes.length;
+			var graph_width = ($('.content').width() - (layout.small ? 30 :100));
+			var scene_width = graph_width / stats.scenes.length;
 
 			var vis = d3.select('#stats-scene-length')
 				.append('svg:svg')
 				.attr('width', '100%')
 				.attr('height', '200');
 
-			$('#stats-scene-length svg').attr('viewBox', '0 0 200px 600px')
+			$('#stats-scene-length svg').attr('viewBox', '0 0 200px ' + graph_width + 'px')
 
 			var bars = vis.selectAll('g')
 				.data(stats.scenes)

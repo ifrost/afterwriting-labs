@@ -6,6 +6,9 @@
 	-o-background-size: cover;
 	background-size: cover;
 }
+body {
+	overflow: hidden;
+}
 /** logo **/
  @font-face {
 	font-family:'Day Roman';
@@ -184,7 +187,7 @@ em {
  @media(max-width: 800px) {
 	.content {
 		width: 100%;
-		padding: 0;
+		padding: 0px;
 	}
 	.logo {
 		font-size: 40px;
@@ -217,5 +220,11 @@ em {
 	/** adjust last row **/
 	.menu-item:nth-child(4), .menu-item:nth-child(6) {
 		margin-left: 55px;
+	}
+	.top-bar {
+		padding: 0px;
+	}
+	.close-content {
+		padding: 5px;
 	}
 }

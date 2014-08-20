@@ -87,7 +87,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<h1>Simple Editor</h1>\r\n<textarea id=\"editor-textarea\" placeholder=\"Code goes here...\" class=\"to-the-bottom\"></textarea>";
+  return "<h1>Editor</h1>\r\n<textarea id=\"editor-textarea\" placeholder=\"Code goes here...\" class=\"to-the-bottom\"></textarea>";
   });
 
 this["JST"]["templates/plugins/facts.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

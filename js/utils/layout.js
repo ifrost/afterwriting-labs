@@ -30,12 +30,12 @@ define(['jquery', 'templates'], function ($, templates) {
 
 	module.init_layout = function (context) {
 
-		var small = $('html').width() < 800;
+		module.small = $('html').width() < 800;
 
 
 		// load background
 		var max_backgrounds = 7;
-		if (!small) {
+		if (!module.small) {
 			$('html').css('background-image', 'url(gfx/bg' + Math.floor(Math.random() * max_backgrounds) + '.jpg)');
 		} else {
 			$('html').css('background-color', '#111111');
@@ -62,7 +62,7 @@ define(['jquery', 'templates'], function ($, templates) {
 		$('.menu-item.inactive').hide();
 		$('.tool.inactive').hide();
 		/** align open **/
-		if (!small) {
+		if (!module.small) {
 			$('.menu-item[plugin="open"').css('margin-left', '120px').css('margin-top', '120px');
 			$('.menu-item[plugin="info"]').css('margin-top', '120px');
 		} else {
@@ -73,12 +73,12 @@ define(['jquery', 'templates'], function ($, templates) {
 		/** content **/
 		$('.content').removeClass('inactive');
 		var calculate_content = function () {
-			var left = small ? 0 : ($(document).width() - $('.content').width()) / 2;
+			var left = module.small ? 0 : ($(document).width() - $('.content').width()) / 2;
 			var height = $(document).height();
 			$('.content').height(height).offset({
 				left: left
 			});
-			$('.plugin-content').height(height - $('.top-bar').height() - 50);
+			$('.plugin-content').height(height - $('.top-bar').height() - (module.small ? 10 : 50));
 
 			/** to the bottom **/
 			$('.to-the-bottom').height(function () {

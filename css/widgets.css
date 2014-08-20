@@ -55,3 +55,17 @@ tr {
 	border-radius: 3px;
 	border: 1px solid #777777;
 }
+
+/** small screens **/
+@media(max-width: 800px) {
+	h1 {
+		margin: 10px 5px 5px 5px;
+}
+	h2 {
+		margin: 10px 5px 10px 5px;
+}
+	p {
+		margin: 5px;
+		text-indent: 5px;
+	}
+}
