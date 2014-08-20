@@ -114,7 +114,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<h1>PDF Preview</h1>\r\n<p>Can't see anything? You need a PDF plugin in your browser.</p>\r\n<iframe id=\"pdf-preview-iframe\" class=\"to-the-bottom\" style=\"width: 100%\"></iframe>\r\n";
+  return "<h1>PDF Preview</h1>\r\n<p>Can't see anything? You need a PDF plugin in your browser.</p>\r\n<iframe id=\"pdf-preview-iframe\" class=\"to-the-bottom\" style=\"width: 100%\"></iframe>\r\n<!-- scripts -->\r\n<script>\r\n	require(['jquery', 'plugins/preview'], function($, preview) {\r\n		preview.activate.add(function() {\r\n			document.getElementById(\"pdf-preview-iframe\").src = preview.data.pdf.output(\"datauristring\");\r\n		});\r\n	});\r\n</script>";
   });
 
 this["JST"]["templates/plugins/save.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

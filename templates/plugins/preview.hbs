@@ -1,3 +1,11 @@
 <h1>PDF Preview</h1>
 <p>Can't see anything? You need a PDF plugin in your browser.</p>
 <iframe id="pdf-preview-iframe" class="to-the-bottom" style="width: 100%"></iframe>
+<!-- scripts -->
+<script>
+	require(['jquery', 'plugins/preview'], function($, preview) {
+		preview.activate.add(function() {
+			document.getElementById("pdf-preview-iframe").src = preview.data.pdf.output("datauristring");
+		});
+	});
+</script>
