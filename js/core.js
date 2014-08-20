@@ -35,6 +35,13 @@ define(['jquery', 'templates', 'logger', 'utils/layout', 'utils/decorator', 'd3'
 
 		layout.switch_to_plugin(plugin.name);
 	};
+	
+	module.refresh = function() {
+		if (current) {
+			current.deactivate();
+			current.activate();
+		}
+	}
 
 	module.show_main = function () {
 		layout.close_content();
