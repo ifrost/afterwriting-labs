@@ -1,2 +1,16 @@
 <h1>Editor</h1>
 <textarea id="editor-textarea" placeholder="Code goes here..." class="to-the-bottom"></textarea>
+<!-- scripts -->
+<script>
+require(['jquery', 'plugins/editor', 'utils/layout'], function($, editor, layout) {
+	var cm = editor.create_editor($('#editor-textarea').get(0));
+
+	var editor_content = $('.plugin-content[plugin="editor"]')
+		if (layout.small) {
+			editor.set_size("auto", editor_content.height() - 70);
+		} else {
+			editor.set_size("700px", editor_content.height() - 100);
+		}
+});
+
+</script>

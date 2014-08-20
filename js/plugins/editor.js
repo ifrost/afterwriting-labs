@@ -1,20 +1,18 @@
-define(['core', 'logger', 'jquery', 'utils/layout',
+define(['core', 'logger', 'jquery',
 		'libs/codemirror/lib/codemirror',
 		'libs/codemirror/addon/selection/active-line',
         'libs/codemirror/addon/hint/show-hint',
 		'libs/codemirror/addon/hint/anyword-hint',
 		'utils/fountainmode'
-], function (core, logger, $, layout, cm) {
+], function (core, logger, $, cm) {
 	var log = logger.get('editor');
 	var plugin = core.create_plugin('editor', 'edit');
-	var editor, ready = false;
+	var editor;
 
-	plugin.data = {
+	plugin.data = {};
 
-	};
-
-	var createEditor = function () {
-		editor = cm.fromTextArea($('#editor-textarea').get(0), {
+	plugin.create_editor = function (textarea) {
+		editor = cm.fromTextArea(textarea, {
 			mode: "fountain",
 			lineNumbers: false,
 			lineWrapping: true,
@@ -24,25 +22,20 @@ define(['core', 'logger', 'jquery', 'utils/layout',
 			}
 		});
 
-		var editor_content = $('.plugin-content[plugin="editor"]')
-		if (layout.small) {
-			editor.setSize("auto", editor_content.height() - 70);
-		} else {
-			editor.setSize("700px", editor_content.height() - 100);
-		}
-		editor.refresh();
-
 		editor.on('change', function () {
 			core.script(editor.getValue());
 		});
+	};
 
-		ready = true;
+	plugin.set_size = function (width, height) {
+		editor.setSize(width, height);
+		editor.refresh();
 	};
 
 	var save_state = function () {
 		plugin.data.cursor = editor.getCursor();
 		plugin.data.scroll_info = editor.getScrollInfo();
-	}
+	};
 
 	plugin.goto = function (line) {
 		plugin.data.cursor = {
@@ -53,15 +46,9 @@ define(['core', 'logger', 'jquery', 'utils/layout',
 		plugin.data.scroll_info = null;
 
 		core.switch_to(plugin);
-		layout.switch_to_plugin(plugin.name);
-	}
-
-	plugin.init = function () {
-		createEditor();
-	}
+	};
 
 	plugin.activate = function () {
-
 
 		setTimeout(function () {
 			editor.setValue(core.script() || "");
@@ -69,7 +56,7 @@ define(['core', 'logger', 'jquery', 'utils/layout',
 			editor.refresh();
 
 			if (plugin.data.cursor) {
-				editor.setCursor(plugin.data.cursor)
+				editor.setCursor(plugin.data.cursor);
 			}
 
 			if (plugin.data.scroll_info) {

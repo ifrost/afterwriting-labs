@@ -5,15 +5,6 @@ define(['jquery', 'templates', 'logger', 'saveAs', 'utils/fountain', 'utils/layo
 	var module = {};
 	var current;
 	var tooltip;
-	
-	var _ready = false;
-	var ready = function () {
-		if (!_ready) {
-			_ready = true;
-			layout.close_content();
-			layout.show_options();
-		}
-	};
 
 	module.create_plugin = function (name, title) {
 		return {
@@ -42,6 +33,8 @@ define(['jquery', 'templates', 'logger', 'saveAs', 'utils/fountain', 'utils/layo
 		current = plugin;
 		module.parsed = fountain.parse(_script, module.config);
 		current.activate();
+
+		layout.switch_to_plugin(plugin.name);
 	};
 
 	var _script = "";
@@ -127,21 +120,25 @@ define(['jquery', 'templates', 'logger', 'saveAs', 'utils/fountain', 'utils/layo
 				max: 58
 			}
 		}
-	}
+	};
 
 	module.script = function (value) {
 		if (arguments.length == 1) {
 			_script = value;
-			ready();
 			module.data('last', _script);
 		}
 
 		return _script;
-	}
+	};
+
+	module.show_main = function () {
+		layout.close_content();
+		layout.show_options();
+	};
 
 	module.init = function (modules) {
 		var plugins = modules.filter(function (module) {
-			return module && module.is_plugin
+			return module && module.is_plugin;
 		});
 		log.info('Initializing core. ' + plugins.length + ' plugins found.');
 

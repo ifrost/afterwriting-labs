@@ -87,7 +87,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<h1>Editor</h1>\r\n<textarea id=\"editor-textarea\" placeholder=\"Code goes here...\" class=\"to-the-bottom\"></textarea>";
+  return "<h1>Editor</h1>\r\n<textarea id=\"editor-textarea\" placeholder=\"Code goes here...\" class=\"to-the-bottom\"></textarea>\r\n<!-- scripts -->\r\n<script>\r\nrequire(['jquery', 'plugins/editor', 'utils/layout'], function($, editor, layout) {\r\n	var cm = editor.create_editor($('#editor-textarea').get(0));\r\n\r\n	var editor_content = $('.plugin-content[plugin=\"editor\"]')\r\n		if (layout.small) {\r\n			editor.set_size(\"auto\", editor_content.height() - 70);\r\n		} else {\r\n			editor.set_size(\"700px\", editor_content.height() - 100);\r\n		}\r\n});\r\n\r\n</script>";
   });
 
 this["JST"]["templates/plugins/facts.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

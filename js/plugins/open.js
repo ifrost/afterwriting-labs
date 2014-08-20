@@ -2,24 +2,28 @@ define(['core', 'logger', 'templates', 'dropbox'], function (core, logger, templ
 	var log = logger.get('open');
 	var plugin = core.create_plugin('open', 'open');
 	plugin.class = "active";
+	
+	var set_script = function(value) {
+		core.script(value);
+		core.show_main();
+	};
 
 	plugin.open_file = function (selected_file) {
 		var fileReader = new FileReader();
 		fileReader.onload = function () {
-			log.info('File loaded. Size: ', this.result.length);
-			core.script(this.result);
+			set_script(this.result);
 		};
 		fileReader.readAsText(selected_file);
 	}
 
 	plugin.create_new = function () {
-		core.script('');
+		set_script.script('');
 	}
 
 	plugin.open_sample = function (name) {
 		var template_name = 'templates/samples/' + name + '.fountain';
 		var text = templates[template_name]();
-		core.script(text);
+		set_script(text);
 	};
 
 	plugin.is_dropbox_available = function () {
@@ -32,7 +36,7 @@ define(['core', 'logger', 'templates', 'dropbox'], function (core, logger, templ
 				$.ajax({
 					url: files[0].link
 				}).done(function (content) {
-					core.script(content);
+					set_script(content);
 				});
 			},
 			linkType: 'direct',
