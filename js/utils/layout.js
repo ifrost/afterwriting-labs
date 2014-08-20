@@ -63,10 +63,10 @@ define(['jquery', 'templates'], function ($, templates) {
 		$('.tool.inactive').hide();
 		/** align open **/
 		if (!module.small) {
-			$('.menu-item[plugin="open"').css('margin-left', '120px').css('margin-top', '120px');
+			$('.menu-item[plugin="open"]').css('margin-left', '120px').css('margin-top', '120px');
 			$('.menu-item[plugin="info"]').css('margin-top', '120px');
 		} else {
-			$('.menu-item[plugin="open"').css('margin-left', '60px').css('margin-top', '20px');
+			$('.menu-item[plugin="open"]').css('margin-left', '60px').css('margin-top', '20px');
 			$('.menu-item[plugin="info"]').css('margin-left', '40px').css('margin-top', '20px');
 
 		}
