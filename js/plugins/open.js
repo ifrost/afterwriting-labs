@@ -17,7 +17,7 @@ define(['core', 'logger', 'templates', 'dropbox'], function (core, logger, templ
 	}
 
 	plugin.create_new = function () {
-		set_script.script('');
+		set_script('');
 	}
 
 	plugin.open_sample = function (name) {

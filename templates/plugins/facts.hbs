@@ -2,24 +2,56 @@
 	.plugin-content[plugin="facts"] li span {
 		font-weight: bold;
 	}
+	
 </style>
-
 <h1>Facts</h1>
-
 <h2>Basic</h2>
 <ul>
-	<li>Title: <span id="facts-title"></span></li>
-	<li>Pages: <span id="facts-pages"></span></li>
-	<li>Time: <span id="facts-time"></span></li>
-	<li>Scenes: <span id="facts-scenes"></span></li>
-	<li>Action time: <span id="facts-action-time"></span></li>
-	<li>Dialogue time: <span id="facts-dialogue-time"></span></li>
+	<li>Title:
+		<span id="facts-title"></span>
+	</li>
+	<li>Pages:
+		<span id="facts-pages"></span>
+	</li>
+	<li>Time:
+		<span id="facts-time"></span>
+	</li>
+	<li>Scenes:
+		<span id="facts-scenes"></span>
+	</li>
+	<li>Action time:
+		<span id="facts-action-time"></span>
+	</li>
+	<li>Dialogue time:
+		<span id="facts-dialogue-time"></span>
+	</li>
 </ul>
-
 <h2>Dialogues</h2>
-<ol id="facts-characters">
-</ol>
-
+<ol id="facts-characters"></ol>
 <h2>Locations</h2>
-<ol id="facts-locations">
-</ol>
+<ol id="facts-locations"></ol>
+<!-- scripts -->
+<script>
+	require(['jquery', 'plugins/facts','utils/helper'], function($, facts, helper) {
+		facts.activate.add(function() {
+			var facts_data = facts.data.facts;
+			$('#facts-title').html(facts_data.title.replace(/\*/g, '').replace(/_/g, '').replace(/\n/g, ' / '));
+			$('#facts-pages').html(facts_data.pages.toFixed(2));
+			$('#facts-time').html(helper.format_time(facts_data.pages));
+			$('#facts-scenes').html(facts_data.scenes);
+			$('#facts-action-time').html(helper.format_time(facts_data.action_time));
+			$('#facts-dialogue-time').html(helper.format_time(facts_data.dialogue_time));
+
+			$('#facts-characters').empty();
+			for (var i = 0; i < facts_data.characters.length; i++) {
+				$('#facts-characters').append('<li>' + facts_data.characters[i].name + ' (' + facts_data.characters[i].count + ')</li>');
+			}
+
+			$('#facts-locations').empty();
+			for (var i = 0; i < facts_data.locations.length; i++) {
+				$('#facts-locations').append('<li>' + facts_data.locations[i].name + ' (' + facts_data.locations[i].count + ')</li>');
+			}
+		});
+
+	});
+</script>

@@ -1,4 +1,4 @@
-define(['core', 'logger', 'd3', 'jquery', 'plugins/editor', 'utils/layout'], function (core, logger, d3, $, editor, layout) {
+define(['core', 'logger', 'd3', 'jquery', 'plugins/editor', 'utils/layout', 'utils/helper'], function (core, logger, d3, $, editor, layout, helper) {
 	var log = logger.get('stats');
 	var plugin = core.create_plugin('stats', 'stats');
 
@@ -67,7 +67,7 @@ define(['core', 'logger', 'd3', 'jquery', 'plugins/editor', 'utils/layout'], fun
 				editor.goto(d.token.line);
 			})
 				.on("mouseover", function (d) {
-				core.show_tooltip(d.header + ' (time: ' + core.format_time(core.lines_to_minutes(d.length)) + ')');
+				core.show_tooltip(d.header + ' (time: ' + helper.format_time(core.lines_to_minutes(d.length)) + ')');
 			})
 				.on("mousemove", function () {
 				core.move_tooltip(d3.event.pageX, d3.event.pageY);

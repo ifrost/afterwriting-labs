@@ -1,5 +1,5 @@
 /*global define*/
-define(['jquery', 'templates', 'logger', 'saveAs', 'utils/fountain', 'utils/layout', 'modernizr'], function ($, templates, logger, saveAs, fountain, layout, Modernizr) {
+define(['jquery', 'templates', 'logger', 'saveAs', 'utils/fountain', 'utils/layout', 'modernizr', 'utils/decorator', 'd3'], function ($, templates, logger, saveAs, fountain, layout, Modernizr, decorate, d3) {
 
 	var log = logger.get('core');
 	var module = {};
@@ -137,16 +137,29 @@ define(['jquery', 'templates', 'logger', 'saveAs', 'utils/fountain', 'utils/layo
 	};
 
 	module.init = function (modules) {
-		var plugins = modules.filter(function (module) {
-			return module && module.is_plugin;
-		});
-		log.info('Initializing core. ' + plugins.length + ' plugins found.');
-
 		var context = {
 			plugins: []
 		};
 
-		var init_plugin = function (plugin) {
+		var enrich = function (plugin) {
+			d3.keys(plugin).forEach(function (property) {
+				if (typeof (plugin[property]) === "function") {
+					plugin[property] = decorate(plugin[property]);
+				}
+			});
+		}
+
+		var plugins = modules.filter(function (module) {
+			return module && module.is_plugin;
+		});
+
+		plugins.forEach(function (plugin) {
+			enrich(plugin);
+		});
+
+		log.info('Initializing core. ' + plugins.length + ' plugins found.');
+
+		plugins.forEach(function (plugin) {
 			log.info('Initializing plugin: ' + plugin.name);
 			var template_name = 'templates/plugins/' + plugin.name + '.hbs';
 			if (templates.hasOwnProperty(template_name)) {
@@ -155,10 +168,6 @@ define(['jquery', 'templates', 'logger', 'saveAs', 'utils/fountain', 'utils/layo
 				plugin.view = html;
 			}
 			context.plugins.push(plugin);
-		}
-
-		plugins.forEach(function (plugin) {
-			init_plugin(plugin);
 		});
 
 		layout.init_layout(context);
@@ -192,21 +201,6 @@ define(['jquery', 'templates', 'logger', 'saveAs', 'utils/fountain', 'utils/layo
 
 	module.lines_to_minutes = function (lines) {
 		return lines / module.config.lines_per_page;
-	};
-
-	module.format_time = function (total) {
-		var hours = Math.floor(total / 60);
-		var minutes = Math.floor(total % 60);
-		var seconds = Math.floor(60 * (total % 1));
-
-		var string_time = function (value) {
-			value = value.toString();
-			return value.length == 1 ? '0' + value : value;
-		};
-
-		var result = hours ? string_time(hours) + ':' : '';
-		result += string_time(minutes) + ':' + string_time(seconds);
-		return result;
 	};
 
 	return module;

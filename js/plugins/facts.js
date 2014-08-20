@@ -16,28 +16,7 @@ define(['core', 'logger', 'jquery'], function (core, logger, $) {
 		};
 	};
 
-	var render = function () {
-		var facts = plugin.data.facts;
-		$('#facts-title').html(facts.title.replace(/\*/g, '').replace(/_/g, '').replace(/\n/g, ' / '));
-		$('#facts-pages').html(facts.pages.toFixed(2));
-		$('#facts-time').html(core.format_time(facts.pages));
-		$('#facts-scenes').html(facts.scenes);
-		$('#facts-action-time').html(core.format_time(facts.action_time));
-		$('#facts-dialogue-time').html(core.format_time(facts.dialogue_time));
-
-		$('#facts-characters').empty();
-		for (var i = 0; i < facts.characters.length; i++) {
-			$('#facts-characters').append('<li>' + facts.characters[i].name + ' (' + facts.characters[i].count + ')</li>');
-		}
-
-		$('#facts-locations').empty();
-		for (var i = 0; i < facts.locations.length; i++) {
-			$('#facts-locations').append('<li>' + facts.locations[i].name + ' (' + facts.locations[i].count + ')</li>');
-		}
-	};
-
-	plugin.activate = function () {
-		clear_data();
+	var generate_data = function () {
 		var facts = plugin.data.facts;
 
 		// title
@@ -71,11 +50,11 @@ define(['core', 'logger', 'jquery'], function (core, logger, $) {
 		if (isNaN(facts.action_time)) {
 			facts.action_time = 0;
 		}
-		
+
 		if (isNaN(facts.dialogue_time)) {
 			facts.dialogue_time = 0;
 		}
-		
+
 		var characters_to_sort = [],
 			locations_to_sort = [],
 			characters_cache = {}, locations_cache = {};
@@ -83,16 +62,14 @@ define(['core', 'logger', 'jquery'], function (core, logger, $) {
 			if (token.type === 'scene_heading') {
 				facts.scenes++;
 				var location = token.text.trim();
-				console.log(location);
 				location = location.replace(/^(INT.?\/.EXT\.?)|(I\/E)|(INT\.?)|(EXT\.?)/, '');
 				var dash = location.lastIndexOf(' - ');
 				if (dash != -1) {
 					location = location.substring(0, dash);
 				}
 				location = location.trim();
-				console.log(location);
 				locations_cache[location] = locations_cache[location] ? locations_cache[location] + 1 : 1;
-			} 
+			}
 
 			if (token.type === "character") {
 				var character = token.text;
@@ -116,7 +93,7 @@ define(['core', 'logger', 'jquery'], function (core, logger, $) {
 			});
 		}
 		facts.characters = characters_to_sort.sort(count_sort);
-		
+
 		for (var location in locations_cache) {
 			locations_to_sort.push({
 				name: location,
@@ -124,9 +101,11 @@ define(['core', 'logger', 'jquery'], function (core, logger, $) {
 			});
 		}
 		facts.locations = locations_to_sort.sort(count_sort);
+	};
 
-		render();
-
+	plugin.activate = function () {
+		clear_data();
+		generate_data();
 	};
 
 
