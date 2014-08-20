@@ -1,4 +1,4 @@
-define(['core', 'logger', 'jquery', 'saveAs', 'plugins/preview'], function (core, logger, $, saveAs, preview) {
+define(['core', 'logger', 'jquery', 'saveAs', 'plugins/preview', 'plugins/data'], function (core, logger, $, saveAs, preview, data) {
 	var log = logger.get('save');
 	var plugin = core.create_plugin('save', 'save');
 
@@ -7,7 +7,7 @@ define(['core', 'logger', 'jquery', 'saveAs', 'plugins/preview'], function (core
 	};
 
 	plugin.save_as_fountain = function () {
-		var blob = new Blob([core.script()], {
+		var blob = new Blob([data.script()], {
 			type: "text/plain;charset=utf-8"
 		});
 		saveAs(blob, plugin.data.filename + '.fountain');

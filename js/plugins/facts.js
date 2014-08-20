@@ -1,4 +1,4 @@
-define(['core', 'logger', 'jquery'], function (core, logger, $) {
+define(['core', 'logger', 'jquery', 'plugins/data'], function (core, logger, $, data) {
 	var log = logger.get('facts');
 	var plugin = core.create_plugin('facts', 'facts');
 
@@ -20,7 +20,7 @@ define(['core', 'logger', 'jquery'], function (core, logger, $) {
 		var facts = plugin.data.facts;
 
 		// title
-		core.parsed.title_page.forEach(function (token) {
+		data.parsed.title_page.forEach(function (token) {
 			if (token.type === 'title') {
 				facts.title = token.text;
 			}
@@ -29,7 +29,7 @@ define(['core', 'logger', 'jquery'], function (core, logger, $) {
 		var last_page_lines = 0;
 		var action_lines = 0;
 		var dialogue_lines = 0;
-		core.parsed.lines.forEach(function (line) {
+		data.parsed.lines.forEach(function (line) {
 			if (line.type === "page_break") {
 				facts.pages++;
 				last_page_lines = 0;
@@ -41,7 +41,7 @@ define(['core', 'logger', 'jquery'], function (core, logger, $) {
 			}
 			last_page_lines++;
 		});
-		facts.pages += last_page_lines / core.config.lines_per_page;
+		facts.pages += last_page_lines / data.config.lines_per_page;
 
 		var action_and_dialogue = action_lines + dialogue_lines;
 		facts.action_time = (action_lines / action_and_dialogue) * facts.pages;
@@ -58,7 +58,7 @@ define(['core', 'logger', 'jquery'], function (core, logger, $) {
 		var characters_to_sort = [],
 			locations_to_sort = [],
 			characters_cache = {}, locations_cache = {};
-		core.parsed.tokens.forEach(function (token) {
+		data.parsed.tokens.forEach(function (token) {
 			if (token.type === 'scene_heading') {
 				facts.scenes++;
 				var location = token.text.trim();

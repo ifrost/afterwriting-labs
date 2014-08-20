@@ -1,7 +1,148 @@
 <h1>Useless Stats</h1>
-
 <h2 style="margin-top: 30px">Days and nights</h2>
 <div id="stats-days-and-nights" style="text-align: center"></div>
-
 <h2 style="margin-top: 30px">Scene length</h2>
 <div id="stats-scene-length" width="100%"></div>
+<!--- scripts -->
+<script>
+	require(['jquery', 'd3', 'plugins/stats', 'utils/layout', 'utils/helper'], function($, d3, stats, layout, helper) {
+
+		var render_days_and_nights = function() {
+
+			var vis = d3.select('#stats-days-and-nights')
+				.append('svg:svg')
+				.data([stats.data.days_and_nights])
+				.attr('width', 200)
+				.attr('height', 200)
+				.style('margin', 'auto')
+				.append('svg:g')
+				.attr('transform', 'translate(100,100)');
+
+			var arc = d3.svg.arc().outerRadius(100);
+			var pie = d3.layout.pie().value(function(d) {
+				return d.value;
+			});
+
+			var arcs = vis.selectAll('g')
+				.data(pie)
+				.enter()
+				.append('svg:g')
+
+			var color = function(d) {
+				if (d.data.label == 'DAY') {
+					return '#ffffff';
+				} else if (d.data.label == 'NIGHT') {
+					return '#222222';
+				} else if (d.data.label == 'DAWN') {
+					return '#777777';
+				} else if (d.data.label == 'DUSK') {
+					return '#444444';
+				} else {
+					return '#aaaaaa';
+				}
+			}
+			arcs.append('svg:path')
+				.attr('fill', function(d) {
+				return color(d);
+			}).attr('d', arc)
+				.on("mouseover", function(d) {
+				layout.show_tooltip(d.data.label + ': ' + d.data.value + (d.data.value == 1 ? ' scene' : ' scenes'));
+			})
+				.on("mousemove", function() {
+				layout.move_tooltip(d3.event.pageX, d3.event.pageY);
+			})
+				.on("mouseout", function() {
+				layout.hide_tooltip();
+			});
+
+			vis.append('svg:circle')
+				.attr('fill', 'none')
+				.attr('stroke', '#000000')
+				.attr('stroke-width', '1')
+				.attr('cx', '0')
+				.attr('cy', '0')
+				.attr('r', '100');
+		};
+
+		var render_scene_length = function() {
+			var max = 0;
+			stats.data.scenes.forEach(function(scene) {
+				if (scene.length > max) {
+					max = scene.length;
+				}
+			});
+			stats.data.scenes.forEach(function(scene) {
+				scene.value = scene.length / (max * 1.1);
+			});
+
+			var graph_width = ($('.content').width() - (layout.small ? 30 : 100));
+			var scene_width = graph_width / stats.data.scenes.length;
+
+			var vis = d3.select('#stats-scene-length')
+				.append('svg:svg')
+				.attr('width', '100%')
+				.attr('height', '200');
+
+			$('#stats-scene-length svg').attr('viewBox', '0 0 200px ' + graph_width + 'px')
+
+			var bars = vis.selectAll('g')
+				.data(stats.data.scenes)
+				.enter()
+				.append('rect');
+
+
+			var color = function(d) {
+				if (d.type == 'day') {
+					return '#ffffff';
+				} else if (d.type == 'night') {
+					return '#222222';
+				} else {
+					return '#777777';
+				}
+			}
+
+			bars.attr('width', scene_width)
+				.attr('height', function(d) {
+				return d.value * 200;
+			})
+				.attr('y', function(d) {
+				return 200 - d.value * 200;
+			})
+				.attr('x', function(d, i) {
+				return i * scene_width;
+			})
+				.attr('fill', color)
+				.attr('stroke', '#000000')
+				.style('cursor', 'pointer')
+				.on('click', function(d) {
+				editor.goto(d.token.line);
+			})
+				.on("mouseover", function(d) {
+				layout.show_tooltip(d.header + ' (time: ' + helper.format_time(helper.lines_to_minutes(d.length)) + ')');
+			})
+				.on("mousemove", function() {
+				layout.move_tooltip(d3.event.pageX, d3.event.pageY);
+			})
+				.on("mouseout", function() {
+				layout.hide_tooltip();
+			});
+
+			vis.append('svg:path')
+				.attr('d', 'M 0 0 L 0 200')
+				.attr('stroke', '#000000');
+
+			vis.append('svg:path')
+				.attr('d', 'M 0 200 L 600 200')
+				.attr('stroke', '#000000');
+
+		};
+
+		stats.activate.add(function() {
+			$('#stats-scene-length').empty();
+			$('#stats-days-and-nights').empty();
+
+			render_scene_length();
+			render_days_and_nights()
+		});
+	});
+</script>

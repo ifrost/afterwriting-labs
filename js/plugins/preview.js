@@ -1,9 +1,9 @@
-define(['core', 'logger', 'utils/typewriter'], function (core, logger, typewriter) {
+define(['core', 'logger', 'utils/typewriter', 'plugins/data'], function (core, logger, typewriter, data) {
 	var log = logger.get('preview');
 	var plugin = core.create_plugin('preview', 'view');
 	
 	plugin.get_pdf = function() {
-		return typewriter.get_pdf(core.parsed, core.config);
+		return typewriter.get_pdf(data.parsed, data.config);
 	};
 	
 	plugin.activate = function() {

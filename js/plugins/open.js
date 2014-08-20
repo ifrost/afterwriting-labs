@@ -1,10 +1,10 @@
-define(['core', 'logger', 'templates', 'dropbox'], function (core, logger, templates, Dropbox) {
+define(['core', 'logger', 'templates', 'dropbox', 'plugins/data'], function (core, logger, templates, Dropbox, data) {
 	var log = logger.get('open');
 	var plugin = core.create_plugin('open', 'open');
 	plugin.class = "active";
 	
 	var set_script = function(value) {
-		core.script(value);
+		data.script(value);
 		core.show_main();
 	};
 

@@ -1,6 +1,6 @@
-define(function () {
+define(['plugins/data'], function (data) {
 	var module = {};
-	
+
 	module.format_time = function (total) {
 		var hours = Math.floor(total / 60);
 		var minutes = Math.floor(total % 60);
@@ -14,6 +14,10 @@ define(function () {
 		var result = hours ? string_time(hours) + ':' : '';
 		result += string_time(minutes) + ':' + string_time(seconds);
 		return result;
+	};
+
+	module.lines_to_minutes = function (lines) {
+		return lines / data.config.lines_per_page;
 	};
 
 	return module;

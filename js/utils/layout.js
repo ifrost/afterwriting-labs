@@ -11,6 +11,19 @@ define(['jquery', 'templates'], function ($, templates) {
 		}).addClass('content-closed');
 	}
 
+	module.show_tooltip = function (text) {
+		$('#tooltip').css("visibility", "visible").html(text);
+	};
+
+	module.move_tooltip = function (x, y) {
+		$('#tooltip').css("top", (y - 10) + "px").css("left", (x + 10) + "px");
+	};
+
+	module.hide_tooltip = function () {
+		$('#tooltip').css("visibility", "hidden");
+	};
+
+
 	/** menu open = show other options **/
 	var show_options = function () {
 		$('.menu-item[plugin="open"], .menu-item[plugin="info"]').animate({

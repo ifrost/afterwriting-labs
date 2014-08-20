@@ -81,6 +81,7 @@ require(['core', 'logger','utils/monitor', 'jquery-ui', 'utils/layout',
          'plugins/save',
          'plugins/facts',
          'plugins/stats',
+		 'plugins/data',
 ], function (core, logger, monitor) {
 	var loaded_plugins = Array.prototype.splice.call(arguments, 0);
 	logger.filter = null;

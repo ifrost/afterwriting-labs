@@ -1,147 +1,9 @@
-define(['core', 'logger', 'd3', 'jquery', 'plugins/editor', 'utils/layout', 'utils/helper'], function (core, logger, d3, $, editor, layout, helper) {
+define(['core', 'logger', 'd3', 'jquery', 'plugins/editor', 'plugins/data', 'utils/layout', 'utils/helper'], function (core, logger, d3, $, editor, data, layout, helper) {
 	var log = logger.get('stats');
 	var plugin = core.create_plugin('stats', 'stats');
 
 	plugin.init = function () {
 		log.info('stats:init');
-	};
-
-	var stats = {};
-
-	var render = function () {
-
-		$('#stats-scene-length').empty();
-		$('#stats-days-and-nights').empty();
-
-		(function () {
-			var max = 0;
-			stats.scenes.forEach(function (scene) {
-				if (scene.length > max) {
-					max = scene.length;
-				}
-			});
-			stats.scenes.forEach(function (scene) {
-				scene.value = scene.length / (max * 1.1);
-			});
-
-			var graph_width = ($('.content').width() - (layout.small ? 30 :100));
-			var scene_width = graph_width / stats.scenes.length;
-
-			var vis = d3.select('#stats-scene-length')
-				.append('svg:svg')
-				.attr('width', '100%')
-				.attr('height', '200');
-
-			$('#stats-scene-length svg').attr('viewBox', '0 0 200px ' + graph_width + 'px')
-
-			var bars = vis.selectAll('g')
-				.data(stats.scenes)
-				.enter()
-				.append('rect');
-
-
-			var color = function (d) {
-				if (d.type == 'day') {
-					return '#ffffff';
-				} else if (d.type == 'night') {
-					return '#222222';
-				} else {
-					return '#777777';
-				}
-			}
-
-			bars.attr('width', scene_width)
-				.attr('height', function (d) {
-				return d.value * 200;
-			})
-				.attr('y', function (d) {
-				return 200 - d.value * 200;
-			})
-				.attr('x', function (d, i) {
-				return i * scene_width;
-			})
-				.attr('fill', color)
-				.attr('stroke', '#000000')
-				.style('cursor', 'pointer')
-				.on('click', function (d) {
-				editor.goto(d.token.line);
-			})
-				.on("mouseover", function (d) {
-				core.show_tooltip(d.header + ' (time: ' + helper.format_time(core.lines_to_minutes(d.length)) + ')');
-			})
-				.on("mousemove", function () {
-				core.move_tooltip(d3.event.pageX, d3.event.pageY);
-			})
-				.on("mouseout", function () {
-				core.hide_tooltip();
-			});
-
-			vis.append('svg:path')
-				.attr('d', 'M 0 0 L 0 200')
-				.attr('stroke', '#000000');
-
-			vis.append('svg:path')
-				.attr('d', 'M 0 200 L 600 200')
-				.attr('stroke', '#000000');
-
-		})();
-
-		(function () {
-
-			var vis = d3.select('#stats-days-and-nights')
-				.append('svg:svg')
-				.data([stats.days_and_nights])
-				.attr('width', 200)
-				.attr('height', 200)
-				.style('margin', 'auto')
-				.append('svg:g')
-				.attr('transform', 'translate(100,100)');
-
-			var arc = d3.svg.arc().outerRadius(100);
-			var pie = d3.layout.pie().value(function (d) {
-				return d.value;
-			});
-
-			var arcs = vis.selectAll('g')
-				.data(pie)
-				.enter()
-				.append('svg:g')
-
-			var color = function (d) {
-				if (d.data.label == 'DAY') {
-					return '#ffffff';
-				} else if (d.data.label == 'NIGHT') {
-					return '#222222';
-				} else if (d.data.label == 'DAWN') {
-					return '#777777';
-				} else if (d.data.label == 'DUSK') {
-					return '#444444';
-				} else {
-					return '#aaaaaa';
-				}
-			}
-			arcs.append('svg:path')
-				.attr('fill', function (d) {
-				return color(d);
-			}).attr('d', arc)
-				.on("mouseover", function (d) {
-				core.show_tooltip(d.data.label + ': ' + d.data.value + (d.data.value == 1 ? ' scene' : ' scenes'));
-			})
-				.on("mousemove", function () {
-				core.move_tooltip(d3.event.pageX, d3.event.pageY);
-			})
-				.on("mouseout", function () {
-				core.hide_tooltip();
-			});
-
-			vis.append('svg:circle')
-				.attr('fill', 'none')
-				.attr('stroke', '#000000')
-				.attr('stroke-width', '1')
-				.attr('cx', '0')
-				.attr('cy', '0')
-				.attr('r', '100');
-		})()
 	};
 
 	plugin.activate = function () {
@@ -154,7 +16,7 @@ define(['core', 'logger', 'd3', 'jquery', 'plugins/editor', 'utils/layout', 'uti
 			other: 0,
 			sum: 0
 		};
-		core.parsed.tokens.forEach(function (token) {
+		data.parsed.tokens.forEach(function (token) {
 			var type;
 			if (token.type === 'scene_heading') {
 				var suffix = token.text.substring(token.text.lastIndexOf(' - '))
@@ -189,7 +51,7 @@ define(['core', 'logger', 'd3', 'jquery', 'plugins/editor', 'utils/layout', 'uti
 			}
 		});
 
-		stats.days_and_nights = [
+		plugin.data.days_and_nights = [
 			{
 				label: 'DUSK',
 				value: days_and_nights.dusk
@@ -212,9 +74,7 @@ define(['core', 'logger', 'd3', 'jquery', 'plugins/editor', 'utils/layout', 'uti
 			},
 		];
 
-		stats.scenes = scenes;
-
-		render();
+		plugin.data.scenes = scenes;
 	};
 
 	plugin.deactivate = function () {

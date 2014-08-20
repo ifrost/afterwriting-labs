@@ -1,10 +1,10 @@
-define(['core', 'logger', 'jquery',
+define(['core', 'logger', 'jquery', 'plugins/data',
 		'libs/codemirror/lib/codemirror',
 		'libs/codemirror/addon/selection/active-line',
         'libs/codemirror/addon/hint/show-hint',
 		'libs/codemirror/addon/hint/anyword-hint',
 		'utils/fountainmode'
-], function (core, logger, $, cm) {
+], function (core, logger, $, data, cm) {
 	var log = logger.get('editor');
 	var plugin = core.create_plugin('editor', 'edit');
 	var editor;
@@ -23,7 +23,7 @@ define(['core', 'logger', 'jquery',
 		});
 
 		editor.on('change', function () {
-			core.script(editor.getValue());
+			data.script(editor.getValue());
 		});
 	};
 
@@ -51,7 +51,7 @@ define(['core', 'logger', 'jquery',
 	plugin.activate = function () {
 
 		setTimeout(function () {
-			editor.setValue(core.script() || "");
+			editor.setValue(data.script() || "");
 			editor.focus();
 			editor.refresh();
 
