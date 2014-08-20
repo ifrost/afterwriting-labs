@@ -1,8 +1,9 @@
 define(['core', 'logger', 'jquery', 'utils/layout',
 		'libs/codemirror/lib/codemirror',
 		'libs/codemirror/addon/selection/active-line',
-        'libs/codemirror/addon/hint/show-hint',
-		'libs/codemirror/addon/hint/anyword-hint'
+        'libs/codemirror/addon/hint/show-hint',		
+		'libs/codemirror/addon/hint/anyword-hint',
+		'utils/fountainmode'
 ], function (core, logger, $, layout, cm) {
 	var log = logger.get('editor');
 	var plugin = core.create_plugin('editor', 'edit');
@@ -14,7 +15,7 @@ define(['core', 'logger', 'jquery', 'utils/layout',
 
 	var createEditor = function () {
 		editor = cm.fromTextArea($('#editor-textarea').get(0), {
-			mode: "text",
+			mode: "fountain",
 			lineNumbers: false,
 			lineWrapping: true,
 			styleActiveLine: true,
