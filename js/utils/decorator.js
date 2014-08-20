@@ -6,8 +6,10 @@ define(function () {
 
 		var runner = function () {
 			var self = this;
+			var args;
 			try {
-				result = func.apply(self, Array.prototype.slice.call(arguments, 0));
+				args = Array.prototype.slice.call(arguments, 0);
+				result = func.apply(self, args);
 			} catch (error) {
 				// rethrow
 				throw error;
@@ -17,7 +19,7 @@ define(function () {
 				if (result instanceof Function && result.add) {
 					result.subscribe(handler);
 				} else {
-					handler.call(self, result);
+					handler.apply(self, [result, args]);
 				}
 			});
 			return result;

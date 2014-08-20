@@ -74,15 +74,16 @@ require(['logger'], function (logger) {
 	});
 });
 
-require(['core', 'logger', 'jquery-ui', 'utils/layout',
+require(['core', 'logger','utils/monitor', 'jquery-ui', 'utils/layout', 
          'plugins/open',
          'plugins/editor',
          'plugins/preview',
          'plugins/save',
          'plugins/facts',
-         'plugins/stats'
-], function (core, logger) {
+         'plugins/stats',
+], function (core, logger, monitor) {
 	var loaded_plugins = Array.prototype.splice.call(arguments, 0);
 	logger.filter = null;
 	core.init(loaded_plugins);
+	monitor.init();
 });
