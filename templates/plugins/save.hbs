@@ -1,6 +1,7 @@
 <h1>Save</h1>
 <ul>
-	<li>filename: <input id="save-filename"/>.*</li>
+	<li>filename:
+		<input id="save-filename" />.*</li>
 	<li>as .fountain:
 		<a href="#" action="save-fountain">download</a>
 		<span>&nbsp;|&nbsp;
@@ -14,4 +15,27 @@
 		</span>
 	</li>
 </ul>
-</table>
+<!--- script -->
+<script>
+	require(['jquery', 'plugins/save'], function($, save) {
+		$(document).ready(function() {
+			$('a[action="save-fountain"]').click(save.save_as_fountain);
+			$('a[action="save-dropbox-fountain"]').click(save.dropbox_fountain);
+
+			$('a[action="save-pdf"]').click(save.save_as_pdf);
+			$('a[action="save-dropbox-pdf"]').click(save.dropbox_pdf);
+
+			$('#save-filename').keyup(function() {
+				save.data.filename = $(this).val();
+			});
+
+			if (!save.is_dropbox_available()) {
+				$('a[action="save-dropbox-pdf"], a[action="save-dropbox-fountain"]').parent().hide();
+			}
+
+			save.activate.add(function() {
+				$('#save-filename').val(save.data.filename);
+			});
+		});
+	});
+</script>
