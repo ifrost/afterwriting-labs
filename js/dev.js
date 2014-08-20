@@ -15,4 +15,6 @@ require(['core', 'plugins/open', 'utils/layout', 'plugins/stats'], function (cor
 
 		layout.dev();
 	}
+	
+	window.core = core;
 });

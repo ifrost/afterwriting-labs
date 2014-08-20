@@ -153,7 +153,9 @@ define(['jquery', 'templates', 'logger', 'saveAs', 'utils/fountain', 'utils/layo
 			return module && module.is_plugin;
 		});
 
+		module.plugins = [];
 		plugins.forEach(function (plugin) {
+			module.plugins[plugin.name] = plugin;
 			enrich(plugin);
 		});
 
