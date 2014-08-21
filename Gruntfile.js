@@ -95,5 +95,6 @@ module.exports = function (grunt) {
 
 
 	grunt.registerTask('build', ['requirejs', 'cssmin', 'copy']);
+	grunt.registerTask('deploy', ['gitcheckout:pages', 'gitmerge:master', 'gitpush:pages', 'gitcheckout:master']);
 
 };
