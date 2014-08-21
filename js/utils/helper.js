@@ -1,4 +1,4 @@
-define(['plugins/data'], function (data) {
+define(['plugins/data', 'd3'], function (data, d3) {
 	var module = {};
 
 	module.format_time = function (total) {
@@ -14,6 +14,11 @@ define(['plugins/data'], function (data) {
 		var result = hours ? string_time(hours) + ':' : '';
 		result += string_time(minutes) + ':' + string_time(seconds);
 		return result;
+	};
+	
+	var date_formatter = d3.time.format("%Y-%m-%d %H:%M");
+	module.format_date = function(date) {
+		return date_formatter(date);
 	};
 
 	module.lines_to_minutes = function (lines) {
