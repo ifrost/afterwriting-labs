@@ -7,13 +7,13 @@ define(['core', 'logger','modernizr','utils/fountain'],function (core, logger, M
 	
 	plugin.data = function (key, value) {
 		if (Modernizr.localstorage) {
-			if (arguments === 1) {
+			if (arguments.length === 1) {				
 				return localStorage.getItem('com.afterwriting.labs.local-storage.' + key);
 			} else {
 				window.localStorage.setItem('com.afterwriting.labs.local-storage.' + key, value);
 			}
 		} else {
-			if (arguments === 1) {
+			if (arguments.length === 1) {
 				return _tempStorage[key];
 			} else {
 				_tempStorage[key] = value;
@@ -25,7 +25,6 @@ define(['core', 'logger','modernizr','utils/fountain'],function (core, logger, M
 		if (arguments.length == 1) {
 			_script = value;
 			plugin.parsed = fountain.parse(_script, plugin.config);
-			plugin.data('last', _script);
 		}
 
 		return _script;
