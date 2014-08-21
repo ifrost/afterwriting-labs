@@ -70,6 +70,10 @@ define(['jquery', 'templates', 'logger', 'utils/layout', 'utils/decorator', 'd3'
 			module.plugins[plugin.name] = plugin;
 			enrich(plugin);
 		});
+		
+		plugins.forEach(function (plugin) {
+			plugin.init();
+		});
 
 		log.info('Initializing core. ' + plugins.length + ' plugins found.');
 
@@ -89,8 +93,7 @@ define(['jquery', 'templates', 'logger', 'utils/layout', 'utils/decorator', 'd3'
 		context.plugins.forEach(function (plugin) {
 			$('.tool[plugin="' + plugin.name + '"], .menu-item[plugin="' + plugin.name + '"], a.switch[plugin="' + plugin.name + '"]').click(function () {
 				module.switch_to(plugin);
-			});
-			plugin.init();
+			});			
 		});
 		
 		if (module.loaded) {
