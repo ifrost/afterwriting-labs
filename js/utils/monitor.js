@@ -1,9 +1,10 @@
 define(['logger', 'plugins/open', 'plugins/save', 'plugins/editor', 'plugins/preview', 'plugins/facts', 'plugins/stats'], function (logger, open, save, editor, preview, facts, stats) {
 
 	var module = {};
-
+	var log = logger.get('monitor');
+	
 	var track_event = function (category, action, label) {
-		logger.log([category,action,label].join(','));
+		log.info('Event sent', category,action,label);
 		ga('send', 'event', category, action, label);
 	};
 
@@ -22,7 +23,8 @@ define(['logger', 'plugins/open', 'plugins/save', 'plugins/editor', 'plugins/pre
 		});
 
 		open.create_new.add(track_handler(open.name, 'new'));
-		open.open_file.add(track_handler(open.name, 'file'));
+		open.open_file_dialog.add(track_handler(open.name, 'file-dialog'));
+		open.open_file.add(track_handler(open.name, 'file-opened'));
 		open.open_from_dropbox.add(track_handler(open.name, 'dropbox'));
 
 		// save 

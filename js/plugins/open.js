@@ -15,6 +15,10 @@ define(['core', 'logger', 'templates', 'dropbox', 'plugins/data'], function (cor
 		};
 		fileReader.readAsText(selected_file);
 	}
+	
+	plugin.open_file_dialog = function() {
+		// view action
+	};
 
 	plugin.create_new = function () {
 		set_script('');

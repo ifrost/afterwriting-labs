@@ -1,6 +1,5 @@
 /*global require*/
 require.config({
-	urlArgs: "bust=" + (new Date()).getTime(),
 	baseUrl: 'js',
 	paths: {
 		templates: '../templates/compiled',
