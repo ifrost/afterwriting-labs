@@ -16,36 +16,31 @@ define(['logger', 'plugins/open', 'plugins/save', 'plugins/editor', 'plugins/pre
 
 	module.init = function () {
 
+		open.activate.add(track_handler('navigation', 'open'));
+		save.activate.add(track_handler('navigation', 'save'));
+		editor.activate.add(track_handler('navigation', 'edit'));
+		preview.activate.add(track_handler('navigation', 'preview'));
+		facts.activate.add(track_handler('navigation', 'facts'));
+		stats.activate.add(track_handler('navigation', 'stats'));
+		
 		// open
-		open.activate.add(track_handler('plugin', 'opened', open.name));
 		open.open_sample.add(function (result, args) {
-			track_event(open.name, 'sample', args[0]);
+			track_event('feature', 'open-sample', args[0]);
 		});
 
-		open.create_new.add(track_handler(open.name, 'new'));
-		open.open_file_dialog.add(track_handler(open.name, 'file-dialog'));
-		open.open_file.add(track_handler(open.name, 'file-opened'));
-		open.open_from_dropbox.add(track_handler(open.name, 'dropbox'));
+		open.create_new.add(track_handler('feature', 'open-new'));
+		open.open_file_dialog.add(track_handler('feature', 'open-file-dialog'));
+		open.open_file.add(track_handler('feature', 'open-file-opened'));
+		open.open_from_dropbox.add(track_handler('feature', 'open-dropbox'));
 
 		// save 
-		save.activate.add(track_handler('plugin', 'opened', save.name));
-		save.save_as_fountain.add(track_handler('save', 'dowload', 'fountain'));
-		save.save_as_pdf.add(track_handler('save', 'dowload', 'pdf'));
-		save.dropbox_fountain.add(track_handler('save', 'dropbox', 'fountain'));
-		save.dropbox_pdf.add(track_handler('save', 'dropbox', 'pdf'));
-
-		// editor
-		editor.activate.add(track_handler('plugin', 'opened', editor.name));
-
-		// preview
-		preview.activate.add(track_handler('plugin', 'opened', preview.name));
-
-		// facts
-		facts.activate.add(track_handler('plugin', 'opened', facts.name));
+		save.save_as_fountain.add(track_handler('feature', 'save-fountain'));
+		save.save_as_pdf.add(track_handler('feature', 'save-pdf'));
+		save.dropbox_fountain.add(track_handler('feature', 'save-fountain-dropbox'));
+		save.dropbox_pdf.add(track_handler('feature', 'save-pdf-dropbox'));
 
 		// stats
-		stats.activate.add(track_handler('plugin', 'opened', stats.name));
-		stats.goto.add(track_handler('stats', 'goto'));
+		stats.goto.add(track_handler('feature', 'stats-scene-length-goto'));
 
 	};
 
