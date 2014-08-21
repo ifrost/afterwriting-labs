@@ -16,7 +16,7 @@ module.exports = function (grunt) {
 					amd: true
 				},
 				files: {
-					'templates/compiled.js': ['**/*.hbs','**/*.fountain']
+					'templates/compiled.js': ['**/*.hbs', '**/*.fountain']
 				}
 			}
 		},
@@ -48,7 +48,7 @@ module.exports = function (grunt) {
 		copy: {
 			gfx: {
 				expand: true,
-				src: ['gfx/**','fonts/**'],
+				src: ['gfx/**', 'fonts/**'],
 				dest: 'build'
 			},
 			html: {
@@ -57,7 +57,33 @@ module.exports = function (grunt) {
 				src: ['html/index.html'],
 				dest: 'build'
 			}
-		}
+		},
+		gitcheckout: {
+			pages: {
+				options: {
+					branch: 'gh-pages'
+				}
+			},
+			master: {
+				options: {
+					branch: 'master'
+				}
+			}
+		},
+		gitmerge: {
+			master: {
+				options: {
+					branch: 'master'
+				}
+			}
+		},
+		gitpush: {
+			pages: {
+				options: {
+					branch: 'gh-pages'
+				}
+			}
+		},
 
 	});
 
@@ -65,7 +91,8 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
-	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-git');
+
 
 	grunt.registerTask('build', ['requirejs', 'cssmin', 'copy']);
 

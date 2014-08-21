@@ -25,6 +25,7 @@
     "grunt-contrib-handlebars": "^0.8.0",
     "grunt-contrib-requirejs": "^0.4.4",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-git": "^0.2.14",
     "grunt-simple-mocha": "~0.4.0"
   },
   "peerDependencies": {
