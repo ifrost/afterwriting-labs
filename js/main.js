@@ -41,7 +41,17 @@ require.config({
 	}
 });
 
-require(['logger'], function (logger) {
+require(['core', 'logger', 'utils/monitor', 
+         'jquery-ui', 'utils/layout',
+         'plugins/open',
+         'plugins/editor',
+         'plugins/preview',
+         'plugins/save',
+         'plugins/facts',
+         'plugins/stats',
+         'plugins/data',
+         'dev',
+], function (core, logger, monitor) {
 	logger.setLevel(logger.DEBUG);
 	logger.setHandler(function (messages, context) {
 		if (logger.filter && logger.filter.indexOf(context.name) == -1) {
@@ -49,7 +59,7 @@ require(['logger'], function (logger) {
 		}
 
 		if (logger.disabled) {
-			return
+			return;
 		}
 
 		var hdlr = console.log;
@@ -70,18 +80,9 @@ require(['logger'], function (logger) {
 
 		// Support for IE8+ (and other, slightly more sane environments)
 		Function.prototype.apply.call(hdlr, console, messages);
-	});
-});
-
-require(['core', 'logger','utils/monitor', 'jquery-ui', 'utils/layout', 
-         'plugins/open',
-         'plugins/editor',
-         'plugins/preview',
-         'plugins/save',
-         'plugins/facts',
-         'plugins/stats',
-		 'plugins/data',
-], function (core, logger, monitor) {
+	});	
+	
+	// main initialization
 	var loaded_plugins = Array.prototype.splice.call(arguments, 0);
 	logger.filter = null;
 	core.init(loaded_plugins);
