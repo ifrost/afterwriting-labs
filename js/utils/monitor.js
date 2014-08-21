@@ -2,13 +2,13 @@ define(['plugins/open'], function (open) {
 
 	var module = {};
 
-	var track_event = function(category, event, label) {
-		ga('send', category, event, label);
+	var track_event = function(category, action, label) {
+		ga('send', 'event', category, action, label);
 	};
 	
-	var track_handler = function(category, event, label) {
-		return function() {
-			track_event(category, event, label);
+	var track_handler = function(category, action, label) {
+		return function() {			
+			track_event(category, action, label);
 		};
 	};
 
