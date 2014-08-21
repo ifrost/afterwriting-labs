@@ -32,6 +32,7 @@ define(['logger', 'plugins/open', 'plugins/save', 'plugins/editor', 'plugins/pre
 		open.open_file_dialog.add(track_handler('feature', 'open-file-dialog'));
 		open.open_file.add(track_handler('feature', 'open-file-opened'));
 		open.open_from_dropbox.add(track_handler('feature', 'open-dropbox'));
+		open.open_last_used.add(track_handler('feature', 'open-last-used'));
 
 		// save 
 		save.save_as_fountain.add(track_handler('feature', 'save-fountain'));
