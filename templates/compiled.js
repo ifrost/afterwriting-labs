@@ -117,10 +117,24 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 this["JST"]["templates/plugins/open.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
   
+  var buffer = "", stack1;
+  buffer += "\r\n<h1>Last opened</h1>\r\n<ul>\r\n	<li><a href=\"#\" open-action=\"last\">"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.last_used)),stack1 == null || stack1 === false ? stack1 : stack1.title)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</a> ("
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.last_used)),stack1 == null || stack1 === false ? stack1 : stack1.date)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + ")</li>\r\n</ul>\r\n";
+  return buffer;
+  }
 
-
-  return "<h1>Start with...</h1>\r\n<ul>\r\n	<li>\r\n		<a href=\"#\" open-action=\"open\">open a script from disk</a>\r\n	</li>\r\n	<li>\r\n		<a href=\"#\" open-action=\"new\">create new empty script</a>\r\n	</li>\r\n	<li>\r\n		<a href=\"#\" open-action=\"dropbox\">open from Dropbox</a>\r\n	</li>\r\n</ul>\r\n<h1>Samples</h1>\r\n<ul>\r\n	<li>\r\n		<a href=\"#\" open-action=\"sample\" value=\"big_fish\">\r\n			<i>Big fish</i>\r\n		</a>by John August</li>\r\n	<li>\r\n		<a href=\"#\" open-action=\"sample\" value=\"brick_and_steel\">\r\n			<i>Brick & Steel</i>\r\n		</a>by Stu Maschwitz</li>\r\n</ul>\r\n<input id=\"open-file\" type=\"file\" style=\"display:none\" />\r\n<!-- interactions -->\r\n<script>\r\n	require(['jquery', 'plugins/open'], function($, open) {\r\n		$('a[open-action=\"open\"]').click(function() {\r\n			open.open_file_dialog()\r\n		});\r\n		$(\"#open-file\").change(function() {\r\n			var selected_file = $('#open-file').get(0).files[0];\r\n			open.open_file(selected_file);\r\n		});\r\n		$('a[open-action=\"new\"]').click(open.create_new);\r\n		$('a[open-action=\"sample\"]').click(function() {\r\n			var name = $(this).attr('value');\r\n			open.open_sample(name);\r\n		});\r\n\r\n		if (open.is_dropbox_available()) {\r\n			$('a[open-action=\"dropbox\"]').click(open.open_from_dropbox);\r\n		} else {\r\n			$('a[open-action=\"dropbox\"]').parent().hide();\r\n		}\r\n\r\n		open.open_file_dialog.add(function() {\r\n			$(\"#open-file\").click();\r\n		});\r\n\r\n	});\r\n</script>";
+  buffer += "<h1>Start with...</h1>\r\n<ul>\r\n	<li>\r\n		<a href=\"#\" open-action=\"open\">open a script from disk</a>\r\n	</li>\r\n	<li>\r\n		<a href=\"#\" open-action=\"new\">create new empty script</a>\r\n	</li>\r\n	<li>\r\n		<a href=\"#\" open-action=\"dropbox\">open from Dropbox</a>\r\n	</li>\r\n</ul>\r\n";
+  stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.last_used)),stack1 == null || stack1 === false ? stack1 : stack1.date), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\r\n<h1>Samples</h1>\r\n<ul>\r\n	<li>\r\n		<a href=\"#\" open-action=\"sample\" value=\"big_fish\">\r\n			<i>Big Fish</i>\r\n		</a>by John August</li>\r\n	<li>\r\n		<a href=\"#\" open-action=\"sample\" value=\"brick_and_steel\">\r\n			<i>Brick & Steel</i>\r\n		</a>by Stu Maschwitz</li>\r\n</ul>\r\n<input id=\"open-file\" type=\"file\" style=\"display:none\" />\r\n<!-- interactions -->\r\n<script>\r\n	require(['jquery', 'plugins/open'], function($, open) {\r\n		$('a[open-action=\"open\"]').click(function() {\r\n			open.open_file_dialog()\r\n		});\r\n		$(\"#open-file\").change(function() {\r\n			var selected_file = $('#open-file').get(0).files[0];\r\n			open.open_file(selected_file);\r\n		});\r\n		$('a[open-action=\"new\"]').click(open.create_new);\r\n		$('a[open-action=\"sample\"]').click(function() {\r\n			var name = $(this).attr('value');\r\n			open.open_sample(name);\r\n		});\r\n		$('a[open-action=\"last\"]').click(open.open_last_used);		\r\n\r\n		if (open.is_dropbox_available()) {\r\n			$('a[open-action=\"dropbox\"]').click(open.open_from_dropbox);\r\n		} else {\r\n			$('a[open-action=\"dropbox\"]').parent().hide();\r\n		}\r\n\r\n		open.open_file_dialog.add(function() {\r\n			$(\"#open-file\").click();\r\n		});\r\n\r\n	});\r\n</script>";
+  return buffer;
   });
 
 this["JST"]["templates/plugins/preview.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
