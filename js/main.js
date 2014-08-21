@@ -3,16 +3,15 @@ require.config({
 	baseUrl: 'js',
 	paths: {
 		templates: '../templates/compiled',
-		jquery: 'libs/jquery-1.11.1',
+		jquery: 'libs/jquery-1.11.1.min',
 		handlebars: 'libs/handlebars',
 		slidebars: 'libs/slidebars',
 		logger: 'libs/logger',
-		'jquery-ui': 'libs/jquery-ui-1.10.3',
 		saveAs: 'libs/FileSaver',
 		jspdf: 'libs/jspdf',
 		d3: 'libs/d3.min',
 		modernizr: 'libs/modernizr',
-		dropbox: 'libs/dropins',
+		dropbox: 'libs/dropins'
 	},
 	shim: {
 		handlebars: {
@@ -20,10 +19,6 @@ require.config({
 		},
 		logger: {
 			exports: 'Logger'
-		},
-		'jquery-ui': {
-			exports: "$",
-			deps: ['jquery']
 		},
 		saveAs: {
 			exports: 'saveAs'
@@ -42,7 +37,7 @@ require.config({
 });
 
 require(['core', 'logger', 'utils/monitor', 
-         'jquery-ui', 'utils/layout',
+         'utils/layout',
          'plugins/open',
          'plugins/editor',
          'plugins/preview',

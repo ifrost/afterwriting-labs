@@ -23,7 +23,7 @@ module.exports = function (grunt) {
 		requirejs: {
 			compile: {
 				options: {
-					optimize: "none",
+					optimize: "uglify",
 					baseUrl: "js",
 					mainConfigFile: "js/main.js",
 					include: "main",
@@ -32,16 +32,27 @@ module.exports = function (grunt) {
 					onBuildWrite: function (moduleName, path, contents) {
 						if (moduleName === 'logger') {
 							contents = contents.replace(/\/\/invoke[\s\S]*\/\/\/invoke/g, '');
+						} else if (moduleName == 'libs/codemirror/lib/codemirror') {
+							contents = '';
 						}
 						return contents;
 					},
 				}
 			}
 		},
+		concat: {
+			options: {
+				separator: ';',
+			},
+			dist: {
+				src: ['build/js/afterwriting.js', 'js/libs/codemirror/lib/codemirror.js'],
+				dest: 'build/js/afterwriting.js',
+			},
+		},
 		cssmin: {
 			build: {
 				files: {
-					'build/css/afterwriting.css': ['css/reset.css', 'css/*.css']
+					'build/css/afterwriting.css': ['css/reset.css', 'css/*.css','js/libs/**/show-hint.css']
 				}
 			}
 		},
@@ -90,11 +101,13 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-handlebars');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
+	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-git');
 
 
-	grunt.registerTask('build', ['requirejs', 'cssmin', 'copy']);
+	grunt.registerTask('build', ['requirejs', 'concat', 'cssmin', 'copy']);
 	grunt.registerTask('deploy', ['gitcheckout:pages', 'gitmerge:master', 'gitpush:pages', 'gitcheckout:master']);
 
 };

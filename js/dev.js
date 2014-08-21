@@ -1,5 +1,5 @@
 define(['core', 'plugins/open', 'utils/layout'], function (core, open, layout, dev_plugin) {
-	if (__devmode) {
+	if (window.__devmode) {
 		core.loaded = function () {
 
 			if (dev_plugin) {
