@@ -6,6 +6,10 @@ define(['core', 'logger', 'd3', 'jquery', 'plugins/editor', 'plugins/data', 'uti
 		log.info('stats:init');
 	};
 
+	plugin.goto = function(line) {
+		editor.goto(line);
+	}
+	
 	plugin.activate = function () {
 		var scenes = [];
 		var days_and_nights = {

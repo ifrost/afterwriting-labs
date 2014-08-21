@@ -115,7 +115,7 @@
 				.attr('stroke', '#000000')
 				.style('cursor', 'pointer')
 				.on('click', function(d) {
-				editor.goto(d.token.line);
+				stats.goto(d.token.line);
 			})
 				.on("mouseover", function(d) {
 				layout.show_tooltip(d.header + ' (time: ' + helper.format_time(helper.lines_to_minutes(d.length)) + ')');
