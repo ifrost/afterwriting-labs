@@ -5,7 +5,6 @@ require.config({
 		templates: '../templates/compiled',
 		jquery: 'libs/jquery-1.11.1.min',
 		handlebars: 'libs/handlebars',
-		slidebars: 'libs/slidebars',
 		logger: 'libs/logger',
 		saveAs: 'libs/FileSaver',
 		jspdf: 'libs/jspdf',
