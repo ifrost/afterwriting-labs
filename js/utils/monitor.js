@@ -2,19 +2,23 @@ define(['plugins/open'], function (open) {
 
 	var module = {};
 
-	var track = function (category, event) {
-		console.log('Tracking event ' + category + ':' + event);
+	var track_event = function(category, event, label) {
+		ga('send', category, event, label);
+	};
+	
+	var track_handler = function(category, event, label) {
+		return function() {
+			track_event(category, event, label);
+		};
 	};
 
 	module.init = function () {
 
 		open.open_sample.add(function (result, args) {
-			track(open.name, args[0]);
+			track_event(open.name, 'open-sample', args[0]);
 		});
 
-		open.create_new.add(function () {
-			track(open.name, 'create_new');
-		});
+		open.create_new.add(track_handler(open.name, 'create-new'));
 	};
 
 	return module;
