@@ -152,6 +152,7 @@ body {
 	width: 20px;
 	height: 20px;
 	cursor: pointer;
+	content: url(../gfx/icons/close.svg);
 }
 .plugin-content.info img {
 	width: 14px;
@@ -226,6 +227,9 @@ em {
 		padding: 0px;
 	}
 	.close-content {
-		padding: 5px;
+		padding: 10px 5px 5px 0;
+		content: url(../gfx/icons/up.svg);
+		width: 30px;
+		height: 30px;
 	}
 }
