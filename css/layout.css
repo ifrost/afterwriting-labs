@@ -212,7 +212,8 @@ em {
 		padding: 0 5px 0 5px;
 	}
 	.footer {
-		visibility: hidden;
+		opacity: 0.5;
+		z-index: -100;
 	}
 	.menu-item-hover span {
 		visibility: hidden;
