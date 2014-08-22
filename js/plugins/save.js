@@ -1,4 +1,4 @@
-define(['core', 'logger', 'jquery', 'saveAs', 'plugins/preview', 'plugins/data'], function (core, logger, $, saveAs, preview, data) {
+define(['core', 'logger', 'jquery', 'saveAs', 'plugins/preview', 'utils/data'], function (core, logger, $, saveAs, preview, data) {
 	var log = logger.get('save');
 	var plugin = core.create_plugin('save', 'save');
 

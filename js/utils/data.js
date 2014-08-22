@@ -1,8 +1,7 @@
-define(['core', 'logger','modernizr','utils/fountain'],function (core, logger, Modernizr, fountain) {
+define(['logger','modernizr','utils/fountain', 'utils/decorator'],function (logger, Modernizr, fountain, decorator) {
 	var log = logger.get('data');
-	var plugin = core.create_plugin('data', 'data');
 	
-	var _script = "";
+	var plugin = {};
 	var _tempStorage = {};
 	
 	plugin.data = function (key, value) {
@@ -21,14 +20,10 @@ define(['core', 'logger','modernizr','utils/fountain'],function (core, logger, M
 		}
 	}
 
-	plugin.script = function (value) {
-		if (arguments.length == 1) {
-			_script = value;
-			plugin.parsed = fountain.parse(_script, plugin.config);
-		}
-
-		return _script;
-	};
+	plugin.script = decorator.property();
+	plugin.script.add(function(script){
+		plugin.parsed = fountain.parse(script, plugin.config);
+	});
 
 	plugin.config = {
 		paper_size: "a4",

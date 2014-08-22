@@ -41,7 +41,7 @@ define(['jquery', 'templates', 'logger', 'utils/layout', 'utils/decorator', 'd3'
 			current.deactivate();
 			current.activate();
 		}
-	}
+	};
 
 	module.show_main = function () {
 		layout.close_content();
@@ -55,11 +55,11 @@ define(['jquery', 'templates', 'logger', 'utils/layout', 'utils/decorator', 'd3'
 
 		var enrich = function (plugin) {
 			d3.keys(plugin).forEach(function (property) {
-				if (typeof (plugin[property]) === "function") {
+				if (typeof (plugin[property]) === "function" && !(plugin[property].decorated)) {
 					plugin[property] = decorate(plugin[property]);
 				}
 			});
-		}
+		};
 
 		var plugins = modules.filter(function (module) {
 			return module && module.is_plugin;

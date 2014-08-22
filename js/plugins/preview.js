@@ -1,4 +1,4 @@
-define(['core', 'logger', 'utils/typewriter', 'plugins/data'], function (core, logger, typewriter, data) {
+define(['core', 'logger', 'utils/typewriter', 'utils/data'], function (core, logger, typewriter, data) {
 	var log = logger.get('preview');
 	var plugin = core.create_plugin('preview', 'view');
 	

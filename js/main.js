@@ -43,7 +43,6 @@ require(['core', 'logger', 'utils/monitor',
          'plugins/save',
          'plugins/facts',
          'plugins/stats',
-         'plugins/data',
          'dev',
 ], function (core, logger, monitor) {
 	logger.setLevel(logger.DEBUG);

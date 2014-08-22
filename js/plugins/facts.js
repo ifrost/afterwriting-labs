@@ -1,4 +1,4 @@
-define(['core', 'logger', 'jquery', 'plugins/data'], function (core, logger, $, data) {
+define(['core', 'logger', 'jquery', 'utils/data'], function (core, logger, $, data) {
 	var log = logger.get('facts');
 	var plugin = core.create_plugin('facts', 'facts');
 

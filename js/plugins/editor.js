@@ -1,4 +1,4 @@
-define(['core', 'logger', 'jquery', 'plugins/data',
+define(['core', 'logger', 'jquery', 'utils/data',
 		'libs/codemirror/lib/codemirror',
 		'libs/codemirror/addon/selection/active-line',
         'libs/codemirror/addon/hint/show-hint',

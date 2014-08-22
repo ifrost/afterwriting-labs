@@ -1,4 +1,4 @@
-define(['plugins/data', 'd3'], function (data, d3) {
+define(['utils/data', 'd3'], function (data, d3) {
 	var module = {};
 
 	module.format_time = function (total) {

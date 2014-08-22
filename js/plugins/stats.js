@@ -1,4 +1,4 @@
-define(['core', 'logger', 'd3', 'jquery', 'plugins/editor', 'plugins/data', 'utils/layout', 'utils/helper'], function (core, logger, d3, $, editor, data, layout, helper) {
+define(['core', 'logger', 'd3', 'jquery', 'plugins/editor', 'utils/data', 'utils/layout', 'utils/helper'], function (core, logger, d3, $, editor, data, layout, helper) {
 	var log = logger.get('stats');
 	var plugin = core.create_plugin('stats', 'stats');
 

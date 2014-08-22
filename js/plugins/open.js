@@ -1,4 +1,4 @@
-define(['core', 'logger', 'templates', 'dropbox', 'plugins/data', 'utils/helper'], function (core, logger, templates, Dropbox, data, helper) {
+define(['core', 'logger', 'templates', 'dropbox', 'utils/data', 'utils/helper'], function (core, logger, templates, Dropbox, data, helper) {
 	var log = logger.get('open');
 	var plugin = core.create_plugin('open', 'open');
 	plugin.class = "active";
@@ -58,10 +58,7 @@ define(['core', 'logger', 'templates', 'dropbox', 'plugins/data', 'utils/helper'
 
 	plugin.init = function () {
 		log.info("open:init");
-		data.script.add(function (result, args) {
-			if (args.length == 0) {
-				return;
-			}
+		data.script.add(function () {
 			if (data.script()) {
 				data.data('last-used-title', 'No title');
 				data.parsed.title_page.forEach(function (token) {
