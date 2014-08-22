@@ -26,6 +26,9 @@ define(['logger','modernizr','utils/fountain', 'utils/decorator'],function (logg
 	});
 
 	plugin.config = {
+		ui: {
+			show_background_image: true
+		},
 		paper_size: "a4",
 		lines_per_page: 57,
 		break_dialogue: true,

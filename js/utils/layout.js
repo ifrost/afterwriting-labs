@@ -1,4 +1,4 @@
-define(['jquery', 'templates'], function ($, templates) {
+define(['jquery', 'templates', 'utils/data'], function ($, templates, data) {
 
 	var module = {};
 
@@ -48,7 +48,7 @@ define(['jquery', 'templates'], function ($, templates) {
 
 		// load background
 		var max_backgrounds = 7;
-		if (!module.small) {
+		if (!module.small && data.config.ui.show_background_image) {
 			$('html').css('background-image', 'url(gfx/bg' + Math.floor(Math.random() * max_backgrounds) + '.jpg)');
 		} else {
 			$('html').css('background-color', '#111111');
