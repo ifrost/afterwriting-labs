@@ -26,9 +26,14 @@
 		<span id="facts-dialogue-time"></span>
 	</li>
 </ul>
-<h2>Dialogues</h2>
+<h2>Time of speaking</h2>
+<span class="content-expander expand-dialogue show-all-dialogues">Top 10 characters shown. Click here to show all&nbsp;<span class="nof-dialogues"></span>.</span>
+<span class="content-expander expand-dialogue show-top-dialogues" style="display:none">All&nbsp;<span class="nof-dialogues"></span>&nbsp;characters shown. Click here to show Top 10 only.</span>
 <ol id="facts-characters"></ol>
+
 <h2>Locations</h2>
+<span class="content-expander expand-locations show-all-locations">Top 10 locations shown. Click here to show all&nbsp;<span class="nof-locations"></span>.</span>
+<span class="content-expander expand-locations show-top-locations" style="display:none">All <span class="nof-locations"></span> locations shown. Click here to show Top 10 only.</span>
 <ol id="facts-locations"></ol>
 <!-- scripts -->
 <script>
@@ -44,13 +49,39 @@
 
 			$('#facts-characters').empty();
 			for (var i = 0; i < facts_data.characters.length; i++) {
-				$('#facts-characters').append('<li>' + facts_data.characters[i].name + ' (' + facts_data.characters[i].count + ')</li>');
+				$('#facts-characters').append('<li class="' + (i >= 10 ? 'expandable' : '') + '">' + facts_data.characters[i].name + ' (' + helper.format_time(facts_data.characters[i].time) + ')</li>');
 			}
 
 			$('#facts-locations').empty();
 			for (var i = 0; i < facts_data.locations.length; i++) {
-				$('#facts-locations').append('<li>' + facts_data.locations[i].name + ' (' + facts_data.locations[i].count + ')</li>');
+				$('#facts-locations').append('<li class="' + (i >= 10 ? 'expandable' : '') + '">' + facts_data.locations[i].name + ' (' + facts_data.locations[i].count + ')</li>');
 			}
+			$('.nof-dialogues').html(facts_data.characters.length);
+			$('.nof-locations').html(facts_data.locations.length);
+			
+			
+			if (facts_data.characters.length > 10) {
+				$('#facts-characters li.expandable').hide();
+				$('.expand-dialogue').click(function(){
+					$('.expand-dialogue').toggle();
+					$('#facts-characters li.expandable').slideToggle({duration: 200});
+				});
+			}
+			else {
+				$('.expand-dialogue').hide();
+			}
+			
+			if (facts_data.locations.length > 10) {
+				$('#facts-locations li.expandable').hide();
+				$('.expand-locations').click(function(){
+					$('.expand-locations').toggle();
+					$('#facts-locations li.expandable').slideToggle({duration: 200});
+				});
+			}
+			else {
+				$('.expand-locations').hide();
+			}
+			
 		});
 
 	});

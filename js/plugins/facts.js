@@ -34,7 +34,7 @@ define(['core', 'logger', 'jquery', 'utils/data'], function (core, logger, $, da
 				facts.pages++;
 				last_page_lines = 0;
 			}
-			if (["character", "dialogue", "parenthetical"].indexOf(line.type) !== -1) {
+			if (["dialogue", "character", "parenthetical"].indexOf(line.type) !== -1) {
 				dialogue_lines++;
 			} else {
 				action_lines++;
@@ -57,7 +57,8 @@ define(['core', 'logger', 'jquery', 'utils/data'], function (core, logger, $, da
 
 		var characters_to_sort = [],
 			locations_to_sort = [],
-			characters_cache = {}, locations_cache = {};
+			characters_cache = {}, locations_cache = {},
+			current_character;
 		data.parsed.tokens.forEach(function (token) {
 			if (token.type === 'scene_heading') {
 				facts.scenes++;
@@ -78,21 +79,31 @@ define(['core', 'logger', 'jquery', 'utils/data'], function (core, logger, $, da
 					character = character.substring(0, p);
 				}
 				character = character.trim();
-				characters_cache[character] = characters_cache[character] ? characters_cache[character] + 1 : 1;
+				if (characters_cache[character] === undefined) {
+					characters_cache[character] = 0;
+				}
+				
+				current_character = character;
+			}
+			if (["dialogue", "character", "parenthetical"].indexOf(token.type) !== -1) {
+				characters_cache[current_character]++;
 			}
 		});
 
-		var count_sort = function (a, b) {
+		var time_sort = function (a, b) {
+			return b.time - a.time;
+		};
+		var count_sort = function(a, b) {
 			return b.count - a.count;
 		};
 
 		for (var character in characters_cache) {
 			characters_to_sort.push({
 				name: character,
-				count: characters_cache[character]
+				time: (characters_cache[character] / dialogue_lines) * facts.dialogue_time
 			});
 		}
-		facts.characters = characters_to_sort.sort(count_sort);
+		facts.characters = characters_to_sort.sort(time_sort);
 
 		for (var location in locations_cache) {
 			locations_to_sort.push({
