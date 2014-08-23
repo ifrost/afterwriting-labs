@@ -1,4 +1,4 @@
-define(['core', 'plugins/open', 'utils/layout', 'plugins/stats'], function (core, open, layout, dev_plugin) {
+define(['core', 'plugins/open', 'utils/layout'], function (core, open, layout, dev_plugin) {
 	if (window.__devmode) {
 		core.loaded = function () {
 
