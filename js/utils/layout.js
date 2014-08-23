@@ -151,8 +151,15 @@ define(['jquery', 'templates', 'utils/data'], function ($, templates, data) {
 			if (!$(this).hasClass('active')) {
 				module.switch_to_plugin($(this).attr('plugin'));
 			}
-		});
+		});		
 
+		/** info handlers **/
+		$('.info-content').hide();
+		$('.info-icon').click(function(){
+			var section = $(this).attr('section');
+			$('.info-content[section="' + section + '"]').toggle({duration: 200, easing: 'linear'});
+		});
+		
 		/** content close **/
 		$('.close-content').click(function () {
 			close_content();

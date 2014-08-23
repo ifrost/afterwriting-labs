@@ -5,14 +5,14 @@ define(['core', 'plugins/open', 'utils/layout'], function (core, open, layout, d
 			if (dev_plugin) {
 				open.open_sample('big_fish');
 
-				setTimeout(function() {
-					layout.switch_to_plugin(dev_plugin.name);
+				setTimeout(function () {
 					core.switch_to(dev_plugin);
 
 					layout.show_options();
 					layout.open_content();
+					layout.switch_to_plugin(dev_plugin.name);
 				}, 200);
-				
+
 			}
 
 			layout.dev();

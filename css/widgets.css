@@ -10,11 +10,10 @@ h1 {
 h2 {
 	font-size: 16px;
 	font-weight: bold;
-	margin: 20px 10px 20px 10px;
+	margin: 20px 10px 10px 10px;
 }
 p {
 	margin: 10px;
-	text-indent: 10px;
 }
 a {
 	color: #777;
@@ -54,6 +53,33 @@ tr {
 	font-size: 13px;
 	border-radius: 3px;
 	border: 1px solid #777777;
+}
+
+.info-icon, .content-expander {
+	cursor: pointer;
+	font-size: 13px;	
+	font-weight: normal;
+	padding: 0px;
+	margin: 0px;
+	background-color: #ffffff;
+	display: inline-block;
+	color: #aaaaaa;
+}
+
+.info-icon:before {
+	content: "[?]";
+}
+
+.info-icon:hover {
+	color: #111111;
+}
+
+.info-content {
+	color: #777777;
+	font-style: oblique;
+	border: 1px dotted #aaaaaa;
+	padding: 4px;
+	margin: 4px;
 }
 
 /** small screens **/
