@@ -32,6 +32,15 @@ body {
 .logo .after, .logo .writing {
 	letter-spacing: 2px;
 }
+.logo .labs {
+	font-size: 20px;
+	position: relative;
+	top: 22px;
+	right: 95px;
+	color: #eeeeee;
+	opacity: 0.3;
+	font-style: oblique;
+}
 /** globals **/
  body {
 	font-family: Georgia;
@@ -192,6 +201,9 @@ em {
 	.logo {
 		font-size: 40px;
 		width: auto;
+	}
+	.logo .labs {
+		display: none;
 	}
 	.menu-item {
 		width: 30px;
