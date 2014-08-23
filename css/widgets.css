@@ -81,6 +81,11 @@ tr {
 	padding: 4px;
 	margin: 4px;
 }
+.info-content.info-inline {
+	border: 1px dotted #aaaaaa;
+	padding: 0px 4px 0px 4px;
+	margin: 0px 2px 0px 2px;
+}
 
 /** small screens **/
 @media(max-width: 800px) {
