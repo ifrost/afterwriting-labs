@@ -59,18 +59,16 @@ define(['core', 'logger', 'templates', 'dropbox', 'utils/data', 'utils/helper'],
 	plugin.init = function () {
 		log.info("open:init");
 		data.script.add(function () {
-			if (data.script()) {
-				data.data('last-used-title', 'No title');
-				data.parsed.title_page.forEach(function (token) {
-					if (token.type === 'title') {
-						var title = token.text;
-						title = title.split('\n')[0].replace(/\*/g, '').replace(/_/g, '').replace(/\n/g, ' / ');
-						data.data('last-used-title', title);
-					}
-				});
-				data.data('last-used-script', data.script());
-				data.data('last-used-date', helper.format_date(new Date()));
-			}
+			data.data('last-used-title', 'No title');
+			data.parsed.title_page.forEach(function (token) {
+				if (token.type === 'title') {
+					var title = token.text;
+					title = title.split('\n')[0].replace(/\*/g, '').replace(/_/g, '').replace(/\n/g, ' / ');
+					data.data('last-used-title', title);
+				}
+			});
+			data.data('last-used-script', data.script());
+			data.data('last-used-date', helper.format_date(new Date()));
 		});
 	};
 
@@ -78,7 +76,7 @@ define(['core', 'logger', 'templates', 'dropbox', 'utils/data', 'utils/helper'],
 		last_used: {}
 	};
 
-	if (data.data('last-used-script')) {
+	if (data.data('last-used-date')) {
 		log.info('Last used exists. Loading: ', data.data('last-used-title'), data.data('last-used-date'));
 		plugin.context.last_used.script = data.data('last-used-script');
 		plugin.context.last_used.date = data.data('last-used-date');
