@@ -10,10 +10,12 @@
 	require(['jquery', 'd3', 'plugins/stats', 'utils/layout', 'utils/helper'], function($, d3, stats, layout, helper) {
 
 		var render_who_with_who = function() {
-			var svg = d3.select('#who-with-who').append('svg').attr('width', 540).attr('height', 300);
 			var data = stats.who_with_who.characters;
 			var links = stats.who_with_who.links;
-
+			
+			var max_name_length = Math.max.apply(null, data.map(function(character){return character.name.length}));
+			var padding = 7.2 * max_name_length;
+			
 			var max_value = Math.max.apply(null, links.map(function(d) {
 				return d.scenes
 			}));
@@ -21,11 +23,13 @@
 			links.forEach(function(link) {
 				link.value = link_scale(link.scenes);
 			});
-
-			var inner_radius = 250;
-			var translate_circle = 'translate(' + ((inner_radius / 2) + 100) + ',' + ((inner_radius / 2)+20) + ')';
+			
+			var svg = d3.select('#who-with-who').append('svg').attr('width', 350 + padding*2).attr('height', 350);
 
 			var circle_size = 12;
+			var inner_radius = 250;
+			var translate_circle = 'translate(' + ((inner_radius / 2)+circle_size+padding) + ',' + ((inner_radius / 2)+circle_size) + ')';
+
 			var arc = d3.svg.arc().outerRadius(inner_radius).innerRadius(0);
 			var arc_scale = d3.scale.linear().domain([0, inner_radius]).range([0, circle_size * 4]);
 			var move_text = function(point) {
