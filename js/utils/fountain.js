@@ -134,7 +134,11 @@ define(function () {
 			}];
 		}
 		var pointer = text.substr(0, max + 1).lastIndexOf(" ");
-
+		
+		if (pointer === -1) {
+			pointer = max-1;
+		}
+		
 		return [{
 			type: token.type,
 			token: token,
