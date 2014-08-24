@@ -183,7 +183,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<h1>Preview <span class=\"info-icon\" section=\"preview-info\"/></h1>\r\n<p class=\"info-content\" section=\"preview-info\">Can't see anything? You need a PDF plugin in your browser.</p>\r\n<iframe id=\"pdf-preview-iframe\" class=\"to-the-bottom\" style=\"width: 100%\"></iframe>\r\n<!-- scripts -->\r\n<script>\r\n	require(['jquery', 'plugins/preview'], function($, preview) {\r\n		preview.activate.add(function() {\r\n			document.getElementById(\"pdf-preview-iframe\").src = preview.data.pdf.output(\"datauristring\");\r\n		});\r\n	});\r\n</script>";
+  return "<h1>Preview <span class=\"info-icon\" section=\"preview-info\"/></h1>\r\n<p class=\"info-content\" section=\"preview-info\">Can't see anything? You need a PDF plugin in your browser.</p>\r\n<div id=\"pdf-preview-iframe-container\"></div>\r\n<!-- scripts -->\r\n<script>\r\n	require(['jquery', 'plugins/preview'], function($, preview) {\r\n		preview.activate.add(function() {\r\n			$('#pdf-preview-iframe-container').html('<iframe id=\"pdf-preview-iframe\" class=\"to-the-bottom\" style=\"width: 100%\"></iframe>');\r\n			$(\"#pdf-preview-iframe\").attr('src', preview.data.pdf.output(\"datauristring\"));\r\n		});\r\n		preview.deactivate.add(function() {\r\n			$(\"#pdf-preview-iframe\").remove();\r\n		});\r\n	});\r\n</script>";
   });
 
 this["JST"]["templates/plugins/save.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

@@ -1,11 +1,15 @@
 <h1>Preview <span class="info-icon" section="preview-info"/></h1>
 <p class="info-content" section="preview-info">Can't see anything? You need a PDF plugin in your browser.</p>
-<iframe id="pdf-preview-iframe" class="to-the-bottom" style="width: 100%"></iframe>
+<div id="pdf-preview-iframe-container"></div>
 <!-- scripts -->
 <script>
 	require(['jquery', 'plugins/preview'], function($, preview) {
 		preview.activate.add(function() {
-			document.getElementById("pdf-preview-iframe").src = preview.data.pdf.output("datauristring");
+			$('#pdf-preview-iframe-container').html('<iframe id="pdf-preview-iframe" class="to-the-bottom" style="width: 100%"></iframe>');
+			$("#pdf-preview-iframe").attr('src', preview.data.pdf.output("datauristring"));
+		});
+		preview.deactivate.add(function() {
+			$("#pdf-preview-iframe").remove();
 		});
 	});
 </script>
