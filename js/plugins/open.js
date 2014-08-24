@@ -1,4 +1,4 @@
-define(['core', 'logger', 'templates', 'dropbox', 'utils/data', 'utils/helper'], function (core, logger, templates, Dropbox, data, helper) {
+define(['core', 'logger', 'templates', 'dropbox', 'utils/data', 'utils/helper', 'jquery'], function (core, logger, templates, Dropbox, data, helper, $) {
 	var log = logger.get('open');
 	var plugin = core.create_plugin('open', 'open');
 	plugin.class = "active";
@@ -52,7 +52,7 @@ define(['core', 'logger', 'templates', 'dropbox', 'utils/data', 'utils/helper'],
 			},
 			linkType: 'direct',
 			multiselect: false,
-			extensions: ['.fountain', '.txt']
+			extensions: ['.fountain','.spmd', '.txt']
 		});
 	};
 
