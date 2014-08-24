@@ -5,7 +5,7 @@ this["JST"] = this["JST"] || {};
 this["JST"]["templates/layout.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
@@ -30,7 +30,11 @@ function program2(depth0,data) {
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">\r\n			<img src=\"gfx/icons/";
+    + "\">\r\n			<img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/";
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -56,7 +60,11 @@ function program5(depth0,data) {
   if (helper = helpers['class']) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0['class']); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" src=\"gfx/icons/";
+    + "\" src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/";
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -83,13 +91,45 @@ function program7(depth0,data) {
   return buffer;
   }
 
-  buffer += "<!--- top logo -->\r\n<p class=\"logo\">\r\n	<span class=\"apostrophe\">&rsquo;</span><span class=\"after\">after</span><span class=\"writing\">writing</span>\r\n	<span class=\"labs\">labs</span>\r\n</p>\r\n<!--- main menu -->\r\n<div class=\"menu\" style=\"display:none\">\r\n	<ul class=\"selector\">\r\n		<li class=\"menu-item\" plugin=\"info\">\r\n			<img src=\"gfx/icons/info.svg\" />\r\n			<span>info</span>\r\n		</li>";
+  buffer += "<!--- top logo -->\r\n<p class=\"logo\">\r\n	<span class=\"apostrophe\">&rsquo;</span><span class=\"after\">after</span><span class=\"writing\">writing</span>\r\n	<span class=\"labs\">labs</span>\r\n</p>\r\n<!--- main menu -->\r\n<div class=\"menu\" style=\"display:none\">\r\n	<ul class=\"selector\">\r\n		<li class=\"menu-item\" plugin=\"info\">\r\n			<img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/info.svg\" />\r\n			<span>info</span>\r\n		</li>";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.plugins), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</ul>\r\n</div>\r\n<div class=\"footer\">version:\r\n	<a href=\"http://www.imdb.com/title/tt1790885/\" target=\"_blank\">\r\n		<span class=\"version\">Zero</span>&nbsp;Dark Thrirty</a>\r\n</div>\r\n<!--- plugin content -->\r\n<div class=\"content\" style=\"display:none\">\r\n	<div class=\"top-bar\">\r\n		<img class=\"tool\" src=\"gfx/icons/info.svg\" plugin=\"info\" />";
+  buffer += "</ul>\r\n</div>\r\n<div class=\"footer\">version:\r\n	<a href=\"http://www.imdb.com/title/tt1790885/\" target=\"_blank\">\r\n		<span class=\"version\">Zero</span>&nbsp;Dark Thrirty</a>\r\n</div>\r\n<!--- plugin content -->\r\n<div class=\"content\" style=\"display:none\">\r\n	<div class=\"top-bar\">\r\n		<img class=\"tool\" src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/info.svg\" plugin=\"info\" />";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.plugins), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n		<img class=\"close-content\" src=\"gfx/icons/close.svg\" />\r\n	</div>\r\n	<div class=\"plugin-contents\">\r\n		<div class=\"plugin-content info\" plugin=\"info\">\r\n			<h1>About</h1>\r\n				<p><em>'afterwritings labs</em>&nbsp;is a place where you can play around with some tools for screenplays written in <a href=\"http://fountain.io/\">Fountain format</a>. Don't have any? You can use one of the <a class=\"switch\" href=\"#\" plugin=\"open\">samples</a>.</p>\r\n			<p>You can use it offline as well (sorry, no Dropbox support for offline version). You don't need access to the internet, just download this <a href=\"#\">file</a>, unzip and double click on index.html.</p>\r\n			<p><em>Warning: this product may contain nuts and bugs!</em></p>\r\n			<ul>\r\n				<li>\r\n					<img src=\"gfx/icons/open.svg\" /></a>&nbsp;/&nbsp;<img src=\"gfx/icons/save.svg\" />\r\n					- open a .fountain file from disk, Dropbox or use a sample, save as .fountain or as PDF.</li>\r\n				<li>\r\n					<img src=\"gfx/icons/editor.svg\" />\r\n					<em>Editor</em>&nbsp;- a basic editor for\r\n					<a href=\"http://fountain.io/\">.fountain files</a></li>\r\n				<li>\r\n					<img src=\"gfx/icons/preview.svg\" />\r\n					<em>Preview</em>&nbsp;- PDF preview (a browser plugin required)</li>\r\n				<li>\r\n					<img src=\"gfx/icons/facts.svg\" />\r\n					<em>Facts</em>&nbsp;- facts about your screenplay (number of pages, scenes, characters, etc.)</li>\r\n				<li>\r\n					<img src=\"gfx/icons/stats.svg\" />\r\n					<em>Useless Stats</em>&nbsp;- some statistics, don't take them too serious!</li>\r\n			</ul>\r\n			<h1>What's next?</h1>\r\n			<p>More useful/useless tools to come. Stay tuned and follow <a href=\"http://blog.afterwriting.com\" target=\"_blank\">afterwriting blog</a> and <a href=\"http://twitter.com/afterwriting\" target=\"_blank\">@afterwriting</a>!</p>\r\n			<h1>Contact</h1>\r\n			<p>E-mail: <a href=\"mailto:contact@afterwriting.com\">contact@afterwriting.com</a>.</p>\r\n			<h1>Thanks</h1>\r\n			<p>\r\n				<ul>\r\n					<li>Icons from\r\n						<a href=\"http://www.freepik.com\" alt=\"Freepik.com\" title=\"Freepik.com\">Freepik</a>&nbsp;(Daniel Bruce, Icomoon, Yannick, Appzgear)</li>\r\n					<li>Sample scripts:\r\n						<ul>\r\n							<li>\r\n								<em>Big Fish</em>&nbsp;by\r\n								<a href=\"http://johnaugust.com/\" about=\"_blank\">John August</a>\r\n							</li>\r\n							<li>\r\n								<em>Brick & Steel</em>&nbsp;by\r\n								<a href=\"http://prolost.com/about/\" about=\"_blank\">Stu Maschwitz</a>\r\n							</li>\r\n						</ul>\r\n					</li>\r\n					<li>DayRoman font by\r\n						<a href=\"http://apostrophiclab.pedroreina.net/\" target=\"_blank\">Apostrophic Laboratories</a>\r\n					</li>\r\n					<li>JS libs:\r\n						<ul>\r\n							<li>\r\n								<a href=\"https://github.com/mattdaly/Fountain.js\" target=\"_blank\">Fountain.js</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"https://github.com/eligrey/FileSaver.js\" target=\"_blank\">FileSaver.js</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"http://github.com/jonnyreeves/js-logger\" target=\"_blank\">js-logger</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"http://parall.ax/products/jspdf\" target=\"_blank\">jsPDF</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"http://codemirror.net/\" target=\"_blank\">CodeMirror</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"http://jquery.com/\" target=\"_blank\">jQuery</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"http://handlebarsjs.com/\" target=\"_blank\">Handlebars</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"https://github.com/jrburke/almond\" target=\"_blank\">Almond</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"http://requirejs.org/\" target=\"_blank\">RequireJS</a>\r\n							</li>\r\n						</ul>\r\n					</li>\r\n				</ul>\r\n			</p>\r\n		</div>";
+  buffer += "\r\n		<img class=\"close-content\" src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/close.svg\" />\r\n	</div>\r\n	<div class=\"plugin-contents\">\r\n		<div class=\"plugin-content info\" plugin=\"info\">\r\n			<h1>About</h1>\r\n				<p><em>'afterwritings labs</em>&nbsp;is a place where you can play around with some tools for screenplays written in <a href=\"http://fountain.io/\">Fountain format</a>. Don't have any? You can use one of the <a class=\"switch\" href=\"#\" plugin=\"open\">samples</a>.</p>\r\n			<p>You can use it offline as well (sorry, no Dropbox support for offline version). Just download this <a href=\"afterwriting.zip\">file</a>, unzip and double click on index.html.</p>\r\n			<p><em>Warning: this product may contain nuts and bugs!</em></p>\r\n			<ul>\r\n				<li>\r\n					<img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/open.svg\" /></a>&nbsp;/&nbsp;<img src=\"gfx/icons/save.svg\" />\r\n					- open a .fountain file from disk, Dropbox or use a sample, save as .fountain or as PDF.</li>\r\n				<li>\r\n					<img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/editor.svg\" />\r\n					<em>Editor</em>&nbsp;- a basic editor for\r\n					<a href=\"http://fountain.io/\">.fountain files</a></li>\r\n				<li>\r\n					<img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/preview.svg\" />\r\n					<em>Preview</em>&nbsp;- PDF preview (a browser plugin required)</li>\r\n				<li>\r\n					<img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/facts.svg\" />\r\n					<em>Facts</em>&nbsp;- facts about your screenplay (number of pages, scenes, characters, etc.)</li>\r\n				<li>\r\n					<img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/stats.svg\" />\r\n					<em>Useless Stats</em>&nbsp;- some statistics, don't take them too serious!</li>\r\n			</ul>\r\n			<h1>What's next?</h1>\r\n			<p>More useful/useless tools to come. Stay tuned and follow <a href=\"http://blog.afterwriting.com\" target=\"_blank\">afterwriting blog</a> and <a href=\"http://twitter.com/afterwriting\" target=\"_blank\">@afterwriting</a>!</p>\r\n			<h1>Contact</h1>\r\n			<p>E-mail: <a href=\"mailto:contact@afterwriting.com\">contact@afterwriting.com</a>.</p>\r\n			<h1>Thanks</h1>\r\n			<p>\r\n				<ul>\r\n					<li>Icons from\r\n						<a href=\"http://www.freepik.com\" alt=\"Freepik.com\" title=\"Freepik.com\">Freepik</a>&nbsp;(Daniel Bruce, Icomoon, Yannick, Appzgear)</li>\r\n					<li>Sample scripts:\r\n						<ul>\r\n							<li>\r\n								<em>Big Fish</em>&nbsp;by\r\n								<a href=\"http://johnaugust.com/\" about=\"_blank\">John August</a>\r\n							</li>\r\n							<li>\r\n								<em>Brick & Steel</em>&nbsp;by\r\n								<a href=\"http://prolost.com/about/\" about=\"_blank\">Stu Maschwitz</a>\r\n							</li>\r\n						</ul>\r\n					</li>\r\n					<li>DayRoman font by\r\n						<a href=\"http://apostrophiclab.pedroreina.net/\" target=\"_blank\">Apostrophic Laboratories</a>\r\n					</li>\r\n					<li>JS libs:\r\n						<ul>\r\n							<li>\r\n								<a href=\"https://github.com/mattdaly/Fountain.js\" target=\"_blank\">Fountain.js</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"https://github.com/eligrey/FileSaver.js\" target=\"_blank\">FileSaver.js</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"http://github.com/jonnyreeves/js-logger\" target=\"_blank\">js-logger</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"http://parall.ax/products/jspdf\" target=\"_blank\">jsPDF</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"http://codemirror.net/\" target=\"_blank\">CodeMirror</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"http://jquery.com/\" target=\"_blank\">jQuery</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"http://handlebarsjs.com/\" target=\"_blank\">Handlebars</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"https://github.com/jrburke/almond\" target=\"_blank\">Almond</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"http://requirejs.org/\" target=\"_blank\">RequireJS</a>\r\n							</li>\r\n						</ul>\r\n					</li>\r\n				</ul>\r\n			</p>\r\n		</div>";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.plugins), {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "</div>\r\n</div>\r\n<div id=\"tooltip\"></div>";

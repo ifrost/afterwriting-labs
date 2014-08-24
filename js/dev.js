@@ -1,23 +1,26 @@
-define(['core', 'plugins/open', 'utils/layout'], function (core, open, layout, dev_plugin) {
-	if (window.__devmode) {
-		core.loaded = function () {
+define(['core', 'utils/common', 'plugins/open', 'utils/layout', 'plugins/preview'], function (core, common, open, layout, dev_plugin) {
+	var module = {};
 
-			if (dev_plugin) {
-				open.open_sample('big_fish');
+	module.pre_init = function() {
+		common.data.static_path = '';	
+	};
+	
+	module.init = function () {
+		if (dev_plugin) {
+			open.open_sample('big_fish');
 
-				setTimeout(function () {
-					core.switch_to(dev_plugin);
+			setTimeout(function () {
+				core.switch_to(dev_plugin);
 
-					layout.show_options();
-					layout.open_content();
-					layout.switch_to_plugin(dev_plugin.name);
-				}, 200);
-
-			}
-
-			layout.dev();
+				layout.show_options();
+				layout.open_content();
+				layout.switch_to_plugin(dev_plugin.name);
+			}, 0);
+			
 		}
-
+		layout.dev();
 		window.core = core;
-	}
+	};
+
+	return module;
 });

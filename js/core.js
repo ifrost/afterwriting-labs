@@ -1,9 +1,7 @@
 /*global define*/
 define(['jquery', 'templates', 'logger', 'utils/layout', 'utils/decorator', 'd3'], function ($, templates, logger, layout, decorate, d3) {
 
-	var log = logger.get('core');
-	var module = {};
-	var current;
+	var log = logger.get('core'), module = {}, current;
 	
 	module.create_plugin = function (name, title) {
 		return {

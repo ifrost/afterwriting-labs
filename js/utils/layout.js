@@ -1,6 +1,11 @@
-define(['jquery', 'templates', 'utils/data'], function ($, templates, data) {
+define(['jquery', 'templates', 'utils/data', 'handlebars', 'utils/common'], function ($, templates, data, Handlebars, common) {
 
 	var module = {};
+	
+	// set up handlebars
+	Handlebars.registerHelper('static_path', function (block) {
+		return common.data.static_path;
+	});
 
 	var close_content = function (immediately) {
 		var action = immediately ? 'offset' : 'animate';
@@ -49,7 +54,7 @@ define(['jquery', 'templates', 'utils/data'], function ($, templates, data) {
 		// load background
 		var max_backgrounds = 7;
 		if (!module.small && data.config.ui.show_background_image) {
-			$('html').css('background-image', 'url(gfx/bg' + Math.floor(Math.random() * max_backgrounds) + '.jpg)');
+			$('html').css('background-image', 'url(' + common.data.static_path + 'gfx/bg' + Math.floor(Math.random() * max_backgrounds) + '.jpg)');
 		} else {
 			$('html').css('background-color', '#111111');
 		}
@@ -119,7 +124,7 @@ define(['jquery', 'templates', 'utils/data'], function ($, templates, data) {
 		});
 
 		module.dev = function () {
-			$('.footer').append('<br /><span class="version">pre-release version</span>');
+			$('.footer').append('<br /><span class="version">development version</span>');
 		};
 
 		/** initialize **/

@@ -28,7 +28,7 @@ module.exports = function (grunt) {
 					mainConfigFile: "js/main.js",
 					include: "main",
 					name: "libs/almond",
-					out: "build/js/afterwriting.js",
+					out: "bundle/js/afterwriting.js",
 					onBuildWrite: function (moduleName, path, contents) {
 						if (moduleName === 'logger') {
 							contents = contents.replace(/\/\/invoke[\s\S]*\/\/\/invoke/g, '');
@@ -45,14 +45,14 @@ module.exports = function (grunt) {
 				separator: ';',
 			},
 			dist: {
-				src: ['build/js/afterwriting.js', 'js/libs/codemirror/lib/codemirror.js'],
-				dest: 'build/js/afterwriting.js',
+				src: ['bundle/js/afterwriting.js', 'js/libs/codemirror/lib/codemirror.js'],
+				dest: 'bundle/js/afterwriting.js',
 			},
 		},
 		cssmin: {
 			build: {
 				files: {
-					'build/css/afterwriting.css': ['css/reset.css', 'css/*.css','js/libs/**/show-hint.css']
+					'bundle/css/afterwriting.css': ['css/reset.css', 'css/*.css', 'js/libs/**/show-hint.css']
 				}
 			}
 		},
@@ -60,13 +60,13 @@ module.exports = function (grunt) {
 			gfx: {
 				expand: true,
 				src: ['gfx/**', 'fonts/**'],
-				dest: 'build'
+				dest: 'bundle'
 			},
 			html: {
 				expand: true,
 				flatten: true,
 				src: ['html/index.html'],
-				dest: 'build'
+				dest: ''
 			}
 		},
 		gitcheckout: {
@@ -95,6 +95,21 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+		compress: {
+			build: {
+				options: {
+					archive: 'afterwriting.zip'
+				},
+				files: [
+					{
+						src: 'bundle/**'
+					},
+					{
+						src: 'index.html'
+					}
+				]
+			}
+		}
 
 	});
 
@@ -104,10 +119,11 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-compress');
 	grunt.loadNpmTasks('grunt-git');
 
 
-	grunt.registerTask('build', ['requirejs', 'concat', 'cssmin', 'copy']);
+	grunt.registerTask('build', ['requirejs', 'concat', 'cssmin', 'copy', 'compress']);
 	grunt.registerTask('deploy', ['gitcheckout:pages', 'gitmerge:master', 'gitpush:pages', 'gitcheckout:master']);
 
 };

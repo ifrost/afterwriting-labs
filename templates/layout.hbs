@@ -7,11 +7,11 @@
 <div class="menu" style="display:none">
 	<ul class="selector">
 		<li class="menu-item" plugin="info">
-			<img src="gfx/icons/info.svg" />
+			<img src="{{static_path}}gfx/icons/info.svg" />
 			<span>info</span>
 		</li>{{#each plugins}} {{#if view}}
 		<li class="menu-item {{name}} {{class}}" plugin="{{name}}">
-			<img src="gfx/icons/{{name}}.svg" />
+			<img src="{{static_path}}gfx/icons/{{name}}.svg" />
 			<span>{{title}}</span>
 		</li>{{/if}}{{/each}}</ul>
 </div>
@@ -22,32 +22,32 @@
 <!--- plugin content -->
 <div class="content" style="display:none">
 	<div class="top-bar">
-		<img class="tool" src="gfx/icons/info.svg" plugin="info" />{{#each plugins}}{{#if view}}
-		<img class="tool {{class}}" src="gfx/icons/{{name}}.svg" plugin="{{name}}" />{{/if}}{{/each}}
-		<img class="close-content" src="gfx/icons/close.svg" />
+		<img class="tool" src="{{static_path}}gfx/icons/info.svg" plugin="info" />{{#each plugins}}{{#if view}}
+		<img class="tool {{class}}" src="{{static_path}}gfx/icons/{{name}}.svg" plugin="{{name}}" />{{/if}}{{/each}}
+		<img class="close-content" src="{{static_path}}gfx/icons/close.svg" />
 	</div>
 	<div class="plugin-contents">
 		<div class="plugin-content info" plugin="info">
 			<h1>About</h1>
 				<p><em>'afterwritings labs</em>&nbsp;is a place where you can play around with some tools for screenplays written in <a href="http://fountain.io/">Fountain format</a>. Don't have any? You can use one of the <a class="switch" href="#" plugin="open">samples</a>.</p>
-			<p>You can use it offline as well (sorry, no Dropbox support for offline version). You don't need access to the internet, just download this <a href="#">file</a>, unzip and double click on index.html.</p>
+			<p>You can use it offline as well (sorry, no Dropbox support for offline version). Just download this <a href="afterwriting.zip">file</a>, unzip and double click on index.html.</p>
 			<p><em>Warning: this product may contain nuts and bugs!</em></p>
 			<ul>
 				<li>
-					<img src="gfx/icons/open.svg" /></a>&nbsp;/&nbsp;<img src="gfx/icons/save.svg" />
+					<img src="{{static_path}}gfx/icons/open.svg" /></a>&nbsp;/&nbsp;<img src="gfx/icons/save.svg" />
 					- open a .fountain file from disk, Dropbox or use a sample, save as .fountain or as PDF.</li>
 				<li>
-					<img src="gfx/icons/editor.svg" />
+					<img src="{{static_path}}gfx/icons/editor.svg" />
 					<em>Editor</em>&nbsp;- a basic editor for
 					<a href="http://fountain.io/">.fountain files</a></li>
 				<li>
-					<img src="gfx/icons/preview.svg" />
+					<img src="{{static_path}}gfx/icons/preview.svg" />
 					<em>Preview</em>&nbsp;- PDF preview (a browser plugin required)</li>
 				<li>
-					<img src="gfx/icons/facts.svg" />
+					<img src="{{static_path}}gfx/icons/facts.svg" />
 					<em>Facts</em>&nbsp;- facts about your screenplay (number of pages, scenes, characters, etc.)</li>
 				<li>
-					<img src="gfx/icons/stats.svg" />
+					<img src="{{static_path}}gfx/icons/stats.svg" />
 					<em>Useless Stats</em>&nbsp;- some statistics, don't take them too serious!</li>
 			</ul>
 			<h1>What's next?</h1>
