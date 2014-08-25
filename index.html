@@ -1,10 +1,25 @@
 <html>
 	<head>
-		<title>afterwriting</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<link rel="icon" type="image/x-icon" href="bundle/gfx/favicon.ico">
-		<link rel="stylesheet" href="bundle/css/afterwriting.css" />
-		<script data-main="afterwriting" src="bundle/js/afterwriting.js"></script>
+		<style>
+			@font-face {
+				font-family:'Day Roman';
+				src: url('fonts/dayroman.ttf');
+			}
+			* {
+				font-family:'Day Roman';
+				font-size: 72px;
+			}
+			p {
+				font-style: normal;
+				padding: 150px;
+				width: auto;
+				text-align: center;
+			}
+			span {
+				color: #777777;
+			}
+			
+		</style>
 		<script>
 			(function(i, s, o, g, r, a, m) {
 				i['GoogleAnalyticsObject'] = r;
@@ -16,14 +31,12 @@
 				a.async = 1;
 				a.src = g;
 				m.parentNode.insertBefore(a, m)
-			})(window, document, 'script', 'http://www.google-analytics.com/analytics.js', 'ga');
+			})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
 			ga('create', 'UA-53953908-1', 'auto');
 			ga('send', 'pageview');
 		</script>
 	</head>
-	<body>
-		<span style="display:none" id="dropboxjs" data-app-key="mbtu2a0kjrj4b3q"></span>
-	</body>
+	<p>&rsquo;<span>after</span>writing</p>
 
 </html>
