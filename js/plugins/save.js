@@ -18,7 +18,7 @@ define(['core', 'logger', 'jquery', 'saveAs', 'plugins/preview', 'utils/data'], 
 	};
 
 	plugin.dropbox_fountain = function () {
-		var encoded = window.btoa(core.script());
+		var encoded = window.btoa(data.script());
 		var uri = 'data:text/plain;base64,' + encoded;
 		Dropbox.save(uri, plugin.data.filename + '.fountain');
 	};
