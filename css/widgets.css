@@ -26,10 +26,11 @@ th {
 	padding: 5px;
 	border: 1px solid #999;
 	background-color: #eee;
+	font-weight: bold;
 }
 td {
 	border: 1px solid #999;
-	padding: 5px;
+	padding: 10px;
 }
 tr {
 	border: 1px solid #999;

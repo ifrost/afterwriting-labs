@@ -76,7 +76,7 @@ body {
 	height: 60px;
 }
 /** adjust last row **/
- .menu-item:nth-child(4), .menu-item:nth-child(6) {
+ .menu-item:nth-child(7) {
 	margin-left: 70px;
 }
 .menu-item span {
@@ -231,7 +231,7 @@ em {
 		visibility: hidden;
 	}
 	/** adjust last row **/
-	.menu-item:nth-child(4), .menu-item:nth-child(6) {
+	.menu-item:nth-child(7) {
 		margin-left: 55px;
 	}
 	.top-bar {
