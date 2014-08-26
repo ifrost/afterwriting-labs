@@ -224,14 +224,14 @@ define(function () {
 		_state = 'normal';
 
 		result.tokens.forEach(function (token) {
-			split_token(token, (cfg.print[token.type] || {}).max || 99999);
+			split_token(token, (cfg.print()[token.type] || {}).max || 99999);
 
 			token.lines.forEach(function (line) {
 				result.lines.push(line);
 			});
 		});
 
-		result.lines = break_lines(result.lines, cfg.lines_per_page, cfg.lines_breaker || default_breaker, cfg);
+		result.lines = break_lines(result.lines, cfg.print().lines_per_page, cfg.lines_breaker || default_breaker, cfg);
 
 		return result;
 	}

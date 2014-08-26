@@ -1,4 +1,4 @@
-define(['core', 'logger'], function (core, logger) {
+define(['core', 'logger', 'utils/data'], function (core, logger, data) {
 	var log = logger.get('settings');
 	var plugin = core.create_plugin('settings', 'setup');
 	
@@ -12,6 +12,22 @@ define(['core', 'logger'], function (core, logger) {
 	
 	plugin.deactivate = function() {
 		log.info('settings:deactivate');
+	};
+	
+	plugin.get_config = function() {
+		return data.config;
+	};
+	
+	plugin.save = function() {
+		data.save_config();
+	};
+	
+	plugin.get_default_config = function() {
+		return data.default_config;
+	};
+	
+	plugin.reset = function() {
+		data.reset_config();
 	};
 	
 	return plugin;

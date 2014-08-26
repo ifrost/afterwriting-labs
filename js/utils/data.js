@@ -24,17 +24,11 @@ define(['logger','modernizr','utils/fountain', 'utils/decorator'],function (logg
 	plugin.script.add(function(script){
 		plugin.parsed = fountain.parse(script, plugin.config);
 	});
-
-	plugin.config = {
-		ui: {
-			show_background_image: true
-		},
-		paper_size: "a4",
-		lines_per_page: 57,
-		break_dialogue: true,
-		show_page_numbers: true,
-		text: {},
-		print: {
+	
+	var print_profiles = {
+		"a4": {
+			paper_size: "a4",
+			lines_per_page: 57,
 			top_margin: 0.85,
 			page_width: 8.27,
 			left_margin: 1.5,
@@ -92,6 +86,36 @@ define(['logger','modernizr','utils/fountain', 'utils/decorator'],function (logg
 				max: 58
 			}
 		}
+	};
+	print_profiles["usletter"] = print_profiles["a4"];
+
+	plugin.default_config = {
+		show_background_image: true,
+		embolden_scene_headers: false,
+		show_page_numbers: true,
+		break_dialogue: true,
+		print_title_page: true,		
+		text: {},
+		print_profile: "a4"
+	};
+	
+	plugin.default_config.print = function() {
+		return print_profiles[plugin.config.print_profile];
+	};
+
+	plugin.save_config = function() {
+		plugin.data('config', JSON.stringify(plugin.config));
+	};
+	
+	plugin.reset_config = function() {
+		plugin.data('config', JSON.stringify({}));
+		plugin.load_config();
+	};
+	
+	plugin.load_config = function() {
+		plugin.config = Object.create(plugin.default_config);
+		var overrides = JSON.parse(plugin.data('config')) || {};
+		for (var attrname in overrides) { plugin.config[attrname] = overrides[attrname]; }		
 	};
 	
 	return plugin;

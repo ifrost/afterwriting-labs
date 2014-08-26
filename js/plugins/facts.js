@@ -41,7 +41,7 @@ define(['core', 'logger', 'jquery', 'utils/data'], function (core, logger, $, da
 			}
 			last_page_lines++;
 		});
-		facts.pages += last_page_lines / data.config.lines_per_page;
+		facts.pages += last_page_lines / data.config.print().lines_per_page;
 
 		var action_and_dialogue = action_lines + dialogue_lines;
 		facts.action_time = (action_lines / action_and_dialogue) * facts.pages;

@@ -53,7 +53,7 @@ define(['jquery', 'templates', 'utils/data', 'handlebars', 'utils/common'], func
 
 		// load background
 		var max_backgrounds = 7;
-		if (!module.small && data.config.ui.show_background_image) {
+		if (!module.small && data.config.show_background_image) {
 			$('html').css('background-image', 'url(' + common.data.static_path + 'gfx/bg' + Math.floor(Math.random() * max_backgrounds) + '.jpg)');
 		} else {
 			$('html').css('background-color', '#111111');

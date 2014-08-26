@@ -22,7 +22,7 @@ define(['utils/data', 'd3'], function (data, d3) {
 	};
 
 	module.lines_to_minutes = function (lines) {
-		return lines / data.config.lines_per_page;
+		return lines / data.config.print().lines_per_page;
 	};
 
 	return module;

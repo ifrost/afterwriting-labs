@@ -1,5 +1,5 @@
 /*global define*/
-define(['jquery', 'templates', 'logger', 'utils/layout', 'utils/decorator', 'd3'], function ($, templates, logger, layout, decorate, d3) {
+define(['jquery', 'templates', 'logger', 'utils/layout', 'utils/decorator', 'd3', 'utils/data'], function ($, templates, logger, layout, decorate, d3, data) {
 
 	var log = logger.get('core'), module = {}, current;
 	
@@ -47,6 +47,8 @@ define(['jquery', 'templates', 'logger', 'utils/layout', 'utils/decorator', 'd3'
 	};
 
 	module.init = function (modules) {
+		data.load_config();
+		
 		var context = {
 			plugins: []
 		};

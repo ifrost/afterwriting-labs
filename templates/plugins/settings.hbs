@@ -1,39 +1,13 @@
+<style>
+	.plugin-content[plugin="settings"] tr td:nth-child(1) {
+		text-align: right;
+	}
+	.plugin-content[plugin="settings"] tr td:nth-child(2) {
+		text-align: left;
+	}
+</style>
+
 <h1>Settings</h1>
-<!--
-<table>
-	<thead>
-		<tr><th>Print</th><th>Miscellaneous</th></tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>
-				Page size: <select>
-					<option>A4</option>
-					<option>US letter</option>
-				</select><br />				
-			</td>
-			<td>				
-				Load plugin on startup:<select>
-					<option>none</option>
-					<option>edit</option>
-					<option>stats</option>
-					<option>facts</option>
-					<option>preview</option>
-				</select><br />	
-			</td>
-		</tr>
-		<tr>
-			<td rowspan="2">
-				<input type="checkbox"> print title page<br />
-				<input type="checkbox"> embolden scene headers
-			</td>
-			<td>
-			<input type="checkbox"> load last used on startup<br />
-			</td>
-		</tr>
-	</tbody>
-</table>
--->
 
 <table>
 	<thead>
@@ -41,56 +15,54 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td style="text-align: right">Page size:</td><td  style="text-align:center"><select>
+			<td>Page size:</td><td><select>
 					<option>A4</option>
 					<option>US letter</option>
 				</select>
 			</td>
 		<tr>
-			<td style="text-align: right">Print title page:</td><td style="text-align:center"><input type="checkbox"></td>
+			<td>Print title page:</td><td><input type="checkbox"></td>
 		</tr>
 		<tr>
-			<td style="text-align: right">Embolden scene headers:</td><td style="text-align:center"><input type="checkbox"></td>
+			<td>Embolden scene headers:</td><td><input type="checkbox"></td>
 		</tr>
 		
 		<tr><th colspan="2">Miscellaneous</th></tr>
-		<tr><td style="text-align: right">Load last opened on startup:</td><td style="text-align:center"><input type="checkbox"></td></tr>
-		<tr><td style="text-align: right">Load plugin on startup:</td><td style="text-align:center"><select>
-					<option>none</option>
-					<option>edit</option>
-					<option>stats</option>
-					<option>facts</option>
-					<option>preview</option>
-				</select></td>
+		<tr><td>Load last opened on startup:</td><td><input type="checkbox"></td></tr>
+		<tr><td>Show background image:</td><td><input setting="show_background_image" type="checkbox"></td>
 
 		</tr>
 	</tbody>
 </table>
 
-<!--
-<p>Print</p>
-<ul>
-	<li>Page size: <select>
-					<option>A4</option>
-					<option>US letter</option>
-				</select></li>
-	<li>Print title page: <input type="checkbox"></li>
-	<li>Load last used on startup: <input type="checkbox"></li>
-</ul>
-<p>Miscellaneous</p>
-<ul>
-	<li>Load plugin on startup:<select>
-					<option>none</option>
-					<option>edit</option>
-					<option>stats</option>
-					<option>facts</option>
-					<option>preview</option>
-				</select></li>
-	<li><input type="checkbox"> load last used on startup<br />
-			</li>
-</ul>
--->
-
 <p>
-	<button>Save settings</button>
+	<button id="settings-save">Save settings</button>
+	<button id="settings-reset">Reset to defaults</button>
 </p>
+
+<script>
+
+require(['plugins/settings'], function(settings){
+	
+	
+	$('#settings-save').click(function(){
+		// bind to settings
+		var c = settings.get_config();		
+		c.show_background_image = $('input[setting="show_background_image"]').is(':checked');
+		settings.save();
+	
+	});
+	
+	$('#settings-reset').click(function(){
+		settings.reset();
+	});
+	
+	settings.activate.add(function(){
+		// bind to components
+		var c = settings.get_config();
+		$('input[setting="show_background_image"]').attr('checked', c.show_background_image);
+	});
+
+});
+	
+</script>
