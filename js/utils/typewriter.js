@@ -49,39 +49,42 @@ define(['jspdf'], function (jsPDF) {
 			}
 		};
 
-		// title page
-		title_page_main('title');
-		title_page_main();
-		title_page_main();
-		title_page_main('credit');
-		title_page_main();
-		title_page_main('author');
-		title_page_main();
-		title_page_main();
-		title_page_main();
-		title_page_main();
-		title_page_main('source');
+		if (cfg.print_title_page) {
 
-		var draft = get_title_page_token('draft date');
-		doc.text(cfg.print().title_page.draft_date.x, cfg.print().title_page.draft_date.y, draft ? draft.text.trim() : "");
-		var contact = get_title_page_token('contact');
-		doc.text(cfg.print().title_page.contact.x, cfg.print().title_page.contact.y, contact ? contact.text.trim() : "");
-		
-		var notes = get_title_page_token('notes');
-		if (notes) {
-			var notes_text = notes.text;
-			var copy = get_title_page_token('copyright');
-			if (copy) {
-				notes_text += '\n\n' + copy.text.trim();
+			// title page
+			title_page_main('title');
+			title_page_main();
+			title_page_main();
+			title_page_main('credit');
+			title_page_main();
+			title_page_main('author');
+			title_page_main();
+			title_page_main();
+			title_page_main();
+			title_page_main();
+			title_page_main('source');
+
+			var draft = get_title_page_token('draft date');
+			doc.text(cfg.print().title_page.draft_date.x, cfg.print().title_page.draft_date.y, draft ? draft.text.trim() : "");
+			var contact = get_title_page_token('contact');
+			doc.text(cfg.print().title_page.contact.x, cfg.print().title_page.contact.y, contact ? contact.text.trim() : "");
+
+			var notes = get_title_page_token('notes');
+			if (notes) {
+				var notes_text = notes.text;
+				var copy = get_title_page_token('copyright');
+				if (copy) {
+					notes_text += '\n\n' + copy.text.trim();
+				}
+				doc.text(cfg.print().title_page.notes.x, cfg.print().title_page.notes.y, notes_text.trim());
 			}
-			doc.text(cfg.print().title_page.notes.x, cfg.print().title_page.notes.y, notes_text.trim());		
-		}
-		
-		var date = get_title_page_token('date');
-		doc.text(cfg.print().title_page.date.x, cfg.print().title_page.date.y, date ? date.text.trim() : "");
 
-		// script
-		doc.addPage();
+			var date = get_title_page_token('date');
+			doc.text(cfg.print().title_page.date.x, cfg.print().title_page.date.y, date ? date.text.trim() : "");
+
+			// script
+			doc.addPage();
+		}
 
 		// rest
 		var y = 1;

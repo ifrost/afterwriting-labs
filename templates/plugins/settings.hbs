@@ -5,64 +5,89 @@
 	.plugin-content[plugin="settings"] tr td:nth-child(2) {
 		text-align: left;
 	}
+	
 </style>
-
 <h1>Settings</h1>
-
 <table>
 	<thead>
-		<tr><th colspan="2">Print</th></tr>
+		<tr>
+			<th colspan="2">Print</th>
+		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td>Page size:</td><td><select>
+			<td>Page size:</td>
+			<td>
+				<select>
 					<option>A4</option>
 					<option>US letter</option>
 				</select>
 			</td>
-		<tr>
-			<td>Print title page:</td><td><input type="checkbox"></td>
-		</tr>
-		<tr>
-			<td>Embolden scene headers:</td><td><input type="checkbox"></td>
-		</tr>
-		
-		<tr><th colspan="2">Miscellaneous</th></tr>
-		<tr><td>Load last opened on startup:</td><td><input type="checkbox"></td></tr>
-		<tr><td>Show background image:</td><td><input setting="show_background_image" type="checkbox"></td>
-
-		</tr>
+			<tr>
+				<td>Print title page:</td>
+				<td>
+					<input setting="print_title_page" type="checkbox">
+				</td>
+			</tr>
+			<tr>
+				<td>Embolden scene headers:</td>
+				<td>
+					<input type="checkbox">
+				</td>
+			</tr>
+			<tr>
+				<th colspan="2">Miscellaneous</th>
+			</tr>
+			<tr>
+				<td>Load last opened on startup:</td>
+				<td>
+					<input type="checkbox">
+				</td>
+			</tr>
+			<tr>
+				<td>Show background image:</td>
+				<td>
+					<input setting="show_background_image" type="checkbox">
+				</td>
+			</tr>
 	</tbody>
 </table>
-
 <p>
 	<button id="settings-save">Save settings</button>
 	<button id="settings-reset">Reset to defaults</button>
 </p>
-
 <script>
+	require(['plugins/settings'], function(settings) {
 
-require(['plugins/settings'], function(settings){
-	
-	
-	$('#settings-save').click(function(){
-		// bind to settings
-		var c = settings.get_config();		
-		c.show_background_image = $('input[setting="show_background_image"]').is(':checked');
-		settings.save();
-	
-	});
-	
-	$('#settings-reset').click(function(){
-		settings.reset();
-	});
-	
-	settings.activate.add(function(){
-		// bind to components
-		var c = settings.get_config();
-		$('input[setting="show_background_image"]').attr('checked', c.show_background_image);
-	});
+		var data_to_components = function() {
+			var c = settings.get_config();
+			$('input[setting="show_background_image"]').prop('checked', c.show_background_image);
+			$('input[setting="print_title_page"]').prop('checked', c.print_title_page);
+		};
 
-});
-	
+		var components_to_data = function() {
+			var c = settings.get_config();
+			c.show_background_image = $('input[setting="show_background_image"]').is(':checked');
+			c.print_title_page = $('input[setting="print_title_page"]').is(':checked');
+			settings.save();
+		};
+
+		$('#settings-reset').click(function() {
+			settings.reset();
+		});
+
+		$('#settings-reset').click(function() {
+			settings.reset();
+			data_to_components();
+		});
+
+		$('#settings-save').click(function() {
+			components_to_data();
+		});
+
+		settings.activate.add(function() {
+			data_to_components();
+		});
+
+	});
 </script>
