@@ -1,4 +1,4 @@
-define(['logger', 'plugins/open', 'plugins/save', 'plugins/editor', 'plugins/preview', 'plugins/facts', 'plugins/stats'], function (logger, open, save, editor, preview, facts, stats) {
+define(['logger', 'plugins/open', 'plugins/save', 'plugins/editor', 'plugins/preview', 'plugins/facts', 'plugins/stats', 'plugins/settings', 'utils/data'], function (logger, open, save, editor, preview, facts, stats, settings, data) {
 
 	var module = {};
 	var log = logger.get('monitor');
@@ -22,6 +22,7 @@ define(['logger', 'plugins/open', 'plugins/save', 'plugins/editor', 'plugins/pre
 		preview.activate.add(track_handler('navigation', 'preview'));
 		facts.activate.add(track_handler('navigation', 'facts'));
 		stats.activate.add(track_handler('navigation', 'stats'));
+		settings.activate.add(track_handler('navigation', 'settings'));
 
 		// open
 		open.open_sample.add(function (result, args) {
@@ -44,6 +45,14 @@ define(['logger', 'plugins/open', 'plugins/save', 'plugins/editor', 'plugins/pre
 
 		// stats
 		stats.goto.add(track_handler('feature', 'stats-scene-length-goto'));
+		
+		// settings
+		settings.save.add(track_handler('feature', 'settings-save'));
+		settings.save.add(function(){
+			var c = settings.get_config();			
+			track_event('settings', 'page-size-set', c.print().paper_size);
+		});
+		settings.reset.add(track_handler('feature', 'settings-reset'));
 
 	};
 
