@@ -32,6 +32,12 @@
 			<tr>
 				<td>Embolden scene headers:</td>
 				<td>
+					<input setting="embolden_scene_headers" type="checkbox">
+				</td>
+			</tr>
+			<tr>
+				<td>Double space between scenes:</td>
+				<td>
 					<input type="checkbox">
 				</td>
 			</tr>
@@ -63,6 +69,7 @@
 			var c = settings.get_config();
 			$('*[setting="show_background_image"]').prop('checked', c.show_background_image);
 			$('*[setting="print_title_page"]').prop('checked', c.print_title_page);
+			$('*[setting="embolden_scene_headers"]').prop('checked', c.embolden_scene_headers);
 			$('*[setting="print_profile"]').val(c.print_profile);
 		};
 
@@ -70,6 +77,7 @@
 			var c = settings.get_config();
 			c.show_background_image = $('*[setting="show_background_image"]').is(':checked');
 			c.print_title_page = $('*[setting="print_title_page"]').is(':checked');
+			c.embolden_scene_headers = $('*[setting="embolden_scene_headers"]').is(':checked');
 			c.print_profile = $('*[setting="print_profile"]').val();
 			settings.save();
 		};

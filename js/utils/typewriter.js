@@ -111,6 +111,12 @@ define(['jspdf'], function (jsPDF) {
 					if (line.type == "transition") {
 						feed = cfg.print().action.feed + cfg.print().action.max * 0.1 - line.text.length * 0.1;
 					}
+					if (line.type == "scene_heading" && cfg.embolden_scene_headers) {
+						doc.setFontType("bold");
+					}
+					else {
+						doc.setFontType("normal");
+					}
 					doc.text(feed, cfg.print().top_margin + cfg.print().font_height * y++, line.text);
 				}
 			}
