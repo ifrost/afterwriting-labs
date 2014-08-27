@@ -87,7 +87,9 @@ define(['logger','modernizr','utils/fountain', 'utils/decorator'],function (logg
 			}
 		}
 	};
-	print_profiles["usletter"] = print_profiles["a4"];
+	print_profiles.usletter = Object.create(print_profiles.a4);
+	print_profiles.usletter.paper_size = "letter";
+	print_profiles.usletter.lines_per_page = 56;
 
 	plugin.default_config = {
 		show_background_image: true,

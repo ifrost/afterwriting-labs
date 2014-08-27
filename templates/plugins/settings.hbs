@@ -18,9 +18,9 @@
 		<tr>
 			<td>Page size:</td>
 			<td>
-				<select>
-					<option>A4</option>
-					<option>US letter</option>
+				<select setting="print_profile">
+					<option value="a4">A4</option>
+					<option value="usletter">US letter</option>
 				</select>
 			</td>
 			<tr>
@@ -61,14 +61,16 @@
 
 		var data_to_components = function() {
 			var c = settings.get_config();
-			$('input[setting="show_background_image"]').prop('checked', c.show_background_image);
-			$('input[setting="print_title_page"]').prop('checked', c.print_title_page);
+			$('*[setting="show_background_image"]').prop('checked', c.show_background_image);
+			$('*[setting="print_title_page"]').prop('checked', c.print_title_page);
+			$('*[setting="print_profile"]').val(c.print_profile);
 		};
 
 		var components_to_data = function() {
 			var c = settings.get_config();
-			c.show_background_image = $('input[setting="show_background_image"]').is(':checked');
-			c.print_title_page = $('input[setting="print_title_page"]').is(':checked');
+			c.show_background_image = $('*[setting="show_background_image"]').is(':checked');
+			c.print_title_page = $('*[setting="print_title_page"]').is(':checked');
+			c.print_profile = $('*[setting="print_profile"]').val();
 			settings.save();
 		};
 
