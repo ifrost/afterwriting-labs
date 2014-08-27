@@ -12,7 +12,7 @@ define(['jspdf'], function (jsPDF) {
 
 		// helper
 		var center = function (txt, y) {
-			var feed = cfg.print().left_margin + (cfg.print().page_width - cfg.print().left_margin - cfg.print().right_margin - txt.length * cfg.print().font_width) / 2;
+			var feed = (cfg.print().page_width - txt.length * cfg.print().font_width) / 2;
 			doc.text(feed, y, txt);
 		};
 
