@@ -1,6 +1,12 @@
 define(['jspdf'], function (jsPDF) {
 	var module = {};
 
+	var split_color = function (color) {
+		return color.substr(1).match(/([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/).slice(1).map(function (hex) {
+			return parseInt(hex, 16)
+		})
+	}
+
 	module.get_pdf = function (parsed, cfg) {
 
 		var title_page = parsed.title_page;
@@ -90,6 +96,8 @@ define(['jspdf'], function (jsPDF) {
 		var y = 1;
 		var page = 1;
 
+		var current_section_level = 0;
+
 		lines.forEach(function (line) {
 			if (line.type == "page_break") {
 				y = 1;
@@ -104,6 +112,9 @@ define(['jspdf'], function (jsPDF) {
 				// formatting not supported yet
 				line.text = line.text.replace(/\*/g, '').replace(/_/g, '');
 
+				var color = (cfg.print()[line.type] && cfg.print()[line.type].color) || '#000000';
+				doc.setTextColor.apply(doc, split_color(color));
+
 				if (line.type === 'centered') {
 					center(line.text, cfg.print().top_margin + cfg.print().font_height * y++);
 				} else {
@@ -113,11 +124,28 @@ define(['jspdf'], function (jsPDF) {
 					}
 					if (line.type == "scene_heading" && cfg.embolden_scene_headers) {
 						doc.setFontType("bold");
-					}
-					else {
+					} else {
 						doc.setFontType("normal");
 					}
+
+					if (line.type === 'section') {
+						current_section_level = line.token.level;
+						feed += current_section_level * cfg.print().section.level_indent;
+					} else if (line.type === 'synopsis') {
+						feed += cfg.print().synopsis.padding || 0;
+						if (cfg.print().synopsis.feed_with_last_section) {
+							feed += current_section_level * cfg.print().section.level_indent;
+						}
+					}
+
+
+					if (cfg.print()[line.type] && cfg.print()[line.type].italic) {
+						doc.setFontType('italic');
+					}
+
 					doc.text(feed, cfg.print().top_margin + cfg.print().font_height * y++, line.text);
+					doc.setTextColor(0);
+					doc.setFontType('normal');
 				}
 			}
 

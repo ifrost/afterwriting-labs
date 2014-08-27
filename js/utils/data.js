@@ -84,7 +84,22 @@ define(['logger', 'modernizr', 'utils/fountain', 'utils/decorator'], function (l
 				feed: 1.5,
 				style: 'center',
 				max: 58
+			},
+			synopsis: {
+				feed: 0.5,
+				max: 58,
+				italic: true,
+				color: '#888888',
+				padding: 0,
+				feed_with_last_section: true
+			},
+			section: {
+				feed: 0.5,
+				max: 58,
+				color: '#555555',
+				level_indent: 0.2
 			}
+			
 		},
 
 
@@ -146,7 +161,22 @@ define(['logger', 'modernizr', 'utils/fountain', 'utils/decorator'], function (l
 				feed: 1.5,
 				style: 'center',
 				max: 60
-			}
+			},
+			synopsis: {
+				feed: 0.5,
+				max: 58,
+				italic: true,
+				color: '#888888',
+				padding: 0,
+				feed_with_last_section: true
+			},
+			section: {
+				feed: 0.5,
+				max: 58,
+				color: '#555555',
+				level_indent: 0.2
+			}			
+			
 		}
 	};
 
@@ -161,6 +191,8 @@ define(['logger', 'modernizr', 'utils/fountain', 'utils/decorator'], function (l
 		print_profile: "a4",
 		load_last_opened: false,
 		double_space_between_scenes: false,
+		print_sections: false,
+		print_synopsis: false,
 	};
 
 	plugin.default_config.print = function () {

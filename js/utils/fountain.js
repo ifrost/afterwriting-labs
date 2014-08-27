@@ -12,6 +12,9 @@ define(function () {
 
 		var regex = {
 			title_page: /(title|credit|author[s]?|source|notes|draft date|date|contact|copyright)\:.*/i,
+			
+            section: /^(#+)(?: *)(.*)/,
+            synopsis: /^(?:\=(?!\=+) *)(.*)/,
 
 			scene_heading: /^((?:\*{0,3}_?)?(?:(?:int|ext|est|i\/e)[. ]).+)|^(?:\.(?!\.+))(.+)/i,
 			scene_number: /( *#(.+)# *)/,
@@ -39,7 +42,7 @@ define(function () {
 			current = 0,
 			match, text, last_title_page_token,
 			token, last_was_separator = false,
-			token_category = 'none';
+			token_category = 'none', match;
 		var state = 'normal';
 		for (var i = 0; i < lines_length; i++) {
 			text = lines[i];
@@ -87,7 +90,23 @@ define(function () {
 				} else if (token.text.match(regex.transition)) {
 					token.text = token.text.replace(/> ?/, '');
 					token.type = 'transition';
-				} else if (token.text.match(regex.scene_heading)) {
+				} 
+				else if (match = token.text.match(regex.synopsis)) {
+					if (!cfg.print_synopsis) {
+						continue;
+					}
+					token.text = match[1];
+					token.type = 'synopsis';
+				}
+				else if (match = token.text.match(regex.section)) {
+					if (!cfg.print_sections) {
+						continue;
+					}
+					token.level = match[1].length;
+					token.text = match[2];
+					token.type = 'section';
+				}
+				else if (token.text.match(regex.scene_heading)) {
 					token.text = token.text.replace(/^\./, '');
 					if (cfg.double_space_between_scenes) {
 						var additional_separator = {
