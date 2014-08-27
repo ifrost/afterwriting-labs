@@ -8,7 +8,7 @@ define(['core', 'logger', 'templates', 'dropbox', 'utils/data', 'utils/helper', 
 		core.show_main();
 	};
 
-	plugin.open_last_used = function () {
+	plugin.open_last_used = function (startup) {
 		var last_used;
 		if (last_used = data.data('last-used-script')) {
 			set_script(last_used);

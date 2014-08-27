@@ -36,17 +36,17 @@ require.config({
 });
 
 require(['core', 'logger', 'utils/monitor', 'dev', 'utils/common',
-         'utils/layout',
+         'utils/layout', 'utils/data',
          'plugins/open',
          'plugins/settings',
          'plugins/editor',
-         'plugins/save',		 
+         'plugins/save',
          'plugins/preview',
          'plugins/facts',
          'plugins/stats',
-], function (core, logger, monitor, dev, common, layout) {
-	var devmode = !!window.__devmode;
-	
+], function (core, logger, monitor, dev, common, layout, data, open) {
+	var devmode = !! window.__devmode;
+
 	// set up logger
 	logger.setLevel(logger.DEBUG);
 	logger.setHandler(function (messages, context) {
@@ -77,7 +77,7 @@ require(['core', 'logger', 'utils/monitor', 'dev', 'utils/common',
 		// Support for IE8+ (and other, slightly more sane environments)
 		Function.prototype.apply.call(hdlr, console, messages);
 	});
-	
+
 	if (devmode) {
 		dev.pre_init();
 	}
@@ -86,10 +86,16 @@ require(['core', 'logger', 'utils/monitor', 'dev', 'utils/common',
 	var loaded_plugins = Array.prototype.splice.call(arguments, 0);
 	logger.filter = null;
 	core.init(loaded_plugins);
+
+	if (data.config.load_last_opened) {
+		open.open_last_used(true);
+		layout.show_options();
+	}
+
 	monitor.init();
-	
+
 	if (devmode) {
 		dev.init();
 	}
-	
+
 });

@@ -98,7 +98,8 @@ define(['logger','modernizr','utils/fountain', 'utils/decorator'],function (logg
 		break_dialogue: true,
 		print_title_page: true,		
 		text: {},
-		print_profile: "a4"
+		print_profile: "a4",
+		load_last_opened: false
 	};
 	
 	plugin.default_config.print = function() {

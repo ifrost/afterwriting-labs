@@ -47,7 +47,7 @@
 			<tr>
 				<td>Load last opened on startup:</td>
 				<td>
-					<input type="checkbox">
+					<input setting="load_last_opened" type="checkbox">
 				</td>
 			</tr>
 			<tr>
@@ -70,6 +70,7 @@
 			$('*[setting="show_background_image"]').prop('checked', c.show_background_image);
 			$('*[setting="print_title_page"]').prop('checked', c.print_title_page);
 			$('*[setting="embolden_scene_headers"]').prop('checked', c.embolden_scene_headers);
+			$('*[setting="load_last_opened"]').prop('checked', c.load_last_opened);
 			$('*[setting="print_profile"]').val(c.print_profile);
 		};
 
@@ -78,6 +79,7 @@
 			c.show_background_image = $('*[setting="show_background_image"]').is(':checked');
 			c.print_title_page = $('*[setting="print_title_page"]').is(':checked');
 			c.embolden_scene_headers = $('*[setting="embolden_scene_headers"]').is(':checked');
+			c.load_last_opened = $('*[setting="load_last_opened"]').is(':checked');
 			c.print_profile = $('*[setting="print_profile"]').val();
 			settings.save();
 		};

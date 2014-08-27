@@ -2,9 +2,9 @@ define(['logger', 'plugins/open', 'plugins/save', 'plugins/editor', 'plugins/pre
 
 	var module = {};
 	var log = logger.get('monitor');
-	
+
 	var track_event = function (category, action, label) {
-		log.info('Event sent', category,action,label);
+		log.info('Event sent', category, action, label);
 		ga('send', 'event', category, action, label);
 	};
 
@@ -22,7 +22,7 @@ define(['logger', 'plugins/open', 'plugins/save', 'plugins/editor', 'plugins/pre
 		preview.activate.add(track_handler('navigation', 'preview'));
 		facts.activate.add(track_handler('navigation', 'facts'));
 		stats.activate.add(track_handler('navigation', 'stats'));
-		
+
 		// open
 		open.open_sample.add(function (result, args) {
 			track_event('feature', 'open-sample', args[0]);
@@ -32,7 +32,9 @@ define(['logger', 'plugins/open', 'plugins/save', 'plugins/editor', 'plugins/pre
 		open.open_file_dialog.add(track_handler('feature', 'open-file-dialog'));
 		open.open_file.add(track_handler('feature', 'open-file-opened'));
 		open.open_from_dropbox.add(track_handler('feature', 'open-dropbox'));
-		open.open_last_used.add(track_handler('feature', 'open-last-used'));
+		open.open_last_used.add(function (startup) {
+			track_event('feature', 'open-last-used', startup ? 'startup' : 'manual');
+		});
 
 		// save 
 		save.save_as_fountain.add(track_handler('feature', 'save-fountain'));

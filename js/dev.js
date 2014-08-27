@@ -1,4 +1,4 @@
-define(['core', 'utils/common', 'plugins/open', 'utils/layout', 'plugins/settings'], function (core, common, open, layout, dev_plugin) {
+define(['core', 'utils/common', 'plugins/open', 'utils/layout'], function (core, common, open, layout, dev_plugin) {
 	var module = {};
 
 	module.pre_init = function() {
