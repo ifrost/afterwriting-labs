@@ -99,7 +99,8 @@ define(['logger','modernizr','utils/fountain', 'utils/decorator'],function (logg
 		print_title_page: true,		
 		text: {},
 		print_profile: "a4",
-		load_last_opened: false
+		load_last_opened: false,
+		double_space_between_scenes: false,
 	};
 	
 	plugin.default_config.print = function() {

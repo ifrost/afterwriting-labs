@@ -38,7 +38,7 @@
 			<tr>
 				<td>Double space between scenes:</td>
 				<td>
-					<input type="checkbox">
+					<input setting="double_space_between_scenes" type="checkbox">
 				</td>
 			</tr>
 			<tr>
@@ -71,6 +71,7 @@
 			$('*[setting="print_title_page"]').prop('checked', c.print_title_page);
 			$('*[setting="embolden_scene_headers"]').prop('checked', c.embolden_scene_headers);
 			$('*[setting="load_last_opened"]').prop('checked', c.load_last_opened);
+			$('*[setting="double_space_between_scenes"]').prop('checked', c.double_space_between_scenes);
 			$('*[setting="print_profile"]').val(c.print_profile);
 		};
 
@@ -80,6 +81,7 @@
 			c.print_title_page = $('*[setting="print_title_page"]').is(':checked');
 			c.embolden_scene_headers = $('*[setting="embolden_scene_headers"]').is(':checked');
 			c.load_last_opened = $('*[setting="load_last_opened"]').is(':checked');
+			c.double_space_between_scenes = $('*[setting="double_space_between_scenes"]').is(':checked');
 			c.print_profile = $('*[setting="print_profile"]').val();
 			settings.save();
 		};

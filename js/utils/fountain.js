@@ -3,7 +3,7 @@ define(function () {
 
 	var _state = 'normal'; // 'dialogue'
 
-	var get_all_tokens = function (script) {
+	var get_all_tokens = function (script, cfg) {
 
 		var result = {
 			title_page: [],
@@ -89,6 +89,16 @@ define(function () {
 					token.type = 'transition';
 				} else if (token.text.match(regex.scene_heading)) {
 					token.text = token.text.replace(/^\./, '');
+					if (cfg.double_space_between_scenes) {
+						var additional_separator = {
+							text: '',
+							start: token.start,
+							end: token.end,
+							line: token.line,
+							type: 'separator'
+						};
+						result.tokens.push(additional_separator);
+					}
 					token.type = 'scene_heading';
 				} else if (token.text.match(regex.character)) {
 					if (i == lines_length || i == lines_length - 1 || lines[i + 1].length == 0) {
@@ -134,11 +144,11 @@ define(function () {
 			}];
 		}
 		var pointer = text.substr(0, max + 1).lastIndexOf(" ");
-		
+
 		if (pointer === -1) {
-			pointer = max-1;
+			pointer = max - 1;
 		}
-		
+
 		return [{
 			type: token.type,
 			token: token,
@@ -218,7 +228,7 @@ define(function () {
 
 	module.parse = function (text, cfg) {
 
-		var result = get_all_tokens(text);
+		var result = get_all_tokens(text, cfg);
 		result.lines = [];
 
 		_state = 'normal';
