@@ -1,4 +1,4 @@
-define(['jspdf'], function (jsPDF) {
+define(['jspdf', 'utils/helper'], function (jsPDF, helper) {
 	var module = {};
 
 	var split_color = function (color) {
@@ -96,7 +96,8 @@ define(['jspdf'], function (jsPDF) {
 		var y = 1;
 		var page = 1;
 
-		var current_section_level = 0;
+		var current_section_level = 0, section_number = helper.version_generator();
+		var text;
 
 		lines.forEach(function (line) {
 			if (line.type == "page_break") {
@@ -110,7 +111,7 @@ define(['jspdf'], function (jsPDF) {
 				}
 			} else {
 				// formatting not supported yet
-				line.text = line.text.replace(/\*/g, '').replace(/_/g, '');
+				text = line.text.replace(/\*/g, '').replace(/_/g, '');
 
 				var color = (cfg.print()[line.type] && cfg.print()[line.type].color) || '#000000';
 				doc.setTextColor.apply(doc, split_color(color));
@@ -131,6 +132,9 @@ define(['jspdf'], function (jsPDF) {
 					if (line.type === 'section') {
 						current_section_level = line.token.level;
 						feed += current_section_level * cfg.print().section.level_indent;
+						if (cfg.number_sections) {
+							text = section_number(line.token.level) + '. ' + text;
+						}
 					} else if (line.type === 'synopsis') {
 						feed += cfg.print().synopsis.padding || 0;
 						if (cfg.print().synopsis.feed_with_last_section) {
@@ -143,7 +147,7 @@ define(['jspdf'], function (jsPDF) {
 						doc.setFontType('italic');
 					}
 
-					doc.text(feed, cfg.print().top_margin + cfg.print().font_height * y++, line.text);
+					doc.text(feed, cfg.print().top_margin + cfg.print().font_height * y++, text);
 					doc.setTextColor(0);
 					doc.setFontType('normal');
 				}

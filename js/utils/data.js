@@ -193,6 +193,7 @@ define(['logger', 'modernizr', 'utils/fountain', 'utils/decorator'], function (l
 		double_space_between_scenes: false,
 		print_sections: false,
 		print_synopsis: false,
+		number_sections: false,
 	};
 
 	plugin.default_config.print = function () {

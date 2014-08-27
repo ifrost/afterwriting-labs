@@ -15,14 +15,47 @@ define(['utils/data', 'd3'], function (data, d3) {
 		result += string_time(minutes) + ':' + string_time(seconds);
 		return result;
 	};
-	
+
 	var date_formatter = d3.time.format("%Y-%m-%d %H:%M");
-	module.format_date = function(date) {
+	module.format_date = function (date) {
 		return date_formatter(date);
 	};
 
 	module.lines_to_minutes = function (lines) {
 		return lines / data.config.print().lines_per_page;
+	};
+
+	module.version_generator = function (current) {
+		current = current || "0";
+
+		var numbers = current.split('.').concat([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+
+		var bump = function (level) {
+			numbers[level - 1]++;
+			for (var i = level; i < numbers.length; i++) {
+				numbers[i] = 0;
+			}
+		};
+
+		var to_str = function () {
+			var copy = numbers.concat();
+			copy.reverse();
+			while (copy.length > 1 && copy[0] === 0) {
+				copy.shift();
+			}
+			copy.reverse();
+			return copy.join('.');
+		};
+
+		var increase = function (level) {
+			if (arguments.length === 0) {
+				return to_str();
+			}
+			bump(level);
+			return to_str();
+		};
+
+		return increase;
 	};
 
 	return module;
