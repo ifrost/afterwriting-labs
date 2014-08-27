@@ -90,7 +90,7 @@ define(['logger', 'modernizr', 'utils/fountain', 'utils/decorator'], function (l
 
 		"usletter": {
 			paper_size: "letter",
-			lines_per_page: 55,
+			lines_per_page: 54,
 			top_margin: 1.0,
 			page_width: 8.5,
 			left_margin: 1.5,
@@ -155,7 +155,7 @@ define(['logger', 'modernizr', 'utils/fountain', 'utils/decorator'], function (l
 		show_background_image: true,
 		embolden_scene_headers: false,
 		show_page_numbers: true,
-		break_dialogue: true,
+		split_dialogue: true,
 		print_title_page: true,
 		text: {},
 		print_profile: "a4",

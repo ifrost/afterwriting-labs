@@ -172,7 +172,7 @@ define(function () {
 
 		if (token_on_break === "scene_heading" && token_after !== "scene_heading") {
 			return false;
-		} else if (cfg.break_dialogue && token_on_break == "dialogue" && token_after == "dialogue" && token_before == "dialogue") {
+		} else if (cfg.split_dialogue && token_on_break == "dialogue" && token_after == "dialogue" && token_before == "dialogue") {
 			for (var character = before; lines[character].type != "character"; character--) {}
 			lines.splice(index, 0, {
 				type: "parenthetical",

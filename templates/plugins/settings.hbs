@@ -31,6 +31,12 @@
 				</td>
 			</tr>
 			<tr>
+				<td>Split dialogue between pages:</td>
+				<td>
+					<input setting="split_dialogue" type="checkbox">
+				</td>
+			</tr>		
+			<tr>
 				<td>Embolden scene headers:</td>
 				<td>
 					<input setting="embolden_scene_headers" type="checkbox">
@@ -41,20 +47,20 @@
 				<td>
 					<input setting="double_space_between_scenes" type="checkbox">
 				</td>
-			</tr>
+			</tr>		
 			<tr>
 				<th colspan="2">Miscellaneous</th>
-			</tr>
-			<tr>
-				<td>Load last opened on startup:</td>
-				<td>
-					<input setting="load_last_opened" type="checkbox">
-				</td>
 			</tr>
 			<tr>
 				<td>Show background image:</td>
 				<td>
 					<input setting="show_background_image" type="checkbox">
+				</td>
+			</tr>		
+			<tr>
+				<td>Load last opened on startup:</td>
+				<td>
+					<input setting="load_last_opened" type="checkbox">
 				</td>
 			</tr>
 	</tbody>
@@ -73,6 +79,7 @@
 			$('*[setting="embolden_scene_headers"]').prop('checked', c.embolden_scene_headers);
 			$('*[setting="load_last_opened"]').prop('checked', c.load_last_opened);
 			$('*[setting="double_space_between_scenes"]').prop('checked', c.double_space_between_scenes);
+			$('*[setting="split_dialogue"]').prop('checked', c.split_dialogue);
 			$('*[setting="print_profile"]').val(c.print_profile);
 		};
 
@@ -83,6 +90,7 @@
 			c.embolden_scene_headers = $('*[setting="embolden_scene_headers"]').is(':checked');
 			c.load_last_opened = $('*[setting="load_last_opened"]').is(':checked');
 			c.double_space_between_scenes = $('*[setting="double_space_between_scenes"]').is(':checked');
+			c.split_dialogue = $('*[setting="split_dialogue"]').is(':checked');
 			c.print_profile = $('*[setting="print_profile"]').val();
 			settings.save();
 		};
