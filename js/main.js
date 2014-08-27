@@ -38,10 +38,10 @@ require.config({
 require(['core', 'logger', 'utils/monitor', 'dev', 'utils/common',
          'utils/layout',
          'plugins/open',
-         'plugins/editor',
-         'plugins/preview',
          'plugins/settings',
-         'plugins/save',
+         'plugins/editor',
+         'plugins/save',		 
+         'plugins/preview',
          'plugins/facts',
          'plugins/stats',
 ], function (core, logger, monitor, dev, common, layout) {
