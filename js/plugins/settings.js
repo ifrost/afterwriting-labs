@@ -20,6 +20,7 @@ define(['core', 'logger', 'utils/data'], function (core, logger, data) {
 	
 	plugin.save = function() {
 		data.save_config();
+		data.script(data.script());
 	};
 	
 	plugin.get_default_config = function() {
@@ -28,6 +29,7 @@ define(['core', 'logger', 'utils/data'], function (core, logger, data) {
 	
 	plugin.reset = function() {
 		data.reset_config();
+		data.script(data.script());
 	};
 	
 	return plugin;
