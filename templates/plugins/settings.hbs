@@ -67,6 +67,12 @@
 					<input setting="split_dialogue" type="checkbox">
 				</td>
 			</tr>
+			<tr>
+				<td>Accept dual dialogue:</td>
+				<td>
+					<input setting="use_dual_dialogue" type="checkbox">
+				</td>
+			</tr>		
 			<tr>				
 				<td>Embolden scene headers:</td>
 				<td>
@@ -134,6 +140,7 @@
 			$('*[setting="print_sections"]').prop('checked', c.print_sections);
 			$('*[setting="print_synopsis"]').prop('checked', c.print_synopsis);
 			$('*[setting="number_sections"]').prop('checked', c.number_sections);
+			$('*[setting="use_dual_dialogue"]').prop('checked', c.use_dual_dialogue);
 			$('*[setting="print_profile"]').val(c.print_profile);
 		};
 
@@ -148,6 +155,7 @@
 			c.print_sections = $('*[setting="print_sections"]').is(':checked');
 			c.print_synopsis = $('*[setting="print_synopsis"]').is(':checked');
 			c.number_sections = $('*[setting="number_sections"]').is(':checked');
+			c.use_dual_dialogue = $('*[setting="use_dual_dialogue"]').is(':checked');
 			c.print_profile = $('*[setting="print_profile"]').val();
 			settings.save();
 		};

@@ -194,6 +194,7 @@ define(['logger', 'modernizr', 'utils/fountain', 'utils/decorator'], function (l
 		print_sections: false,
 		print_synopsis: false,
 		number_sections: false,
+		use_dual_dialogue: true,
 	};
 
 	plugin.default_config.print = function () {

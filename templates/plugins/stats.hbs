@@ -43,7 +43,7 @@
 
 			var circle_size = 12;
 			var inner_radius = 250;
-			var translate_circle = 'translate(' + ((inner_radius / 2)+padding) + ',' + ((inner_radius / 2)+circle_size) + ')';
+			var translate_circle = 'translate(' + ((inner_radius / 2)+padding+circle_size+2) + ',' + ((inner_radius / 2)+circle_size) + ')';
 
 			var arc = d3.svg.arc().outerRadius(inner_radius).innerRadius(0);
 			var arc_scale = d3.scale.linear().domain([0, inner_radius]).range([0, circle_size * 4]);

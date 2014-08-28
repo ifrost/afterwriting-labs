@@ -42,7 +42,8 @@ define(function () {
 			current = 0,
 			match, text, last_title_page_token,
 			token, last_was_separator = false,
-			token_category = 'none', match;
+			token_category = 'none', last_character_index,
+			dual_right;
 		var state = 'normal';
 		for (var i = 0; i < lines_length; i++) {
 			text = lines[i];
@@ -57,6 +58,7 @@ define(function () {
 			if (text.length == 0) {
 				if (!last_was_separator) {
 					state = 'normal';
+					dual_right = false;
 					token.type = 'separator';
 					last_was_separator = true;
 					result.tokens.push(token);
@@ -125,7 +127,20 @@ define(function () {
 					} else {
 						state = 'dialogue'
 						token.type = 'character';
-						token.text = token.text.replace('^', '');
+						if (token.text[token.text.length - 1] === '^') {
+							if (cfg.use_dual_dialogue) {
+								// update last dialogue to be dual:left
+								var dialogue_tokens = ['dialogue', 'character', 'parenthetical'];
+								while(dialogue_tokens.indexOf(result.tokens[last_character_index].type) != -1) {
+									result.tokens[last_character_index].dual = 'left';
+									last_character_index++;
+								}
+								token.dual = 'right';								
+								dual_right = true;
+							}
+							token.text = token.text.replace('^', '');
+						}
+						last_character_index = result.tokens.length;
 					}
 				} else if (token.text.match(regex.page_break)) {
 					token.text = '';
@@ -139,7 +154,10 @@ define(function () {
 				} else {
 					token.type = 'dialogue';
 				}
-			};
+				if (dual_right) {
+					token.dual = 'right';
+				}
+			}
 
 			last_was_separator = false;
 
@@ -175,11 +193,11 @@ define(function () {
 			start: index,
 			end: index + pointer
 		}].concat(split_text(text.substr(pointer + 1), max, index + pointer, token));
-	}
+	};
 
 	var split_token = function (token, max) {
 		token.lines = split_text(token.text || "", max, token.start, token);
-	}
+	};
 
 	var default_breaker = function (index, lines, cfg) {
 		for (var before = index - 1; before && !(lines[before].text); before--) {}
@@ -191,7 +209,8 @@ define(function () {
 
 		if (token_on_break === "scene_heading" && token_after !== "scene_heading") {
 			return false;
-		} else if (cfg.split_dialogue && token_on_break == "dialogue" && token_after == "dialogue" && token_before == "dialogue") {
+		} else if (cfg.split_dialogue && token_on_break == "dialogue" && token_after == "dialogue" && token_before == "dialogue" && !(lines[index].token.dual)) {
+			console.log(lines[index]);
 			for (var character = before; lines[character].type != "character"; character--) {}
 			lines.splice(index, 0, {
 				type: "parenthetical",
@@ -253,15 +272,51 @@ define(function () {
 		_state = 'normal';
 
 		result.tokens.forEach(function (token) {
-			split_token(token, (cfg.print()[token.type] || {}).max || 99999);
+			var max = (cfg.print()[token.type] || {}).max || 99999;
+			if (token.dual) {
+				max *= 0.75;
+			}
+			split_token(token, max);
 
 			token.lines.forEach(function (line) {
 				result.lines.push(line);
 			});
 		});
+		
+		// fold dual dialogue for breaking
+		var dual_left, dual_right, contains_dual = true;
+		while (contains_dual) {
+			dual_left = -1, dual_right = -1, contains_dual = false;
+			// find left && right index		
+			for (var i=0; i<result.lines.length; i++) {
+				if (result.lines[i].token && result.lines[i].token.type === 'character' && result.lines[i].token.dual === 'left') {
+					dual_left = i;
+				}
+				else if (result.lines[i].token && result.lines[i].token.dual === 'right') {
+					dual_right = i;					
+					break;
+				}
+			}
+			// move right to left
+			if (dual_left != -1 && dual_right != -1) {
+				contains_dual = true;
+				result.lines[dual_left].right_column = [];
+				while (result.lines[dual_right].token.dual === 'right') {
+					result.lines[dual_left].right_column.push(result.lines.splice(dual_right, 1)[0]);
+				}
+				if (result.lines[dual_right].type === 'separator') {
+					result.lines.splice(dual_right, 1);
+				}
+			}
+		}
+		
 
 		result.lines = break_lines(result.lines, cfg.print().lines_per_page, cfg.lines_breaker || default_breaker, cfg);
 
+		// unfold dual dialogue
+		
+		console.log(result);
+		
 		return result;
 	}
 

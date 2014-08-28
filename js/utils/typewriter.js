@@ -98,7 +98,7 @@ define(['jspdf', 'utils/helper'], function (jsPDF, helper) {
 
 		var current_section_level = 0, section_number = helper.version_generator();
 		var text;
-
+		
 		lines.forEach(function (line) {
 			if (line.type == "page_break") {
 				y = 1;
@@ -112,7 +112,7 @@ define(['jspdf', 'utils/helper'], function (jsPDF, helper) {
 			} else {
 				// formatting not supported yet
 				text = line.text.replace(/\*/g, '').replace(/_/g, '');
-
+				
 				var color = (cfg.print()[line.type] && cfg.print()[line.type].color) || '#000000';
 				doc.setTextColor.apply(doc, split_color(color));
 
@@ -145,6 +145,21 @@ define(['jspdf', 'utils/helper'], function (jsPDF, helper) {
 
 					if (cfg.print()[line.type] && cfg.print()[line.type].italic) {
 						doc.setFontType('italic');
+					}
+					
+					if (line.token && line.token.dual) {
+						if (line.right_column) {
+							var y_right = y;
+							line.right_column.forEach(function(line){
+								var feed_right = (cfg.print()[line.type] || {}).feed || cfg.print().action.feed;
+								var text_right = line.text.replace(/\*/g, '').replace(/_/g, '');
+								feed_right -= (feed_right - cfg.print().left_margin) / 2;
+								feed_right += (cfg.print().page_width - cfg.print().right_margin - cfg.print().left_margin) / 2;
+								doc.text(feed_right, cfg.print().top_margin + cfg.print().font_height * y_right++, text_right);
+							});
+						}
+						
+						feed -= (feed - cfg.print().left_margin) / 2;												
 					}
 
 					doc.text(feed, cfg.print().top_margin + cfg.print().font_height * y++, text);
