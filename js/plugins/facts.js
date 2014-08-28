@@ -86,7 +86,7 @@ define(['core', 'logger', 'jquery', 'utils/data'], function (core, logger, $, da
 				current_character = character;
 			}
 			if (["dialogue", "character", "parenthetical"].indexOf(token.type) !== -1) {
-				characters_cache[current_character]++;
+				characters_cache[current_character] += token.lines.length;
 			}
 		});
 
