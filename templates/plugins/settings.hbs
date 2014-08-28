@@ -1,20 +1,48 @@
 <style>
-	.plugin-content[plugin="settings"] tr td:nth-child(odd) {
+	.plugin-content[plugin="settings"] .buttons {
+		float: right;
+	}
+	
+	.plugin-content[plugin="settings"] .buttons p {
+		margin: 0;
+	}
+	
+	.plugin-content[plugin="settings"] table {
+		margin: auto;
+		width: 100%;
+	}
+	
+	.plugin-content[plugin="settings"] tr td:nth-child(1) {
 		text-align: right;
 		border-right: 0;
 	}
-	.plugin-content[plugin="settings"] tr td:nth-child(even) {
+	
+	.plugin-content[plugin="settings"] tr td:nth-child(2) {
 		text-align: left;
+		width: 50%;
 		border-left-width: 0;
 	}
 	
+	.settings-panel {
+		width: 90%;
+		margin: auto;
+	}
+
 </style>
 <h1>Settings <span class="info-icon" section="settings-info"/></h1>
 <p class="info-content" section="settings-info">You can change configuration here. Some settings (e.g. page size, double space between scenes) may affect statistics which are based on assumption that 1 page = 1 minute of a movie .</p>
+
+
+<div class="settings-panel">
+	
+<p class="buttons">
+	<a href="#" class="settings-save inactive button">save settings</a>
+	<a href="#" class="settings-reset button">reset settings</a>
+</p>
 <table>
 	<thead>
 		<tr>
-			<th colspan="4">Print</th>
+			<th colspan="2">Print</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -26,7 +54,8 @@
 					<option value="usletter">US letter</option>
 				</select>
 			</td>
-
+			</tr>
+			<tr>
 				<td>Print title page:</td>
 				<td>
 					<input setting="print_title_page" type="checkbox">
@@ -37,6 +66,8 @@
 				<td>
 					<input setting="split_dialogue" type="checkbox">
 				</td>
+			</tr>
+			<tr>				
 				<td>Embolden scene headers:</td>
 				<td>
 					<input setting="embolden_scene_headers" type="checkbox">
@@ -47,7 +78,9 @@
 				<td>
 					<input setting="double_space_between_scenes" type="checkbox">
 				</td>
-				<td>Print sections:</td>
+			</tr>
+			<tr>				
+				<td>Print sections:</td>				
 				<td>
 					<input setting="print_sections" type="checkbox">
 				</td>
@@ -57,19 +90,23 @@
 				<td>
 					<input setting="print_synopsis" type="checkbox">
 				</td>
+			</tr>
+			<tr>				
 				<td>Prefix sections with numbers:</td>
 				<td>
 					<input setting="number_sections" type="checkbox">
 				</td>
 			</tr>		
 			<tr>
-				<th colspan="4">Miscellaneous</th>
+				<th colspan="2">Miscellaneous</th>
 			</tr>
 			<tr>
 				<td>Show background image:</td>
 				<td>
 					<input setting="show_background_image" type="checkbox">
 				</td>
+			</tr>
+			<tr>				
 				<td>Load last opened on startup:</td>
 				<td>
 					<input setting="load_last_opened" type="checkbox">
@@ -77,10 +114,12 @@
 			</tr>
 	</tbody>
 </table>
-<p>
-	<button id="settings-save">Save settings</button>
-	<button id="settings-reset">Reset to defaults</button>
+<p class="buttons">
+	<a href="#" class="settings-save inactive button">save settings</a>
+	<a href="#" class="settings-reset button">reset settings</a>
 </p>
+
+</div>
 <script>
 	require(['plugins/settings'], function(settings) {
 
@@ -112,14 +151,22 @@
 			c.print_profile = $('*[setting="print_profile"]').val();
 			settings.save();
 		};
-
-		$('#settings-reset').click(function() {
-			settings.reset();
-			data_to_components();
+		
+		$('.plugin-content[plugin="settings"]').select('input, option').change(function(){
+			$('.settings-save').removeClass('inactive');
 		});
 
-		$('#settings-save').click(function() {
+		$('.settings-reset').click(function() {
+			if ($(this).hasClass('inactive')) {return;}
+			settings.reset();
+			data_to_components();
+			$('.settings-save').addClass('inactive');
+		});		
+
+		$('.settings-save').click(function() {
+			if ($(this).hasClass('inactive')) {return;}
 			components_to_data();
+			$('.settings-save').addClass('inactive');
 		});
 
 		settings.activate.add(function() {

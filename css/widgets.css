@@ -15,6 +15,28 @@ h2 {
 p {
 	margin: 10px;
 }
+.button {
+	font-size: 12px;
+	text-decoration: none;
+	border: 1px solid #111111;
+	background-color: #eeeeee;
+	color: #111111;
+	min-width: 50px;
+	padding: 5px 10px 5px 10px;
+}
+.button:hover {
+	color: #eeeeee;
+	background-color: #111111;
+}
+.button.inactive {
+	opacity: 0.5;
+	border: 1px solid #777777;
+}
+.button.inactive:hover {
+	cursor: default;
+	color: #111111;
+	background-color: #eeeeee;
+}
 a {
 	color: #777;
 }
