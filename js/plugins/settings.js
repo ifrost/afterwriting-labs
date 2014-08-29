@@ -1,9 +1,9 @@
 /* global define */
 define(function (require) {
-	var core = require('core'),
+	var pm = require('utils/pluginmanager'),
 		data = require('utils/data');
 	
-	var plugin = core.create_plugin('settings', 'setup');
+	var plugin = pm.create_plugin('settings', 'setup');
 	
 	plugin.get_config = function() {
 		return data.config;

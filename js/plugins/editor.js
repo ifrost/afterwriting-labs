@@ -1,7 +1,7 @@
 /* global define, setTimeout */
 define(function (require) {
 	
-	var core = require('core'),
+	var pm = require('utils/pluginmanager'),
 		data = require('utils/data'),
 		cm = require('libs/codemirror/lib/codemirror');
 	
@@ -11,7 +11,7 @@ define(function (require) {
 	require('libs/codemirror/addon/hint/anyword-hint');
 	require('utils/fountainmode');
 	
-	var plugin = core.create_plugin('editor', 'edit');
+	var plugin = pm.create_plugin('editor', 'edit');
 	var editor;
 
 	plugin.data = {};
@@ -50,7 +50,7 @@ define(function (require) {
 		};
 		plugin.data.scroll_info = null;
 
-		core.switch_to(plugin);
+		pm.switch_to(plugin);
 	};
 
 	plugin.activate = function () {

@@ -1,11 +1,11 @@
 /* global define */
 define(function (require) {
 	
-	var core = require('core'),
+	var pm = require('utils/pluginmanager'),
 		typewriter = require('utils/typewriter'),
 		data = require('utils/data');
 	
-	var plugin = core.create_plugin('preview', 'view');
+	var plugin = pm.create_plugin('preview', 'view');
 	
 	plugin.get_pdf = function() {
 		return typewriter.get_pdf(data.parsed, data.config);

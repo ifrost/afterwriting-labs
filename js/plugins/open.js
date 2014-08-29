@@ -1,7 +1,8 @@
 /* global define, window, FileReader */
 define(function (require) {
 	
-	var logger = require('logger'),
+	var pm = require('utils/pluginmanager'),
+		logger = require('logger'),
 		templates = require('templates'), 
 		Dropbox = require('dropbox'), 
 		data = require('utils/data'), 
@@ -10,7 +11,7 @@ define(function (require) {
 		layout = require('utils/layout');
 	
 	var log = logger.get('open');
-	var plugin = helper.create_plugin('open', 'open');
+	var plugin = pm.create_plugin('open', 'open');
 	plugin.class = "active";
 
 	var set_script = function (value) {

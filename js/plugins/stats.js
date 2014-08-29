@@ -1,14 +1,14 @@
 /* global define */
 define(function (require) {
 	
-	var core = require('core'),
+	var pm = require('utils/pluginmanager'),
 		logger = require('logger'), 
 		d3 = require('d3'), 
 		editor = require('plugins/editor'), 
 		data = require('utils/data');
 	
 	var log = logger.get('stats');
-	var plugin = core.create_plugin('stats', 'stats');
+	var plugin = pm.create_plugin('stats', 'stats');
 
 	plugin.init = function () {
 		log.info('stats:init');

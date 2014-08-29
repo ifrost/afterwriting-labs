@@ -1,13 +1,13 @@
 /* global define, Blob, window */
 define(function (require) {
 	
-	var core = require('core'), 
+	var pm = require('utils/pluginmanager'), 
 		saveAs = require('saveAs'), 
 		preview = require('plugins/preview'),
 		Dropbox = require('dropbox'), 
 		data = require('utils/data');
 	
-	var plugin = core.create_plugin('save', 'save');
+	var plugin = pm.create_plugin('save', 'save');
 
 	plugin.data = {
 		filename: "screenplay"

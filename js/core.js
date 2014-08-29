@@ -1,45 +1,17 @@
 /*global define*/
-define(['jquery', 'templates', 'logger', 'utils/layout', 'utils/decorator', 'd3', 'utils/data'], function ($, templates, logger, layout, decorate, d3, data) {
+define(function (require) {
 
-	var log = logger.get('core'), module = {}, current;
+	var $ = require('jquery'),
+		templates = require('templates'),
+		logger = require('logger'),
+		layout = require('utils/layout'),
+		decorator = require('utils/decorator'),
+		d3 = require('d3'),
+		pluginmanager = require('utils/pluginmanager'),
+		data = require('utils/data');
 	
-	module.create_plugin = function (name, title) {
-		return {
-			is_plugin: true,
-			activate: function () {},
-			deactivate: function () {},
-			context: {},
-			init: function () {},
-			data: {},
-			name: name,
-			title: title,
-			class: 'inactive'
-		};
-	};
-
-	module.switch_to = function (plugin) {
-		if (plugin === current) {
-			return;
-		}
-
-		log.info('Switching to: ' + plugin.name);
-
-		if (current) {
-			current.deactivate();
-		}
-		current = plugin;
-		
-		current.activate();
-
-		layout.switch_to_plugin(plugin.name);
-	};
+	var log = logger.get('core'), module = {};
 	
-	module.refresh = function() {
-		if (current) {
-			current.deactivate();
-			current.activate();
-		}
-	};
 
 	module.init = function (modules) {
 		data.load_config();
@@ -51,7 +23,7 @@ define(['jquery', 'templates', 'logger', 'utils/layout', 'utils/decorator', 'd3'
 		var enrich = function (plugin) {
 			d3.keys(plugin).forEach(function (property) {
 				if (typeof (plugin[property]) === "function" && !(plugin[property].decorated)) {
-					plugin[property] = decorate(plugin[property]);
+					plugin[property] = decorator(plugin[property]);
 				}
 			});
 		};
@@ -87,7 +59,7 @@ define(['jquery', 'templates', 'logger', 'utils/layout', 'utils/decorator', 'd3'
 
 		context.plugins.forEach(function (plugin) {
 			$('.tool[plugin="' + plugin.name + '"], .menu-item[plugin="' + plugin.name + '"], a.switch[plugin="' + plugin.name + '"]').click(function () {
-				module.switch_to(plugin);
+				pluginmanager.switch_to(plugin);
 			});			
 		});
 		
