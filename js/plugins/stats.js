@@ -10,10 +10,6 @@ define(function (require) {
 	var log = logger.get('stats');
 	var plugin = pm.create_plugin('stats', 'stats');
 
-	plugin.init = function () {
-		log.info('stats:init');
-	};
-
 	plugin.goto = function (line) {
 		editor.goto(line);
 	};

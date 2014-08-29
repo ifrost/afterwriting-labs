@@ -5,6 +5,7 @@ define(function (require) {
 		templates = require('templates'),
 		data = require('utils/data'),
 		Handlebars = require('handlebars'),
+		pm = require('utils/pluginmanager'),
 		common = require('utils/common');
 	
 	var module = {};
@@ -61,7 +62,6 @@ define(function (require) {
 	module.init_layout = function (context) {
 
 		module.small = $('html').width() < 800;
-
 
 		// load background
 		var max_backgrounds = 7;
@@ -181,6 +181,17 @@ define(function (require) {
 		$('.close-content').click(function () {
 			close_content();
 		});
+		
+		context.plugins.forEach(function (plugin) {
+			$('.tool[plugin="' + plugin.name + '"], .menu-item[plugin="' + plugin.name + '"], a.switch[plugin="' + plugin.name + '"]').click(function () {
+				pm.switch_to(plugin);
+			});
+		});
+
+		pm.switch_to.add(function(plugin){
+			module.switch_to_plugin(plugin.name);
+		});
+
 
 		/** hide all plugins **/
 		$('.plugin-contents > div').hide();

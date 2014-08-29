@@ -2,7 +2,7 @@
 define(function(require){
 	
 	var logger = require('logger'),
-		layout = require('utils/layout');
+		decorator = require('utils/decorator');
 	
 	var log = logger.get('pluginmanager');
 	
@@ -23,7 +23,7 @@ define(function(require){
 		};
 	};
 
-	module.switch_to = function (plugin) {
+	module.switch_to = decorator(function (plugin) {
 		if (plugin === current) {
 			return;
 		}
@@ -37,8 +37,8 @@ define(function(require){
 		
 		current.activate();
 
-		layout.switch_to_plugin(plugin.name);
-	};
+		return current;
+	});
 	
 	module.refresh = function() {
 		if (current) {
