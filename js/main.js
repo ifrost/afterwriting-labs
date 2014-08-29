@@ -43,7 +43,7 @@ require(['bootstrap', 'logger', 'utils/monitor', 'dev', 'utils/common',
          'plugins/save',
          'plugins/preview',
          'plugins/facts',
-         'plugins/stats',
+         'plugins/stats'
 ], function (bootstrap, logger, monitor, dev, common, layout, data, open) {
 	var devmode = !! window.__devmode;
 

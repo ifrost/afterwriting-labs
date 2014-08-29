@@ -18,7 +18,7 @@ define(function (require) {
 					stream.next();
 					return null;
 				}
-			},
+			}
 		};
 
 

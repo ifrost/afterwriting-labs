@@ -171,7 +171,7 @@ define(function (require) {
 			{
 				label: 'OTHER',
 				value: days_and_nights.other
-			},
+			}
 		];
 
 		plugin.data.scenes = scenes;

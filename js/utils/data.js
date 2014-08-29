@@ -57,7 +57,7 @@ define(function (require) {
 				},
 				notes: {
 					x: 1.5,
-					y: 8.5,
+					y: 8.5
 				}
 			},
 			scene_heading: {
@@ -134,7 +134,7 @@ define(function (require) {
 				},
 				notes: {
 					x: 1.5,
-					y: 8.5,
+					y: 8.5
 				}
 			},
 			scene_heading: {
@@ -198,7 +198,7 @@ define(function (require) {
 		print_sections: false,
 		print_synopsis: false,
 		number_sections: false,
-		use_dual_dialogue: true,
+		use_dual_dialogue: true
 	};
 
 	plugin.default_config.print = function () {

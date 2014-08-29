@@ -23,7 +23,7 @@ define(function (require) {
 			lineWrapping: true,
 			styleActiveLine: true,
 			extraKeys: {
-				"Ctrl-Space": "autocomplete",
+				"Ctrl-Space": "autocomplete"
 			}
 		});
 
