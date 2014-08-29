@@ -10,7 +10,7 @@ define(function (require) {
 		pluginmanager = require('utils/pluginmanager'),
 		data = require('utils/data');
 	
-	var log = logger.get('core'), module = {};
+	var log = logger.get('bootstrap'), module = {};
 	
 
 	module.init = function (modules) {
@@ -42,7 +42,7 @@ define(function (require) {
 			plugin.init();
 		});
 
-		log.info('Initializing core. ' + plugins.length + ' plugins found.');
+		log.info('Bootstrapping: ' + plugins.length + ' plugins found.');
 
 		plugins.forEach(function (plugin) {
 			log.info('Initializing plugin: ' + plugin.name);
