@@ -1,5 +1,12 @@
-define(['core', 'logger', 'jquery', 'saveAs', 'plugins/preview', 'utils/data'], function (core, logger, $, saveAs, preview, data) {
-	var log = logger.get('save');
+/* global define, Blob, window */
+define(function (require) {
+	
+	var core = require('core'), 
+		saveAs = require('saveAs'), 
+		preview = require('plugins/preview'),
+		Dropbox = require('dropbox'), 
+		data = require('utils/data');
+	
 	var plugin = core.create_plugin('save', 'save');
 
 	plugin.data = {

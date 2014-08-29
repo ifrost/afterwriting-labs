@@ -1,3 +1,4 @@
+/* global define */
 define(function () {
 	var module = {};
 
@@ -55,7 +56,7 @@ define(function () {
 			};
 			current = token.end + 1;
 
-			if (text.length == 0) {
+			if (text.length === 0) {
 				if (!last_was_separator) {
 					state = 'normal';
 					dual_right = false;
@@ -122,10 +123,10 @@ define(function () {
 					}
 					token.type = 'scene_heading';
 				} else if (token.text.match(regex.character)) {
-					if (i == lines_length || i == lines_length - 1 || lines[i + 1].length == 0) {
+					if (i === lines_length || i === lines_length - 1 || lines[i + 1].length === 0) {
 						token.type = 'shot';
 					} else {
-						state = 'dialogue'
+						state = 'dialogue';
 						token.type = 'character';
 						if (token.text[token.text.length - 1] === '^') {
 							if (cfg.use_dual_dialogue) {
@@ -286,7 +287,9 @@ define(function () {
 		// fold dual dialogue for breaking
 		var dual_left, dual_right, contains_dual = true;
 		while (contains_dual) {
-			dual_left = -1, dual_right = -1, contains_dual = false;
+			dual_left = -1;
+			dual_right = -1;
+			contains_dual = false;
 			// find left && right index		
 			for (var i=0; i<result.lines.length; i++) {
 				if (result.lines[i].token && result.lines[i].token.type === 'character' && result.lines[i].token.dual === 'left') {
@@ -318,7 +321,7 @@ define(function () {
 		console.log(result);
 		
 		return result;
-	}
+	};
 
 	return module;
 

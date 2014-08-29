@@ -1,5 +1,9 @@
-define(['logger', 'modernizr', 'utils/fountain', 'utils/decorator'], function (logger, Modernizr, fountain, decorator) {
-	var log = logger.get('data');
+/* global define, localStorage, window */
+define(function (require) {
+	
+	var Modernizr = require('modernizr'), 
+		fountain = require('utils/fountain'), 
+		decorator = require('utils/decorator');
 
 	var plugin = {};
 	var _tempStorage = {};
@@ -18,7 +22,7 @@ define(['logger', 'modernizr', 'utils/fountain', 'utils/decorator'], function (l
 				_tempStorage[key] = value;
 			}
 		}
-	}
+	};
 
 	plugin.script = decorator.property();
 	plugin.script.add(function (script) {

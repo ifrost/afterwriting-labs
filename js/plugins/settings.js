@@ -1,5 +1,8 @@
-define(['core', 'logger', 'utils/data'], function (core, logger, data) {
-	var log = logger.get('settings');
+/* global define */
+define(function (require) {
+	var core = require('core'),
+		data = require('utils/data');
+	
 	var plugin = core.create_plugin('settings', 'setup');
 	
 	plugin.get_config = function() {

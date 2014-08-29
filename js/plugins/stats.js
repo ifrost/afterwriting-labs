@@ -1,4 +1,12 @@
-define(['core', 'logger', 'd3', 'jquery', 'plugins/editor', 'utils/data', 'utils/layout', 'utils/helper'], function (core, logger, d3, $, editor, data, layout, helper) {
+/* global define */
+define(function (require) {
+	
+	var core = require('core'),
+		logger = require('logger'), 
+		d3 = require('d3'), 
+		editor = require('plugins/editor'), 
+		data = require('utils/data');
+	
 	var log = logger.get('stats');
 	var plugin = core.create_plugin('stats', 'stats');
 
@@ -8,7 +16,7 @@ define(['core', 'logger', 'd3', 'jquery', 'plugins/editor', 'utils/data', 'utils
 
 	plugin.goto = function (line) {
 		editor.goto(line);
-	}
+	};
 
 	plugin.activate = function () {
 		var scenes = [];
@@ -35,13 +43,13 @@ define(['core', 'logger', 'd3', 'jquery', 'plugins/editor', 'utils/data', 'utils
 			});
 			current_scene_characters = d3.set();
 
-		}
+		};
 
 		data.parsed.tokens.forEach(function (token) {
 			var type;
 			if (token.type === 'scene_heading') {
 				append_characters();
-				var suffix = token.text.substring(token.text.lastIndexOf(' - '))
+				var suffix = token.text.substring(token.text.lastIndexOf(' - '));
 				if (suffix.indexOf('DAY') !== -1) {
 					days_and_nights.day++;
 					type = 'day';
@@ -101,7 +109,7 @@ define(['core', 'logger', 'd3', 'jquery', 'plugins/editor', 'utils/data', 'utils
 		})(all_characters_nof_scenes);
 
 		var top10_names = top10.map(function (character) {
-			return character.name
+			return character.name;
 		});
 		var links = [];
 		var id = function (a, b) {
@@ -110,10 +118,10 @@ define(['core', 'logger', 'd3', 'jquery', 'plugins/editor', 'utils/data', 'utils
 		var perm = function (t) {
 			return t.map(function (item, index) {
 				return t.slice(index + 1).map(function (i) {
-					return [t[index], i]
-				})
+					return [t[index], i];
+				});
 			}).reduce(function (prev, cur) {
-				return prev.concat(cur)
+				return prev.concat(cur);
 			}, []);
 		};
 

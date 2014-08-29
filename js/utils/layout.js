@@ -1,9 +1,16 @@
-define(['jquery', 'templates', 'utils/data', 'handlebars', 'utils/common'], function ($, templates, data, Handlebars, common) {
+/* global define, document */
+define(function (require) {
 
+	var $ = require('jquery'),
+		templates = require('templates'),
+		data = require('utils/data'),
+		Handlebars = require('handlebars'),
+		common = require('utils/common');
+	
 	var module = {};
 	
 	// set up handlebars
-	Handlebars.registerHelper('static_path', function (block) {
+	Handlebars.registerHelper('static_path', function () {
 		return common.data.static_path;
 	});
 
@@ -14,7 +21,7 @@ define(['jquery', 'templates', 'utils/data', 'handlebars', 'utils/common'], func
 		}, {
 			duration: 500
 		}).addClass('content-closed');
-	}
+	};
 
 	module.show_tooltip = function (text) {
 		$('#tooltip').css("visibility", "visible").html(text);
@@ -26,6 +33,11 @@ define(['jquery', 'templates', 'utils/data', 'handlebars', 'utils/common'], func
 
 	module.hide_tooltip = function () {
 		$('#tooltip').css("visibility", "hidden");
+	};
+	
+	module.show_main = function () {
+		module.close_content();
+		module.show_options();
 	};
 
 

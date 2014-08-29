@@ -1,16 +1,17 @@
-define(['libs/codemirror/lib/codemirror'], function (CodeMirror) {
+/* global define */
+define(function (require) {
 	"use strict";
+	
+	var CodeMirror = require('libs/codemirror/lib/codemirror');
 
-	CodeMirror.defineMode("fountain", function (config) {
-		"use strict";
-
+	CodeMirror.defineMode("fountain", function () {
 		var last;
 
 		// our various parsers
 		var parsers = {
 
 			// the main tokenizer
-			tokenizer: function (stream, state) {
+			tokenizer: function (stream) {
 				if (stream.match(/^((INT.?\/.EXT\.?)|(I\/E)|(INT\.?)|(EXT\.?)).*$/, true)) {
 					return "scene-header";
 				} else {

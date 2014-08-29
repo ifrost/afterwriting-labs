@@ -1,11 +1,16 @@
-define(['core', 'logger', 'jquery', 'utils/data',
-		'libs/codemirror/lib/codemirror',
-		'libs/codemirror/addon/selection/active-line',
-        'libs/codemirror/addon/hint/show-hint',
-		'libs/codemirror/addon/hint/anyword-hint',
-		'utils/fountainmode'
-], function (core, logger, $, data, cm) {
-	var log = logger.get('editor');
+/* global define, setTimeout */
+define(function (require) {
+	
+	var core = require('core'),
+		data = require('utils/data'),
+		cm = require('libs/codemirror/lib/codemirror');
+	
+	// codemirror plugins
+	require('libs/codemirror/addon/selection/active-line');
+    require('libs/codemirror/addon/hint/show-hint');
+	require('libs/codemirror/addon/hint/anyword-hint');
+	require('utils/fountainmode');
+	
 	var plugin = core.create_plugin('editor', 'edit');
 	var editor;
 
@@ -67,7 +72,6 @@ define(['core', 'logger', 'jquery', 'utils/data',
 					editor.scrollTo(0, scroll_to.top + scroll_to.clientHeight - editor.defaultTextHeight() * 2);
 				}
 			}
-
 
 		}, 300);
 	};

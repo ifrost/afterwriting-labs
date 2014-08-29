@@ -1,5 +1,24 @@
-define(['utils/data', 'd3'], function (data, d3) {
+/* global define */
+define(function (require) {
+	
+	var data = require('utils/data'),
+		d3 = require('d3');
+	
 	var module = {};
+	
+	module.create_plugin = function (name, title) {
+		return {
+			is_plugin: true,
+			activate: function () {},
+			deactivate: function () {},
+			context: {},
+			init: function () {},
+			data: {},
+			name: name,
+			title: title,
+			class: 'inactive'
+		};
+	};
 
 	module.format_time = function (total) {
 		var hours = Math.floor(total / 60);

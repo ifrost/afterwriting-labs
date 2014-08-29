@@ -1,5 +1,7 @@
-define(['core', 'logger', 'jquery', 'utils/data'], function (core, logger, $, data) {
-	var log = logger.get('facts');
+define(function (require) {
+	var core = require('core'),
+		data = require('utils/data');
+	
 	var plugin = core.create_plugin('facts', 'facts');
 
 	var clear_data = function () {

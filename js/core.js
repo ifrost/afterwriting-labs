@@ -41,11 +41,6 @@ define(['jquery', 'templates', 'logger', 'utils/layout', 'utils/decorator', 'd3'
 		}
 	};
 
-	module.show_main = function () {
-		layout.close_content();
-		layout.show_options();
-	};
-
 	module.init = function (modules) {
 		data.load_config();
 		

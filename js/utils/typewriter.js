@@ -1,11 +1,15 @@
-define(['jspdf', 'utils/helper'], function (jsPDF, helper) {
+/* global define */
+define(function (require) {
+	var jsPDF = require('jspdf'),
+		helper = require('utils/helper');
+	
 	var module = {};
 
 	var split_color = function (color) {
 		return color.substr(1).match(/([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/).slice(1).map(function (hex) {
-			return parseInt(hex, 16)
-		})
-	}
+			return parseInt(hex, 16);
+		});
+	};
 
 	module.get_pdf = function (parsed, cfg) {
 

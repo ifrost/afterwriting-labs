@@ -1,18 +1,29 @@
-define(['core', 'logger', 'templates', 'dropbox', 'utils/data', 'utils/helper', 'jquery'], function (core, logger, templates, Dropbox, data, helper, $) {
+/* global define, window, FileReader */
+define(function (require) {
+	
+	var logger = require('logger'),
+		templates = require('templates'), 
+		Dropbox = require('dropbox'), 
+		data = require('utils/data'), 
+		helper = require('utils/helper'), 
+		$ = require('jquery'), 
+		layout = require('utils/layout');
+	
 	var log = logger.get('open');
-	var plugin = core.create_plugin('open', 'open');
+	var plugin = helper.create_plugin('open', 'open');
 	plugin.class = "active";
 
 	var set_script = function (value) {
 		data.script(value);
-		core.show_main();
+		layout.show_main();
 	};
 
 	plugin.open_last_used = function (startup) {
-		var last_used;
-		if (last_used = data.data('last-used-script')) {
+		var last_used = data.data('last-used-script');
+		if (last_used) {
 			set_script(last_used);
 		}
+		return startup;
 	};
 
 	plugin.open_file = function (selected_file) {
@@ -21,7 +32,7 @@ define(['core', 'logger', 'templates', 'dropbox', 'utils/data', 'utils/helper', 
 			set_script(this.result);
 		};
 		fileReader.readAsText(selected_file);
-	}
+	};
 
 	plugin.open_file_dialog = function () {
 		// view action
@@ -29,7 +40,7 @@ define(['core', 'logger', 'templates', 'dropbox', 'utils/data', 'utils/helper', 
 
 	plugin.create_new = function () {
 		set_script('');
-	}
+	};
 
 	plugin.open_sample = function (name) {
 		var template_name = 'templates/samples/' + name + '.fountain';

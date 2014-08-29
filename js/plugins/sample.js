@@ -1,4 +1,8 @@
-define(['core', 'logger'], function (core, logger) {
+/* global define */
+define(function (require) {
+	var core = require('core'),
+		logger =require('logger');
+	
 	var log = logger.get('sample');
 	var plugin = core.create_plugin('sample', 'sample');
 	

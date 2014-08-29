@@ -1,5 +1,10 @@
-define(['core', 'logger', 'utils/typewriter', 'utils/data'], function (core, logger, typewriter, data) {
-	var log = logger.get('preview');
+/* global define */
+define(function (require) {
+	
+	var core = require('core'),
+		typewriter = require('utils/typewriter'),
+		data = require('utils/data');
+	
 	var plugin = core.create_plugin('preview', 'view');
 	
 	plugin.get_pdf = function() {

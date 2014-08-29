@@ -1,5 +1,15 @@
-define(['logger', 'plugins/open', 'plugins/save', 'plugins/editor', 'plugins/preview', 'plugins/facts', 'plugins/stats', 'plugins/settings', 'utils/data'], function (logger, open, save, editor, preview, facts, stats, settings, data) {
+/* global define, ga */
+define(function (require) {
 
+	var logger = require('logger'), 
+		open = require('plugins/open'), 
+		save = require('plugins/save'),
+		editor = require('plugins/editor'),
+		preview = require('plugins/preview'), 
+		facts = require('plugins/facts'), 
+		stats = require('plugins/stats'), 
+		settings = require('plugins/settings');
+	
 	var module = {};
 	var log = logger.get('monitor');
 
