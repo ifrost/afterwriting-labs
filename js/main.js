@@ -35,7 +35,7 @@ require.config({
 	}
 });
 
-require(['core', 'logger', 'utils/monitor', 'dev', 'utils/common',
+require(['bootstrap', 'logger', 'utils/monitor', 'dev', 'utils/common',
          'utils/layout', 'utils/data',
          'plugins/open',
          'plugins/settings',
@@ -44,7 +44,7 @@ require(['core', 'logger', 'utils/monitor', 'dev', 'utils/common',
          'plugins/preview',
          'plugins/facts',
          'plugins/stats',
-], function (core, logger, monitor, dev, common, layout, data, open) {
+], function (bootstrap, logger, monitor, dev, common, layout, data, open) {
 	var devmode = !! window.__devmode;
 
 	// set up logger
@@ -85,7 +85,7 @@ require(['core', 'logger', 'utils/monitor', 'dev', 'utils/common',
 	// main initialization
 	var loaded_plugins = Array.prototype.splice.call(arguments, 0);
 	logger.filter = null;
-	core.init(loaded_plugins);
+	bootstrap.init(loaded_plugins);
 
 	if (data.config.load_last_opened) {
 		open.open_last_used(true);

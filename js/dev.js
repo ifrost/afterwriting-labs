@@ -1,4 +1,15 @@
-define(['core', 'utils/common', 'plugins/open', 'utils/layout'], function (core, common, open, layout, dev_plugin) {
+/* global define, setTimeout */
+define(function (require) {
+	
+	var pm = require('utils/pluginmanager'),
+		common = require('utils/common'),
+		open = require('plugins/open'),
+		layout = require('utils/layout'),
+		dev_plugin;
+	
+	//dev_plugin = require('plugins/plugin');
+						 
+	
 	var module = {};
 
 	module.pre_init = function() {
@@ -10,7 +21,7 @@ define(['core', 'utils/common', 'plugins/open', 'utils/layout'], function (core,
 			open.open_sample('big_fish');
 
 			setTimeout(function () {
-				core.switch_to(dev_plugin);
+				pm.switch_to(dev_plugin);
 
 				layout.show_options();
 				layout.open_content();
@@ -19,7 +30,6 @@ define(['core', 'utils/common', 'plugins/open', 'utils/layout'], function (core,
 			
 		}
 		layout.dev();
-		window.core = core;
 	};
 
 	return module;
