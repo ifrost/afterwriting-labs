@@ -9,7 +9,7 @@ define(function (require) {
 	require('libs/codemirror/addon/selection/active-line');
     require('libs/codemirror/addon/hint/show-hint');
 	require('libs/codemirror/addon/hint/anyword-hint');
-	require('utils/fountainmode');
+	require('utils/fountain/cmmode');
 	
 	var plugin = pm.create_plugin('editor', 'edit');
 	var editor;

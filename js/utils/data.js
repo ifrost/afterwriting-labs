@@ -2,7 +2,7 @@
 define(function (require) {
 	
 	var Modernizr = require('modernizr'), 
-		fountain = require('utils/fountain'), 
+		fountain = require('utils/fountain/liner'), 
 		decorator = require('utils/decorator');
 
 	var plugin = {};

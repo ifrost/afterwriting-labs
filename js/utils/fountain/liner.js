@@ -1,10 +1,10 @@
 /* global define */
 define(function (require) {
 
-	var parser = require('utils/fountainparser'),
-		h = require('utils/fountainhelpers');
+	var parser = require('utils/fountain/parser'),
+		h = require('utils/fountain/helpers');
 
-		var module = {};
+	var module = {};
 
 	var _state = 'normal'; // 'dialogue'
 
