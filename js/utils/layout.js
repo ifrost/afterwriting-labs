@@ -1,4 +1,4 @@
-/* global define, document */
+/* global define, document, window, setTimeout */
 define(function (require) {
 
 	var $ = require('jquery'),
@@ -7,15 +7,65 @@ define(function (require) {
 		Handlebars = require('handlebars'),
 		pm = require('utils/pluginmanager'),
 		common = require('utils/common');
-	
-	var module = {};
-	
+
+	var module = {}, only_active_visible = true;
+
 	// set up handlebars
 	Handlebars.registerHelper('static_path', function () {
 		return common.data.static_path;
 	});
 
-	var close_content = function (immediately) {
+	var calculate_basics = function () {
+		module.small = $('html').width() < 800;
+	};
+
+	var update_selector = function (no_animation) {
+		var active_only = only_active_visible;
+		var cols = 3;
+		var img_size = module.small ? 70 : 100;
+		var padding = module.small ? 5 : 15;
+		var corner = {};
+		corner.top = module.small ? 120 : 150;
+		corner.left = ($('html').width() - (cols * (img_size + padding)) + padding) / 2;
+
+		var get_position = function (index, all, max) {
+			var item_row = Math.floor(index / cols),
+				rows = Math.floor(all / cols),
+				item_col = index % cols,
+				last_row_items = (all % cols) || cols,
+				item_in_the_last_row = (index >= all - last_row_items),
+				items_in_current_row = item_in_the_last_row ? last_row_items : cols,
+				max_rows = Math.floor(max / cols),
+				left_padding = ((cols - items_in_current_row) * img_size) / items_in_current_row,
+				top_padding = rows < max_rows ? img_size / 3 : 0;
+
+			var pos = {
+				top: item_row * (img_size + padding) + corner.top + top_padding,
+				left: item_col * (img_size + padding) + corner.left + left_padding
+			};
+
+			return pos;
+		};
+
+		if (active_only) {
+			$('.menu-item.inactive').hide();
+		} else {
+			$('.menu-item.inactive').show();
+		}
+
+		$('.menu-item' + (active_only ? '.active' : '')).each(function (index) {
+			var active_items = $('.menu-item.active').size();
+			var all_items = $('.menu-item').size();
+			var attrs = get_position(index, active_only ? active_items : all_items, all_items);
+			attrs.opacity = 1.0;
+			attrs.width = img_size - 40;
+			attrs.height = img_size - 40;
+			$(this).animate(attrs, no_animation ? 0 : 800);
+		});
+
+	};
+
+	module.close_content = function (immediately) {
 		var action = immediately ? 'offset' : 'animate';
 		$('.content')[action]({
 			top: -$('.content').height()
@@ -35,33 +85,21 @@ define(function (require) {
 	module.hide_tooltip = function () {
 		$('#tooltip').css("visibility", "hidden");
 	};
-	
+
 	module.show_main = function () {
 		module.close_content();
-		module.show_options();
+		$('.tool.inactive').fadeIn();
+		only_active_visible = false;
+		update_selector();
 	};
 
-
-	/** menu open = show other options **/
-	var show_options = function () {
-		$('.menu-item[plugin="open"], .menu-item[plugin="info"]').animate({
-			'margin-left': '10px',
-			'margin-top': '10px'
-		}, {
-			duration: 800,
-			complete: function () {
-				$('.menu-item.inactive').fadeIn();
-				$('.tool.inactive').fadeIn();
-			}
-		});
+	module.set_footer = function (content) {
+		$('.footer').html(content);
 	};
-
-	module.show_options = show_options;
-	module.close_content = close_content;
 
 	module.init_layout = function (context) {
 
-		module.small = $('html').width() < 800;
+		calculate_basics();
 
 		// load background
 		var max_backgrounds = 7;
@@ -74,6 +112,17 @@ define(function (require) {
 		var layout = templates['templates/layout.hbs'];
 		var body = layout(context);
 		$('body').append(body);
+
+
+		var inactive_plugins_count = 0,
+			all_plugins_count = 0;
+
+		context.plugins.forEach(function (plugin) {
+			if (plugin.class !== "active") {
+				inactive_plugins_count++;
+			}
+			all_plugins_count++;
+		});
 
 		/** mouse over IE fix **/
 		$('.menu-item').hover(function () {
@@ -88,22 +137,8 @@ define(function (require) {
 		});
 
 
-		/** hide inactive elements **/
-		$('.menu-item.inactive').hide();
-		$('.tool.inactive').hide();
-		/** align open **/
-		if (!module.small) {
-			$('.menu-item[plugin="open"]').css('margin-left', '120px').css('margin-top', '120px');
-			$('.menu-item[plugin="info"]').css('margin-top', '120px');
-		} else {
-			$('.menu-item[plugin="open"]').css('margin-left', '60px').css('margin-top', '20px');
-			$('.menu-item[plugin="info"]').css('margin-left', '40px').css('margin-top', '20px');
-
-		}
-		/** content **/
-		$('.content').removeClass('inactive');
 		var calculate_content = function () {
-			var left = module.small ? 0 : ($(document).width() - $('.content').width()) / 2;
+			var left = module.small ? 0 : ($('html').width() - $('.content').outerWidth()) / 2;
 			var height = $(document).height();
 			$('.content').height(height).offset({
 				left: left
@@ -114,6 +149,7 @@ define(function (require) {
 			$('.to-the-bottom').height(function () {
 				return height - $(this).offset().top - 60;
 			});
+
 		};
 
 		module.open_content = function () {
@@ -122,26 +158,23 @@ define(function (require) {
 			}, {
 				duration: 500
 			});
-		}
+		};
 
 		/** calc on each reize **/
 		$(window).resize(function () {
+			calculate_basics();
 			calculate_content();
 			if ($('.content').hasClass('content-closed')) {
-				close_content(true);
+				module.close_content(true);
 			} else {
 				module.open_content();
 			}
-
+			update_selector(true);
 		});
-
-		module.dev = function () {
-			$('.footer').append('<br /><span class="version">development version</span>');
-		};
 
 		/** initialize **/
 		calculate_content();
-		close_content(true);
+		module.close_content(true);
 
 		module.switch_to_plugin = function (plugin) {
 
@@ -152,10 +185,9 @@ define(function (require) {
 
 			setTimeout(calculate_content, 500);
 
-
 			$('.tool.active').removeClass('active');
 			$('.tool[plugin="' + plugin + '"]').addClass('active');
-		}
+		};
 
 		/** open content handlers **/
 		$('.menu-item, a.switch').click(function () {
@@ -168,27 +200,30 @@ define(function (require) {
 			if (!$(this).hasClass('active')) {
 				module.switch_to_plugin($(this).attr('plugin'));
 			}
-		});		
+		});
 
 		/** info handlers **/
 		$('.info-content').hide();
-		$('.info-icon').click(function(){
+		$('.info-icon').click(function () {
 			var section = $(this).attr('section');
-			$('.info-content[section="' + section + '"]').toggle({duration: 200, easing: 'linear'});
+			$('.info-content[section="' + section + '"]').toggle({
+				duration: 200,
+				easing: 'linear'
+			});
 		});
-		
+
 		/** content close **/
 		$('.close-content').click(function () {
-			close_content();
+			module.close_content();
 		});
-		
+
 		context.plugins.forEach(function (plugin) {
 			$('.tool[plugin="' + plugin.name + '"], .menu-item[plugin="' + plugin.name + '"], a.switch[plugin="' + plugin.name + '"]').click(function () {
 				pm.switch_to(plugin);
 			});
 		});
 
-		pm.switch_to.add(function(plugin){
+		pm.switch_to.add(function (plugin) {
 			module.switch_to_plugin(plugin.name);
 		});
 
@@ -197,6 +232,16 @@ define(function (require) {
 		$('.plugin-contents > div').hide();
 
 		/** init content **/
+		$('.menu-item').offset({
+			top: $(window).height() / 2,
+			left: $(window).width() / 2
+		});
+		$('.menu-item').css({
+			'opacity': 0
+		});
+		$('.tool.inactive').hide();
+
+		update_selector();
 		$('.content').css('display', 'block');
 		$('.menu').fadeIn();
 

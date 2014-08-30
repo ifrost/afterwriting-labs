@@ -37,6 +37,7 @@ require.config({
 
 require(['bootstrap', 'logger', 'utils/monitor', 'dev', 'utils/common',
          'utils/layout', 'utils/data',
+         'plugins/info',
          'plugins/open',
          'plugins/settings',
          'plugins/editor',
@@ -94,8 +95,10 @@ require(['bootstrap', 'logger', 'utils/monitor', 'dev', 'utils/common',
 
 	monitor.init();
 
+	var footer = 'version: <a href="http://www.imdb.com/title/tt1790885/" target="_blank"><span class="version">Zero</span>&nbsp;Dark Thrirty</a>';
 	if (devmode) {
-		dev.init();
+		footer += '<br /><span class="version">development version</span>';
 	}
+	layout.set_footer(footer);
 
 });

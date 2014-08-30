@@ -72,14 +72,14 @@ function program5(depth0,data) {
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" />";
+    + "\" />\r\n		";
   return buffer;
   }
 
 function program7(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\r\n		<div class=\"plugin-content\" plugin=\"";
+  buffer += "<div class=\"plugin-content\" plugin=\"";
   if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -91,49 +91,17 @@ function program7(depth0,data) {
   return buffer;
   }
 
-  buffer += "<!--- top logo -->\r\n<p class=\"logo\">\r\n	<span class=\"apostrophe\">&rsquo;</span><span class=\"after\">after</span><span class=\"writing\">writing</span>\r\n	<span class=\"labs\">labs</span>\r\n</p>\r\n<!--- main menu -->\r\n<div class=\"menu\" style=\"display:none\">\r\n	<ul class=\"selector\">\r\n		<li class=\"menu-item\" plugin=\"info\">\r\n			<img src=\"";
-  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "gfx/icons/info.svg\" />\r\n			<span>info</span>\r\n		</li>";
+  buffer += "<!--- top logo -->\r\n<p class=\"logo\">\r\n	<span class=\"apostrophe\">&rsquo;</span><span class=\"after\">after</span><span class=\"writing\">writing</span>\r\n</p>\r\n<!--- main menu -->\r\n<div class=\"menu\" style=\"display:none\">\r\n	<ul class=\"selector\">\r\n		";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.plugins), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</ul>\r\n</div>\r\n<div class=\"footer\">version:\r\n	<a href=\"http://www.imdb.com/title/tt1790885/\" target=\"_blank\">\r\n		<span class=\"version\">Zero</span>&nbsp;Dark Thrirty</a>\r\n</div>\r\n<!--- plugin content -->\r\n<div class=\"content\" style=\"display:none\">\r\n	<div class=\"top-bar\">\r\n		<img class=\"tool\" src=\"";
-  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "gfx/icons/info.svg\" plugin=\"info\" />";
+  buffer += "</ul>\r\n</div>\r\n<div class=\"footer\"></div>\r\n<!--- plugin content -->\r\n<div class=\"content\" style=\"display:none\">\r\n	<div class=\"top-bar\">\r\n		";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.plugins), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n		<img class=\"close-content\" src=\"";
   if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "gfx/icons/close.svg\" />\r\n	</div>\r\n	<div class=\"plugin-contents\">\r\n		<div class=\"plugin-content info\" plugin=\"info\">\r\n			<h1>About</h1>\r\n			<p>\r\n				<em>'afterwritings labs</em>&nbsp;is a place where you can play around with some tools for screenplays written in\r\n				<a href=\"http://fountain.io/\" target=\"_blank\">Fountain format</a>. Don't have any? You can use one of the\r\n				<a class=\"switch\" href=\"#\" plugin=\"open\">samples</a>.</p>\r\n			<p>You can use it offline as well (sorry, no Dropbox support for offline version). Just download this\r\n				<a href=\"afterwriting.zip\">file</a>, unzip and double click on index.html.</p>\r\n			<p>\r\n				<em>Warning: this product may contain nuts and bugs!</em>\r\n			</p>\r\n			<h1>What's inside?</h1>\r\n			<p>Available plugins:</p>\r\n			<ul>\r\n				<li>\r\n					<img src=\"";
-  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "gfx/icons/open.svg\" />&nbsp;/&nbsp;\r\n					<img src=\"gfx/icons/save.svg\" />&nbsp;\r\n					<em>Open / Save</em>&nbsp;- open a .fountain file from disk, Dropbox or use a sample, save as .fountain or as PDF.</li>\r\n				<li>\r\n					<img src=\"";
-  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "gfx/icons/settings.svg\" />\r\n					<em>Settings</em>&nbsp;- change paper size, print layout, etc.</li>\r\n				<li>\r\n					<img src=\"";
-  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "gfx/icons/editor.svg\" />\r\n					<em>Editor</em>&nbsp;- a basic editor for\r\n					<a href=\"http://fountain.io/\" target=\"_blank\">.fountain files</a>\r\n				</li>\r\n				<li>\r\n					<img src=\"";
-  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "gfx/icons/preview.svg\" />\r\n					<em>Preview</em>&nbsp;- PDF preview (a browser plugin required)</li>\r\n				<li>\r\n					<img src=\"";
-  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "gfx/icons/facts.svg\" />\r\n					<em>Facts</em>&nbsp;- facts about your screenplay (number of pages, scenes, characters, etc.)</li>\r\n				<li>\r\n					<img src=\"";
-  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "gfx/icons/stats.svg\" />\r\n					<em>Useless Stats</em>&nbsp;- some statistics, don't take them too serious!</li>\r\n			</ul>\r\n			<h1>What's next?</h1>\r\n			<p>More useful/useless tools to come. Stay tuned and follow\r\n				<a href=\"http://blog.afterwriting.com\" target=\"_blank\">afterwriting blog</a>&nbsp;and\r\n				<a href=\"http://twitter.com/afterwriting\" target=\"_blank\">@afterwriting</a>!</p>\r\n			<h1>Contact</h1>\r\n			<p>E-mail:\r\n				<a href=\"mailto:contact@afterwriting.com\">contact@afterwriting.com</a>.</p>\r\n			<h1>Thanks</h1>\r\n			<p>\r\n				<ul>\r\n					<li>Icons from\r\n						<a href=\"http://www.freepik.com\" alt=\"Freepik.com\" title=\"Freepik.com\">Freepik</a>&nbsp;(Daniel Bruce, Icomoon, Yannick, Appzgear)</li>\r\n					<li>Sample scripts:\r\n						<ul>\r\n							<li>\r\n								<em>Big Fish</em>&nbsp;by\r\n								<a href=\"http://johnaugust.com/\" about=\"_blank\">John August</a>\r\n							</li>\r\n							<li>\r\n								<em>Brick & Steel</em>&nbsp;by\r\n								<a href=\"http://prolost.com/about/\" about=\"_blank\">Stu Maschwitz</a>\r\n							</li>\r\n						</ul>\r\n					</li>\r\n					<li>DayRoman font by\r\n						<a href=\"http://apostrophiclab.pedroreina.net/\" target=\"_blank\">Apostrophic Laboratories</a>\r\n					</li>\r\n					<li>JS libs:\r\n						<ul>\r\n							<li>\r\n								<a href=\"https://github.com/mattdaly/Fountain.js\" target=\"_blank\">Fountain.js</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"https://github.com/eligrey/FileSaver.js\" target=\"_blank\">FileSaver.js</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"http://github.com/jonnyreeves/js-logger\" target=\"_blank\">js-logger</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"http://parall.ax/products/jspdf\" target=\"_blank\">jsPDF</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"http://codemirror.net/\" target=\"_blank\">CodeMirror</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"http://jquery.com/\" target=\"_blank\">jQuery</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"http://handlebarsjs.com/\" target=\"_blank\">Handlebars</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"https://github.com/jrburke/almond\" target=\"_blank\">Almond</a>\r\n							</li>\r\n							<li>\r\n								<a href=\"http://requirejs.org/\" target=\"_blank\">RequireJS</a>\r\n							</li>\r\n						</ul>\r\n					</li>\r\n				</ul>\r\n			</p>\r\n		</div>";
+    + "gfx/icons/close.svg\" />\r\n	</div>\r\n	<div class=\"plugin-contents\">\r\n		";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.plugins), {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "</div>\r\n</div>\r\n<div id=\"tooltip\"></div>";
@@ -156,6 +124,40 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
 
   return "<style>\r\n	.plugin-content[plugin=\"facts\"] li span {\r\n		font-weight: bold;\r\n	}\r\n	\r\n</style>\r\n<h1>Facts</h1>\r\n<ul>\r\n	<li>Title:\r\n		<span id=\"facts-title\"></span>\r\n	</li>\r\n	<li>Pages:\r\n		<span id=\"facts-pages\"></span>\r\n	</li>\r\n	<li>Time:\r\n		<span id=\"facts-time\"></span>\r\n	</li>\r\n	<li>Scenes:\r\n		<span id=\"facts-scenes\"></span>\r\n	</li>\r\n	<li>Action time:\r\n		<span id=\"facts-action-time\"></span>\r\n	</li>\r\n	<li>Dialogue time:\r\n		<span id=\"facts-dialogue-time\"></span>\r\n	</li>\r\n</ul>\r\n<h2>Time of speaking</h2>\r\n<span class=\"content-expander expand-dialogue show-all-dialogues\" style=\"margin-left: 20px\">Top 10 characters shown. Click here to show all&nbsp;<span class=\"nof-dialogues\"></span>.</span>\r\n<span class=\"content-expander expand-dialogue show-top-dialogues\" style=\"display:none; margin-left: 20px\">All&nbsp;<span class=\"nof-dialogues\"></span>&nbsp;characters shown. Click here to show Top 10 only.</span>\r\n<ol id=\"facts-characters\"></ol>\r\n\r\n<h2>Locations</h2>\r\n<span class=\"content-expander expand-locations show-all-locations\" style=\"margin-left: 20px\">Top 10 locations shown. Click here to show all&nbsp;<span class=\"nof-locations\"></span>.</span>\r\n<span class=\"content-expander expand-locations show-top-locations\" style=\"display:none; margin-left: 20px\">All <span class=\"nof-locations\"></span> locations shown. Click here to show Top 10 only.</span>\r\n<ol id=\"facts-locations\"></ol>\r\n<!-- scripts -->\r\n<script>\r\n	require(['jquery', 'plugins/facts','utils/helper'], function($, facts, helper) {\r\n		facts.activate.add(function() {\r\n			var facts_data = facts.data.facts;\r\n			$('#facts-title').html(facts_data.title.replace(/\\*/g, '').replace(/_/g, '').replace(/\\n/g, ' / '));\r\n			$('#facts-pages').html(facts_data.pages.toFixed(2));\r\n			$('#facts-time').html(helper.format_time(facts_data.pages));\r\n			$('#facts-scenes').html(facts_data.scenes);\r\n			$('#facts-action-time').html(helper.format_time(facts_data.action_time));\r\n			$('#facts-dialogue-time').html(helper.format_time(facts_data.dialogue_time));\r\n\r\n			$('#facts-characters').empty();\r\n			for (var i = 0; i < facts_data.characters.length; i++) {\r\n				$('#facts-characters').append('<li class=\"' + (i >= 10 ? 'expandable' : '') + '\">' + facts_data.characters[i].name + ' (' + helper.format_time(facts_data.characters[i].time) + ')</li>');\r\n			}\r\n\r\n			$('#facts-locations').empty();\r\n			for (var i = 0; i < facts_data.locations.length; i++) {\r\n				$('#facts-locations').append('<li class=\"' + (i >= 10 ? 'expandable' : '') + '\">' + facts_data.locations[i].name + ' (' + facts_data.locations[i].count + ')</li>');\r\n			}\r\n			$('.nof-dialogues').html(facts_data.characters.length);\r\n			$('.nof-locations').html(facts_data.locations.length);\r\n			\r\n			\r\n			if (facts_data.characters.length > 10) {\r\n				$('#facts-characters li.expandable').hide();\r\n				$('.expand-dialogue').click(function(){\r\n					$('.expand-dialogue').toggle();\r\n					$('#facts-characters li.expandable').slideToggle({duration: 200});\r\n				});\r\n			}\r\n			else {\r\n				$('.expand-dialogue').hide();\r\n			}\r\n			\r\n			if (facts_data.locations.length > 10) {\r\n				$('#facts-locations li.expandable').hide();\r\n				$('.expand-locations').click(function(){\r\n					$('.expand-locations').toggle();\r\n					$('#facts-locations li.expandable').slideToggle({duration: 200});\r\n				});\r\n			}\r\n			else {\r\n				$('.expand-locations').hide();\r\n			}\r\n			\r\n		});\r\n\r\n	});\r\n</script>";
+  });
+
+this["JST"]["templates/plugins/info.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<h1>About</h1>\r\n<p>\r\n	<em>'afterwritings labs</em>&nbsp;is a place where you can play around with some tools for screenplays written in\r\n	<a href=\"http://fountain.io/\" target=\"_blank\">Fountain format</a>. Don't have any? You can use one of the\r\n	<a class=\"switch\" href=\"#\" plugin=\"open\">samples</a>.</p>\r\n<p>You can use it offline as well (sorry, no Dropbox support for offline version). Just download this\r\n	<a href=\"afterwriting.zip\">file</a>, unzip and double click on index.html.</p>\r\n<p>\r\n	<em>Warning: this product may contain nuts and bugs!</em>\r\n</p>\r\n<h1>What's inside?</h1>\r\n<p>Available plugins:</p>\r\n<ul>\r\n	<li>\r\n		<img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/open.svg\" />&nbsp;/&nbsp;\r\n		<img src=\"gfx/icons/save.svg\" />&nbsp;\r\n		<em>Open / Save</em>&nbsp;- open a .fountain file from disk, Dropbox or use a sample, save as .fountain or as PDF.</li>\r\n	<li>\r\n		<img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/settings.svg\" />\r\n		<em>Settings</em>&nbsp;- change paper size, print layout, etc.</li>\r\n	<li>\r\n		<img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/editor.svg\" />\r\n		<em>Editor</em>&nbsp;- a basic editor for\r\n		<a href=\"http://fountain.io/\" target=\"_blank\">.fountain files</a>\r\n	</li>\r\n	<li>\r\n		<img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/preview.svg\" />\r\n		<em>Preview</em>&nbsp;- PDF preview (a browser plugin required)</li>\r\n	<li>\r\n		<img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/facts.svg\" />\r\n		<em>Facts</em>&nbsp;- facts about your screenplay (number of pages, scenes, characters, etc.)</li>\r\n	<li>\r\n		<img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/stats.svg\" />\r\n		<em>Useless Stats</em>&nbsp;- some statistics, don't take them too serious!</li>\r\n</ul>\r\n<h1>What's next?</h1>\r\n<p>More useful/useless tools to come. Stay tuned and follow\r\n	<a href=\"http://blog.afterwriting.com\" target=\"_blank\">afterwriting blog</a>&nbsp;and\r\n	<a href=\"http://twitter.com/afterwriting\" target=\"_blank\">@afterwriting</a>!</p>\r\n<h1>Contact</h1>\r\n<p>E-mail:\r\n	<a href=\"mailto:contact@afterwriting.com\">contact@afterwriting.com</a>.</p>\r\n<h1>Thanks</h1>\r\n<p>\r\n	<ul>\r\n		<li>Icons from\r\n			<a href=\"http://www.freepik.com\" alt=\"Freepik.com\" title=\"Freepik.com\">Freepik</a>&nbsp;(Daniel Bruce, Icomoon, Yannick, Appzgear)</li>\r\n		<li>Sample scripts:\r\n			<ul>\r\n				<li>\r\n					<em>Big Fish</em>&nbsp;by\r\n					<a href=\"http://johnaugust.com/\" about=\"_blank\">John August</a>\r\n				</li>\r\n				<li>\r\n					<em>Brick & Steel</em>&nbsp;by\r\n					<a href=\"http://prolost.com/about/\" about=\"_blank\">Stu Maschwitz</a>\r\n				</li>\r\n			</ul>\r\n		</li>\r\n		<li>DayRoman font by\r\n			<a href=\"http://apostrophiclab.pedroreina.net/\" target=\"_blank\">Apostrophic Laboratories</a>\r\n		</li>\r\n		<li>JS libs:\r\n			<ul>\r\n				<li>\r\n					<a href=\"https://github.com/mattdaly/Fountain.js\" target=\"_blank\">Fountain.js</a>\r\n				</li>\r\n				<li>\r\n					<a href=\"https://github.com/eligrey/FileSaver.js\" target=\"_blank\">FileSaver.js</a>\r\n				</li>\r\n				<li>\r\n					<a href=\"http://github.com/jonnyreeves/js-logger\" target=\"_blank\">js-logger</a>\r\n				</li>\r\n				<li>\r\n					<a href=\"http://parall.ax/products/jspdf\" target=\"_blank\">jsPDF</a>\r\n				</li>\r\n				<li>\r\n					<a href=\"http://codemirror.net/\" target=\"_blank\">CodeMirror</a>\r\n				</li>\r\n				<li>\r\n					<a href=\"http://jquery.com/\" target=\"_blank\">jQuery</a>\r\n				</li>\r\n				<li>\r\n					<a href=\"http://handlebarsjs.com/\" target=\"_blank\">Handlebars</a>\r\n				</li>\r\n				<li>\r\n					<a href=\"https://github.com/jrburke/almond\" target=\"_blank\">Almond</a>\r\n				</li>\r\n				<li>\r\n					<a href=\"http://requirejs.org/\" target=\"_blank\">RequireJS</a>\r\n				</li>\r\n			</ul>\r\n		</li>\r\n	</ul>\r\n</p>";
+  return buffer;
   });
 
 this["JST"]["templates/plugins/open.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
