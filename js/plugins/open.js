@@ -14,15 +14,16 @@ define(function (require) {
 	var plugin = pm.create_plugin('open', 'open');
 	plugin.class = "active";
 
+	var last_session_script;
+	
 	var set_script = function (value) {
 		data.script(value);
 		layout.show_main();
 	};
 
 	plugin.open_last_used = function (startup) {
-		var last_used = data.data('last-used-script');
-		if (last_used) {
-			set_script(last_used);
+		if (last_session_script) {
+			set_script(last_session_script);
 		}
 		return startup;
 	};
@@ -93,6 +94,7 @@ define(function (require) {
 		plugin.context.last_used.script = data.data('last-used-script');
 		plugin.context.last_used.date = data.data('last-used-date');
 		plugin.context.last_used.title = data.data('last-used-title');
+		last_session_script = data.data('last-used-script');
 	}
 
 	return plugin;
