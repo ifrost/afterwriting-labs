@@ -72,12 +72,12 @@ define(function (require) {
 				max: 58
 			},
 			character: {
-				feed: 3.5,
+				feed: 3.7,
 				max: 33
 			},
 			parenthetical: {
-				feed: 3.0,
-				max: 33
+				feed: 3.1,
+				max: 35
 			},
 			dialogue: {
 				feed: 2.5,
@@ -116,8 +116,9 @@ define(function (require) {
 	letter.lines_per_page = 54;
 	letter.page_width = 8.5;
 	letter.scene_heading.max = 60;
+	letter.action.max = 60;
 	letter.character.max = 35;
-	letter.parenthetical.max = 35;
+	letter.parenthetical.max = 38;
 	letter.dialogue.max = 35;
 	letter.transition.max = 60;
 	letter.centered.max = 60;

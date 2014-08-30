@@ -116,12 +116,13 @@ define(function (require) {
 			} else {
 				// formatting not supported yet
 				text = line.text.replace(/\*/g, '').replace(/_/g, '');
+				text = text.trim();
 				
 				var color = (cfg.print()[line.type] && cfg.print()[line.type].color) || '#000000';
 				doc.setTextColor.apply(doc, split_color(color));
 
 				if (line.type === 'centered') {
-					center(line.text, cfg.print().top_margin + cfg.print().font_height * y++);
+					center(text, cfg.print().top_margin + cfg.print().font_height * y++);
 				} else {
 					var feed = (cfg.print()[line.type] || {}).feed || cfg.print().action.feed;
 					if (line.type == "transition") {
