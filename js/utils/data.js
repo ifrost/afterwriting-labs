@@ -41,6 +41,7 @@ define(function (require) {
 			font_height: 0.1667,
 			line_spacing: 1,
 			page_number_top_margin: 0.5,
+			dual_max_factor: 0.75,
 			title_page: {
 				top_start: 3.5,
 				draft_date: {
@@ -105,85 +106,21 @@ define(function (require) {
 			}
 			
 		},
-
-
-		"usletter": {
-			paper_size: "letter",
-			lines_per_page: 54,
-			top_margin: 1.0,
-			page_width: 8.5,
-			left_margin: 1.5,
-			right_margin: 1,
-			font_width: 0.1,
-			font_height: 0.1667,
-			line_spacing: 1,
-			page_number_top_margin: 0.5,
-			title_page: {
-				top_start: 3.5,
-				draft_date: {
-					x: 5.3,
-					y: 8.2
-				},
-				date: {
-					x: 5.3,
-					y: 8.2
-				},
-				contact: {
-					x: 5.3,
-					y: 8.5
-				},
-				notes: {
-					x: 1.5,
-					y: 8.5
-				}
-			},
-			scene_heading: {
-				feed: 1.5,
-				max: 60
-			},
-			action: {
-				feed: 1.5,
-				max: 60
-			},
-			character: {
-				feed: 3.5,
-				max: 35
-			},
-			parenthetical: {
-				feed: 3.0,
-				max: 35
-			},
-			dialogue: {
-				feed: 2.5,
-				max: 35
-			},
-			transition: {
-				feed: 0.0,
-				max: 60
-			},
-			centered: {
-				feed: 1.5,
-				style: 'center',
-				max: 60
-			},
-			synopsis: {
-				feed: 0.5,
-				max: 58,
-				italic: true,
-				color: '#888888',
-				padding: 0,
-				feed_with_last_section: true
-			},
-			section: {
-				feed: 0.5,
-				max: 58,
-				color: '#555555',
-				level_indent: 0.2
-			}			
-			
-		}
 	};
 
+	print_profiles.usletter = JSON.parse(JSON.stringify(print_profiles.a4));
+	var letter  = print_profiles.usletter;
+	letter.paper_size = 'letter';
+	letter.lines_per_page = 54;
+	letter.page_width = 8.5;
+	letter.scene_heading.max = 60;
+	letter.character.max = 35;
+	letter.parenthetical.max = 35;
+	letter.dialogue.max = 35;
+	letter.transition.max = 60;
+	letter.centered.max = 60;
+	letter.synopsis.max = 60;
+	letter.section.max = 60;
 
 	plugin.default_config = {
 		show_background_image: true,
