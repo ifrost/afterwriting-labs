@@ -151,14 +151,13 @@ define(function (require) {
 	};
 
 
-	module.parse = function (text, cfg) {
+	module.line = function (tokens, cfg) {
 
-		var result = parser.get_tokens(text, cfg);
-		result.lines = [];
+		var lines = [];
 
 		_state = 'normal';
 
-		result.tokens.forEach(function (token) {
+		tokens.forEach(function (token) {
 			var max = (cfg.print()[token.type] || {}).max || 99999;
 
 			if (token.dual) {
@@ -168,15 +167,15 @@ define(function (require) {
 			split_token(token, max);
 
 			token.lines.forEach(function (line) {
-				result.lines.push(line);
+				lines.push(line);
 			});
 		});
 
-		fold_dual_dialogue(result.lines);
+		fold_dual_dialogue(lines);
 
-		result.lines = break_lines(result.lines, cfg.print().lines_per_page, cfg.lines_breaker || default_breaker, cfg);
+		lines = break_lines(lines, cfg.print().lines_per_page, cfg.lines_breaker || default_breaker, cfg);
 
-		return result;
+		return lines;
 	};
 
 	return module;

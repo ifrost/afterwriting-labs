@@ -2,7 +2,8 @@
 define(function (require) {
 	
 	var Modernizr = require('modernizr'), 
-		fountain = require('utils/fountain/liner'), 
+		fparser = require('utils/fountain/parser'),
+		fliner = require('utils/fountain/liner'), 
 		decorator = require('utils/decorator');
 
 	var plugin = {};
@@ -26,7 +27,8 @@ define(function (require) {
 
 	plugin.script = decorator.property();
 	plugin.script.add(function (script) {
-		plugin.parsed = fountain.parse(script, plugin.config);
+		plugin.parsed = fparser.parse(script, plugin.config);
+		plugin.parsed.lines = fliner.line(plugin.parsed.tokens, plugin.config);
 	});
 
 	var print_profiles = {

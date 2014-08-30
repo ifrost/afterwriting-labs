@@ -27,7 +27,7 @@ define(function (require) {
 		line_break: /^ {2}$/
 	};
 
-	module.get_tokens = function (script, cfg) {
+	module.parse = function (script, cfg) {
 
 		var result = {
 			title_page: [],
