@@ -108,6 +108,15 @@ function program7(depth0,data) {
   return buffer;
   });
 
+this["JST"]["templates/plugins/dev/fquerysandbox.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<h1>Play with fQuery</h1>\r\n\r\n<h2>Basics</h2>\r\n<p>Open developers tools and run:</p>\r\n<pre>\r\nvar data = require('modules/data'),\r\n    fquery = require('utils/fountain/query'),\r\n    fhelpers = require('utils/fountain/helpers'),\r\n    h = fhelpers.fq;\r\n</pre>\r\n<p>Create a query:</p>\r\n<pre>\r\n// 'name' - a grouping key\r\n// {lines: 0} - default values for a group\r\n// {sort_by: 'lines'} - apply sorting at the end\r\nvar characters = fquery('name', {lines: 0}, {sort_by: 'lines'});\r\n</pre>\r\n<p>Configure your query:</p>\r\n<pre>\r\n// for each 'character' token - create new result and update current character\r\ncharacters.enter(h.is('character'), function(item, fq){\r\n  var selection = fq.select(item.name());\r\n  fq.current_character = selection;\r\n});\r\n\r\n// for each 'dialogue' token - add number of lines for current character\r\ncharacters.enter(h.is_dialogue(), function(item, fq){\r\n  fq.current_character.lines += item.lines.length;\r\n});\r\n\r\n// calculate time after gathering results\r\ncharacters.exit(function(selection){\r\n	selection.time = selection.lines / data.config.print().lines_per_page;\r\n});\r\n</pre>\r\n<p>Now run query and print the most talkative character:</p>\r\n<pre>\r\nvar result = characters.run(data.parsed.tokens);\r\nconsole.log(result[0].name + ': ' + result[0].time + ' minutes');\r\n</pre>";
+  });
+
 this["JST"]["templates/plugins/dev/test.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};

@@ -15,6 +15,14 @@ h2 {
 p {
 	margin: 10px;
 }
+pre {
+	margin: 10px;
+	padding: 5px;
+	border: 1px dotted #111111;
+	font-family: monospace;
+	font-size: 13px;
+	overflow: auto;
+}
 .button {
 	font-size: 12px;
 	text-decoration: none;
