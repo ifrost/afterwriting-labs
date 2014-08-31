@@ -1,7 +1,7 @@
 /* global define */
 define(function (require) {
 	
-	var data = require('utils/data'),
+	var data = require('modules/data'),
 		d3 = require('d3');
 	
 	var module = {};

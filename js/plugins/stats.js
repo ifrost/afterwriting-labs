@@ -5,7 +5,7 @@ define(function (require) {
 		logger = require('logger'), 
 		d3 = require('d3'), 
 		editor = require('plugins/editor'), 
-		data = require('utils/data');
+		data = require('modules/data');
 	
 	var log = logger.get('stats');
 	var plugin = pm.create_plugin('stats', 'stats');

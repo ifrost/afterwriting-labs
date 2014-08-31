@@ -3,7 +3,7 @@ define(function (require) {
 	
 	var pm = require('utils/pluginmanager'),
 		typewriter = require('utils/typewriter'),
-		data = require('utils/data');
+		data = require('modules/data');
 	
 	var plugin = pm.create_plugin('preview', 'view');
 	

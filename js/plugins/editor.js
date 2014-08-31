@@ -2,7 +2,7 @@
 define(function (require) {
 	
 	var pm = require('utils/pluginmanager'),
-		data = require('utils/data'),
+		data = require('modules/data'),
 		cm = require('libs/codemirror/lib/codemirror');
 	
 	// codemirror plugins

@@ -24,8 +24,7 @@ define(function (require) {
 		};
 	};
 
-	module.init = function () {
-
+	module.windup = function () {
 		open.activate.add(track_handler('navigation', 'open'));
 		save.activate.add(track_handler('navigation', 'save'));
 		editor.activate.add(track_handler('navigation', 'edit'));
@@ -65,6 +64,6 @@ define(function (require) {
 		settings.reset.add(track_handler('feature', 'settings-reset'));
 
 	};
-
+	
 	return module;
 });

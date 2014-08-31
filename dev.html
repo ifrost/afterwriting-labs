@@ -9,10 +9,25 @@
 		<link rel="stylesheet" href="css/widgets.css" />
 		<link rel="stylesheet" href="css/codemirror.css" />
 		<link rel="stylesheet" href="js/libs/codemirror/addon/hint/show-hint.css" />
+		<script src="js/libs/require.js"></script>
+		<script src="js/main.js"></script>
 		<script>
-			window.__devmode = true;
+			require(['bootstrap',
+					'modules/monitor',
+					'modules/data',
+					'modules/dev',
+					'plugins/info',
+					'plugins/open',
+					'plugins/settings',
+					'plugins/editor',
+					'plugins/save',
+					'plugins/preview',
+					'plugins/facts',
+					'plugins/stats'
+			], function(bootstrap) {
+				bootstrap.init(arguments);
+			});
 		</script>
-		<script data-main="js/main" src="js/libs/require.js"></script>
 		<script>
 			(function(i, s, o, g, r, a, m) {
 				i['GoogleAnalyticsObject'] = r;

@@ -160,9 +160,13 @@
 		Logger.setHandler(function(messages, context) {
 			var hdlr = console.log;
 
+			if (Logger.disabled || (Logger.filter && Logger.filter.indexOf(context.name) == -1)) {
+				return;
+			}
+			
 			// Prepend the logger's name to the log message for easy identification.
 			if (context.name) {
-				messages[0] = "[" + context.name + "] " + messages[0];
+				messages[0] = "[" + context.level.name + "] [" + (new Date().toTimeString()).split(' ')[0] + "] [" + context.name + "] " + messages[0];
 			}
 
 			// Delegate through to custom warn/error loggers if present on the console.

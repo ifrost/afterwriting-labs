@@ -1,27 +1,36 @@
 /* global define */
 define(function (require) {
 	var pm = require('utils/pluginmanager'),
-		data = require('utils/data');
-	
+		data = require('modules/data'),
+		layout = require('utils/layout'),
+		open = require('plugins/open');
+
 	var plugin = pm.create_plugin('settings', 'setup');
-	
-	plugin.get_config = function() {
+
+	plugin.get_config = function () {
 		return data.config;
 	};
-	
-	plugin.save = function() {
+
+	plugin.save = function () {
 		data.save_config();
 		data.script(data.script());
 	};
-	
-	plugin.get_default_config = function() {
+
+	plugin.get_default_config = function () {
 		return data.default_config;
 	};
-	
-	plugin.reset = function() {
+
+	plugin.reset = function () {
 		data.reset_config();
 		data.script(data.script());
 	};
-	
+
+	plugin.windup = function () {
+		if (data.config.load_last_opened) {
+			open.open_last_used(true);
+			layout.show_main();
+		}
+	};
+
 	return plugin;
 });

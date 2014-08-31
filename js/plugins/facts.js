@@ -1,7 +1,7 @@
 /* global define */
 define(function (require) {
 	var pm = require('utils/pluginmanager'),
-		data = require('utils/data');
+		data = require('modules/data');
 	
 	var plugin = pm.create_plugin('facts', 'facts');
 

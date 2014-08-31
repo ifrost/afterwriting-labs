@@ -1,14 +1,7 @@
 /* global define, document, window, setTimeout */
-define(function (require) {
+define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanager', 'utils/common', 'templates'], function ($, temlates, data, Handlebars, pm, common, templates) {
 
-	var $ = require('jquery'),
-		templates = require('templates'),
-		data = require('utils/data'),
-		Handlebars = require('handlebars'),
-		pm = require('utils/pluginmanager'),
-		common = require('utils/common');
-
-	var module = {}, only_active_visible = true;
+	var module = {only_active_visible: true};
 
 	// set up handlebars
 	Handlebars.registerHelper('static_path', function () {
@@ -20,7 +13,7 @@ define(function (require) {
 	};
 
 	var update_selector = function (no_animation) {
-		var active_only = only_active_visible;
+		var active_only = module.only_active_visible;
 		var cols = 3;
 		var img_size = module.small ? 70 : 100;
 		var padding = module.small ? 5 : 15;
@@ -89,7 +82,7 @@ define(function (require) {
 	module.show_main = function () {
 		module.close_content();
 		$('.tool.inactive').fadeIn();
-		only_active_visible = false;
+		module.only_active_visible = false;
 		update_selector();
 	};
 
@@ -241,7 +234,7 @@ define(function (require) {
 		});
 		$('.tool.inactive').hide();
 
-		update_selector();
+		update_selector(true);
 		$('.content').css('display', 'block');
 		$('.menu').fadeIn();
 

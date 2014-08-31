@@ -5,7 +5,7 @@ define(function (require) {
 		logger = require('logger'),
 		templates = require('templates'), 
 		Dropbox = require('dropbox'), 
-		data = require('utils/data'), 
+		data = require('modules/data'), 
 		helper = require('utils/helper'), 
 		$ = require('jquery'), 
 		layout = require('utils/layout');

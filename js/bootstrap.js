@@ -1,26 +1,26 @@
 /*global define*/
-define(function (require) {
-
-	var templates = require('templates'),
-		logger = require('logger'),
-		layout = require('utils/layout'),
-		decorator = require('utils/decorator'),
-		d3 = require('d3'),
-		data = require('utils/data');
+define(['templates', 'logger', 'utils/layout', 'utils/decorator', 'd3'], function (templates, logger, layout, decorator, d3) {
 
 	var log = logger.get('bootstrap'),
 		module = {};
-	
+
 	var decorate_all_properties = function (plugin) {
 		d3.keys(plugin).forEach(function (property) {
-			if (typeof (plugin[property]) === "function" && !(plugin[property].decorated)) {
+			if (typeof (plugin[property]) === "function" && ! (plugin[property].decorated)) {
 				plugin[property] = decorator(plugin[property]);
 			}
 		});
 	};
 
 	module.init = function (modules) {
-		data.load_config();
+		modules = Array.prototype.splice.call(modules, 0);
+
+		log.info('Modules preparation.');
+		modules.forEach(function (module) {
+			if (module.prepare && typeof (module.prepare) === 'function') {
+				module.prepare();
+			}
+		});
 
 		var context = {
 			plugins: []
@@ -36,14 +36,14 @@ define(function (require) {
 			decorate_all_properties(plugin);
 		});
 
-		plugins.forEach(function (plugin) {
-			plugin.init();
-		});
-
 		log.info('Bootstrapping: ' + plugins.length + ' plugins found.');
 
 		plugins.forEach(function (plugin) {
 			log.info('Initializing plugin: ' + plugin.name);
+			plugin.init();
+		});
+
+		plugins.forEach(function (plugin) {
 			var template_name = 'templates/plugins/' + plugin.name + '.hbs';
 			if (templates.hasOwnProperty(template_name)) {
 				var template = templates[template_name];
@@ -56,10 +56,14 @@ define(function (require) {
 		log.info('Initializing layout');
 		layout.init_layout(context);
 
+		log.info('Modules windup.');
+		modules.forEach(function (module) {
+			if (module.windup && typeof (module.windup) === 'function') {
+				module.windup();
+			}
+		});
+
 		log.info('Bootstrapping finished.');
-		if (module.loaded) {
-			module.loaded();
-		}
 	};
 
 	return module;
