@@ -21,7 +21,7 @@ define(function () {
 		};
 
 		fquery.exit = function (func) {
-			fquery.exit = func;
+			fquery.exit_handler = func;
 		};
 
 		fquery.select = function (key) {
@@ -62,9 +62,9 @@ define(function () {
 				});
 			}
 
-			if (fquery.exit) {
+			if (fquery.exit_handler) {
 				fquery.result.forEach(function (item) {
-					fquery.exit(item, fquery);
+					fquery.exit_handler(item, fquery);
 				});
 			}
 
