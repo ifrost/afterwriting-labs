@@ -71,7 +71,7 @@ define(function (require) {
 
 	plugin.init = function () {
 		log.info("Init: script handlers");
-		data.script.add(function () {
+		data.parse.add(function () {
 			data.data('last-used-title', 'No title');
 			data.parsed.title_page.forEach(function (token) {
 				if (token.type === 'title') {

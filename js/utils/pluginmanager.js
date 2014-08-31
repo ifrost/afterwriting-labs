@@ -2,6 +2,7 @@
 define(function(require){
 	
 	var logger = require('logger'),
+		data = require('modules/data'),
 		decorator = require('utils/decorator');
 	
 	var log = logger.get('pluginmanager');
@@ -34,6 +35,8 @@ define(function(require){
 			current.deactivate();
 		}
 		current = plugin;
+		
+		data.parse();
 		
 		current.activate();
 

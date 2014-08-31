@@ -26,8 +26,9 @@ define(function (require) {
 	};
 
 	plugin.script = decorator.property();
-	plugin.script.add(function (script) {
-		plugin.parsed = fparser.parse(script, plugin.config);
+	
+	plugin.parse = decorator(function() {
+		plugin.parsed = fparser.parse(plugin.script(), plugin.config);
 		plugin.parsed.lines = fliner.line(plugin.parsed.tokens, plugin.config);
 	});
 
