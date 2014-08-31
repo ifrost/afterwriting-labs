@@ -95,7 +95,10 @@ define(function (require) {
 		}
 		var page = lines.slice(0, p + 1);
 		page.push(h.enrich_line({
-			type: "page_break"
+			type: "page_break",
+			token: h.enrich_token({
+				type: "page_break"
+			})
 		}));
 		var append = break_lines(lines.slice(p + 1), max, breaker, cfg);
 		return page.concat(append);
