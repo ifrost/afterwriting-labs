@@ -25,8 +25,8 @@ module.exports = function (grunt) {
 				options: {
 					optimize: "uglify",
 					baseUrl: "js",
-					mainConfigFile: "js/main.js",
-					include: "main",
+					mainConfigFile: 'js/afterwriting-bootstrap.js',
+					include: "afterwriting-bootstrap",
 					name: "libs/almond",
 					out: "bundle/js/afterwriting.js",
 					onBuildWrite: function (moduleName, path, contents) {
@@ -41,13 +41,24 @@ module.exports = function (grunt) {
 			}
 		},
 		concat: {
-			options: {
-				separator: ';',
+			bootstrap: {
+				options: {
+					separator: ''
+				},
+				src: ['js/main.js', 'js/bootstraps/index.js'],
+				dest: 'js/afterwriting-bootstrap.js'
+
 			},
-			dist: {
+			codemirror: {
+				options: {
+					separator: ';'
+				},
 				src: ['bundle/js/afterwriting.js', 'js/libs/codemirror/lib/codemirror.js'],
-				dest: 'bundle/js/afterwriting.js',
+				dest: 'bundle/js/afterwriting.js'
 			},
+		},
+		clean: {
+			bootstrap: ['js/afterwriting-bootstrap.js']
 		},
 		cssmin: {
 			build: {
@@ -114,6 +125,7 @@ module.exports = function (grunt) {
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-handlebars');
+	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-contrib-concat');
@@ -123,7 +135,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-git');
 
 
-	grunt.registerTask('build', ['requirejs', 'concat', 'cssmin', 'copy', 'compress']);
+	grunt.registerTask('build', ['concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'clean']);
 	grunt.registerTask('deploy', ['gitcheckout:pages', 'gitmerge:master', 'gitpush:pages', 'gitcheckout:master']);
 
 };
