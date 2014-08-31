@@ -108,6 +108,15 @@ function program7(depth0,data) {
   return buffer;
   });
 
+this["JST"]["templates/plugins/dev/test.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<h1>Performance test</h1>\r\n<p>Parse\r\n	<input id=\"test-parse-times\" type=\"input\" value=\"10\"/>times:\r\n	<button id=\"test-parse-perform\">perform</button>\r\n</p>\r\n<ul id=\"test-parse-results\"></ul>\r\n<script>\r\n	require(['plugins/dev/test', 'jquery'], function(test, $) {\r\n\r\n			$('#test-parse-perform').click(function() {\r\n				var result = test.parse_times(parseInt($('#test-parse-times').val()));\r\n				$('#test-parse-results').empty();\r\n				result.forEach(function(r) {\r\n					$('#test-parse-results').append('<li>' + r.action + ': ' + r.avg);\r\n				});\r\n			});\r\n\r\n		});\r\n</script>";
+  });
+
 this["JST"]["templates/plugins/editor.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
