@@ -19,7 +19,8 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 		var padding = module.small ? 5 : 15;
 		var corner = {};
 		corner.top = module.small ? 120 : 150;
-		corner.left = ($('html').width() - (cols * (img_size + padding)) + padding) / 2;
+		var icons_with_padding = cols * (img_size + padding) + padding;
+		corner.left = ($('html').width() - icons_with_padding) / 2;
 
 		var get_position = function (index, all, max) {
 			var item_row = Math.floor(index / cols),
@@ -29,12 +30,12 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 				item_in_the_last_row = (index >= all - last_row_items),
 				items_in_current_row = item_in_the_last_row ? last_row_items : cols,
 				max_rows = Math.floor(max / cols),
-				left_padding = ((cols - items_in_current_row) * img_size) / items_in_current_row,
+				empty_space_left_padding = ((cols - items_in_current_row) * (img_size + padding) - padding) / 2,
 				top_padding = rows < max_rows ? img_size / 3 : 0;
 
 			var pos = {
 				top: item_row * (img_size + padding) + corner.top + top_padding,
-				left: item_col * (img_size + padding) + corner.left + left_padding
+				left: padding + item_col * (img_size + padding) + corner.left + empty_space_left_padding
 			};
 
 			return pos;
