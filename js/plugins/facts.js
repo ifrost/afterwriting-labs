@@ -1,8 +1,12 @@
 /* global define */
 define(function (require) {
 	var pm = require('utils/pluginmanager'),
-		data = require('modules/data');
-	
+		data = require('modules/data'),
+		fquery = require('utils/fountain/query'),
+		fhelpers = require('utils/fountain/helpers');
+
+	var h = fhelpers.fq;
+
 	var plugin = pm.create_plugin('facts', 'facts');
 
 	var clear_data = function () {
@@ -20,8 +24,29 @@ define(function (require) {
 	};
 
 	var generate_data = function () {
+		var basic = fquery('basics', {last_page_lines: 0});
+		basic.count('action_lines', h.is('action', 'scene_heading'));
+		basic.count('dialogue_lines', h.is_dialogue());
+		basic.count('pages', h.is('page_break'));
+		basic.enter(true, function(item, fq){
+			var selector = fq.select();
+			if (item.is('page_break')) {
+				selector.last_page_lines = 0;
+			}
+			else {
+				selector.last_page_lines++;
+			}
+		});
+		basic.exit(function(item){
+			var all = item.action_lines + item.dialogue_lines;
+			item.pages = item.pages + item.last_page_lines / data.config.print().lines_per_page;
+			item.action_time = (item.action_lines / all) * item.pages;
+			item.dialogue_time = (item.dialogue_lines / all) * item.pages;
+		});
+		
+		plugin.data.facts = basic.run(data.parsed.lines)[0];
 		var facts = plugin.data.facts;
-
+		console.log(facts);
 		// title
 		data.parsed.title_page.forEach(function (token) {
 			if (token.type === 'title') {
@@ -29,92 +54,26 @@ define(function (require) {
 			}
 		});
 
-		var last_page_lines = 0;
-		var action_lines = 0;
-		var dialogue_lines = 0;
-		data.parsed.lines.forEach(function (line) {
-			if (line.type === "page_break") {
-				facts.pages++;
-				last_page_lines = 0;
-			}
-			if (["dialogue", "character", "parenthetical"].indexOf(line.type) !== -1) {
-				dialogue_lines++;
-			} else {
-				action_lines++;
-			}
-			last_page_lines++;
+		var characters = fquery('name', {lines: 0}, {sort_by: 'lines'});
+		characters.enter(h.is('character'), function (item, fq) {
+			var selection = fq.select(item.name());
+			fq.current_character = selection;
 		});
-		facts.pages += last_page_lines / data.config.print().lines_per_page;
-
-		var action_and_dialogue = action_lines + dialogue_lines;
-		facts.action_time = (action_lines / action_and_dialogue) * facts.pages;
-		facts.dialogue_time = (dialogue_lines / action_and_dialogue) * facts.pages;
-
-		if (isNaN(facts.action_time)) {
-			facts.action_time = 0;
-		}
-
-		if (isNaN(facts.dialogue_time)) {
-			facts.dialogue_time = 0;
-		}
-
-		var characters_to_sort = [],
-			locations_to_sort = [],
-			characters_cache = {}, locations_cache = {},
-			current_character;
-		data.parsed.tokens.forEach(function (token) {
-			if (token.type === 'scene_heading') {
-				facts.scenes++;
-				var location = token.text.trim();
-				location = location.replace(/^(INT.?\/.EXT\.?)|(I\/E)|(INT\.?)|(EXT\.?)/, '');
-				var dash = location.lastIndexOf(' - ');
-				if (dash != -1) {
-					location = location.substring(0, dash);
-				}
-				location = location.trim();
-				locations_cache[location] = locations_cache[location] ? locations_cache[location] + 1 : 1;
-			}
-
-			if (token.type === "character") {
-				var character = token.text;
-				var p = character.indexOf('(');
-				if (p != -1) {
-					character = character.substring(0, p);
-				}
-				character = character.trim();
-				if (characters_cache[character] === undefined) {
-					characters_cache[character] = 0;
-				}
-				
-				current_character = character;
-			}
-			if (["dialogue", "character", "parenthetical"].indexOf(token.type) !== -1) {
-				characters_cache[current_character] += token.lines.length;
-			}
+		characters.enter(h.is_dialogue(), function(item, fq){
+			fq.current_character.lines += item.lines.length;
+		});	
+		characters.exit(function(selection){			
+			selection.time = (selection.lines / facts.dialogue_lines) * facts.dialogue_time;
 		});
-
-		var time_sort = function (a, b) {
-			return b.time - a.time;
-		};
-		var count_sort = function(a, b) {
-			return b.count - a.count;
-		};
-
-		for (var character in characters_cache) {
-			characters_to_sort.push({
-				name: character,
-				time: (characters_cache[character] / dialogue_lines) * facts.dialogue_time
-			});
-		}
-		facts.characters = characters_to_sort.sort(time_sort);
-
-		for (var location in locations_cache) {
-			locations_to_sort.push({
-				name: location,
-				count: locations_cache[location]
-			});
-		}
-		facts.locations = locations_to_sort.sort(count_sort);
+		facts.characters = characters.run(data.parsed.tokens);
+		
+		facts.scenes = 0;
+		var locations = fquery('name', {count: 0}, {sort_by: 'count'});
+		locations.enter(h.is('scene_heading'), function(item, fq) {
+			fq.select(item.location()).count++;
+			facts.scenes++;
+		});
+		facts.locations = locations.run(data.parsed.tokens);
 	};
 
 	plugin.activate = function () {

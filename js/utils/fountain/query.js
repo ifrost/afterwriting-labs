@@ -10,6 +10,12 @@ define(function () {
 			result: [],
 			config: config || {}
 		};
+		
+		fquery.not = function(condition) {
+			return function(item) {
+				return !condition(item);
+			};
+		};
 
 		fquery.enter = function (condition, action) {
 			var processor = {
@@ -23,7 +29,7 @@ define(function () {
 		fquery.exit = function (func) {
 			fquery.exit_handler = func;
 		};
-
+		
 		fquery.select = function (key) {
 			var selection;
 			for (var i = 0; i < fquery.result.length; i++) {
@@ -43,6 +49,16 @@ define(function () {
 			} else {
 				return selection;
 			}
+		};
+		
+		fquery.count = function(counter_name, condition, key) {
+			fquery.enter(condition, function(item, fq){
+				var selector = fq.select(key);
+				if (!selector.hasOwnProperty(counter_name)) {
+					selector[counter_name] = 0;
+				};
+				selector[counter_name]++;
+			});
 		};
 
 		fquery.run = function (data) {

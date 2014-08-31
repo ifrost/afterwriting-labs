@@ -26,6 +26,16 @@ define(function () {
 		return character;
 	};
 
+	operators.location = function () {
+		var location = this.text.trim();
+		location = location.replace(/^(INT.?\/.EXT\.?)|(I\/E)|(INT\.?)|(EXT\.?)/, '');
+		var dash = location.lastIndexOf(' - ');
+		if (dash != -1) {
+			location = location.substring(0, dash);
+		}
+		return location.trim();
+	};
+
 	module.enrich_token = function (token) {
 		for (var name in operators) {
 			token[name] = operators[name];
