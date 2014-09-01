@@ -1,7 +1,7 @@
 /* global define, localStorage, window */
 define(function (require) {
 	
-	var Modernizr = require('modernizr'), 		
+	var Modernizr = require('modernizr'),
 		fparser = require('utils/fountain/parser'),
 		fliner = require('utils/fountain/liner'), 
 		decorator = require('utils/decorator');

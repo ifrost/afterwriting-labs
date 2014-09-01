@@ -35,6 +35,11 @@ define(function () {
 		}
 		return location.trim();
 	};
+	
+	operators.has_scene_time = function(time) {
+		var suffix = this.text.substring(this.text.indexOf(' - '));
+		return this.is('scene_heading') && suffix.indexOf(time) !== -1;
+	};
 
 	module.enrich_token = function (token) {
 		for (var name in operators) {
@@ -69,7 +74,6 @@ define(function () {
 		}
 		return line;
 	};
-
 
 	return module;
 });

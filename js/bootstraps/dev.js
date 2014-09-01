@@ -1,6 +1,7 @@
 require(['bootstrap',
 		'modules/monitor',
 		'modules/data',
+		'modules/queries',
 		'modules/dev',
 		'plugins/info',
 		'plugins/open',

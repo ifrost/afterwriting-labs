@@ -4,17 +4,24 @@ define(function () {
 	var fquerybuilder = function (key_name, base, config) {
 
 		var fquery = {
-			key_name: key_name,
+			flat: !key_name,
+			key_name: key_name|| '___',
 			base: base,
 			processors: [],
 			result: [],
-			config: config || {}
+			config: config || {},
+			lock: false
 		};
 		
 		fquery.not = function(condition) {
 			return function(item) {
 				return !condition(item);
 			};
+		};
+		
+		fquery.prepare = function(func) {
+			fquery.prepare_handler = func;
+			return fquery;
 		};
 
 		fquery.enter = function (condition, action) {
@@ -28,6 +35,12 @@ define(function () {
 
 		fquery.exit = function (func) {
 			fquery.exit_handler = func;
+			return fquery;
+		};
+		
+		fquery.end = function(func) {
+			fquery.end_handler = func;
+			return fquery;
 		};
 		
 		fquery.select = function (key) {
@@ -51,30 +64,40 @@ define(function () {
 			}
 		};
 		
-		fquery.count = function(counter_name, condition, key) {
+		fquery.count = function(counter_name, condition, key, lock) {
 			fquery.enter(condition, function(item, fq){
 				var selector = fq.select(key);
 				if (!selector.hasOwnProperty(counter_name)) {
 					selector[counter_name] = 0;
-				};
+				}
 				selector[counter_name]++;
+				if (lock) {
+					fquery.lock = true;
+				}
 			});
+			return fquery;
 		};
 
-		fquery.run = function (data) {
+		fquery.run = function (data, override_config) {
+			var config = override_config || fquery.config;
+			fquery.source = data;
 			fquery.result = [];
+			if (fquery.prepare_handler) {
+				fquery.prepare_handler(fquery);
+			}
 			data.forEach(function (item) {
 				fquery.processors.forEach(function (processor) {
-					if (processor.condition === true || processor.condition(item)) {
+					if (!fquery.lock && (processor.condition === true || processor.condition(item))) {
 						processor.action(item, fquery);
 					}
 				});
+				fquery.lock = false;
 			});
 
-			if (fquery.config.sort_by) {
-				var sort_prop = fquery.config.sort_by;
+			if (config.sort_by) {
+				var sort_prop = config.sort_by;
 				fquery.result.sort(function (a, b) {
-					return fquery.config.asc ? a[sort_prop] - b[sort_prop] : b[sort_prop] - a[sort_prop];
+					return config.asc ? a[sort_prop] - b[sort_prop] : b[sort_prop] - a[sort_prop];
 				});
 			}
 
@@ -83,8 +106,12 @@ define(function () {
 					fquery.exit_handler(item, fquery);
 				});
 			}
+			
+			if (fquery.end_handler) {
+				fquery.end_handler(fquery.result, fquery);
+			}
 
-			return fquery.result;
+			return fquery.flat ? fquery.result[0] : fquery.result;
 		};
 
 

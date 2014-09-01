@@ -1,9 +1,9 @@
 /* global define */
 define(function (require) {
-	
+
 	var data = require('modules/data'),
 		d3 = require('d3');
-	
+
 	var module = {};
 
 	module.format_time = function (total) {
@@ -61,6 +61,26 @@ define(function (require) {
 		};
 
 		return increase;
+	};
+
+	module.double_id = function (a, b) {
+		return Math.min(a, b) + '_' + Math.max(a, b);
+	};
+
+	module.pairs = function (t) {
+		var result = t.map(function (item, index) {
+			return t.slice(index + 1).map(function (i) {
+				return [t[index], i];
+			});
+		}).reduce(function (prev, cur) {
+			return prev.concat(cur);
+		}, []);
+		result.each = function (handler) {
+			result.forEach(function (p) {
+				handler(p[0], p[1]);
+			});
+		};
+		return result;
 	};
 
 	return module;
