@@ -111,7 +111,7 @@ define(function () {
 				fquery.end_handler(fquery.result, fquery);
 			}
 
-			return fquery.flat ? fquery.result[0] : fquery.result;
+			return fquery.flat && fquery.result.length ? fquery.result[0] : fquery.result;
 		};
 
 

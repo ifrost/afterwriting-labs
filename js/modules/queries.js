@@ -63,7 +63,10 @@ define(function (require) {
 	var create_basics = function () {
 		var basic = fquery(null, {
 			last_page_lines: 0,
-			scenes: 0
+			scenes: 0,
+			pages: 0,
+			action_lines: 0,
+			dialogue_lines: 0
 		});
 		basic.count('action_lines', h.is('action', 'scene_heading'));
 		basic.count('dialogue_lines', h.is_dialogue());
@@ -84,6 +87,18 @@ define(function (require) {
 			item.pages = item.pages + item.last_page_lines / data.config.print().lines_per_page;
 			item.action_time = (item.action_lines / all) * item.pages;
 			item.dialogue_time = (item.dialogue_lines / all) * item.pages;
+		});
+		basic.end(function (result) {
+			if (result.length === 0) {
+				result.push({
+					pages: 0.0,
+					scenes: 0,
+					action_time: 0.0,
+					dialogue_time: 0.0,
+					characters: [],
+					locations: []
+				});
+			}
 		});
 		return basic;
 	};
