@@ -58,8 +58,10 @@ define(function () {
 					item[prop] = base[prop];
 				}
 				fquery.result.push(item);
+				fquery.last_selection = item;
 				return item;
 			} else {
+				fquery.last_selection = selection;
 				return selection;
 			}
 		};
@@ -80,12 +82,15 @@ define(function () {
 
 		fquery.run = function (data, override_config) {
 			var config = override_config || fquery.config;
+			fquery.index = -1;
 			fquery.source = data;
 			fquery.result = [];
+			fquery.last_selection = undefined;
 			if (fquery.prepare_handler) {
 				fquery.prepare_handler(fquery);
 			}
 			data.forEach(function (item) {
+				fquery.index++;
 				fquery.processors.forEach(function (processor) {
 					if (!fquery.lock && (processor.condition === true || processor.condition(item))) {
 						processor.action(item, fquery);

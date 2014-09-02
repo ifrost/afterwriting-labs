@@ -19,7 +19,12 @@ define(function (require) {
 		query.count('value', h.has_scene_time('DAY'), 'DAY', true)
 			.count('value', h.has_scene_time('NIGHT'), 'NIGHT', true)
 			.count('value', h.has_scene_time('DUSK'), 'DUSK', true)
-			.count('value', h.has_scene_time('DAWN'), 'DAWN', true);
+			.count('value', h.has_scene_time('DAWN'), 'DAWN', true)
+		query.enter(h.is('scene_heading'), function(item, fq){
+			if (data.config.keep_last_scene_time && fq.last_selection) {
+				fq.last_selection.value++;
+			};
+		});
 		query.exit(function (item, fq) {
 			fq.recognized_scenes += item.value;
 		});
@@ -53,8 +58,9 @@ define(function (require) {
 				} else if (fq.current_header.token.has_scene_time('NIGHT')) {
 					fq.current_header.type = 'night';
 				} else {
-					fq.current_header.type = 'other';
+					fq.current_header.type = fq.last_header_type || 'other';
 				}
+				fq.last_header_type = data.config.keep_last_scene_time ? fq.current_header.type : undefined;
 			}
 		});
 		return query;

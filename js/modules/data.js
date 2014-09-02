@@ -139,7 +139,8 @@ define(function (require) {
 		print_sections: false,
 		print_synopsis: false,
 		number_sections: false,
-		use_dual_dialogue: true
+		use_dual_dialogue: true,
+		keep_last_scene_time: false
 	};
 
 	plugin.default_config.print = function () {
