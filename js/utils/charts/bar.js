@@ -1,48 +1,40 @@
 /* global define */
 define(function (require) {
 	var d3 = require('d3'),
-		$ = require('jquery');
+		$ = require('jquery'),
+		layout = require('utils/layout');
 
 	var plugin = {};
 
-	plugin.render = function (id, data, layout, helper, stats) {
+	plugin.render = function (id, data, config) {
+		$(id).empty();
+		
 		var max = 0;
-		data.forEach(function (scene) {
-			if (scene.length > max) {
-				max = scene.length;
+		data.forEach(function (item) {
+			if (item[config.value] > max) {
+				max = item[config.value];
 			}
 		});
-		data.forEach(function (scene) {
-			scene.value = scene.length / (max * 1.1);
+		data.forEach(function (item) {
+			item.value = item.length / (max * 1.1);
 		});
 
 		var graph_width = ($('.content').width() - (layout.small ? 30 : 100));
-		var scene_width = graph_width / data.length;
+		var bar_width = graph_width / data.length;
 
 		var vis = d3.select(id)
 			.append('svg:svg')
 			.attr('width', '100%')
 			.attr('height', '200');
 
-		$('#stats-scene-length svg').attr('viewBox', '0 0 200px ' + graph_width + 'px')
+		$(id + ' svg').attr('viewBox', '0 0 200px ' + graph_width + 'px');
 
 		var bars = vis.selectAll('g')
-			.data(stats.data.scenes)
+			.data(data)
 			.enter()
 			.append('rect');
 
-
-		var color = function (d) {
-			if (d.type == 'day') {
-				return '#ffffff';
-			} else if (d.type == 'night') {
-				return '#222222';
-			} else {
-				return '#777777';
-			}
-		}
-
-		bars.attr('width', scene_width)
+		bars.attr('width', bar_width)
 			.attr('height', function (d) {
 			return d.value * 200;
 		})
@@ -50,16 +42,18 @@ define(function (require) {
 			return 200 - d.value * 200;
 		})
 			.attr('x', function (d, i) {
-			return i * scene_width;
+			return i * bar_width;
 		})
-			.attr('fill', color)
+			.attr('fill', config.color)
 			.attr('stroke', '#000000')
 			.style('cursor', 'pointer')
 			.on('click', function (d) {
-			stats.goto(d.token.line);
+			if (config.bar_click) {
+				config.bar_click(d);
+			}
 		})
 			.on("mouseover", function (d) {
-			layout.show_tooltip(d.header + ' (time: ' + helper.format_time(helper.lines_to_minutes(d.length)) + ')');
+			layout.show_tooltip(config.tooltip(d));
 		})
 			.on("mousemove", function () {
 			layout.move_tooltip(d3.event.pageX, d3.event.pageY);
@@ -77,6 +71,6 @@ define(function (require) {
 			.attr('stroke', '#000000');
 
 	};
-	
+
 	return plugin;
 });

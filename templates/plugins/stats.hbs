@@ -4,32 +4,74 @@
 	}
 	
 </style>
-
 <h1>"Useless" Stats</h1>
-<p>Some "useless" statistics about your screenplay. Do you have an idea for a chart? Let me know at <a href="mailto:contact@afterwriting.com?Subject=Stats%20idea">contact@afterwriting.com</a>!</p>
-
-<h2 style="margin-top: 30px">Who talks with who (by number of scenes) <div class="info-icon" section="stats-who"/></h2>
+<p>Some "useless" statistics about your screenplay. Do you have an idea for a chart? Let me know at
+	<a href="mailto:contact@afterwriting.com?Subject=Stats%20idea">contact@afterwriting.com</a>!</p>
+<h2 style="margin-top: 30px">Who talks with who (by number of scenes)
+	<div class="info-icon" section="stats-who" />
+</h2>
 <p class="info-content" section="stats-who">Each character is represented by a circle (max. 10 characters). If characters are connected with a line that means they are talking in the same scene. Thicker the line - more scenes together. Hover the mouse cursor over a character circle to see how many dialogues scenes that character have with other characters.</p>
 <div id="who-with-who" style="text-align: center"></div>
-
-<h2 style="margin-top: 30px">Scene length <div class="info-icon" section="stats-scene-length" /></h2>
+<h2 style="margin-top: 30px">Scene length
+	<div class="info-icon" section="stats-scene-length" />
+</h2>
 <p class="info-content" section="stats-scene-length">Each bar represent one scene (white bars for day scenes, black bars for night scenes). Hover the mouse cursor over a bar to see estimated time of a scene. You can click on a bar to jump to selected scene in the editor.</p>
 <div id="stats-scene-length" width="100%"></div>
-
-<h2 style="margin-top: 30px">Days and nights <div class="info-icon" section="stats-days-nights"/></h2>
+<h2 style="margin-top: 30px">Days and nights
+	<div class="info-icon" section="stats-days-nights" />
+</h2>
 <p class="info-content" section="stats-days-nights">Pie chart representing day vs night scenes breakdown. Hover over sections to see number of day/night scenes.</p>
 <div id="stats-days-and-nights" style="text-align: center"></div>
-
 <!--- scripts -->
 <script>
-	require(['jquery', 'd3', 'plugins/stats', 'utils/layout', 'utils/helper', 
-			 'utils/charts/spider', 'utils/charts/bar', 'utils/charts/pie'], function($, d3, stats, layout, helper, spider_chart, bar_chart, pie_chart) {
+	require(['jquery', 'd3', 'plugins/stats', 'utils/layout', 'utils/helper',
+			'utils/charts/spider', 'utils/charts/bar', 'utils/charts/pie'
+	], function($, d3, stats, layout, helper, spider_chart, bar_chart, pie_chart) {
 
-		stats.activate.add(function() {		
-			spider_chart.render('#who-with-who', stats.data.who_with_who);
-			bar_chart.render('#stats-scene-length', stats.data.scenes, layout, helper, stats);
-			pie_chart.render('#stats-days-and-nights', stats.data.days_and_nights, layout);
-			
+		stats.activate.add(function() {
+			spider_chart.render('#who-with-who', stats.data.who_with_who.characters, stats.data.who_with_who.links, {
+				label: 'name'
+			});
+
+			bar_chart.render('#stats-scene-length', stats.data.scenes, {
+				tooltip: function(d) {
+					return d.header + ' (time: ' + helper.format_time(helper.lines_to_minutes(d.length)) + ')'
+				},
+				value: 'length',
+				color: function(d) {
+					if (d.type == 'day') {
+						return '#ffffff';
+					} else if (d.type == 'night') {
+						return '#222222';
+					} else {
+						return '#777777';
+					}
+				},
+				bar_click: function(d) {
+					stats.goto(d.token.line);
+				}
+			});
+
+			pie_chart.render('#stats-days-and-nights', stats.data.days_and_nights, {
+				tooltip: function(d) {
+					return d.data.label + ': ' + d.data.value + (d.data.value == 1 ? ' scene' : ' scenes')
+				},
+				value: 'value',
+				color: function(d) {
+					if (d.data.label == 'DAY') {
+						return '#ffffff';
+					} else if (d.data.label == 'NIGHT') {
+						return '#222222';
+					} else if (d.data.label == 'DAWN') {
+						return '#777777';
+					} else if (d.data.label == 'DUSK') {
+						return '#444444';
+					} else {
+						return '#aaaaaa';
+					}
+				}
+			});
+
 		});
 	});
 </script>

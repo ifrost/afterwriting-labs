@@ -5,21 +5,18 @@ define(function (require) {
 
 	var plugin = {};
 
-	plugin.render = function (id, characters_and_links) {
+	plugin.render = function (id, data, links, config) {
 		$(id).empty();
 
-		var data = characters_and_links.characters;
-		var links = characters_and_links.links;
-
-		var max_name_length = Math.max.apply(null, data.map(function (character) {
-			return character.name.length;
+		var max_name_length = Math.max.apply(null, data.map(function (item) {
+			return item[config.label].length;
 		}));
 		var padding = 7.2 * max_name_length;
 
 		var max_value = Math.max.apply(null, links.map(function (d) {
 			return d.scenes;
 		}));
-		var link_scale = d3.scale.linear().domain([0, max_value]).range([1, 5]);
+		var link_scale = d3.scale.linear().domain([1, max_value]).range([1, Math.min(max_value, 6)]);
 		links.forEach(function (link) {
 			link.value = link_scale(link.scenes);
 		});
@@ -31,10 +28,7 @@ define(function (require) {
 		var translate_circle = 'translate(' + ((inner_radius / 2) + padding + circle_size + 2) + ',' + ((inner_radius / 2) + circle_size) + ')';
 
 		var arc = d3.svg.arc().outerRadius(inner_radius).innerRadius(0);
-		//		var arc_scale = d3.scale.linear().domain([0, inner_radius]).range([0, circle_size * 4]);
-		//		var move_text = function (point) {
-		//			return [point[0] + arc_scale(point[0]), point[1] + arc_scale(point[1])]
-		//		}
+
 		var layout = d3.layout.pie().value(function () {
 			return 1;
 		});
@@ -66,7 +60,7 @@ define(function (require) {
 			.append('text')
 			.attr('transform', translate_circle)
 			.text(function (d) {
-			return d.name;
+			return d[config.label];
 		})
 			.attr('class', function (d, i) {
 			return 'who-' + i;
@@ -74,7 +68,7 @@ define(function (require) {
 			.attr('font-size', 12)
 			.attr('font-family', 'Courier New')
 			.attr('x', function (d, i) {
-			return points[i][0] > 0 ? points[i][0] + circle_size + 2 : points[i][0] - circle_size - 2 - (d.name.length * 7.2);
+			return points[i][0] > 0 ? points[i][0] + circle_size + 2 : points[i][0] - circle_size - 2 - (d[config.label].length * 7.2);
 		})
 			.attr('y', function (d, i) {
 			return points[i][1] + 3;
