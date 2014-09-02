@@ -18,7 +18,7 @@ define(function (require) {
 		plugin.data.days_and_nights = queries.days_and_nights.run(data.parsed.tokens);
 		plugin.data.scenes = queries.scene_length.run(data.parsed.tokens);
 		var basics = queries.basics.run(data.parsed.lines);
-		plugin.who_with_who = queries.dialogue_breakdown.run(data.parsed.tokens, basics, 10);		
+		plugin.data.who_with_who = queries.dialogue_breakdown.run(data.parsed.tokens, basics, 10);		
 	};
 
 	plugin.deactivate = function () {

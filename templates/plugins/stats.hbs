@@ -24,9 +24,9 @@
 <script>
 	require(['jquery', 'd3', 'plugins/stats', 'utils/layout', 'utils/helper'], function($, d3, stats, layout, helper) {
 
-		var render_who_with_who = function() {
-			var data = stats.who_with_who.characters;
-			var links = stats.who_with_who.links;
+		var render_who_with_who = function(characters_and_links) {
+			var data = characters_and_links.characters;
+			var links = characters_and_links.links;
 			
 			var max_name_length = Math.max.apply(null, data.map(function(character){return character.name.length}));
 			var padding = 7.2 * max_name_length;
@@ -160,11 +160,11 @@
 
 		};
 
-		var render_days_and_nights = function() {
+		var render_days_and_nights = function(data) {
 
 			var vis = d3.select('#stats-days-and-nights')
 				.append('svg:svg')
-				.data([stats.data.days_and_nights])
+				.data([data])
 				.attr('width', 200)
 				.attr('height', 200)
 				.style('margin-left', 'auto')
@@ -218,19 +218,19 @@
 				.attr('r', '100');
 		};
 
-		var render_scene_length = function() {
+		var render_scene_length = function(data) {
 			var max = 0;
-			stats.data.scenes.forEach(function(scene) {
+			data.forEach(function(scene) {
 				if (scene.length > max) {
 					max = scene.length;
 				}
 			});
-			stats.data.scenes.forEach(function(scene) {
+			data.forEach(function(scene) {
 				scene.value = scene.length / (max * 1.1);
 			});
 
 			var graph_width = ($('.content').width() - (layout.small ? 30 : 100));
-			var scene_width = graph_width / stats.data.scenes.length;
+			var scene_width = graph_width / data.length;
 
 			var vis = d3.select('#stats-scene-length')
 				.append('svg:svg')
@@ -296,9 +296,9 @@
 			$('#stats-scene-length').empty();
 			$('#stats-days-and-nights').empty();
 
-			render_who_with_who()
-			render_scene_length();
-			render_days_and_nights();
+			render_who_with_who(stats.data.who_with_who);
+			render_scene_length(stats.data.scenes);
+			render_days_and_nights(stats.data.days_and_nights);
 		});
 	});
 </script>
