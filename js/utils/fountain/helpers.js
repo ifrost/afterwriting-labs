@@ -35,8 +35,8 @@ define(function () {
 		}
 		return location.trim();
 	};
-	
-	operators.has_scene_time = function(time) {
+
+	operators.has_scene_time = function (time) {
 		var suffix = this.text.substring(this.text.indexOf(' - '));
 		return this.is('scene_heading') && suffix.indexOf(time) !== -1;
 	};
@@ -73,6 +73,15 @@ define(function () {
 			line[name] = create_token_delegator(line, name);
 		}
 		return line;
+	};
+
+	module.first_text = function (type, list, default_value) {
+		for (var i=0; i < list.length; i++) {
+			if (list[i].type === type) {
+				return list[i].text;
+			}
+		}
+		return default_value;
 	};
 
 	return module;
