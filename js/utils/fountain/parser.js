@@ -33,6 +33,10 @@ define(function (require) {
 			title_page: [],
 			tokens: []
 		};
+		
+		if (!script) {
+			return result;
+		}
 
 		var new_line_length = script.match(/\r\n/) ? 2 : 1;
 		var lines = script.split(/\r\n|\r|\n/);
