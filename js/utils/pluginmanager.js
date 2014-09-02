@@ -26,6 +26,7 @@ define(function(require){
 
 	module.switch_to = decorator(function (plugin) {
 		if (plugin === current) {
+			module.switch_to.lock = true;
 			return;
 		}
 

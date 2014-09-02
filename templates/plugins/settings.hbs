@@ -34,12 +34,10 @@
 		<a href="#" class="settings-reset button">reset settings</a>
 	</p>
 	<table>
-		<thead>
+		<tbody>
 			<tr>
 				<th colspan="2">Print</th>
 			</tr>
-		</thead>
-		<tbody>
 			<tr>
 				<td>Page size:</td>
 				<td>
@@ -56,6 +54,21 @@
 				</td>
 			</tr>
 			<tr>
+				<td>Print sections:</td>
+				<td>
+					<input setting="print_sections" type="checkbox">
+				</td>
+			</tr>
+			<tr>
+				<td>Print synopsis:</td>
+				<td>
+					<input setting="print_synopsis" type="checkbox">
+				</td>
+			</tr>			
+			<tr>
+				<th colspan="2">Layout</th>
+			</tr>
+			<tr>
 				<td>Split dialogue between pages:</td>
 				<td>
 					<input setting="split_dialogue" type="checkbox">
@@ -68,27 +81,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Embolden scene headers:</td>
-				<td>
-					<input setting="embolden_scene_headers" type="checkbox">
-				</td>
-			</tr>
-			<tr>
 				<td>Double space between scenes:</td>
 				<td>
 					<input setting="double_space_between_scenes" type="checkbox">
-				</td>
-			</tr>
-			<tr>
-				<td>Print sections:</td>
-				<td>
-					<input setting="print_sections" type="checkbox">
-				</td>
-			</tr>
-			<tr>
-				<td>Print synopsis:</td>
-				<td>
-					<input setting="print_synopsis" type="checkbox">
 				</td>
 			</tr>
 			<tr>
@@ -97,6 +92,12 @@
 					<input setting="number_sections" type="checkbox">
 				</td>
 			</tr>
+			<tr>
+				<td>Embolden scene headers:</td>
+				<td>
+					<input setting="embolden_scene_headers" type="checkbox">
+				</td>
+			</tr>			
 			<tr>
 				<th colspan="2">Miscellaneous</th>
 			</tr>
@@ -118,7 +119,13 @@
 			<tr>
 				<td>Keep last scene slugline time (DAY,NIGHT):</td>
 				<td>
-					<input setting="keep_last_scene_time" type="checkbox">
+					<input setting="stats_keep_last_scene_time" type="checkbox">
+				</td>
+			</tr>
+			<tr>
+				<td>Who with who max characters:</td>
+				<td>
+					<input setting="stats_who_with_who_max" type="input">
 				</td>
 			</tr>
 		</tbody>
@@ -143,8 +150,9 @@
 			$('*[setting="print_synopsis"]').prop('checked', c.print_synopsis);
 			$('*[setting="number_sections"]').prop('checked', c.number_sections);
 			$('*[setting="use_dual_dialogue"]').prop('checked', c.use_dual_dialogue);
-			$('*[setting="keep_last_scene_time"]').prop('checked', c.keep_last_scene_time);
+			$('*[setting="stats_keep_last_scene_time"]').prop('checked', c.stats_keep_last_scene_time);
 			$('*[setting="print_profile"]').val(c.print_profile);
+			$('*[setting="stats_who_with_who_max"]').val(c.stats_who_with_who_max);
 		};
 
 		var components_to_data = function() {
@@ -159,12 +167,13 @@
 			c.print_synopsis = $('*[setting="print_synopsis"]').is(':checked');
 			c.number_sections = $('*[setting="number_sections"]').is(':checked');
 			c.use_dual_dialogue = $('*[setting="use_dual_dialogue"]').is(':checked');
-			c.keep_last_scene_time = $('*[setting="keep_last_scene_time"]').is(':checked');
+			c.stats_keep_last_scene_time = $('*[setting="stats_keep_last_scene_time"]').is(':checked');
+			c.stats_who_with_who_max = parseInt($('*[setting="stats_who_with_who_max"]').val());
 			c.print_profile = $('*[setting="print_profile"]').val();
 			settings.save();
 		};
 
-		$('.plugin-content[plugin="settings"]').select('input, option').change(function() {
+		$('.plugin-content[plugin="settings"]').select('input, option').on('change keyup', function() {
 			$('.settings-save').removeClass('inactive');
 		});
 

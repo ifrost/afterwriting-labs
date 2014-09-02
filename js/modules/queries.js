@@ -21,7 +21,7 @@ define(function (require) {
 			.count('value', h.has_scene_time('DUSK'), 'DUSK', true)
 			.count('value', h.has_scene_time('DAWN'), 'DAWN', true)
 		query.enter(h.is('scene_heading'), function(item, fq){
-			if (data.config.keep_last_scene_time && fq.last_selection) {
+			if (data.config.stats_keep_last_scene_time && fq.last_selection) {
 				fq.last_selection.value++;
 			};
 		});
@@ -60,7 +60,7 @@ define(function (require) {
 				} else {
 					fq.current_header.type = fq.last_header_type || 'other';
 				}
-				fq.last_header_type = data.config.keep_last_scene_time ? fq.current_header.type : undefined;
+				fq.last_header_type = data.config.stats_keep_last_scene_time ? fq.current_header.type : undefined;
 			}
 		});
 		return query;
