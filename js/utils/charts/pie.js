@@ -10,7 +10,6 @@ define(function (require) {
 		$(id).empty();
 
 		var count = data.reduce(function(prev, curr){return prev + curr[config.value]},0);
-		console.log(data, count);
 		if (count === 0 || isNaN(count)) {
 			$(id).append('<p class="error">Sorry, there is not enough data to display the chart. Add at least one scene to your script.</p>');
 			return;
