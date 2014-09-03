@@ -136,7 +136,7 @@ body {
 	height: 15px;
 	margin: 0 10px 0 0;
 	float: left;
-	opacity: 0.2;
+	opacity: 0.5;
 	cursor: pointer;
 	-webkit-transition: all 0.5s ease-in-out;
 	-moz-transition: all 0.5s ease-in-out;
