@@ -26,7 +26,9 @@ define(function (require) {
 			link.value = link_scale(link.scenes);
 		});
 
-		var svg = d3.select(id).append('svg').attr('width', 350 + padding * 2).attr('height', 300);
+		var width = 350 + padding * 2;
+		var height = 300; 
+		var svg = d3.select(id).append('svg').attr('width', Math.min(width, $('.plugin-contents').width()-40)).attr('viewBox', '0 0 ' + width.toString() + ' ' + height.toString()).attr('preserveAspectRatio', 'meet');
 
 		var circle_size = 12;
 		var inner_radius = 250;
