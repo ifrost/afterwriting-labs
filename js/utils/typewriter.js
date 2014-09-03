@@ -82,7 +82,7 @@ define(function (require) {
 			var notes = get_title_page_token('notes');
 			if (notes) {
 				var notes_text = notes.text;
-				var copy = get_title_page_token('copyright');
+				var copy = get_title_page_token('notes');
 				if (copy) {
 					notes_text += '\n\n' + copy.text.trim();
 				}

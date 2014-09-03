@@ -140,7 +140,7 @@ define(function (require) {
 		print_synopsis: false,
 		number_sections: false,
 		use_dual_dialogue: true,
-		stats_keep_last_scene_time: false,
+		stats_keep_last_scene_time: true,
 		stats_who_with_who_max: 10
 	};
 
