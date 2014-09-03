@@ -7,17 +7,22 @@
 <h1>"Useless" Stats</h1>
 <p>Some "useless" statistics about your screenplay. Do you have an idea for a chart? Let me know at
 	<a href="mailto:contact@afterwriting.com?Subject=Stats%20idea">contact@afterwriting.com</a>!</p>
-<h2 style="margin-top: 30px">Who talks with who (by number of scenes)
+<h2 style="margin-top: 30px; margin-left: 0">Who talks with who (by number of scenes)
 	<div class="info-icon" section="stats-who" />
 </h2>
 <p class="info-content" section="stats-who">Each character is represented by a circle (max. 10 characters). If characters are connected with a line that means they are talking in the same scene. Thicker the line - more scenes together. Hover the mouse cursor over a character circle to see how many dialogues scenes that character have with other characters.</p>
 <div id="who-with-who" style="text-align: center"></div>
-<h2 style="margin-top: 30px">Scene length
+<h2 style="margin-top: 30px; margin-left: 0">Scene length
 	<div class="info-icon" section="stats-scene-length" />
 </h2>
 <p class="info-content" section="stats-scene-length">Each bar represent one scene (white bars for day scenes, black bars for night scenes). Hover the mouse cursor over a bar to see estimated time of a scene. You can click on a bar to jump to selected scene in the editor.</p>
 <div id="stats-scene-length" width="100%"></div>
-<h2 style="margin-top: 30px">Days and nights
+<h2 style="margin-top: 30px; margin-left: 0">Page balance
+	<div class="info-icon" section="stats-page-balance" />
+</h2>
+<p class="info-content" section="stats-page-balance">Shows balance between action time and dialogue time on each page. Click on a page to jump to the editor.</p>
+<div id="stats-page-balance"></div>
+<h2 style="margin-top: 30px; margin-left: 0">Days and nights
 	<div class="info-icon" section="stats-days-nights" />
 </h2>
 <p class="info-content" section="stats-days-nights">Pie chart representing day vs night scenes breakdown. Hover over sections to see number of day/night scenes.</p>
@@ -25,8 +30,8 @@
 <!--- scripts -->
 <script>
 	require(['jquery', 'd3', 'plugins/stats', 'utils/layout', 'utils/helper',
-			'utils/charts/spider', 'utils/charts/bar', 'utils/charts/pie'
-	], function($, d3, stats, layout, helper, spider_chart, bar_chart, pie_chart) {
+			'utils/charts/spider', 'utils/charts/bar', 'utils/charts/pie', 'utils/charts/page_balance'
+	], function($, d3, stats, layout, helper, spider_chart, bar_chart, pie_chart, page_balance_chart) {
 
 		stats.activate.add(function() {
 			spider_chart.render('#who-with-who', stats.data.who_with_who.characters, stats.data.who_with_who.links, {
@@ -69,6 +74,12 @@
 					} else {
 						return '#aaaaaa';
 					}
+				}
+			});
+
+			page_balance_chart.render('#stats-page-balance', stats.data.page_balance, {
+				page_click: function(d) {
+					stats.goto(d.first_line.token.line);
 				}
 			});
 

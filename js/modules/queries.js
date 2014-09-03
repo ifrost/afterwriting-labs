@@ -197,6 +197,40 @@ define(function (require) {
 		};
 		return runner;
 	};
+	
+	var create_page_balance = function() {
+		var query = fquery('page_number', {
+			action_lines: 0,
+			dialogue_lines: 0,
+			total_lines: 0,
+			first_line: null,
+		});
+		query.prepare(function(fq){
+			fq.current_page = 1;
+		});
+		query.enter(h.is('page_break'), function(item, fq){
+			fq.current_page++;
+		});
+		query.enter(query.not(h.is('page_break')), function(item, fq){
+			var selector = fq.select(fq.current_page);
+			selector.first_line = selector.first_line || item;
+		});
+		query.enter(h.is('scene_heading','action'), function (item, fq) {
+			var selector = fq.select(fq.current_page);
+			selector.action_lines++;
+			selector.total_lines++;
+		});	
+		query.enter(h.is_dialogue(), function (item, fq) {
+			var selector = fq.select(fq.current_page);
+			selector.dialogue_lines++;
+			selector.total_lines++;
+		});
+		query.exit(function(selector){
+			selector.dialogue_time = selector.dialogue_lines / selector.total_lines;
+			selector.action_time = selector.action_lines / selector.total_lines;
+		});
+		return query;
+	};
 
 	plugin.windup = function () {
 		plugin.days_and_nights = create_days_and_nights();
@@ -205,6 +239,7 @@ define(function (require) {
 		plugin.locations = create_locations();
 		plugin.dialogue_breakdown = create_dialogue_breakdown();
 		plugin.basics = create_basics();
+		plugin.page_balance = create_page_balance();
 	};
 
 	return plugin;
