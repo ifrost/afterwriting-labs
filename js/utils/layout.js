@@ -13,6 +13,7 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 	};
 
 	var update_selector = function (no_animation) {
+		no_animation = no_animation || module.small;
 		var active_only = module.only_active_visible;
 		var cols = 3;
 		var img_size = module.small ? 70 : 100;
@@ -60,11 +61,12 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 	};
 
 	module.close_content = function (immediately) {
+		var duration = module.small ? 0 : 500;
 		var action = immediately ? 'offset' : 'animate';
 		$('.content')[action]({
 			top: -$('.content').height()
 		}, {
-			duration: 500
+			duration: duration
 		}).addClass('content-closed');
 	};
 
@@ -147,10 +149,11 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 		};
 
 		module.open_content = function () {
+			var duration = module.small ? 0 : 200;
 			$('.content').removeClass('content-closed').animate({
 				top: 0
 			}, {
-				duration: 500
+				duration: duration
 			});
 		};
 
@@ -171,11 +174,11 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 		module.close_content(true);
 
 		module.switch_to_plugin = function (plugin) {
-
-			$('.plugin-content.active').removeClass('active').fadeOut(200);
+			var fade_time = module.small ? 0 : 200;
+			$('.plugin-content.active').removeClass('active').fadeOut(fade_time);
 			setTimeout(function () {
 				$('.plugin-content[plugin="' + plugin + '"]').fadeIn().addClass('active');
-			}, 200);
+			}, fade_time);
 
 			setTimeout(calculate_content, 500);
 
@@ -199,9 +202,10 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 		/** info handlers **/
 		$('.info-content').hide();
 		$('.info-icon').click(function () {
+			var duration = module.small ? 0 : 200;
 			var section = $(this).attr('section');
 			$('.info-content[section="' + section + '"]').toggle({
-				duration: 200,
+				duration: duration,
 				easing: 'linear'
 			});
 		});
