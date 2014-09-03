@@ -22,8 +22,8 @@ define(function (require) {
 	};
 
 	plugin.open_last_used = function (startup) {
-		if (last_session_script) {
-			set_script(last_session_script);
+		if (last_session_script_loaded) {
+			set_script(last_session_script || '');
 		}
 		return startup;
 	};
@@ -89,12 +89,14 @@ define(function (require) {
 		last_used: {}
 	};
 
+	var last_session_script_loaded = false;
 	if (data.data('last-used-date')) {
 		log.info('Last used exists. Loading: ', data.data('last-used-title'), data.data('last-used-date'));
 		plugin.context.last_used.script = data.data('last-used-script');
 		plugin.context.last_used.date = data.data('last-used-date');
 		plugin.context.last_used.title = data.data('last-used-title');
 		last_session_script = data.data('last-used-script');
+		last_session_script_loaded = true;
 	}
 
 	return plugin;

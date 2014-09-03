@@ -8,7 +8,12 @@ define(function (require) {
 
 	plugin.render = function (id, data, config) {
 		$(id).empty();
-		
+
+		if (data.length < 1) {
+			$(id).append('<p class="error">Sorry, there is not enough data to display the chart. Add at least one scene to your script.</p>');
+			return;
+		};
+
 		var max = 0;
 		data.forEach(function (item) {
 			if (item[config.value] > max) {

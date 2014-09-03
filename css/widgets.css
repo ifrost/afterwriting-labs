@@ -65,6 +65,12 @@ td {
 tr {
 	border: 1px solid #999;
 }
+p.error {
+	padding: 5px;
+	font-style: italic;
+	border: 1px dashed red;
+	text-align: center;
+}
 .content ul, .content ol {
 	margin-left: 40px;
 }

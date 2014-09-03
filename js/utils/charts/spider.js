@@ -7,6 +7,11 @@ define(function (require) {
 
 	plugin.render = function (id, data, links, config) {
 		$(id).empty();
+		
+		if (data.length <= 1) {
+			$(id).append('<p class="error">Sorry, there is not enough data to display the chart. Add at least two speaking characters to your script.</p>');
+			return;
+		};
 
 		var max_name_length = Math.max.apply(null, data.map(function (item) {
 			return item[config.label].length;
