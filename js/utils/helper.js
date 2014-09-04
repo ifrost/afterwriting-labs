@@ -9,8 +9,12 @@ define(function (require) {
 	module.format_time = function (total) {
 		var hours = Math.floor(total / 60);
 		var minutes = Math.floor(total % 60);
-		var seconds = Math.floor(60 * (total % 1));
-
+		var seconds = Math.round(60 * (total % 1));
+		if (seconds == 60) {
+			minutes++;
+			seconds = 0;
+		}
+		
 		var string_time = function (value) {
 			value = value.toString();
 			return value.length == 1 ? '0' + value : value;
