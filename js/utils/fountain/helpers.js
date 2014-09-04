@@ -89,8 +89,8 @@ define(function () {
 		line.type = line.type || "unknown";
 		line.start = line.start || 0;
 		line.end = line.end || 0;
-		var token = module.create_token({type: line.type, lines: [line]});
-		line.token = token;
+		line.token = line.token || module.create_token({type: line.type});
+		line.token.lines = line.token.lines || [line];
 		return enrich_line(line);
 	};
 	
