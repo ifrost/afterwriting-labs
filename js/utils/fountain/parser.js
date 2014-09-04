@@ -42,7 +42,7 @@ define(function (require) {
 		var lines = script.split(/\r\n|\r|\n/);
 
 		var create_token = function (text, cursor, line) {
-			return h.enrich_token({
+			return h.create_token({
 				text: text.trim(),
 				start: cursor,
 				end: cursor + text.length - 1 + new_line_length,
@@ -118,13 +118,13 @@ define(function (require) {
 				} else if (token.text.match(regex.scene_heading)) {
 					token.text = token.text.replace(/^\./, '');
 					if (cfg.double_space_between_scenes) {
-						var additional_separator = {
+						var additional_separator = h.create_token({
 							text: '',
 							start: token.start,
 							end: token.end,
-							line: token.line,
+							lines: [''],
 							type: 'separator'
-						};
+						});
 						result.tokens.push(additional_separator);
 					}
 					token.type = 'scene_heading';

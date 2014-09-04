@@ -10,7 +10,7 @@ define(function (require) {
 
 	var split_text = function (text, max, index, token) {
 		if (text.length <= max) {
-			return [h.enrich_line({
+			return [h.create_line({
 				type: token.type,
 				token: token,
 				text: text,
@@ -24,7 +24,7 @@ define(function (require) {
 			pointer = max - 1;
 		}
 
-		return [h.enrich_line({
+		return [h.create_line({
 			type: token.type,
 			token: token,
 			text: text.substr(0, pointer),
@@ -53,10 +53,10 @@ define(function (require) {
 		} else if (cfg.split_dialogue && token_on_break.is("dialogue") && token_after.is("dialogue") && token_before.is("dialogue") && !(token_on_break.dual)) {
 
 			for (var character = before; lines[character].type != "character"; character--) {}
-			lines.splice(index, 0, h.enrich_line({
+			lines.splice(index, 0, h.create_line({
 				type: "parenthetical",
 				text: MORE
-			}), h.enrich_line({
+			}), h.create_line({
 				type: "character",
 				text: lines[character].text.trim() + " " + (lines[character].text.indexOf(CONTD) !== -1 ? '' : CONTD)
 			}));
@@ -94,11 +94,8 @@ define(function (require) {
 			p = internal_break - 1;
 		}
 		var page = lines.slice(0, p + 1);
-		page.push(h.enrich_line({
-			type: "page_break",
-			token: h.enrich_token({
-				type: "page_break"
-			})
+		page.push(h.create_line({
+			type: "page_break"
 		}));
 		var append = break_lines(lines.slice(p + 1), max, breaker, cfg);
 		return page.concat(append);

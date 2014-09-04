@@ -41,7 +41,7 @@ define(function () {
 		return this.is('scene_heading') && suffix.indexOf(time) !== -1;
 	};
 
-	module.enrich_token = function (token) {
+	var enrich_token = function (token) {
 		for (var name in operators) {
 			token[name] = operators[name];
 		}
@@ -68,7 +68,7 @@ define(function () {
 		module.fq[name] = create_fquery_delegator(name);
 	}
 
-	module.enrich_line = function (line) {
+	var enrich_line = function (line) {
 		for (var name in operators) {
 			line[name] = create_token_delegator(line, name);
 		}
@@ -82,6 +82,25 @@ define(function () {
 			}
 		}
 		return default_value;
+	};
+	
+	module.create_line = function(line) {
+		line.text = line.text || "";
+		line.type = line.type || "unknown";
+		line.start = line.start || 0;
+		line.end = line.end || 0;
+		var token = module.create_token({type: line.type, lines: [line]});
+		line.token = token;
+		return enrich_line(line);
+	};
+	
+	module.create_token = function(token) {
+		token.text = token.text || "";
+		token.type = token.type || "unknown";
+		token.start = token.start || 0;
+		token.end = token.end || 0;
+		token.lines = token.lines || [];
+		return enrich_token(token);
 	};
 
 	return module;
