@@ -53,7 +53,9 @@
 					}
 				},
 				bar_click: function(d) {
-					stats.goto(d.token.line);
+					if (!layout.small) {
+						stats.goto(d.token.line);
+					}
 				}
 			});
 
@@ -79,7 +81,9 @@
 
 			page_balance_chart.render('#stats-page-balance', stats.data.page_balance, {
 				page_click: function(d) {
-					stats.goto(d.first_line.token.line);
+					if (!layout.small) {
+						stats.goto(d.first_line.token.line);
+					}
 				}
 			});
 
