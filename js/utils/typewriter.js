@@ -45,7 +45,8 @@ define(function (require) {
 			title_y += cfg.print().line_spacing * cfg.print().font_height;
 		};
 
-		var title_page_main = function (type) {
+		var title_page_main = function (type, options) {
+			options = options || {};
 			if (type === undefined) {
 				title_page_next_line();
 				return;
@@ -53,6 +54,9 @@ define(function (require) {
 			var token = get_title_page_token(type);
 			if (token) {
 				token.text.split('\n').forEach(function (line) {
+					if (options.capitalize) {
+						line = line.toUpperCase();
+					}
 					center(line, title_y);
 					title_page_next_line();
 				});
@@ -62,7 +66,7 @@ define(function (require) {
 		if (cfg.print_title_page) {
 
 			// title page
-			title_page_main('title');
+			title_page_main('title', {capitalize: true});
 			title_page_main();
 			title_page_main();
 			title_page_main('credit');
@@ -79,16 +83,13 @@ define(function (require) {
 			var contact = get_title_page_token('contact');
 			doc.text(cfg.print().title_page.contact.x, cfg.print().title_page.contact.y, contact ? contact.text.trim() : "");
 
+			var notes_and_copy = '';
 			var notes = get_title_page_token('notes');
-			if (notes) {
-				var notes_text = notes.text;
-				var copy = get_title_page_token('notes');
-				if (copy) {
-					notes_text += '\n\n' + copy.text.trim();
-				}
-				doc.text(cfg.print().title_page.notes.x, cfg.print().title_page.notes.y, notes_text.trim());
-			}
-
+			var copy = get_title_page_token('copyright');
+			notes_and_copy = notes ? (notes.text.trim() + "\n") : '';
+			notes_and_copy += copy ? copy.text.trim() : '';
+			doc.text(cfg.print().title_page.notes.x, cfg.print().title_page.notes.y, notes_and_copy);
+			
 			var date = get_title_page_token('date');
 			doc.text(cfg.print().title_page.date.x, cfg.print().title_page.date.y, date ? date.text.trim() : "");
 
