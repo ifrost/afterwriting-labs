@@ -14,7 +14,7 @@ define(function (require) {
 			return text;
 		}).get().join('');
 		text = $('<div/>').html(text).text();
-		text = text.replace(/’/g, "'").replace(/”/g,'"').replace(/“/g,'"');
+		text = text.replace(/’/g, "'").replace(/”/g,'"').replace(/“/g,'"').replace(/‘/g,"'");
 
 		if (page_break === 'Yes') {
 			text += '\n====\n' + text;

@@ -60,9 +60,11 @@
 			
 			
 			if (facts_data.characters.length > 10) {
+				$('.show-all-dialogues').show();
+				$('.show-top-dialogues').hide();
 				$('#facts-characters li.expandable').hide();
 				$('.expand-dialogue').click(function(){
-					$('.expand-dialogue').toggle();
+					$('.expand-dialogue').show();
 					$('#facts-characters li.expandable').slideToggle({duration: 200});
 				});
 			}
@@ -71,9 +73,11 @@
 			}
 			
 			if (facts_data.locations.length > 10) {
+				$('.show-all-locations').show();
+				$('.show-top-locations').hide();
 				$('#facts-locations li.expandable').hide();
 				$('.expand-locations').click(function(){
-					$('.expand-locations').toggle();
+					$('.expand-locations').show();
 					$('#facts-locations li.expandable').slideToggle({duration: 200});
 				});
 			}
