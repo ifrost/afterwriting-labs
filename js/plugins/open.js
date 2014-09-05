@@ -8,6 +8,7 @@ define(function (require) {
 		data = require('modules/data'), 
 		helper = require('utils/helper'), 
 		$ = require('jquery'), 
+		finaldraft_converter = require('utils/converters/finaldraft'),
 		layout = require('utils/layout');
 	
 	var log = logger.get('open');
@@ -31,7 +32,12 @@ define(function (require) {
 	plugin.open_file = function (selected_file) {
 		var fileReader = new FileReader();
 		fileReader.onload = function () {
-			set_script(this.result);
+			var value = this.result;
+			if (/<\?xml/.test(value)) {
+				value = finaldraft_converter.to_fountain(value);
+			}
+			
+			set_script(value);
 		};
 		fileReader.readAsText(selected_file);
 	};
@@ -65,7 +71,7 @@ define(function (require) {
 			},
 			linkType: 'direct',
 			multiselect: false,
-			extensions: ['.fountain','.spmd', '.txt']
+			extensions: ['.fountain','.spmd', '.txt', '.fdx']
 		});
 	};
 
