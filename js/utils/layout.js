@@ -243,6 +243,8 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 		$('.content').css('display', 'block');
 		$('.menu').fadeIn();
 
+		var footer = common.data.footer;
+		module.set_footer(footer);
 	};
 
 	return module;
