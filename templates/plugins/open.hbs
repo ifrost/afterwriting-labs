@@ -24,24 +24,30 @@
 	<li>
 		<a href="#" open-action="sample" value="my_living_memory">
 			<i>My Living Memory</i>
-		</a>&nbsp;by Dan Rahmel
-	</li>
+		</a>&nbsp;by Dan Rahmel</li>
 	<li>
 		<a href="#" open-action="sample" value="printing_trouble">
 			<i>Printing Trouble</i>
 		</a>&nbsp;by Dan Rahmel</li>
 </ul>
-<input id="open-file" type="file" style="display:none" />
+<div id="open-file-wrapper"></div>
 <!-- interactions -->
 <script>
 	require(['jquery', 'plugins/open'], function($, open) {
+		var reset_file_input = function() {
+			$('#open-file-wrapper').empty();
+			$('#open-file-wrapper').html('<input id="open-file" type="file" style="display:none" />');
+			$("#open-file").change(function() {
+				var selected_file = $('#open-file').get(0).files[0];
+				open.open_file(selected_file);
+				reset_file_input();
+			});
+		}
+
 		$('a[open-action="open"]').click(function() {
 			open.open_file_dialog()
 		});
-		$("#open-file").change(function() {
-			var selected_file = $('#open-file').get(0).files[0];
-			open.open_file(selected_file);
-		});
+
 		$('a[open-action="new"]').click(open.create_new);
 		$('a[open-action="sample"]').click(function() {
 			var name = $(this).attr('value');
@@ -58,6 +64,8 @@
 		open.open_file_dialog.add(function() {
 			$("#open-file").click();
 		});
+		
+		reset_file_input();
 
 	});
 </script>
