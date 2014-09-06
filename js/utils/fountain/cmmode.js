@@ -12,7 +12,7 @@ define(function (require) {
 
 			// the main tokenizer
 			tokenizer: function (stream) {
-				if (stream.match(/^((INT.?\/.EXT\.?)|(I\/E)|(INT\.?)|(EXT\.?)).*$/, true)) {
+				if (stream.match(/^((INT.\/.EXT\.)|(I\/E)|(INT\.)|(EXT\.)).*$/, true)) {
 					return "scene-header";
 				} else {
 					stream.next();
