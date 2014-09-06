@@ -185,9 +185,6 @@ body {
 .footer .version {
 	color: #eeeeee;
 }
-em {
-	font-style: oblique;
-}
 /** small screens **/
  @media(max-width: 800px) {
 	.content {

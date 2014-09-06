@@ -23,6 +23,12 @@ pre {
 	font-size: 13px;
 	overflow: auto;
 }
+em {
+	font-style: oblique;
+}
+strong {
+	font-weight: bold;
+}
 .button {
 	font-size: 12px;
 	text-decoration: none;
