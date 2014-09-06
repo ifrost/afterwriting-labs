@@ -28,7 +28,7 @@ define(function (require) {
 
 		var width = 350 + padding * 2;
 		var height = 300; 
-		var svg = d3.select(id).append('svg').attr('width', Math.min(width, $('.plugin-contents').width()-40)).attr('viewBox', '0 0 ' + width.toString() + ' ' + height.toString()).attr('preserveAspectRatio', 'meet');
+		var svg = d3.select(id).append('svg').attr('width', Math.min(width, $('.plugin-contents').width()-40)).attr('viewBox', '0 0 ' + width.toString() + ' ' + height.toString());
 
 		var circle_size = 12;
 		var inner_radius = 250;
