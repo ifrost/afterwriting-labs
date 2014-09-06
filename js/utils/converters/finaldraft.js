@@ -41,6 +41,11 @@ define(function (require) {
 		if (type !== 'Center') {
 			text += '\n';
 		}
+		
+		if (text.replace(/\n/g,'') === '') {
+			return '';
+		}
+		
 		return text;
 	};
 
