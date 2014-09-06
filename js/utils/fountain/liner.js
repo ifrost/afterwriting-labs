@@ -50,7 +50,7 @@ define(function (require) {
 
 		if (token_on_break.is("scene_heading") && !token_after.is("scene_heading")) {
 			return false;
-		} else if (cfg.split_dialogue && token_on_break.is("dialogue") && token_after.is("dialogue") && token_before.is("dialogue") && !(token_on_break.dual)) {
+		} else if (cfg.split_dialogue && token_on_break.is("dialogue") && token_after && token_after.is("dialogue") && token_before.is("dialogue") && !(token_on_break.dual)) {
 
 			for (var character = before; lines[character].type != "character"; character--) {}
 			lines.splice(index, 0, h.create_line({
@@ -61,7 +61,7 @@ define(function (require) {
 				text: lines[character].text.trim() + " " + (lines[character].text.indexOf(CONTD) !== -1 ? '' : CONTD)
 			}));
 			return true;
-		} else if (lines[index].is_dialogue() != -1 &&  lines[after] &&lines[after].is("dialogue", "parenthetical")) {
+		} else if (lines[index].is_dialogue() != -1 &&  lines[after] && lines[after].is("dialogue", "parenthetical")) {
 			return false; // or break
 		}
 
