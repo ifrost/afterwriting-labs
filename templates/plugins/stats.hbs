@@ -38,17 +38,15 @@
 <div id="stats-days-and-nights" style="text-align: center"></div>
 <!--- scripts -->
 <script>
-	require(['jquery', 'd3', 'plugins/stats', 'utils/layout', 'utils/helper',
-			'utils/charts/spider', 'utils/charts/bar', 'utils/charts/pie', 'utils/charts/page_balance',
-			'utils/charts/line',
-	], function($, d3, stats, layout, helper, spider_chart, bar_chart, pie_chart, page_balance_chart, line_chart) {
+	require(['jquery', 'd3', 'plugins/stats', 'utils/layout', 'utils/helper', 'modules/charts',
+	], function($, d3, stats, layout, helper, charts) {
 
 		stats.activate.add(function() {
-			spider_chart.render('#who-with-who', stats.data.who_with_who.characters, stats.data.who_with_who.links, {
+			charts.spider_chart.render('#who-with-who', stats.data.who_with_who.characters, stats.data.who_with_who.links, {
 				label: 'name'
 			});
 
-			bar_chart.render('#stats-scene-length', stats.data.scenes, {
+			charts.bar_chart.render('#stats-scene-length', stats.data.scenes, {
 				tooltip: function(d) {
 					return d.header + ' (time: ' + helper.format_time(helper.lines_to_minutes(d.length)) + ')'
 				},
@@ -69,7 +67,7 @@
 				}
 			});
 
-			pie_chart.render('#stats-days-and-nights', stats.data.days_and_nights, {
+			charts.pie_chart.render('#stats-days-and-nights', stats.data.days_and_nights, {
 				tooltip: function(d) {
 					return d.data.label + ': ' + d.data.value + (d.data.value == 1 ? ' scene' : ' scenes')
 				},
@@ -89,7 +87,7 @@
 				}
 			});
 
-			page_balance_chart.render('#stats-page-balance', stats.data.page_balance, {
+			charts.page_balance_chart.render('#stats-page-balance', stats.data.page_balance, {
 				page_click: function(d) {
 					if (!layout.small) {
 						stats.goto(d.first_line.token.line);
@@ -97,7 +95,7 @@
 				}
 			});
 
-			line_chart.render('#stats-tempo', stats.data.tempo, {
+			charts.line_chart.render('#stats-tempo', stats.data.tempo, {
 				value: 'tempo',
 				tooltip: function(d, i) {
 					if (i === stats.data.tempo.length - 1) {
