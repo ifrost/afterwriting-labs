@@ -20,7 +20,7 @@ define(function (require) {
 			.count('value', h.has_scene_time('NIGHT'), 'NIGHT', true)
 			.count('value', h.has_scene_time('DUSK'), 'DUSK', true)
 			.count('value', h.has_scene_time('DAWN'), 'DAWN', true)
-		query.enter(h.is('scene_heading'), function(item, fq){
+		query.enter(h.is('scene_heading'), function (item, fq) {
 			if (data.config.stats_keep_last_scene_time && fq.last_selection) {
 				fq.last_selection.value++;
 			};
@@ -197,39 +197,131 @@ define(function (require) {
 		};
 		return runner;
 	};
-	
-	var create_page_balance = function() {
+
+	var create_page_balance = function () {
 		var query = fquery('page_number', {
 			action_lines: 0,
 			dialogue_lines: 0,
 			total_lines: 0,
 			first_line: null,
 		});
-		query.prepare(function(fq){
+		query.prepare(function (fq) {
 			fq.current_page = 1;
 		});
-		query.enter(h.is('page_break'), function(item, fq){
+		query.enter(h.is('page_break'), function (item, fq) {
 			fq.current_page++;
 		});
-		query.enter(query.not(h.is('page_break')), function(item, fq){
+		query.enter(query.not(h.is('page_break')), function (item, fq) {
 			var selector = fq.select(fq.current_page);
 			selector.first_line = selector.first_line || item;
 		});
-		query.enter(h.is('scene_heading','action'), function (item, fq) {
+		query.enter(h.is('scene_heading', 'action'), function (item, fq) {
 			var selector = fq.select(fq.current_page);
 			selector.action_lines++;
 			selector.total_lines++;
-		});	
+		});
 		query.enter(h.is_dialogue(), function (item, fq) {
 			var selector = fq.select(fq.current_page);
 			selector.dialogue_lines++;
 			selector.total_lines++;
 		});
-		query.exit(function(selector){
+		query.exit(function (selector) {
 			selector.dialogue_time = selector.dialogue_lines / selector.total_lines;
 			selector.action_time = selector.action_lines / selector.total_lines;
 		});
 		return query;
+	};
+
+
+	var create_tempo = function () {
+
+		var runner = {};
+		runner.run = function (tokens) {
+
+			var query = fquery('scene_number');
+			query.prepare(function (fq) {
+				fq.current_scene_number = 0;
+				fq.current_scene = null;
+				fq.total_lines = 0;
+			});
+			query.enter(h.is('scene_heading'), function (item, fq) {
+				fq.current_scene_number++;
+				fq.current_scene = item;
+				var selector = fq.select(fq.current_scene_number);
+				selector.blocks = [];
+				selector.lines = 0;
+				selector.scene_heading = item.text;
+			});
+			query.enter(h.is('action', 'dialogue'), function (item, fq) {
+				if (fq.current_scene_number) {
+					var selector = fq.select(fq.current_scene_number);
+					var total = item.lines.length;
+					selector.blocks.push({
+						token: item,
+						lines: total
+					});
+					selector.lines += total;
+					fq.total_lines += total;
+				}
+			});
+			query.exit(function (item) {
+				item.avg_lines_per_block = item.lines / item.blocks.length;
+				item.blocks.forEach(function (block) {
+					block.line_tempo_change = (item.avg_lines_per_block - block.lines) / block.lines;
+				});
+			});
+			query.end(function (result, fq) {				
+				result = result.filter(function(scene){
+					return scene.lines > 0;
+				});
+				fq.avg_lines_per_scene = fq.total_lines / result.length;
+				result.forEach(function (scene) {
+					scene.line_tempo_change = (fq.avg_lines_per_scene - scene.lines) / scene.lines;
+				});				
+			});
+			
+
+			var scenes = query.run(tokens);
+			
+			var scenes_weight = scenes.length / 10;
+			var result = [{
+				line: '',
+				scene: '',
+				tempo: 0,
+			}];
+			var current_tempo = 0;
+			var max = -Infinity, min=Infinity;
+			scenes.forEach(function(scene){
+				scene.blocks.forEach(function(block){
+					current_tempo *= 0.9;
+					block.token.lines.forEach(function(line){
+						current_tempo *= 0.9;
+						current_tempo += scenes_weight * scene.line_tempo_change + block.line_tempo_change;
+						result.push({
+							scene: scene.scene_heading,
+							line: line.text,
+							line_no: line.token.line,
+							tempo: parseFloat(current_tempo.toFixed(2))		
+						});
+						if (current_tempo < min) {
+							min = current_tempo;
+						}
+						if (current_tempo > max) {
+							max = current_tempo;
+						}
+					});
+				});
+			});
+			result.push({
+				line: '',
+				scene: '',
+				tempo: 0,
+			});
+			
+			return result;
+		};
+
+		return runner;
 	};
 
 	plugin.windup = function () {
@@ -240,6 +332,7 @@ define(function (require) {
 		plugin.dialogue_breakdown = create_dialogue_breakdown();
 		plugin.basics = create_basics();
 		plugin.page_balance = create_page_balance();
+		plugin.tempo = create_tempo();
 	};
 
 	return plugin;

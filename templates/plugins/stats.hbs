@@ -7,16 +7,25 @@
 <h1>"Useless" Stats</h1>
 <p>Some "useless" statistics about your screenplay. Do you have an idea for a chart? Let me know at
 	<a href="mailto:contact@afterwriting.com?Subject=Stats%20idea">contact@afterwriting.com</a>!</p>
+
 <h2 style="margin-top: 30px; margin-left: 0">Who talks with who (by number of scenes)
 	<div class="info-icon" section="stats-who" />
 </h2>
 <p class="info-content" section="stats-who">Each character is represented by a circle (max. 10 characters). If characters are connected with a line that means they are talking in the same scene. Thicker the line - more scenes together. Hover the mouse cursor over a character circle to see how many dialogues scenes that character have with other characters.</p>
 <div id="who-with-who" style="text-align: center"></div>
+
+<h2 style="margin-top: 30px; margin-left: 0">Script pulse
+	<div class="info-icon" section="stats-tempo" />
+</h2>
+<p class="info-content" section="stats-tempo">Short scenes and short action/dialogue blocks bump the tempo up. Long scenes and long blocks set it back.</p>
+<div id="stats-tempo"></div>
+
 <h2 style="margin-top: 30px; margin-left: 0">Scene length
 	<div class="info-icon" section="stats-scene-length" />
 </h2>
 <p class="info-content" section="stats-scene-length">Each bar represent one scene (white bars for day scenes, black bars for night scenes). Hover the mouse cursor over a bar to see estimated time of a scene. You can click on a bar to jump to selected scene in the editor.</p>
 <div id="stats-scene-length" width="100%"></div>
+
 <h2 style="margin-top: 30px; margin-left: 0">Page balance
 	<div class="info-icon" section="stats-page-balance" />
 </h2>
@@ -30,8 +39,9 @@
 <!--- scripts -->
 <script>
 	require(['jquery', 'd3', 'plugins/stats', 'utils/layout', 'utils/helper',
-			'utils/charts/spider', 'utils/charts/bar', 'utils/charts/pie', 'utils/charts/page_balance'
-	], function($, d3, stats, layout, helper, spider_chart, bar_chart, pie_chart, page_balance_chart) {
+			'utils/charts/spider', 'utils/charts/bar', 'utils/charts/pie', 'utils/charts/page_balance',
+			'utils/charts/line',
+	], function($, d3, stats, layout, helper, spider_chart, bar_chart, pie_chart, page_balance_chart, line_chart) {
 
 		stats.activate.add(function() {
 			spider_chart.render('#who-with-who', stats.data.who_with_who.characters, stats.data.who_with_who.links, {
@@ -83,6 +93,21 @@
 				page_click: function(d) {
 					if (!layout.small) {
 						stats.goto(d.first_line.token.line);
+					}
+				}
+			});
+
+			line_chart.render('#stats-tempo', stats.data.tempo, {
+				value: 'tempo',
+				tooltip: function(d, i) {
+					if (i === stats.data.tempo.length - 1) {
+						return '';
+					}
+					return d.scene + '<br />...' + d.line + '... ';
+				},
+				click: function(d) {
+					if (!layout.small) {
+						stats.goto(d.line_no);
 					}
 				}
 			});

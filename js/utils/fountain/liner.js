@@ -61,7 +61,7 @@ define(function (require) {
 				text: lines[character].text.trim() + " " + (lines[character].text.indexOf(CONTD) !== -1 ? '' : CONTD)
 			}));
 			return true;
-		} else if (lines[index].is_dialogue != -1 && lines[after].is("dialogue", "parenthetical")) {
+		} else if (lines[index].is_dialogue() != -1 &&  lines[after] &&lines[after].is("dialogue", "parenthetical")) {
 			return false; // or break
 		}
 

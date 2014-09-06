@@ -20,6 +20,7 @@ define(function (require) {
 		var basics = queries.basics.run(data.parsed.lines);
 		plugin.data.who_with_who = queries.dialogue_breakdown.run(data.parsed.tokens, basics, data.config.stats_who_with_who_max);
 		plugin.data.page_balance = queries.page_balance.run(data.parsed.lines);
+		plugin.data.tempo = queries.tempo.run(data.parsed.tokens);
 	};
 
 	plugin.deactivate = function () {

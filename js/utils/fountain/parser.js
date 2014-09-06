@@ -57,7 +57,7 @@ define(function (require) {
 			token_category = 'none',
 			last_character_index,
 			dual_right,
-			state = 'title_page';
+			state = 'title_page', title_page_started = false;
 
 		for (var i = 0; i < lines_length; i++) {
 			text = lines[i];
@@ -79,6 +79,7 @@ define(function (require) {
 			}
 
 			token_category = 'script';
+			
 
 			if (state === 'title_page') {
 				if (regex.title_page.test(token.text)) {
@@ -87,10 +88,14 @@ define(function (require) {
 					token.text = split[1] || '';
 					last_title_page_token = token;
 					result.title_page.push(token);
+					title_page_started = true;
 					continue;
-				} else {
+				} else if (title_page_started) {
 					last_title_page_token.text += (last_title_page_token.text ? "\n" : "") + token.text;
 					continue;
+				}
+				else {
+					state = 'normal';
 				}
 			}
 
