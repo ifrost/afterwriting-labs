@@ -2,7 +2,7 @@
 define(function (require) {
 
 	var h = require('utils/fountain/helpers');
-	
+
 	var module = {};
 
 	var regex = {
@@ -33,7 +33,7 @@ define(function (require) {
 			title_page: [],
 			tokens: []
 		};
-		
+
 		if (!script) {
 			return result;
 		}
@@ -57,7 +57,7 @@ define(function (require) {
 			token_category = 'none',
 			last_character_index,
 			dual_right,
-			state = 'normal';
+			state = 'title_page';
 
 		for (var i = 0; i < lines_length; i++) {
 			text = lines[i];
@@ -80,17 +80,18 @@ define(function (require) {
 
 			token_category = 'script';
 
-			if (regex.title_page.test(token.text)) {
-				var split = token.text.split(":");
-				token.type = split[0].toLowerCase();
-				token.text = split[1] || '';
-				state = 'title_page';
-				last_title_page_token = token;
-				result.title_page.push(token);
-				continue;
-			} else if (state == 'title_page') {
-				last_title_page_token.text += (last_title_page_token.text ? "\n" : "") + token.text;
-				continue;
+			if (state === 'title_page') {
+				if (regex.title_page.test(token.text)) {
+					var split = token.text.split(":");
+					token.type = split[0].toLowerCase();
+					token.text = split[1] || '';
+					last_title_page_token = token;
+					result.title_page.push(token);
+					continue;
+				} else {
+					last_title_page_token.text += (last_title_page_token.text ? "\n" : "") + token.text;
+					continue;
+				}
 			}
 
 			if (state === 'normal') {
