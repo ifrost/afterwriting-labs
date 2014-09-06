@@ -12,7 +12,7 @@ define(function (require) {
 	plugin.data = function (key, value) {
 		if (Modernizr.localstorage) {
 			if (arguments.length === 1) {
-				return localStorage.getItem('com.afterwriting.labs.local-storage.' + key);
+				return window.localStorage.getItem('com.afterwriting.labs.local-storage.' + key);
 			} else {
 				window.localStorage.setItem('com.afterwriting.labs.local-storage.' + key, value);
 			}
@@ -158,8 +158,14 @@ define(function (require) {
 	};
 
 	plugin.load_config = function () {
-		plugin.config = Object.create(plugin.default_config);
-		var overrides = JSON.parse(plugin.data('config')) || {};
+		plugin.config = Object.create(plugin.default_config);		
+		var overrides;
+		try {
+			overrides = JSON.parse(plugin.data('config'));
+		}
+		catch (error) {
+			overrides = {};
+		}
 		for (var attrname in overrides) {
 			plugin.config[attrname] = overrides[attrname];
 		}
