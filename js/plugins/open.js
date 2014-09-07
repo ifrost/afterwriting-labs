@@ -1,22 +1,22 @@
 /* global define, window, FileReader */
 define(function (require) {
-	
+
 	var pm = require('utils/pluginmanager'),
 		logger = require('logger'),
-		templates = require('templates'), 
-		Dropbox = require('dropbox'), 
-		data = require('modules/data'), 
-		helper = require('utils/helper'), 
-		$ = require('jquery'), 
+		templates = require('templates'),
+		Dropbox = require('dropbox'),
+		data = require('modules/data'),
+		helper = require('utils/helper'),
+		$ = require('jquery'),
 		finaldraft_converter = require('utils/converters/finaldraft'),
 		layout = require('utils/layout');
-	
+
 	var log = logger.get('open');
 	var plugin = pm.create_plugin('open', 'open');
 	plugin.class = "active";
 
 	var last_session_script;
-	
+
 	var set_script = function (value) {
 		data.script(value);
 		layout.show_main();
@@ -36,7 +36,7 @@ define(function (require) {
 			if (/<\?xml/.test(value)) {
 				value = finaldraft_converter.to_fountain(value);
 			}
-			
+
 			set_script(value);
 		};
 		fileReader.readAsText(selected_file);
@@ -71,7 +71,7 @@ define(function (require) {
 			},
 			linkType: 'direct',
 			multiselect: false,
-			extensions: ['.fountain','.spmd', '.txt', '.fdx']
+			extensions: ['.fountain', '.spmd', '.txt', '.fdx']
 		});
 	};
 
@@ -86,6 +86,8 @@ define(function (require) {
 					data.data('last-used-title', title);
 				}
 			});
+		});
+		data.script.add(function () {
 			data.data('last-used-script', data.script());
 			data.data('last-used-date', helper.format_date(new Date()));
 		});
