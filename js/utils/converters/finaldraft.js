@@ -10,7 +10,7 @@ define(function (require) {
 		var align = $(paragraph).attr('Alignment');
 		var page_break = $(paragraph).attr('StartsNewPage');
 		var text = $(paragraph).find('Text').map(function () {
-			var text = $(this).html();
+			var text = $(this).text();
 			return text;
 		}).get().join('');
 		text = $('<div/>').html(text).text();
@@ -61,7 +61,7 @@ define(function (require) {
 				if (order.length === 0) {
 					return;
 				}
-				var text = $(this).find('Text').html().trim();
+				var text = $(this).find('Text').text().trim();
 				if (text === '') {
 					processing = false;
 				}
@@ -90,7 +90,7 @@ define(function (require) {
 			
 			
 		} catch (error) {
-			result = text;
+			result = "Sorry, I couldn't convert FinalDraft file :(\nerror: " + error.message;
 		}
 		return result;
 	};
