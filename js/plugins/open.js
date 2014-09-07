@@ -4,7 +4,6 @@ define(function (require) {
 	var pm = require('utils/pluginmanager'),
 		logger = require('logger'),
 		templates = require('templates'),
-		Dropbox = require('dropbox'),
 		data = require('modules/data'),
 		helper = require('utils/helper'),
 		$ = require('jquery'),

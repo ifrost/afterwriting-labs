@@ -4,7 +4,6 @@ define(function (require) {
 	var pm = require('utils/pluginmanager'), 
 		saveAs = require('saveAs'), 
 		preview = require('plugins/preview'),
-		Dropbox = require('dropbox'), 
 		data = require('modules/data');
 	
 	var plugin = pm.create_plugin('save', 'save');
