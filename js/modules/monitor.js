@@ -14,8 +14,10 @@ define(function (require) {
 	var log = logger.get('monitor');
 
 	var track_event = function (category, action, label) {
-		log.info('Event sent', category, action, label || '');
-		ga('send', 'event', category, action, label);
+		if (window.ga) {
+			log.info('Event sent', category, action, label || '');		
+			ga('send', 'event', category, action, label);
+		}
 	};
 
 	var track_handler = function (category, action, label) {
