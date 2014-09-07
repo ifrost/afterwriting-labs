@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "grunt": "~0.4.1",
+    "grunt-bumpup": "^0.6.1",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-concat": "^0.5.0",
     "grunt-contrib-copy": "^0.5.0",
