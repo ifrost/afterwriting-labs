@@ -38,6 +38,14 @@ define(function (require) {
 	plugin.is_dropbox_available = function () {
 		return Dropbox.isBrowserSupported() && window.location.protocol !== 'file:';
 	};
+	
+	plugin.activate = function() {
+		plugin.data.filename = 'screenplay';
+		var title_token = data.get_title_page_token('title');
+		if (title_token) {
+			plugin.data.filename = title_token.text.replace(/[^a-zA-Z0-9]/g,' ').split('\n').join(' ').replace(/\s+/g, ' ').trim();
+		}
+	};
 
 	return plugin;
 });

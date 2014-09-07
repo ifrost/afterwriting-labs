@@ -31,6 +31,18 @@ define(function (require) {
 		plugin.parsed = fparser.parse(plugin.script(), plugin.config);
 		plugin.parsed.lines = fliner.line(plugin.parsed.tokens, plugin.config);
 	});
+	
+	plugin.get_title_page_token = function(type) {
+		var result = null;
+		if (plugin.parsed && plugin.parsed.title_page) {
+			plugin.parsed.title_page.forEach(function(token){
+				if (token.is(type)) {
+					result = token;
+				}
+			});
+		}
+		return result;
+	};
 
 	var print_profiles = {
 		"a4": {
