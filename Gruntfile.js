@@ -58,7 +58,7 @@ module.exports = function (grunt) {
 			},
 		},
 		clean: {
-			bootstrap: ['js/afterwriting-bootstrap.js','afterwriting.html']
+			bootstrap: ['js/afterwriting-bootstrap.js', 'afterwriting.html']
 		},
 		cssmin: {
 			build: {
@@ -121,6 +121,16 @@ module.exports = function (grunt) {
 				]
 			}
 		},
+		replace: {
+			last_update: {
+				src: ['html/*'],
+				overwrite: true,
+				replacements: [{
+					from: /afterwriting.js[=?0-9a-z\-_]*\"/g,
+					to: "afterwriting.js?last_update=<%= grunt.template.today('yyyy-mm-dd_HH-MM') %>\""
+                }]
+			}
+		},
 		bumpup: 'package.json'
 
 	});
@@ -135,6 +145,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-compress');
 	grunt.loadNpmTasks('grunt-git');
 	grunt.loadNpmTasks('grunt-bumpup');
+	grunt.loadNpmTasks('grunt-text-replace');
 
 
 	grunt.registerTask('build', ['concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'clean']);
