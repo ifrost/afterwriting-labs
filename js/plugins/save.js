@@ -35,7 +35,7 @@ define(function (require) {
 	};
 
 	plugin.is_dropbox_available = function () {
-		return Dropbox.isBrowserSupported() && window.location.protocol !== 'file:';
+		return window.Dropbox !== undefined && Dropbox.isBrowserSupported() && window.location.protocol !== 'file:';
 	};
 	
 	plugin.activate = function() {
