@@ -26,17 +26,20 @@
 	</li>
 </ul>
 <h2>Time of speaking</h2>
-<span class="content-expander expand-dialogue show-all-dialogues" style="margin-left: 20px">Top 10 characters shown. Click here to show all&nbsp;<span class="nof-dialogues"></span>.</span>
-<span class="content-expander expand-dialogue show-top-dialogues" style="display:none; margin-left: 20px">All&nbsp;<span class="nof-dialogues"></span>&nbsp;characters shown. Click here to show Top 10 only.</span>
+<span class="content-expander expand-dialogue show-all-dialogues" style="margin-left: 20px">Top 10 characters shown. Click here to show all&nbsp;
+	<span class="nof-dialogues"></span>.</span>
+<span class="content-expander expand-dialogue show-top-dialogues" style="display:none; margin-left: 20px">All&nbsp;
+	<span class="nof-dialogues"></span>&nbsp;characters shown. Click here to show Top 10 only.</span>
 <ol id="facts-characters"></ol>
-
 <h2>Locations</h2>
-<span class="content-expander expand-locations show-all-locations" style="margin-left: 20px">Top 10 locations shown. Click here to show all&nbsp;<span class="nof-locations"></span>.</span>
-<span class="content-expander expand-locations show-top-locations" style="display:none; margin-left: 20px">All <span class="nof-locations"></span> locations shown. Click here to show Top 10 only.</span>
+<span class="content-expander expand-locations show-all-locations" style="margin-left: 20px">Top 10 locations shown. Click here to show all&nbsp;
+	<span class="nof-locations"></span>.</span>
+<span class="content-expander expand-locations show-top-locations" style="display:none; margin-left: 20px">All
+	<span class="nof-locations"></span>locations shown. Click here to show Top 10 only.</span>
 <ol id="facts-locations"></ol>
 <!-- scripts -->
 <script>
-	require(['jquery', 'plugins/facts','utils/helper'], function($, facts, helper) {
+	require(['jquery', 'plugins/facts', 'utils/helper'], function($, facts, helper) {
 		facts.activate.add(function() {
 			var facts_data = facts.data.facts;
 			$('#facts-title').html(facts_data.title.replace(/\*/g, '').replace(/_/g, '').replace(/\n/g, ' / '));
@@ -57,34 +60,48 @@
 			}
 			$('.nof-dialogues').html(facts_data.characters.length);
 			$('.nof-locations').html(facts_data.locations.length);
-			
-			
+
+
 			if (facts_data.characters.length > 10) {
 				$('.show-all-dialogues').show();
 				$('.show-top-dialogues').hide();
 				$('#facts-characters li.expandable').hide();
-				$('.expand-dialogue').click(function(){
-					$('.expand-dialogue').show();
-					$('#facts-characters li.expandable').slideToggle({duration: 200});
+				$('.expand-dialogue').click(function() {
+					if ($(this).hasClass('show-all-dialogues')) {
+						$('.show-all-dialogues').hide();
+						$('.show-top-dialogues').show();
+					} else {
+						$('.show-all-dialogues').show();
+						$('.show-top-dialogues').hide();
+					}
+					$('#facts-characters li.expandable').slideToggle({
+						duration: 200
+					});
 				});
-			}
-			else {
+			} else {
 				$('.expand-dialogue').hide();
 			}
-			
+
 			if (facts_data.locations.length > 10) {
 				$('.show-all-locations').show();
 				$('.show-top-locations').hide();
 				$('#facts-locations li.expandable').hide();
-				$('.expand-locations').click(function(){
-					$('.expand-locations').show();
-					$('#facts-locations li.expandable').slideToggle({duration: 200});
+				$('.expand-locations').click(function() {
+					if ($(this).hasClass('show-all-locations')) {
+						$('.show-all-locations').hide();
+						$('.show-top-locations').show();
+					} else {
+						$('.show-all-locations').show();
+						$('.show-top-locations').hide();
+					}
+					$('#facts-locations li.expandable').slideToggle({
+						duration: 200
+					});
 				});
-			}
-			else {
+			} else {
 				$('.expand-locations').hide();
 			}
-			
+
 		});
 
 	});

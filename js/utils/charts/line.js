@@ -53,8 +53,10 @@ define(function (require) {
 		var block_width = width / data.length;
 		var shift_tip = block_width / 2;
 
+		var tip_layer = vis.append('g');
+		
 		var show_tip = function (d, i) {
-			vis.append('path')
+			tip_layer.append('path')
 				.attr('class', 'linetip')
 				.attr('fill', 'none')
 				.attr('stroke', '#777777')
@@ -62,7 +64,7 @@ define(function (require) {
 		};
 
 		var hide_tip = function () {
-			vis.selectAll('.linetip').remove();
+			tip_layer.selectAll('.linetip').remove();
 		};
 
 		vis.selectAll('rect')
