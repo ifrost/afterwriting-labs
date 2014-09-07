@@ -58,7 +58,7 @@ module.exports = function (grunt) {
 			},
 		},
 		clean: {
-			bootstrap: ['js/afterwriting-bootstrap.js']
+			bootstrap: ['js/afterwriting-bootstrap.js','afterwriting.html']
 		},
 		cssmin: {
 			build: {
@@ -76,7 +76,7 @@ module.exports = function (grunt) {
 			html: {
 				expand: true,
 				flatten: true,
-				src: ['html/index.html'],
+				src: ['html/index.html', 'html/afterwriting.html'],
 				dest: ''
 			}
 		},
@@ -116,7 +116,7 @@ module.exports = function (grunt) {
 						src: 'bundle/**'
 					},
 					{
-						src: 'index.html'
+						src: 'afterwriting.html'
 					}
 				]
 			}
