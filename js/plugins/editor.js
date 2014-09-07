@@ -11,7 +11,7 @@ define(function (require) {
 	require('libs/codemirror/addon/hint/anyword-hint');
 	require('utils/fountain/cmmode');
 	
-	var plugin = pm.create_plugin('editor', 'edit');
+	var plugin = pm.create_plugin('editor', 'write');
 	var editor;
 
 	plugin.data = {};
