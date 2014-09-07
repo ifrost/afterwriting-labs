@@ -1,7 +1,7 @@
 {
   "name": "afterwriting",
-  "version": "0.0.0",
-  "description": "Screewriting experiments",
+  "version": "1.0.0",
+  "description": "Screewriting tools",
   "keywords": [
     "screenwriting",
     "screenplay",
@@ -14,8 +14,8 @@
     "url": "http://about.me/piotr.jamroz"
   },
   "repository": {
-    "type": "git",
-    "url": "git://github.com/ifrost/afterwriting.git"
+    "type": "git",	
+    "url": "git://github.com/ifrost/afterwriting-labs.git"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
