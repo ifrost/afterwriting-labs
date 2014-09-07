@@ -120,7 +120,8 @@ module.exports = function (grunt) {
 					}
 				]
 			}
-		}
+		},
+		bumpup: 'package.json'
 
 	});
 
@@ -133,6 +134,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-compress');
 	grunt.loadNpmTasks('grunt-git');
+	grunt.loadNpmTasks('grunt-bumpup');
 
 
 	grunt.registerTask('build', ['concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'clean']);
