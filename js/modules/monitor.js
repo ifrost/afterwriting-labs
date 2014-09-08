@@ -2,6 +2,7 @@
 define(function (require) {
 
 	var logger = require('logger'), 
+		info = require('plugins/info'),
 		open = require('plugins/open'), 
 		save = require('plugins/save'),
 		editor = require('plugins/editor'),
@@ -27,6 +28,7 @@ define(function (require) {
 	};
 
 	module.windup = function () {
+		info.activate.add(track_handler('navigation', 'info'));
 		open.activate.add(track_handler('navigation', 'open'));
 		save.activate.add(track_handler('navigation', 'save'));
 		editor.activate.add(track_handler('navigation', 'edit'));
@@ -35,6 +37,9 @@ define(function (require) {
 		stats.activate.add(track_handler('navigation', 'stats'));
 		settings.activate.add(track_handler('navigation', 'settings'));
 
+		// info
+		info.download_clicked.add(track_handler('feature', 'download'));
+		
 		// open
 		open.open_sample.add(function (result, args) {
 			track_event('feature', 'open-sample', args[0]);
