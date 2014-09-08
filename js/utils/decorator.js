@@ -16,7 +16,7 @@ define(function () {
 				runner.lock = false;
 			} else {
 				_handlers.forEach(function (handler) {
-					if (result instanceof Function && result.add) {
+					if (result instanceof Function && result.decorated) {
 						result.add(handler);
 					} else {
 						handler.apply(self, [result, args]);
