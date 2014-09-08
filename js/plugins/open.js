@@ -6,6 +6,7 @@ define(function (require) {
 		templates = require('templates'),
 		data = require('modules/data'),
 		helper = require('utils/helper'),
+		decorator = require('utils/decorator'),
 		$ = require('jquery'),
 		finaldraft_converter = require('utils/converters/finaldraft'),
 		layout = require('utils/layout');
@@ -29,21 +30,23 @@ define(function (require) {
 	};
 
 	plugin.open_file = function (selected_file) {
+		var callback = decorator.signal();
 		var fileReader = new FileReader();
 		fileReader.onload = function () {
+			var format = 'fountain';						
 			var value = this.result;
 			if (/<\?xml/.test(value)) {
 				value = finaldraft_converter.to_fountain(value);
+				format = 'fdx';	
 			}
-
 			set_script(value);
+			callback(format);
 		};
 		fileReader.readAsText(selected_file);
+		return callback;
 	};
 
-	plugin.open_file_dialog = function () {
-		// view action
-	};
+	plugin.open_file_dialog = decorator.signal();
 
 	plugin.create_new = function () {
 		set_script('');

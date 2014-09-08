@@ -42,7 +42,9 @@ define(function (require) {
 
 		open.create_new.add(track_handler('feature', 'open-new'));
 		open.open_file_dialog.add(track_handler('feature', 'open-file-dialog'));
-		open.open_file.add(track_handler('feature', 'open-file-opened'));
+		open.open_file.add(function(format){
+			track_event('feature', 'open-file-opened', format);
+		});
 		open.open_from_dropbox.add(track_handler('feature', 'open-dropbox'));
 		open.open_last_used.add(function (startup) {
 			track_event('feature', 'open-last-used', startup ? 'startup' : 'manual');
