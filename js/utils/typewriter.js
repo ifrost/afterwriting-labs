@@ -1,6 +1,7 @@
 /* global define */
 define(function (require) {
 	var jsPDF = require('jspdf'),
+		data = require('modules/data'),
 		helper = require('utils/helper');
 	
 	var module = {};
@@ -13,25 +14,29 @@ define(function (require) {
 
 	module.get_pdf = function (parsed, cfg) {
 
-		var title_page = parsed.title_page;
 		var lines = parsed.lines;
+		
+		var title_token = data.get_title_page_token('title');
+		var author_token = data.get_title_page_token('author');
+		if (!author_token) {
+			author_token = data.get_title_page_token('authors');
+		}
+		
+		var properties = {
+			title: title_token ? title_token.text : '',
+			author: author_token ? author_token.text : '',
+			creator: 'afterwriting.com'
+		};
 
 		// set up document
 		var doc = new jsPDF("p", "in", cfg.print().paper_size || "a4");
+		doc.setProperties(properties);
 		doc.setFont("courier").setFontSize(12);
 
 		// helper
 		var center = function (txt, y) {
 			var feed = (cfg.print().page_width - txt.length * cfg.print().font_width) / 2;
 			doc.text(feed, y, txt);
-		};
-
-		var get_title_page_token = function (type) {
-			for (var i = 0; i < title_page.length; i++) {
-				if (title_page[i].type === type) {
-					return title_page[i];
-				}
-			}
 		};
 
 		// formatting not supported yet
@@ -51,7 +56,7 @@ define(function (require) {
 				title_page_next_line();
 				return;
 			}
-			var token = get_title_page_token(type);
+			var token = data.get_title_page_token(type);
 			if (token) {
 				token.text.split('\n').forEach(function (line) {
 					if (options.capitalize) {
@@ -78,19 +83,19 @@ define(function (require) {
 			title_page_main();
 			title_page_main('source');
 
-			var draft = get_title_page_token('draft date');
+			var draft = data.get_title_page_token('draft date');
 			doc.text(cfg.print().title_page.draft_date.x, cfg.print().title_page.draft_date.y, draft ? draft.text.trim() : "");
-			var contact = get_title_page_token('contact');
+			var contact = data.get_title_page_token('contact');
 			doc.text(cfg.print().title_page.contact.x, cfg.print().title_page.contact.y, contact ? contact.text.trim() : "");
 
 			var notes_and_copy = '';
-			var notes = get_title_page_token('notes');
-			var copy = get_title_page_token('copyright');
+			var notes = data.get_title_page_token('notes');
+			var copy = data.get_title_page_token('copyright');
 			notes_and_copy = notes ? (notes.text.trim() + "\n") : '';
 			notes_and_copy += copy ? copy.text.trim() : '';
 			doc.text(cfg.print().title_page.notes.x, cfg.print().title_page.notes.y, notes_and_copy);
 			
-			var date = get_title_page_token('date');
+			var date = data.get_title_page_token('date');
 			doc.text(cfg.print().title_page.date.x, cfg.print().title_page.date.y, date ? date.text.trim() : "");
 
 			// script
