@@ -54,6 +54,7 @@ define(['templates', 'logger', 'utils/layout', 'utils/decorator', 'd3'], functio
 		});
 
 		log.info('Initializing layout');
+		$('#loader').remove();
 		layout.init_layout(context);
 
 		log.info('Modules windup.');

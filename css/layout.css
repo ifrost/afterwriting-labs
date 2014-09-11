@@ -6,6 +6,13 @@
 	-o-background-size: cover;
 	background-size: cover;
 }
+#loader {
+	left: 50%;
+	top: 50%;
+	position: fixed;
+	margin-top: -12px;
+	margin-left: -35px;
+}
 body {
 	overflow: hidden;
 }
