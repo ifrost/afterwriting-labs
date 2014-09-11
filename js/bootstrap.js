@@ -1,5 +1,5 @@
 /*global define*/
-define(['templates', 'logger', 'utils/layout', 'utils/decorator', 'd3'], function (templates, logger, layout, decorator, d3) {
+define(['templates', 'logger', 'utils/layout', 'utils/decorator', 'd3', 'jquery'], function (templates, logger, layout, decorator, d3, $) {
 
 	var log = logger.get('bootstrap'),
 		module = {};
@@ -54,7 +54,7 @@ define(['templates', 'logger', 'utils/layout', 'utils/decorator', 'd3'], functio
 		});
 
 		log.info('Initializing layout');
-		$('#loader').remove();
+		$('#loader').fadeOut();
 		layout.init_layout(context);
 
 		log.info('Modules windup.');
