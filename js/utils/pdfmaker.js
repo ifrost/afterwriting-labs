@@ -48,9 +48,45 @@ define(function (require) {
 		doc.fontSize(12);
 
 		// convert points to inches for text
+		doc.format_state = {bold: false, italic: false, underline: false};
 		var inner_text = doc.text;
-		doc.text = function (text, x, y) {
-			inner_text.call(doc, text, x * 72, y * 72);
+		doc.text = function (text, x, y) {			
+			var split_for_fromatting = text.split(/(\*{1,3})|(_)|([^\*_]+)/g).filter(function(a){return a})
+			var font_width = cfg.print().font_width;
+			for (var i=0; i<split_for_fromatting.length; i++) {
+				var elem = split_for_fromatting[i];
+				if (elem == '***') {
+					doc.format_state.italic = !doc.format_state.italic;
+					doc.format_state.bold = !doc.format_state.bold;
+				}
+				else if (elem === '**') {
+					doc.format_state.bold = !doc.format_state.bold;
+				}
+				else if (elem == '*') {
+					doc.format_state.italic = !doc.format_state.italic;
+				}
+				else if (elem == '_') {
+					doc.format_state.underline = !doc.format_state.underline;
+				}
+				else {
+					if (doc.format_state.bold && doc.format_state.italic) {
+						doc.font(fonts.prime.bolditalic);
+					}
+					else if (doc.format_state.bold) {
+						doc.font(fonts.prime.bold);
+					}
+					else if (doc.format_state.italic) {
+						doc.font(fonts.prime.italic);
+					}
+					else {
+						doc.font(fonts.prime.normal);
+					}
+					inner_text.call(doc, elem, x * 72, y * 72, {underline: doc.format_state.underline});
+					x += font_width * elem.length;
+				}
+			}
+			
+			
 		};
 
 		return doc;
@@ -73,22 +109,16 @@ define(function (require) {
 			author_token = data.get_title_page_token('authors');
 		}
 
-		var properties = {
-			title: title_token ? title_token.text : '',
-			author: author_token ? author_token.text : '',
-			creator: 'afterwriting.com'
-		};
+		doc.info.Title= title_token ? title_token.text : '';
+		doc.info.Author = author_token ? author_token.text : '';
+		doc.info.Creator = 'afterwriting.com';
 
 		// helper
 		var center = function (txt, y) {
-			var feed = (cfg.print().page_width - txt.length * cfg.print().font_width) / 2;
+			var txt_length = txt.replace(/\*/g,'').replace(/_/g,'').length;
+			var feed = (cfg.print().page_width - txt_length * cfg.print().font_width) / 2;
 			doc.text(txt, feed, y);
 		};
-
-		// formatting not supported yet
-		parsed.title_page.forEach(function (title_page_token) {
-			title_page_token.text = title_page_token.text.replace(/\*/g, '').replace(/_/g, '');
-		});
 
 		var title_y = cfg.print().title_page.top_start;
 
@@ -170,7 +200,7 @@ define(function (require) {
 				y++;
 			} else {
 				// formatting not supported yet
-				text = line.text.replace(/\*/g, '').replace(/_/g, '');
+				text = line.text;
 				text = text.trim();
 
 				var color = (cfg.print()[line.type] && cfg.print()[line.type].color) || '#000000';
