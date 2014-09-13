@@ -214,10 +214,8 @@ define(function (require) {
 						feed = cfg.print().action.feed + cfg.print().action.max * 0.1 - line.text.length * 0.1;
 					}
 					if (line.type == "scene_heading" && cfg.embolden_scene_headers) {
-						doc.font(fonts.prime.bold);
-					} else {
-						doc.font(fonts.prime.normal);
-					}
+						text = '**' + text + '**';
+					} 
 
 					if (line.type === 'section') {
 						current_section_level = line.token.level;
@@ -234,7 +232,7 @@ define(function (require) {
 
 
 					if (cfg.print()[line.type] && cfg.print()[line.type].italic) {
-						doc.font(fonts.prime.italic);
+						text = '*' + text + '*';
 					}
 
 					if (line.token && line.token.dual) {
@@ -254,7 +252,6 @@ define(function (require) {
 
 					doc.text(text, feed, cfg.print().top_margin + cfg.print().font_height * y++);
 					doc.fill('black');
-					doc.font(fonts.prime.normal);
 				}
 			}
 
