@@ -9,7 +9,9 @@ require.config({
 		saveAs: 'libs/FileSaver',
 		jspdf: 'libs/jspdf',
 		d3: 'libs/d3.min',
-		modernizr: 'libs/modernizr'
+		modernizr: 'libs/modernizr',
+		pdfkit: 'libs/pdfkit',
+		blobstream: 'libs/blob-stream-v0.1.2'
 	},
 	shim: {
 		handlebars: {
@@ -26,7 +28,6 @@ require.config({
 		},
 		modernizr: {
 			exports: 'Modernizr'
-		},
-
+		}
 	}
 });
