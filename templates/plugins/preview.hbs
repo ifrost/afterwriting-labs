@@ -9,10 +9,9 @@
 	require(['jquery', 'plugins/preview'], function($, preview) {
 		preview.activate.add(function() {
 			$('#pdf-preview-iframe-container').html('<iframe id="pdf-preview-iframe" class="to-the-bottom" style="width: 100%"></iframe>');
-			//$("#pdf-preview-iframe").attr('src', preview.data.pdf.output("datauristring"));
 
-			preview.get_pdf_url(function(url) {
-				$("#pdf-preview-iframe").attr('src', url);
+			preview.get_pdf(function(data) {
+				$("#pdf-preview-iframe").attr('src', data.url);
 			});
 
 		});

@@ -3,12 +3,18 @@ define(function (require) {
 
 	var PDFDocument = require('pdfkit'),
 		fonts = require('utils/fonts'),
-		blobstream = require('blobstream');
+		blobstream = require('blobstream'),
+		data = require('modules/data'),
+		helper = require('utils/helper');
 
 	var module = {};
 	
 	function initDoc() {
-		var doc = new PDFDocument();
+		var cfg = data.config;
+		var options = {
+			size: cfg.print().paper_size == "a4" ? 'A4' : 'LETTER'
+		};
+		var doc = new PDFDocument(options);
 		doc.font(fonts.prime.normal);		
 		doc.fontSize(12);
 		return doc;
@@ -19,7 +25,8 @@ define(function (require) {
 		doc.end();
 		stream.on('finish', function () {
 			var url = stream.toBlobURL('application/pdf');
-			callback(url);
+			var blob = stream.toBlob('application/pdf');
+			callback({url: url, blob: blob});
 		});
 	}
 	
@@ -27,7 +34,7 @@ define(function (require) {
 		doc.text("Pchnąć w tę łódź jeża lub osiem skrzyń fig", 100, 160);
 	}
 	
-	module.get_pdf_url = function (callback) {
+	module.get_pdf = function (callback) {
 		var doc = initDoc();
 		generate(doc);		
 		finishDoc(doc, callback);
