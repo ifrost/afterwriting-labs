@@ -158,7 +158,7 @@ define(function (require) {
 		use_dual_dialogue: true,
 		stats_keep_last_scene_time: true,
 		stats_who_with_who_max: 10,
-		print_notes: true
+		print_notes: false
 	};
 
 	plugin.default_config.print = function () {
