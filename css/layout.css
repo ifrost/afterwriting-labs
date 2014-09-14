@@ -1,6 +1,6 @@
 /** background image **/
  html {
-	background: none no-repeat center center fixed;
+	background: #111111 no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -12,6 +12,7 @@
 	position: fixed;
 	margin-top: -12px;
 	margin-left: -35px;
+	color: #eeeeee;
 }
 body {
 	overflow: hidden;

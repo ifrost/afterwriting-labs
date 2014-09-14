@@ -101,10 +101,8 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 		var max_backgrounds = 7;
 		if (!module.small && data.config.show_background_image) {
 			$('html').css('background-image', 'url(' + common.data.static_path + 'gfx/bg' + Math.floor(Math.random() * max_backgrounds) + '.jpg)');
-		} else {
-			$('html').css('background-color', '#111111');
 		}
-
+		
 		var layout = templates['templates/layout.hbs'];
 		var body = layout(context);
 		$('body').append(body);
