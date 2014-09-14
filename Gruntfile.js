@@ -148,7 +148,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-text-replace');
 
 
-	grunt.registerTask('build', ['replace', 'concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'clean']);
+	grunt.registerTask('build', ['handlebars', 'replace', 'concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'clean']);
 	grunt.registerTask('deploy', ['gitcheckout:pages', 'gitmerge:master', 'gitpush:pages', 'gitcheckout:master']);
 
 };
