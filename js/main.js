@@ -11,7 +11,6 @@ require.config({
 		d3: 'libs/d3.min',
 		modernizr: 'libs/modernizr',
 		pdfkit: 'libs/pdfkit',
-		blobstream: 'libs/blob-stream-v0.1.2'
 	},
 	shim: {
 		handlebars: {

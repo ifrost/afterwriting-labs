@@ -27,18 +27,24 @@ define(function (require) {
 		line_break: /^ {2}$/
 	};
 
-	module.parse = function (script, cfg) {
+	module.parse = function (original_script, cfg) {
 
-		var result = {
-			title_page: [],
-			tokens: []
-		};
+		var script = original_script,
+			result = {
+				title_page: [],
+				tokens: []
+			};
 
 		if (!script) {
 			return result;
 		}
 
 		var new_line_length = script.match(/\r\n/) ? 2 : 1;
+
+		if (!cfg.print_notes) {
+			script = script.replace(/ {0,1}\[\[/g, ' /*').replace(/\]\] {0,1}/g, '*/');
+		}
+
 		var lines = script.split(/\r\n|\r|\n/);
 
 		var create_token = function (text, cursor, line) {
@@ -57,14 +63,49 @@ define(function (require) {
 			token_category = 'none',
 			last_character_index,
 			dual_right,
-			state = 'title_page', title_page_started = false;
+			state = 'title_page',
+			cache_state_for_comment,
+			nested_comments = 0,
+			title_page_started = false;
+
+
+		var reduce_comment = function (prev, current) {
+			if (current == '/*') {
+				nested_comments++;
+			} else if (current == '*/') {
+				nested_comments--;
+			} else if (!nested_comments) {
+				prev = prev + current;
+			}
+			return prev;
+		};
+
+		var if_not_empty = function (a) {
+			return a;
+		};
 
 		for (var i = 0; i < lines_length; i++) {
 			text = lines[i];
+
+			// replace inline comments
+			text = text.split(/(\/\*){1}|(\*\/){1}|([^\/\*]+)/g).filter(if_not_empty).reduce(reduce_comment, '');
+
+			if (nested_comments && state != 'ignore') {
+				cache_state_for_comment = state;
+				state = 'ignore';
+			} else if (state == 'ignore') {
+				state = cache_state_for_comment;
+			}
+
+			if (nested_comments === 0 && state === 'ignore') {
+				state = cache_state_for_comment;
+			}
+
+
 			token = create_token(text, current, i);
 			current = token.end + 1;
 
-			if (text.length === 0) {
+			if (text.trim().length === 0) {
 				if (!last_was_separator) {
 					state = 'normal';
 					dual_right = false;
@@ -79,7 +120,6 @@ define(function (require) {
 			}
 
 			token_category = 'script';
-			
 
 			if (state === 'title_page') {
 				if (regex.title_page.test(token.text)) {
@@ -93,8 +133,7 @@ define(function (require) {
 				} else if (title_page_started) {
 					last_title_page_token.text += (last_title_page_token.text ? "\n" : "") + token.text;
 					continue;
-				}
-				else {
+				} else {
 					state = 'normal';
 				}
 			}
@@ -174,9 +213,10 @@ define(function (require) {
 
 			last_was_separator = false;
 
-			if (token_category === 'script') {
+			if (token_category === 'script' && state !== 'ignore') {
 				result.tokens.push(token);
 			}
+
 
 		}
 

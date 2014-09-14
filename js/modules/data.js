@@ -118,6 +118,10 @@ define(function (require) {
 				max: 58,
 				color: '#555555',
 				level_indent: 0.2
+			},
+			note: {
+				color: '#888888',
+				italic: true
 			}
 			
 		},
@@ -153,7 +157,8 @@ define(function (require) {
 		number_sections: false,
 		use_dual_dialogue: true,
 		stats_keep_last_scene_time: true,
-		stats_who_with_who_max: 10
+		stats_who_with_who_max: 10,
+		print_notes: true
 	};
 
 	plugin.default_config.print = function () {
