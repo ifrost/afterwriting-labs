@@ -32,8 +32,9 @@ define(function (require) {
 	};
 
 	plugin.dropbox_pdf = function () {
-		var uri = preview.get_pdf().url;
-		Dropbox.save(uri, plugin.data.filename + '.pdf');
+		var uri = preview.get_pdf(function(data){
+			Dropbox.save(data.url, plugin.data.filename + '.pdf');
+		});		
 	};
 
 	plugin.is_dropbox_available = function () {
