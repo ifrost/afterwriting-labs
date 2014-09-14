@@ -7,7 +7,6 @@ require.config({
 		handlebars: 'libs/handlebars',
 		logger: 'libs/logger',
 		saveAs: 'libs/FileSaver',
-		jspdf: 'libs/jspdf',
 		d3: 'libs/d3.min',
 		modernizr: 'libs/modernizr',
 		pdfkit: 'libs/pdfkit',
@@ -21,9 +20,6 @@ require.config({
 		},
 		saveAs: {
 			exports: 'saveAs'
-		},
-		'jspdf': {
-			exports: 'jsPDF'
 		},
 		modernizr: {
 			exports: 'Modernizr'
