@@ -193,7 +193,6 @@ define(function (require) {
 
 			var date = data.get_title_page_token('date');
 			doc.text(date ? date.text.trim() : "", cfg.print().title_page.date.x, cfg.print().title_page.date.y);
-			doc.note(cfg.print().title_page.date.x * 72, cfg.print().title_page.date.y * 72, 0, 0, 'note');
 			
 			// script
 			doc.addPage();
