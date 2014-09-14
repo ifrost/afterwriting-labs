@@ -1,6 +1,6 @@
 Title: 
 	_Screenplay title_
-	Second line title
+	Second line
 Credit: written by
 Author: 
 	Author 1,
@@ -59,17 +59,17 @@ Action. action. action. action. /*ignored*/action. action. action. action. actio
 
 INT. FORMATTING - DAY
 
-Normal test, _underline test_, *italic test*, **bold test**, ***bold and italic test***, _*underline and italic text*_, _**underline and bold test_**, _***underline, bold and italic test***_.
+Normal test, _underline test_, *italic test*, **bold test**, ***bold and italic test***, _*underline and italic test*_, _**underline and bold test_**, _***underline, bold and italic test***_.
 
 _Long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long **(with nested bold)** long long long long underlined text._
 
-> CENTERED, **BOLD CENTERED**, _UNDERLINE CENTERED_ <
+> CENTERED, **BOLD**, _UNDERLINE_ <
 
 > TRANSITION:
 
-Page break test:
+Page break test...
 
-====
+===
 
 .FORCED HEADER
 
@@ -127,8 +127,5 @@ Blåbærsyltetøy
 
 SPANISH
 El pingüino Wenceslao hizo kilómetros bajo exhaustiva lluvia y frío, añoraba a su querido cachorro.
-
-FRENCH
-Les naïfs ægithales hâtifs pondant à Noël où il gèle sont sûrs d'être déçus en voyant leurs drôles d'œufs abîmés.
 
 
