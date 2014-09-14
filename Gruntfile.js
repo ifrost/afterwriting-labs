@@ -126,8 +126,8 @@ module.exports = function (grunt) {
 				src: ['html/*'],
 				overwrite: true,
 				replacements: [{
-					from: /afterwriting.js[=?0-9a-z\-_]*\"/g,
-					to: "afterwriting.js?last_update=<%= grunt.template.today('yyyy-mm-dd_HH-MM') %>\""
+					from: /last_update[=?0-9a-z\-_]*\"/g,
+					to: "last_update=<%= grunt.template.today('yyyy-mm-dd_HH-MM') %>\""
                 }]
 			}
 		},
