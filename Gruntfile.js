@@ -32,7 +32,7 @@ module.exports = function (grunt) {
 					onBuildWrite: function (moduleName, path, contents) {
 						if (moduleName === 'logger') {
 							contents = contents.replace(/\/\/invoke[\s\S]*\/\/\/invoke/g, '');
-						} else if (moduleName == 'libs/codemirror/lib/codemirror') {
+						} else if (moduleName == 'libs/codemirror/lib/codemirror' || moduleName == 'pdfkit') {
 							contents = '';
 						}
 						return contents;
@@ -53,7 +53,7 @@ module.exports = function (grunt) {
 				options: {
 					separator: ';'
 				},
-				src: ['bundle/js/afterwriting.js', 'js/libs/codemirror/lib/codemirror.js'],
+				src: ['bundle/js/afterwriting.js', 'js/libs/codemirror/lib/codemirror.js', 'js/libs/pdfkit.js'],
 				dest: 'bundle/js/afterwriting.js'
 			},
 		},
