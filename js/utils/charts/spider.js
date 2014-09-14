@@ -3,7 +3,8 @@ define(function (require) {
 	var d3 = require('d3'),
 		$ = require('jquery');
 
-	var plugin = {};
+	var plugin = {},
+		MAX_CHARACTER_NAME = 15;
 
 	plugin.render = function (id, data, links, config) {
 		$(id).empty();
@@ -11,8 +12,14 @@ define(function (require) {
 		if (data.length <= 1) {
 			$(id).append('<p class="error">Sorry, there is not enough data to display the chart. Add at least two speaking characters to your script.</p>');
 			return;
-		};
-
+		};	
+		
+		for (var i=0; i<data.length; i++) {
+			if (data[i][config.label].length > MAX_CHARACTER_NAME) {
+				data[i][config.label] = data[i][config.label].substr(0, MAX_CHARACTER_NAME) + '...';
+			}
+		}
+		
 		var max_name_length = Math.max.apply(null, data.map(function (item) {
 			return item[config.label].length;
 		}));
