@@ -79,19 +79,20 @@ define(function (require) {
 
 	plugin.init = function () {
 		log.info("Init: script handlers");
-		data.parse.add(function () {
-			data.data('last-used-title', 'No title');
-			data.parsed.title_page.forEach(function (token) {
-				if (token.type === 'title') {
-					var title = token.text;
-					title = title.split('\n')[0].replace(/\*/g, '').replace(/_/g, '').replace(/\n/g, ' / ');
-					data.data('last-used-title', title);
-				}
-			});
-		});
 		data.script.add(function () {
+			var title = '';			
 			data.data('last-used-script', data.script());
 			data.data('last-used-date', helper.format_date(new Date()));
+			if (data.script()) {
+				var title_match;
+				data.script().split('\n').forEach(function(line){
+					title_match = line.match(/title\:(.*)/i);
+					if (title_match) {
+						title = title_match[1];
+					}
+				});
+			}
+			data.data('last-used-title', title || 'No title');
 		});
 	};
 
