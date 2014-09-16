@@ -220,7 +220,6 @@ define(function (require) {
 					token.text = '*' + token.text.substr(1) + '*';
 				}
 				token.text = token.text.trim();
-				console.log(token.text, token.type);
 				result.tokens.push(token);
 			}
 			
