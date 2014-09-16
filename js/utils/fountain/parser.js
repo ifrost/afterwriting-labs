@@ -11,13 +11,13 @@ define(function (require) {
 		section: /^(#+)(?: *)(.*)/,
 		synopsis: /^(?:\=(?!\=+) *)(.*)/,
 
-		scene_heading: /^((?:\*{0,3}_?)?(?:(?:int|ext|est|i\/e)[. ]).+)|^(?:\.(?!\.+))(.+)/i,
+		scene_heading: /^((?:\*{0,3}_?)?(?:(?:int|ext|est|int\/ext|i\.?\/e\.?)[. ]).+)|^(?:\.(?!\.+))(.+)/i,
 		scene_number: /( *#(.+)# *)/,
 
-		transition: /^((?:FADE (?:TO BLACK|OUT)|CUT TO BLACK)\.|.+ TO\:)|^(?:> *)(.+)/,
+		transition: /^((?:FADE (?:TO BLACK|OUT)|CUT TO BLACK)\.|.+ TO\:|^TO\:$)|^(?:> *)(.+)/,
 
 		dialogue: /^([A-Z*_]+[0-9A-Z (._\-')]*)(\^?)?(?:\n(?!\n+))([\s\S]+)/,
-		character: /^([A-Z*_]+[0-9A-Z (._\-')]*)\^?$/,
+		character: /^([A-Z*_]+[0-9A-Z (._\-')]*)\^?$|^@.*$/,
 		parenthetical: /^(\(.+\))$/,
 
 		action: /^(.+)/g,
@@ -163,13 +163,7 @@ define(function (require) {
 				} else if (token.text.match(regex.scene_heading)) {
 					token.text = token.text.replace(/^\./, '');
 					if (cfg.double_space_between_scenes) {
-						var additional_separator = h.create_token({
-							text: '',
-							start: token.start,
-							end: token.end,
-							lines: [''],
-							type: 'separator'
-						});
+						var additional_separator = h.create_separator(token.start, token.end);
 						result.tokens.push(additional_separator);
 					}
 					token.type = 'scene_heading';
@@ -179,6 +173,7 @@ define(function (require) {
 					} else {
 						state = 'dialogue';
 						token.type = 'character';
+						token.text = token.text.replace(/^@/, '');
 						if (token.text[token.text.length - 1] === '^') {
 							if (cfg.use_dual_dialogue) {
 								// update last dialogue to be dual:left
@@ -197,7 +192,11 @@ define(function (require) {
 				} else if (token.text.match(regex.page_break)) {
 					token.text = '';
 					token.type = 'page_break';
-				} else {
+				} else if (token.text.length && token.text[0] === '!') {
+					token.type = 'action';
+					token.text = token.text.substr(1);
+				}
+				else {
 					token.type = 'action';
 				}
 			} else {
@@ -214,10 +213,17 @@ define(function (require) {
 			last_was_separator = false;
 
 			if (token_category === 'script' && state !== 'ignore') {
+				if (token.is('scene_heading', 'transition')) {
+					token.text = token.text.toUpperCase();
+				}
+				if (token.text && token.text[0] == '~') {
+					token.text = '*' + token.text.substr(1) + '*';
+				}
+				token.text = token.text.trim();
+				console.log(token.text, token.type);
 				result.tokens.push(token);
 			}
-
-
+			
 		}
 
 		return result;
