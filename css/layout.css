@@ -137,7 +137,7 @@ body {
 	overflow: hidden;
 }
 .tool {
-	background-color: #bbbbbb;
+	background-color: #111111;
 	border-radius: 50%;
 	padding: 5px;
 	width: 15px;
@@ -156,7 +156,7 @@ body {
 	opacity: 1.0;
 }
 .tool-hover, .tool-hover.active {
-	background-color: #999999;
+	background-color: #111111;
 	opacity: 1.0;
 }
 .close-content {
