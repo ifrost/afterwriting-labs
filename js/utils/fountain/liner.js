@@ -1,8 +1,7 @@
 /* global define */
 define(function (require) {
 
-	var parser = require('utils/fountain/parser'),
-		h = require('utils/fountain/helpers');
+	var h = require('utils/fountain/helpers');
 
 	var module = {};
 

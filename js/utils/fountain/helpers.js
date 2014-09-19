@@ -76,31 +76,43 @@ define(function () {
 	};
 
 	module.first_text = function (type, list, default_value) {
-		for (var i=0; i < list.length; i++) {
+		for (var i = 0; i < list.length; i++) {
 			if (list[i].type === type) {
 				return list[i].text;
 			}
 		}
 		return default_value;
 	};
-	
-	module.create_line = function(line) {
+
+	module.create_line = function (line) {
 		line.text = line.text || "";
 		line.type = line.type || "unknown";
 		line.start = line.start || 0;
 		line.end = line.end || 0;
-		line.token = line.token || module.create_token({type: line.type});
+		line.token = line.token || module.create_token({
+			type: line.type
+		});
 		line.token.lines = line.token.lines || [line];
 		return enrich_line(line);
 	};
-	
-	module.create_token = function(token) {
+
+	module.create_token = function (token) {
 		token.text = token.text || "";
 		token.type = token.type || "unknown";
 		token.start = token.start || 0;
 		token.end = token.end || 0;
 		token.lines = token.lines || [];
 		return enrich_token(token);
+	};
+
+	module.create_separator = function (start, end) {
+		return module.create_token({
+			text: '',
+			start: start,
+			end: end,
+			lines: [''],
+			type: 'separator'
+		});
 	};
 
 	return module;
