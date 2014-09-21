@@ -1,20 +1,21 @@
-<h1>Open Fountain / Convert FinalDraft .fdx</h1>
-<ul>
+<h1>Start&nbsp;<div class="info-icon" section="open-start" /></h1>
+<p class="info-content" section="open-start">You can open a .fountain or .fdx file (it will be converted to Fountain), or use one of the samples below.</p>
+<ul class="no-bullets">
 	<li>
-		<a href="#" open-action="open">Load a local file</a>
+		<img src="{{static_path}}gfx/icons/other/new.svg" class="icon" />
+		<a href="#" open-action="new">Create new</a>
 	</li>
 	<li>
+		<img src="{{static_path}}gfx/icons/other/load.svg" class="icon" />
+		<a href="#" open-action="open">Load file</a>
+	</li>
+	<li>
+		<img src="{{static_path}}gfx/icons/other/dropbox.svg" class="icon" />
 		<a href="#" open-action="dropbox">Open from Dropbox</a>
-	</li>
+	</li>{{#if last_used.date}}
 	<li>
-		<a href="#" open-action="new">...or create new</a>
-	</li>
-</ul>{{#if last_used.date}}
-<h1>Last opened</h1>
-<ul>
-	<li>
-		<a href="#" open-action="last">{{last_used.title}}</a>&nbsp;({{last_used.date}})</li>
-</ul>{{/if}}
+		<img src="{{static_path}}gfx/icons/other/reuse.svg" class="icon" />Last opened:&nbsp;
+		<a href="#" open-action="last">{{last_used.title}}</a>&nbsp;({{last_used.date}})</li>{{/if}}</ul>
 <h1>Samples</h1>
 <ul>
 	<li>
@@ -64,7 +65,7 @@
 		open.open_file_dialog.add(function() {
 			$("#open-file").click();
 		});
-		
+
 		reset_file_input();
 
 	});

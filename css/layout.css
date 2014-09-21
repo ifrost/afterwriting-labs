@@ -137,14 +137,14 @@ body {
 	overflow: hidden;
 }
 .tool {
-	background-color: #111111;
-	border-radius: 50%;
+	background-color: #333333;
+	border-radius: 25%;
 	padding: 5px;
 	width: 15px;
 	height: 15px;
 	margin: 0 10px 0 0;
 	float: left;
-	opacity: 0.5;
+	opacity: 0.6;
 	cursor: pointer;
 	-webkit-transition: all 0.5s ease-in-out;
 	-moz-transition: all 0.5s ease-in-out;
@@ -245,5 +245,6 @@ body {
 		padding: 10px 5px 5px 0;
 		width: 30px;
 		height: 30px;
+		background-color: #ffffff;
 	}
 }
