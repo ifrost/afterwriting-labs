@@ -1,6 +1,7 @@
 module.exports = function (grunt) {
 
 	grunt.initConfig({
+		pkg: grunt.file.readJSON('package.json'),
 		watch: {
 			templates: {
 				files: ['**/*.hbs'],
@@ -128,6 +129,14 @@ module.exports = function (grunt) {
 				replacements: [{
 					from: /last_update[=?0-9a-z\-_]*\"/g,
 					to: "last_update=<%= grunt.template.today('yyyy-mm-dd_HH-MM') %>\""
+                }]
+			},
+			footer: {
+				src: ['js/utils/common.js'],
+				overwrite: true,
+				replacements: [{
+					from: /footer: '[^']*'/g,
+					to: "footer: 'version: <%= pkg.version %> (<%= grunt.template.today('yyyy/mm/dd') %>)'"
                 }]
 			}
 		},
