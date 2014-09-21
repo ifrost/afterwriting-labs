@@ -1,7 +1,14 @@
 /* global define, document, window, setTimeout */
-define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanager', 'utils/common', 'templates'], function ($, temlates, data, Handlebars, pm, common, templates) {
+define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanager', 'utils/common', 'templates', 'utils/decorator'], function ($, temlates, data, Handlebars, pm, common, templates, decorator) {
 
-	var module = {only_active_visible: true};
+	var module = {
+		only_active_visible: true
+	};
+
+	var switch_and_return = function (plugin) {
+		pm.switch_to(plugin);
+		return plugin;
+	};
 
 	// set up handlebars
 	Handlebars.registerHelper('static_path', function () {
@@ -60,15 +67,19 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 
 	};
 
-	module.close_content = function (immediately) {
+	module.close_content = decorator(function (immediately) {
 		var duration = module.small ? 0 : 500;
 		var action = immediately ? 'offset' : 'animate';
+		var closed_plugin = pm.get_current();
+
 		$('.content')[action]({
 			top: -$('.content').height()
 		}, {
 			duration: duration
 		}).addClass('content-closed');
-	};
+
+		return closed_plugin;
+	});
 
 	module.show_tooltip = function (text) {
 		$('#tooltip').css("visibility", "visible").html(text);
@@ -102,7 +113,7 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 		if (!module.small && data.config.show_background_image) {
 			$('html').css('background-image', 'url(' + common.data.static_path + 'gfx/bg' + Math.floor(Math.random() * max_backgrounds) + '.jpg)');
 		}
-		
+
 		var layout = templates['templates/layout.hbs'];
 		var body = layout(context);
 		$('body').append(body);
@@ -184,25 +195,17 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 			$('.tool[plugin="' + plugin + '"]').addClass('active');
 		};
 
-		/** open content handlers **/
-		$('.menu-item, a.switch').click(function () {
-			module.open_content();
-			module.switch_to_plugin($(this).attr('plugin'));
-		});
-
-		/** tool handlers **/
-		$('.tool').click(function () {
-			if (!$(this).hasClass('active')) {
-				module.switch_to_plugin($(this).attr('plugin'));
-			}
-		});
-
 		/** info handlers **/
+		module.info_opened = decorator.signal();
 		$('.info-content').hide();
 		$('.info-icon').click(function () {
 			var duration = module.small ? 0 : 200;
 			var section = $(this).attr('section');
-			$('.info-content[section="' + section + '"]').toggle({
+			var section_block = $('.info-content[section="' + section + '"]');
+			if (section_block.css('display') === 'none') {
+				module.info_opened(section);
+			}
+			section_block.toggle({
 				duration: duration,
 				easing: 'linear'
 			});
@@ -210,12 +213,34 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 
 		/** content close **/
 		$('.close-content').click(function () {
-			module.close_content();
+			module.scopes.toolbar_close_content();
+		});
+
+		$('#back').click(function () {
+			if (!$('.content').hasClass('content-closed')) {
+				module.scopes.back_close_content();
+			}
 		});
 
 		context.plugins.forEach(function (plugin) {
-			$('.tool[plugin="' + plugin.name + '"], .menu-item[plugin="' + plugin.name + '"], a.switch[plugin="' + plugin.name + '"]').click(function () {
-				pm.switch_to(plugin);
+			$('.tool[plugin="' + plugin.name + '"]').click(function () {
+				if (!$(this).hasClass('active')) {
+					module.switch_to_plugin($(this).attr('plugin'));
+					module.scopes.toolbar_switch_to(plugin);
+
+				}
+			});
+
+			$('.menu-item[plugin="' + plugin.name + '"]').click(function () {
+				module.open_content();
+				module.switch_to_plugin($(this).attr('plugin'));
+				module.scopes.main_switch_to(plugin);
+			});
+
+			$('a.switch[plugin="' + plugin.name + '"]').click(function () {
+				module.open_content();
+				module.switch_to_plugin($(this).attr('plugin'));
+				module.scopes.switcher_switch_to(plugin);
 			});
 		});
 
@@ -240,6 +265,16 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 		update_selector(true);
 		$('.content').css('display', 'block');
 		$('.menu').fadeIn();
+
+
+		module.scopes = {
+			toolbar_switch_to: decorator(switch_and_return),
+			main_switch_to: decorator(switch_and_return),
+			switcher_switch_to: decorator(switch_and_return),
+
+			toolbar_close_content: decorator(module.close_content),
+			back_close_content: decorator(module.close_content)
+		};
 
 		var footer = common.data.footer;
 		module.set_footer(footer);

@@ -161,10 +161,17 @@ body {
 }
 .close-content {
 	float: right;
-	padding: 10px;
+	padding: 1px;	
+	margin: 0px 17px 10px 10px;
 	width: 20px;
 	height: 20px;
 	cursor: pointer;
+	border-radius: 50%;
+	opacity: 0.6;
+	background-color: #aaaaaa;
+}
+.close-content:hover {
+	opacity: 0.8;
 }
 .plugin-content[plugin="info"] img {
 	width: 14px;

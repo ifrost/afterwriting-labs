@@ -14,7 +14,6 @@
 				preview.get_pdf(function(data) {
 					$("#pdf-preview-iframe-container p").remove();
 					$("#pdf-preview-iframe").attr('src', data.url).css('display', 'block');
-
 				});
 			}, 200);
 
