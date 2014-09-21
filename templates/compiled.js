@@ -91,7 +91,7 @@ function program7(depth0,data) {
   return buffer;
   }
 
-  buffer += "<!--- top logo -->\r\n<p class=\"logo\">\r\n	<span class=\"apostrophe\">&rsquo;</span><span class=\"after\">after</span><span class=\"writing\">writing</span>\r\n</p>\r\n<!--- main menu -->\r\n<div class=\"menu\" style=\"display:none\">\r\n	<ul class=\"selector\">\r\n		";
+  buffer += "<!--- top logo -->\r\n<p class=\"logo\">\r\n	<span class=\"apostrophe\">&rsquo;</span><span class=\"after\">after</span><span class=\"writing\">writing</span>\r\n</p>\r\n<!--- out of content -->\r\n<div id=\"back\" style=\"opacity:0; width: 100%; height: 100%; position: absolute; top: 0; left: 0\"></div>\r\n<!--- main menu -->\r\n<div class=\"menu\" style=\"display:none\">\r\n	<ul class=\"selector\">\r\n		";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.plugins), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "</ul>\r\n</div>\r\n<div class=\"footer\"></div>\r\n<!--- plugin content -->\r\n<div class=\"content\" style=\"display:none\">\r\n	<div class=\"top-bar\">\r\n		";
@@ -207,7 +207,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<h1>Preview\r\n	<span class=\"info-icon\" section=\"preview-info\" />\r\n</h1>\r\n<p class=\"info-content\" section=\"preview-info\">Can't see anything? You need a PDF plugin in your browser. (You can download pdf from\r\n	<a class=\"switch\" href=\"#\" plugin=\"save\">here</a>)</p>\r\n<div id=\"pdf-preview-iframe-container\" class=\"to-the-bottom\"></div>\r\n<!-- scripts -->\r\n<script>\r\n	require(['jquery', 'plugins/preview'], function($, preview) {\r\n		preview.activate.add(function() {\r\n			$('#pdf-preview-iframe-container').html('<p>Loading preview...</p><iframe id=\"pdf-preview-iframe\" style=\"height: 100%; width: 100%; display:none\"></iframe>');\r\n\r\n			setTimeout(function() {\r\n				preview.get_pdf(function(data) {\r\n					$(\"#pdf-preview-iframe-container p\").remove();\r\n					$(\"#pdf-preview-iframe\").attr('src', data.url).css('display', 'block');\r\n\r\n				});\r\n			}, 200);\r\n\r\n\r\n		});\r\n		preview.deactivate.add(function() {\r\n			$(\"#pdf-preview-iframe\").remove();\r\n		});\r\n	});\r\n</script>";
+  return "<h1>Preview\r\n	<span class=\"info-icon\" section=\"preview-info\" />\r\n</h1>\r\n<p class=\"info-content\" section=\"preview-info\">Can't see anything? You need a PDF plugin in your browser. (You can download pdf from\r\n	<a class=\"switch\" href=\"#\" plugin=\"save\">here</a>)</p>\r\n<div id=\"pdf-preview-iframe-container\" class=\"to-the-bottom\"></div>\r\n<!-- scripts -->\r\n<script>\r\n	require(['jquery', 'plugins/preview'], function($, preview) {\r\n		preview.activate.add(function() {\r\n			$('#pdf-preview-iframe-container').html('<p>Loading preview...</p><iframe id=\"pdf-preview-iframe\" style=\"height: 100%; width: 100%; display:none\"></iframe>');\r\n\r\n			setTimeout(function() {\r\n				preview.get_pdf(function(data) {\r\n					$(\"#pdf-preview-iframe-container p\").remove();\r\n					$(\"#pdf-preview-iframe\").attr('src', data.url).css('display', 'block');\r\n				});\r\n			}, 200);\r\n\r\n\r\n		});\r\n		preview.deactivate.add(function() {\r\n			$(\"#pdf-preview-iframe\").remove();\r\n		});\r\n	});\r\n</script>";
   });
 
 this["JST"]["templates/plugins/save.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

@@ -50,6 +50,10 @@ define(function(require){
 			current.activate();
 		}
 	};
+	
+	module.get_current = function() {
+		return current;
+	};
 
 	return module;
 });

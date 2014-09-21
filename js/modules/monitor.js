@@ -1,22 +1,23 @@
 /* global define, ga */
 define(function (require) {
 
-	var logger = require('logger'), 
+	var logger = require('logger'),
 		info = require('plugins/info'),
-		open = require('plugins/open'), 
+		open = require('plugins/open'),
 		save = require('plugins/save'),
 		editor = require('plugins/editor'),
-		preview = require('plugins/preview'), 
-		facts = require('plugins/facts'), 
-		stats = require('plugins/stats'), 
+		preview = require('plugins/preview'),
+		facts = require('plugins/facts'),
+		stats = require('plugins/stats'),
+		layout = require('utils/layout'),
 		settings = require('plugins/settings');
-	
+
 	var module = {};
 	var log = logger.get('monitor');
 
 	var track_event = function (category, action, label) {
 		if (window.ga) {
-			log.info('Event sent', category, action, label || '');		
+			log.info('Event sent', category, action, label || '');
 			ga('send', 'event', category, action, label);
 		}
 	};
@@ -28,18 +29,29 @@ define(function (require) {
 	};
 
 	module.windup = function () {
-		info.activate.add(track_handler('navigation', 'info'));
-		open.activate.add(track_handler('navigation', 'open'));
-		save.activate.add(track_handler('navigation', 'save'));
-		editor.activate.add(track_handler('navigation', 'edit'));
-		preview.activate.add(track_handler('navigation', 'preview'));
-		facts.activate.add(track_handler('navigation', 'facts'));
-		stats.activate.add(track_handler('navigation', 'stats'));
-		settings.activate.add(track_handler('navigation', 'settings'));
+		// layout stats
+		layout.scopes.toolbar_switch_to.add(function (plugin) {
+			track_event('navigation', plugin.name, 'toolbar');
+		});
+		layout.scopes.main_switch_to.add(function (plugin) {
+			track_event('navigation', plugin.name, 'main');
+		});
+		layout.scopes.switcher_switch_to.add(function (plugin) {
+			track_event('navigation', plugin.name, 'switcher');
+		});
+		layout.scopes.toolbar_close_content.add(function (plugin) {
+			track_event('navigation', 'toolbar-close', plugin.name);
+		});
+		layout.scopes.back_close_content.add(function (plugin) {
+			track_event('navigation', 'back-close', plugin.name);
+		});		
+		layout.info_opened.add(function(section) {
+			track_event('feature', 'help', section);
+		});
 
 		// info
 		info.download_clicked.add(track_handler('feature', 'download'));
-		
+
 		// open
 		open.open_sample.add(function (result, args) {
 			track_event('feature', 'open-sample', args[0]);
@@ -47,12 +59,12 @@ define(function (require) {
 
 		open.create_new.add(track_handler('feature', 'open-new'));
 		open.open_file_dialog.add(track_handler('feature', 'open-file-dialog'));
-		open.open_file.add(function(format){
+		open.open_file.add(function (format) {
 			track_event('feature', 'open-file-opened', format);
 		});
 		open.open_from_dropbox.add(track_handler('feature', 'open-dropbox'));
 		open.open_last_used.add(function (startup) {
-			track_event('feature', 'open-last-used', startup ? 'startup' : 'manual');
+			track_event('feature', 'open-last-used', startup === true ? 'startup' : 'manual');
 		});
 
 		// save 
@@ -63,16 +75,16 @@ define(function (require) {
 
 		// stats
 		stats.goto.add(track_handler('feature', 'stats-scene-length-goto'));
-		
+
 		// settings
 		settings.save.add(track_handler('feature', 'settings-save'));
-		settings.save.add(function(){
-			var c = settings.get_config();			
+		settings.save.add(function () {
+			var c = settings.get_config();
 			track_event('settings', 'page-size-set', c.print().paper_size);
 		});
 		settings.reset.add(track_handler('feature', 'settings-reset'));
 
 	};
-	
+
 	return module;
 });
