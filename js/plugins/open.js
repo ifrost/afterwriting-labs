@@ -33,11 +33,11 @@ define(function (require) {
 		var callback = decorator.signal();
 		var fileReader = new FileReader();
 		fileReader.onload = function () {
-			var format = 'fountain';						
+			var format = 'fountain';
 			var value = this.result;
 			if (/<\?xml/.test(value)) {
 				value = finaldraft_converter.to_fountain(value);
-				format = 'fdx';	
+				format = 'fdx';
 			}
 			set_script(value);
 			callback(format);
@@ -80,15 +80,21 @@ define(function (require) {
 	plugin.init = function () {
 		log.info("Init: script handlers");
 		data.script.add(function () {
-			var title = '';			
+			var title = '';
 			data.data('last-used-script', data.script());
 			data.data('last-used-date', helper.format_date(new Date()));
 			if (data.script()) {
 				var title_match;
-				data.script().split('\n').forEach(function(line){
+				var wait_for_non_empty = false;
+				data.script().split('\n').forEach(function (line) {
 					title_match = line.match(/title\:(.*)/i);
+					if (wait_for_non_empty) {
+						title = line.trim().replace(/\*/g, '').replace(/_/g, '');
+						wait_for_non_empty = ! title;
+					}
 					if (title_match) {
-						title = title_match[1];
+						title = title_match[1].trim();
+						wait_for_non_empty = ! title;
 					}
 				});
 			}
