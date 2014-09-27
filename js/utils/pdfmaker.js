@@ -47,64 +47,74 @@ define(function (require) {
 		doc.fontSize(12);
 
 		// convert points to inches for text
-		doc.format_state = {bold: false, italic: false, underline: false, override_color: null};
+		doc.reset_format = function () {
+			doc.format_state = {
+				bold: false,
+				italic: false,
+				underline: false,
+				override_color: null
+			};
+		};
+		doc.reset_format();
 		var inner_text = doc.text;
 		doc.simple_text = inner_text;
-		doc.text = function (text, x, y, options) {	
+		doc.format_text = function (text, x, y, options) {
+			var cache_current_state = doc.format_state;
+			doc.reset_format();
+			doc.text(text, x, y, options);
+			doc.format_state = cache_current_state;
+		};
+		doc.text = function (text, x, y, options) {
 			options = options || {};
 			var color = options.color || 'black';
 			color = doc.format_state.override_color ? doc.format_state.override_color : color;
-			
+
 			doc.fill(color);
-			
+
 			if (cfg.print().note.italic) {
-				text = text.replace(/\[\[/g,'*[[').replace(/\]\]/g,']]*');
+				text = text.replace(/\[\[/g, '*[[').replace(/\]\]/g, ']]*');
 			}
-			
-			var split_for_fromatting = text.split(/(\*{1,3})|(_)|(\[\[)|(\]\])|([^\*_\[\]]+)/g).filter(function(a){return a})
+
+			var split_for_fromatting = text.split(/(\*{1,3})|(_)|(\[\[)|(\]\])|([^\*_\[\]]+)/g).filter(function (a) {
+				return a
+			});
 			var font_width = cfg.print().font_width;
-			for (var i=0; i<split_for_fromatting.length; i++) {
+			for (var i = 0; i < split_for_fromatting.length; i++) {
 				var elem = split_for_fromatting[i];
 				if (elem == '***') {
 					doc.format_state.italic = !doc.format_state.italic;
 					doc.format_state.bold = !doc.format_state.bold;
-				}
-				else if (elem === '**') {
+				} else if (elem === '**') {
 					doc.format_state.bold = !doc.format_state.bold;
-				}
-				else if (elem == '*') {
+				} else if (elem == '*') {
 					doc.format_state.italic = !doc.format_state.italic;
-				}
-				else if (elem == '_') {
+				} else if (elem == '_') {
 					doc.format_state.underline = !doc.format_state.underline;
-				}
-				else if (elem == '[[') {
+				} else if (elem == '[[') {
 					doc.format_state.override_color = (cfg.print().note && cfg.print().note.color) || '#000000';
 					doc.fill(doc.format_state.override_color);
-				}
-				else if (elem == ']]') {
+				} else if (elem == ']]') {
 					doc.format_state.override_color = null;
-					doc.fill('black');					
-				}
-				else {
+					doc.fill('black');
+				} else {
 					if (doc.format_state.bold && doc.format_state.italic) {
 						doc.font(fonts.prime.bolditalic);
-					}
-					else if (doc.format_state.bold) {
+					} else if (doc.format_state.bold) {
 						doc.font(fonts.prime.bold);
-					}
-					else if (doc.format_state.italic) {
+					} else if (doc.format_state.italic) {
 						doc.font(fonts.prime.italic);
-					}
-					else {
+					} else {
 						doc.font(fonts.prime.normal);
 					}
-					inner_text.call(doc, elem, x * 72, y * 72, {underline: doc.format_state.underline});
+					inner_text.call(doc, elem, x * 72, y * 72, {
+						underline: doc.format_state.underline,
+						lineBreak: options.line_break
+					});
 					x += font_width * elem.length;
 				}
 			}
-			
-			
+
+
 		};
 
 		return doc;
@@ -127,13 +137,13 @@ define(function (require) {
 			author_token = data.get_title_page_token('authors');
 		}
 
-		doc.info.Title= title_token ? title_token.text : '';
+		doc.info.Title = title_token ? title_token.text : '';
 		doc.info.Author = author_token ? author_token.text : '';
 		doc.info.Creator = 'afterwriting.com';
 
 		// helper
 		var center = function (txt, y) {
-			var txt_length = txt.replace(/\*/g,'').replace(/_/g,'').length;
+			var txt_length = txt.replace(/\*/g, '').replace(/_/g, '').length;
 			var feed = (cfg.print().page_width - txt_length * cfg.print().font_width) / 2;
 			doc.text(txt, feed, y);
 		};
@@ -179,21 +189,29 @@ define(function (require) {
 			title_page_main();
 			title_page_main('source');
 
-			var draft = data.get_title_page_token('draft date');
-			doc.text(draft ? draft.text.trim() : "", cfg.print().title_page.draft_date.x, cfg.print().title_page.draft_date.y);
-			var contact = data.get_title_page_token('contact');
-			doc.text(contact ? contact.text.trim() : "", cfg.print().title_page.contact.x, cfg.print().title_page.contact.y);
+			var concat_types = function (prev, type) {
+				var token = data.get_title_page_token(type);
+				if (token) {
+					prev = prev.concat(token.text.split('\n'));
+				}
+				return prev;
+			};
 
-			var notes_and_copy = '';
-			var notes = data.get_title_page_token('notes');
-			var copy = data.get_title_page_token('copyright');
-			notes_and_copy = notes ? (notes.text.trim() + "\n") : '';
-			notes_and_copy += copy ? copy.text.trim() : '';
-			doc.text(notes_and_copy, cfg.print().title_page.notes.x, cfg.print().title_page.notes.y);
+			var left_side = cfg.print().title_page.left_side.reduce(concat_types, []),
+				right_side = cfg.print().title_page.right_side.reduce(concat_types, []),
+				title_page_extra = function (x) {
+					return function (line) {
+						doc.text(line.trim(), x, title_y);
+						title_page_next_line();
+					};
+				};
 
-			var date = data.get_title_page_token('date');
-			doc.text(date ? date.text.trim() : "", cfg.print().title_page.date.x, cfg.print().title_page.date.y);
-			
+			title_y = 8.5;
+			left_side.forEach(title_page_extra(1.3));
+
+			title_y = 8.5;
+			right_side.forEach(title_page_extra(5));
+
 			// script
 			doc.addPage();
 		}
@@ -204,6 +222,48 @@ define(function (require) {
 			section_number = helper.version_generator(),
 			text;
 
+		var print_header_and_footer = function () {
+			if (cfg.print_header) {
+				doc.format_text(cfg.print_header, 1.5, cfg.print().page_number_top_margin, {
+					color: '#777777'
+				});
+			}
+			if (cfg.print_footer) {
+				doc.format_text(cfg.print_footer, 1.5, cfg.print().page_height - 0.6, {
+					color: '#777777'
+				});
+			}
+		};
+		
+	
+		var print_watermark = function() {
+			if (cfg.print_watermark) {
+				var options = {origin: [0, 0]}, 
+					font_size, 
+					angle=Math.atan(cfg.print().page_height/cfg.print().page_width)*180/Math.PI,
+					diagonal,
+					watermark, len;
+				
+				// underline and rotate pdfkit bug (?) workaround
+				watermark = cfg.print_watermark.replace(/_/g,'')
+				
+				// unformat
+				len = watermark.replace(/\*/g,'').length;
+				
+				diagonal = Math.sqrt(Math.pow(cfg.print().page_width,2) + Math.pow(cfg.print().page_height,2));
+				diagonal -= 4;
+				
+				font_size = (1.667 * diagonal) / len * 72;
+				doc.fontSize(font_size);
+				doc.rotate(angle, options);
+				doc.format_text(watermark, 2, -(font_size/2)/72, {color: '#eeeeee', line_break: false});
+				doc.rotate(-angle, options);				
+				doc.fontSize(12);
+			}
+		};
+
+		print_watermark();
+		print_header_and_footer();
 		lines.forEach(function (line) {
 			if (line.type == "page_break") {
 				y = 1;
@@ -216,6 +276,8 @@ define(function (require) {
 					var number_y = cfg.print().page_number_top_margin;
 					doc.simple_text(page_num, number_x * 72, number_y * 72);
 				}
+				print_watermark();
+				print_header_and_footer();
 			} else if (line.type == "separator") {
 				y++;
 			} else {
@@ -227,7 +289,7 @@ define(function (require) {
 				var text_properties = {
 					color: color
 				};
-				
+
 				if (line.type === 'centered') {
 					center(text, cfg.print().top_margin + cfg.print().font_height * y++);
 				} else {
@@ -237,7 +299,7 @@ define(function (require) {
 					}
 					if (line.type == "scene_heading" && cfg.embolden_scene_headers) {
 						text = '**' + text + '**';
-					} 
+					}
 
 					if (line.type === 'section') {
 						current_section_level = line.token.level;
@@ -272,7 +334,7 @@ define(function (require) {
 						feed -= (feed - cfg.print().left_margin) / 2;
 					}
 
-					doc.text(text, feed, cfg.print().top_margin + cfg.print().font_height * y++, text_properties);					
+					doc.text(text, feed, cfg.print().top_margin + cfg.print().font_height * y++, text_properties);
 				}
 			}
 

@@ -50,6 +50,7 @@ define(function (require) {
 			lines_per_page: 58,
 			top_margin: 1.0,
 			page_width: 8.27,
+			page_height: 11.7,
 			left_margin: 1.5,
 			right_margin: 1,
 			font_width: 0.1,
@@ -59,22 +60,8 @@ define(function (require) {
 			dual_max_factor: 0.75,
 			title_page: {
 				top_start: 3.5,
-				draft_date: {
-					x: 5.3,
-					y: 8.2
-				},
-				date: {
-					x: 5.3,
-					y: 8.2
-				},
-				contact: {
-					x: 5.3,
-					y: 8.5
-				},
-				notes: {
-					x: 1.5,
-					y: 8.5
-				}
+				left_side: ['notes', 'copyright'],
+				right_side: ['draft date', 'date', 'contact']
 			},
 			scene_heading: {
 				feed: 1.5,
@@ -132,6 +119,7 @@ define(function (require) {
 	letter.paper_size = 'letter';
 	letter.lines_per_page = 54;
 	letter.page_width = 8.5;
+	letter.page_height = 11;
 	letter.scene_heading.max = 60;
 	letter.action.max = 60;
 	letter.character.max = 35;
@@ -158,8 +146,12 @@ define(function (require) {
 		use_dual_dialogue: true,
 		stats_keep_last_scene_time: true,
 		stats_who_with_who_max: 10,
-		print_notes: false
+		print_notes: false,
+		print_header: '',
+		print_footer: '',
+		print_watermark: ''
 	};
+	
 
 	plugin.default_config.print = function () {
 		return print_profiles[plugin.config.print_profile];
