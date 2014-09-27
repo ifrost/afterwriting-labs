@@ -70,7 +70,19 @@
 				<td>
 					<input setting="print_notes" type="checkbox">
 				</td>
-			</tr>					
+			</tr>				
+			<tr>
+				<td>Header:</td>
+				<td>
+					<input setting="print_header" type="text">
+				</td>
+			</tr>							
+			<tr>
+				<td>Footer:</td>
+				<td>
+					<input setting="print_footer" type="text">
+				</td>
+			</tr>				
 			<tr>
 				<th colspan="2">Layout</th>
 			</tr>
@@ -160,6 +172,8 @@
 			$('*[setting="stats_keep_last_scene_time"]').prop('checked', c.stats_keep_last_scene_time);
 			$('*[setting="print_profile"]').val(c.print_profile);
 			$('*[setting="stats_who_with_who_max"]').val(c.stats_who_with_who_max);
+			$('*[setting="print_header"]').val(c.print_header);
+			$('*[setting="print_footer"]').val(c.print_footer);
 		};
 
 		var components_to_data = function() {
@@ -177,6 +191,8 @@
 			c.use_dual_dialogue = $('*[setting="use_dual_dialogue"]').is(':checked');
 			c.stats_keep_last_scene_time = $('*[setting="stats_keep_last_scene_time"]').is(':checked');
 			c.stats_who_with_who_max = parseInt($('*[setting="stats_who_with_who_max"]').val());
+			c.print_header = $('*[setting="print_header"]').val();
+			c.print_footer = $('*[setting="print_footer"]').val();
 			c.print_profile = $('*[setting="print_profile"]').val();
 			settings.save();
 		};
