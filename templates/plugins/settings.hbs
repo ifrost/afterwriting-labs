@@ -82,6 +82,12 @@
 				<td>
 					<input setting="print_footer" type="text">
 				</td>
+			</tr>	
+			<tr>
+				<td>Watermark:</td>
+				<td>
+					<input setting="print_watermark" type="text">
+				</td>
 			</tr>				
 			<tr>
 				<th colspan="2">Layout</th>
@@ -174,6 +180,7 @@
 			$('*[setting="stats_who_with_who_max"]').val(c.stats_who_with_who_max);
 			$('*[setting="print_header"]').val(c.print_header);
 			$('*[setting="print_footer"]').val(c.print_footer);
+			$('*[setting="print_watermark"]').val(c.print_watermark);
 		};
 
 		var components_to_data = function() {
@@ -193,6 +200,7 @@
 			c.stats_who_with_who_max = parseInt($('*[setting="stats_who_with_who_max"]').val());
 			c.print_header = $('*[setting="print_header"]').val();
 			c.print_footer = $('*[setting="print_footer"]').val();
+			c.print_watermark = $('*[setting="print_watermark"]').val();
 			c.print_profile = $('*[setting="print_profile"]').val();
 			settings.save();
 		};

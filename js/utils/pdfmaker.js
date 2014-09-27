@@ -107,7 +107,8 @@ define(function (require) {
 						doc.font(fonts.prime.normal);
 					}
 					inner_text.call(doc, elem, x * 72, y * 72, {
-						underline: doc.format_state.underline
+						underline: doc.format_state.underline,
+						lineBreak: options.line_break
 					});
 					x += font_width * elem.length;
 				}
@@ -205,7 +206,6 @@ define(function (require) {
 					};
 				};
 
-
 			title_y = 8.5;
 			left_side.forEach(title_page_extra(1.3));
 
@@ -224,7 +224,7 @@ define(function (require) {
 
 		var print_header_and_footer = function () {
 			if (cfg.print_header) {
-				doc.format_text(cfg.print_header, 1.5, 0.5, {
+				doc.format_text(cfg.print_header, 1.5, cfg.print().page_number_top_margin, {
 					color: '#777777'
 				});
 			}
@@ -234,7 +234,36 @@ define(function (require) {
 				});
 			}
 		};
+		
+	
+		var print_watermark = function() {
+			if (cfg.print_watermark) {
+				var options = {origin: [0, 0]}, 
+					font_size, 
+					angle=53,
+					diagonal,
+					watermark, len;
+				
+				// underline and rotate pdfkit bug (?) workaround
+				watermark = cfg.print_watermark.replace(/_/g,'')
+				
+				// unformat
+				len = watermark.replace(/\*/g,'').length;
+				
+				diagonal = Math.sqrt(Math.pow(cfg.print().page_width,2) + Math.pow(cfg.print().page_height,2));
+				diagonal -= 4;
+				
+				font_size = (1.667 * diagonal) / len * 72;
+				console.log(cfg.print().page_width, cfg.print().page_height, diagonal, font_size);
+				doc.fontSize(font_size);
+				doc.rotate(angle, options);
+				doc.format_text(watermark, 1.5, -(font_size/2)/72, {color: '#dddddd', line_break: false});
+				doc.rotate(-angle, options);				
+				doc.fontSize(12);
+			}
+		};
 
+		print_watermark();
 		print_header_and_footer();
 		lines.forEach(function (line) {
 			if (line.type == "page_break") {
@@ -248,6 +277,7 @@ define(function (require) {
 					var number_y = cfg.print().page_number_top_margin;
 					doc.simple_text(page_num, number_x * 72, number_y * 72);
 				}
+				print_watermark();
 				print_header_and_footer();
 			} else if (line.type == "separator") {
 				y++;

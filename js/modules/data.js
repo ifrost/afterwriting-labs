@@ -148,8 +148,10 @@ define(function (require) {
 		stats_who_with_who_max: 10,
 		print_notes: false,
 		print_header: '',
-		print_footer: ''
+		print_footer: '',
+		print_watermark: ''
 	};
+	
 
 	plugin.default_config.print = function () {
 		return print_profiles[plugin.config.print_profile];
