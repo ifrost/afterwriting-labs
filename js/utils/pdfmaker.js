@@ -127,7 +127,7 @@ define(function (require) {
 			author_token = data.get_title_page_token('authors');
 		}
 
-		doc.info.Title= title_token ? title_token.text : '';
+		doc.info.Title = title_token ? title_token.text : '';
 		doc.info.Author = author_token ? author_token.text : '';
 		doc.info.Creator = 'afterwriting.com';
 
@@ -179,20 +179,29 @@ define(function (require) {
 			title_page_main();
 			title_page_main('source');
 
-			var draft = data.get_title_page_token('draft date');
-			doc.text(draft ? draft.text.trim() : "", cfg.print().title_page.draft_date.x, cfg.print().title_page.draft_date.y);
-			var contact = data.get_title_page_token('contact');
-			doc.text(contact ? contact.text.trim() : "", cfg.print().title_page.contact.x, cfg.print().title_page.contact.y);
-
-			var notes_and_copy = '';
-			var notes = data.get_title_page_token('notes');
-			var copy = data.get_title_page_token('copyright');
-			notes_and_copy = notes ? (notes.text.trim() + "\n") : '';
-			notes_and_copy += copy ? copy.text.trim() : '';
-			doc.text(notes_and_copy, cfg.print().title_page.notes.x, cfg.print().title_page.notes.y);
-
-			var date = data.get_title_page_token('date');
-			doc.text(date ? date.text.trim() : "", cfg.print().title_page.date.x, cfg.print().title_page.date.y);
+			var concat_types = function(prev, type){
+				var token = data.get_title_page_token(type);
+				if (token) {
+					prev = prev.concat(token.text.split('\n'));
+				}
+				return prev;
+			};
+			
+			var left_side = cfg.print().title_page.left_side.reduce(concat_types, []),
+				right_side = cfg.print().title_page.right_side.reduce(concat_types, []),
+				title_page_extra = function(x) {
+					return function(line) {
+						doc.text(line.trim(), x, title_y);
+						title_page_next_line();
+					};
+				};
+			
+			
+			title_y = 8.5;
+			left_side.forEach(title_page_extra(1.3));
+			
+			title_y = 8.5;
+			right_side.forEach(title_page_extra(5));
 			
 			// script
 			doc.addPage();

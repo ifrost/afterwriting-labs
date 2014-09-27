@@ -59,22 +59,8 @@ define(function (require) {
 			dual_max_factor: 0.75,
 			title_page: {
 				top_start: 3.5,
-				draft_date: {
-					x: 5.3,
-					y: 8.2
-				},
-				date: {
-					x: 5.3,
-					y: 8.2
-				},
-				contact: {
-					x: 5.3,
-					y: 8.5
-				},
-				notes: {
-					x: 1.5,
-					y: 8.5
-				}
+				left_side: ['notes', 'copyright'],
+				right_side: ['draft date', 'date', 'contact']
 			},
 			scene_heading: {
 				feed: 1.5,
