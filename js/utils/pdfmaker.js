@@ -240,7 +240,7 @@ define(function (require) {
 			if (cfg.print_watermark) {
 				var options = {origin: [0, 0]}, 
 					font_size, 
-					angle=53,
+					angle=Math.atan(cfg.print().page_height/cfg.print().page_width)*180/Math.PI,
 					diagonal,
 					watermark, len;
 				
@@ -254,10 +254,9 @@ define(function (require) {
 				diagonal -= 4;
 				
 				font_size = (1.667 * diagonal) / len * 72;
-				console.log(cfg.print().page_width, cfg.print().page_height, diagonal, font_size);
 				doc.fontSize(font_size);
 				doc.rotate(angle, options);
-				doc.format_text(watermark, 1.5, -(font_size/2)/72, {color: '#dddddd', line_break: false});
+				doc.format_text(watermark, 2, -(font_size/2)/72, {color: '#eeeeee', line_break: false});
 				doc.rotate(-angle, options);				
 				doc.fontSize(12);
 			}
