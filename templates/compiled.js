@@ -114,7 +114,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "...";
+  return "<h1>FQuery sandbox</h1>\r\n\r\n<ol>\r\n	<li>Open developer tools</li>\r\n	<li>data.script() - text</li>\r\n	<li>data.parsed.tokens - list of tokens</li>\r\n	<li>data.lines - list of lines</li>\r\n</ol>";
   });
 
 this["JST"]["templates/plugins/dev/test.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
