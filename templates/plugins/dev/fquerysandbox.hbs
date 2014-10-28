@@ -1,7 +1,56 @@
 <h1>FQuery sandbox</h1>
 
-<ul>
-	<li>data.script() - text</li>
-	<li>data.parsed.tokens - list of tokens</li>
-	<li>data.lines - list of lines</li>
-</ul>
+Open dev tools and start with a snippet:
+
+<pre>
+var data = window.data,
+    fquery = window.fquery,
+    fhelper = window.fhelpers,
+    h = fhelpers.fq,
+    tokens = data.parsed.tokens,
+    lines = data.parsed.lines;
+</pre>
+
+<h2>Sample query - scenes with length</h2>
+
+<p>Create a new query. For each heading set name of the scene and save reference to the selection.</p>
+
+<pre>
+var query = fquery('id');
+query.enter(h.is('scene_heading'), function (token, fq) {
+    fq.current = fq.select(token);
+	fq.current.lines = 0;
+	fq.current.scene = token.text;
+});
+</pre>
+
+<p>For any other token add numberof lines.</p>
+<pre>
+query.enter(query.not(h.is('scene_heading')), function (item, fq) {
+    if (fq.current) {
+        fq.current.lines += item.lines.length;
+    }
+});
+</pre>
+
+<p>Run the query and print returned results.</p>
+<pre>
+var result = query.run(tokens);
+result.forEach(function(item, i){
+    var pages = item.lines / data.config.print().lines_per_page;
+    console.log('#' + i + ' ' + item.scene + ' ' + helper.format_time(pages) + ' (' + item.lines + ' lines)') 
+});
+</pre>
+
+<p>Console:</p>
+<pre>
+#0 INT. MATTHEW'S BEDROOM - DAY 00:12 (11 lines) test:24
+#1 INT. MAIN ROOM - DAY 01:34 (85 lines) test:24
+#2 EXT. PARK PLAYGROUND - DAY 00:08 (7 lines) test:24
+#3 INT. LIVING ROOM - DAY 02:00 (108 lines) test:24
+#4 INT. LIVING ROOM - DAY 06:17 (339 lines) test:24
+#5 EXT. PARK PLAYGROUND - DAY 00:29 (26 lines) test:24
+#6 EXT. HILLTOP - DAY 00:09 (8 lines) test:24
+#7 EXT. TRAIN STATION - DAY 01:37 (87 lines) test:24
+#8 EXT. OLD TRAIN STATION 01:56 (104 lines) 
+</pre>
