@@ -123,9 +123,9 @@ define(function (require) {
 
 			if (state === 'title_page') {
 				if (regex.title_page.test(token.text)) {
-					var split = token.text.split(":");
-					token.type = split[0].toLowerCase();
-					token.text = split[1] || '';
+					var index = token.text.indexOf(':');
+					token.type = token.text.substr(0,index).toLowerCase();
+					token.text = token.text.substr(index+1);
 					last_title_page_token = token;
 					result.title_page.push(token);
 					title_page_started = true;
