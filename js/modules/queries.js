@@ -149,6 +149,33 @@ define(function (require) {
 		return query;
 	};
 
+	var create_locations_breakdown = function () {
+		var query = fquery('token', {
+			scenes: 0,
+			lines: 0,
+			scenes_lines: null
+		});
+		query.enter(h.is('scene_heading'), function (item, fq) {
+			var same_scene = fq.current && fq.current.token.location() === item.location();
+			fq.current = fq.select(same_scene ? fq.current.token : item);
+			if (!same_scene) {
+				fq.current.location = item.location();
+				fq.current.scenes_lines = [];
+			}
+
+			fq.current.scenes++;
+			fq.current.scenes_lines.push(0);
+
+		});
+		query.enter(query.not(h.is('scene_heading')), function (item, fq) {
+			if (fq.current) {
+				fq.current.lines += item.lines.length;
+				fq.current.scenes_lines[fq.current.scenes_lines.length - 1] += item.lines.length;
+			}
+		});
+		return query;
+	};
+
 	var create_dialogue_breakdown = function () {
 		var runner = {};
 		runner.run = function (tokens, basics, max) {
@@ -270,38 +297,39 @@ define(function (require) {
 					block.line_tempo_change = (item.avg_lines_per_block - block.lines) / block.lines;
 				});
 			});
-			query.end(function (result, fq) {				
-				result = result.filter(function(scene){
+			query.end(function (result, fq) {
+				result = result.filter(function (scene) {
 					return scene.lines > 0;
 				});
 				fq.avg_lines_per_scene = fq.total_lines / result.length;
 				result.forEach(function (scene) {
 					scene.line_tempo_change = (fq.avg_lines_per_scene - scene.lines) / scene.lines;
-				});				
+				});
 			});
-			
+
 
 			var scenes = query.run(tokens);
-			
+
 			var scenes_weight = scenes.length / 10;
 			var result = [{
-				line: '',
-				scene: '',
-				tempo: 0,
+					line: '',
+					scene: '',
+					tempo: 0,
 			}];
 			var current_tempo = 0;
-			var max = -Infinity, min=Infinity;
-			scenes.forEach(function(scene){
-				scene.blocks.forEach(function(block){
+			var max = -Infinity,
+				min = Infinity;
+			scenes.forEach(function (scene) {
+				scene.blocks.forEach(function (block) {
 					current_tempo *= 0.9;
-					block.token.lines.forEach(function(line){
+					block.token.lines.forEach(function (line) {
 						current_tempo *= 0.9;
 						current_tempo += scenes_weight * scene.line_tempo_change + block.line_tempo_change;
 						result.push({
 							scene: scene.scene_heading,
 							line: line.text,
 							line_no: line.token.line,
-							tempo: parseFloat(current_tempo.toFixed(2))		
+							tempo: parseFloat(current_tempo.toFixed(2))
 						});
 						if (current_tempo < min) {
 							min = current_tempo;
@@ -317,7 +345,7 @@ define(function (require) {
 				scene: '',
 				tempo: 0,
 			});
-			
+
 			return result;
 		};
 
@@ -333,6 +361,7 @@ define(function (require) {
 		plugin.basics = create_basics();
 		plugin.page_balance = create_page_balance();
 		plugin.tempo = create_tempo();
+		plugin.locations_breakdown = create_locations_breakdown();
 	};
 
 	return plugin;

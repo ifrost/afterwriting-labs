@@ -21,6 +21,8 @@ define(function (require) {
 		plugin.data.who_with_who = queries.dialogue_breakdown.run(data.parsed.tokens, basics, data.config.stats_who_with_who_max);
 		plugin.data.page_balance = queries.page_balance.run(data.parsed.lines);
 		plugin.data.tempo = queries.tempo.run(data.parsed.tokens);
+		plugin.data.locations_breakdown = queries.locations_breakdown.run(data.parsed.tokens);
+		console.log(plugin.data.locations_breakdown);
 	};
 
 	plugin.deactivate = function () {
