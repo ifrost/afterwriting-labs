@@ -150,19 +150,19 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<h1>About</h1>\r\n<p>\r\n	<em>'afterwritings labs</em>&nbsp;is a place where you can play with some screenwriting tools. You can open screenplays written in <a href=\"http://fountain.io/\" target=\"_blank\"><strong>Fountain format</strong></a> or <a href=\"http://www.finaldraft.com/\" target=\"_blank\"><strong>Final Draft</strong></a> (it will be converted to fountain). You can also use one of the\r\n	<a class=\"switch\" href=\"#\" plugin=\"open\">samples</a>.</p>\r\n<p>You can use it offline too! (sorry, no Dropbox support for offline version). Just download this\r\n	<a href=\"afterwriting.zip\" id=\"download-link\">file</a>, unzip and double click on afterwriting.html.</p>\r\n<p>\r\n	<em>Warning: this product may contain nuts and bugs!</em>\r\n</p>\r\n<p>\r\n<h2>Contact</h2>\r\n<p>\r\n<a href=\"http://twitter.com/afterwriting\" target=\"_blank\" title=\"twitter.com/afterwriting\"><img src=\"";
+  buffer += "<h1>About</h1>\r\n<p>\r\n	<em>'afterwritings labs</em>&nbsp;is a place where you can play with some screenwriting tools. You can open screenplays written in <a href=\"http://fountain.io/\" target=\"_blank\"><strong>Fountain format</strong></a> or <a href=\"http://www.finaldraft.com/\" target=\"_blank\"><strong>Final Draft</strong></a> (it will be converted to fountain). You can also use one of the\r\n	<a class=\"switch\" href=\"#\" plugin=\"open\">samples</a>.</p>\r\n<p>You can use it offline too! (sorry, no Dropbox support for offline version). Just download this\r\n	<a href=\"afterwriting.zip\" id=\"download-link\">file</a>, unzip and double click on afterwriting.html.</p>\r\n<p>\r\n	<em>Warning: this product may contain nuts and bugs!</em>\r\n</p>\r\n<p>\r\n<h2>Contact</h2>\r\n<p><a href=\"http://twitter.com/afterwriting\" target=\"_blank\" title=\"twitter.com/afterwriting\"><img src=\"";
   if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "gfx/icons/other/twitter.svg\" class=\"icon\" /></a>\r\n<a href=\"http://blog.afterwriting.com\" target=\"_blank\" title=\"blog.afterwriting.com\"><img src=\"";
+    + "gfx/icons/other/twitter.svg\" class=\"icon\" />@afterwriting</a></p>\r\n<p><a href=\"http://blog.afterwriting.com\" target=\"_blank\" title=\"blog.afterwriting.com\"><img src=\"";
   if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "gfx/icons/other/blogger.svg\" class=\"icon\" /></a>\r\n<a href=\"mailto:contact@afterwriting.com\" title=\"contact@afterwriting.com\"><img src=\"";
+    + "gfx/icons/other/blogger.svg\" class=\"icon\" />blog.afterwriting.com</a></p>\r\n<p><a href=\"mailto:contact@afterwriting.com\" title=\"contact@afterwriting.com\"><img src=\"";
   if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "gfx/icons/other/email.svg\" class=\"icon\" /></a>\r\n</p>\r\n<h1>What's inside?</h1>\r\n<p>Available plugins:</p>\r\n<ul>\r\n	<li>\r\n		<img src=\"";
+    + "gfx/icons/other/email.svg\" class=\"icon\" />contact@afterwriting.com</a></p>\r\n</p>\r\n<h1>What's inside?</h1>\r\n<p>Available plugins:</p>\r\n<ul>\r\n	<li>\r\n		<img src=\"";
   if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
