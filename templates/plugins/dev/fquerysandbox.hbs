@@ -1,6 +1,8 @@
 <h1>FQuery sandbox</h1>
 
-Open dev tools and start with a snippet:
+<div id="sandbox"></div>
+
+<p>Open dev tools and start with a snippet:</p>
 
 <pre>
 var data = window.data,
@@ -8,10 +10,11 @@ var data = window.data,
     fhelper = window.fhelpers,
     h = fhelpers.fq,
     tokens = data.parsed.tokens,
-    lines = data.parsed.lines;
+    lines = data.parsed.lines,
+	queries = window.queries;
 </pre>
 
-<h2>Sample query - scenes with length</h2>
+<h2>Build a - scenes with length</h2>
 
 <p>Create a new query. For each heading set name of the scene and save reference to the selection.</p>
 
@@ -53,4 +56,25 @@ result.forEach(function(item, i){
 #6 EXT. HILLTOP - DAY 00:09 (8 lines) test:24
 #7 EXT. TRAIN STATION - DAY 01:37 (87 lines) test:24
 #8 EXT. OLD TRAIN STATION 01:56 (104 lines) 
+</pre>
+
+<h2>Display a a chart</h2>
+
+<p>Add you query to queries.js module or use <em>result</em> variable from the previous script.</p>
+
+<pre>
+var chart = {},
+    // query = queries.locations_breakdown,
+    result = query.run(data.parsed.tokens);
+
+chart.render = function(id, data, config) {
+    $(id).empty();
+    if (data.length &lt; 1) {
+	   $(id).append('&lt;p class="error"&gt;Sorry, there is not enough data to display the chart. Add at least ??? to your script.&lt;/p&gt;');
+	   return;
+    };
+};
+
+
+chart.render('#sandbox', result, {});
 </pre>

@@ -3,6 +3,7 @@ define(function (require) {
 	var pm = require('utils/pluginmanager'),
 		fhelpers = require('utils/fountain/helpers'),
 		data = require('modules/data'),
+		queries = require('modules/queries'),
 		fquery = require('utils/fountain/query'),
 		helper = require('utils/helper');
 
@@ -13,6 +14,7 @@ define(function (require) {
 		window.fquery = fquery;
 		window.fhelpers = fhelpers;
 		window.helper = helper;
+		window.queries = queries;
 	}
 	
 	return plugin;

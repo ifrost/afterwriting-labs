@@ -22,7 +22,6 @@ define(function (require) {
 		plugin.data.page_balance = queries.page_balance.run(data.parsed.lines);
 		plugin.data.tempo = queries.tempo.run(data.parsed.tokens);
 		plugin.data.locations_breakdown = queries.locations_breakdown.run(data.parsed.tokens);
-		console.log(plugin.data.locations_breakdown);
 	};
 
 	plugin.deactivate = function () {

@@ -1,7 +1,8 @@
 require(['bootstrap',
 		'modules/data',
 		'modules/test',
-		'plugins/open',
+		'modules/queries',
+		'plugins/open',		 
 		'plugins/settings',
 		'plugins/dev/test',
 		'plugins/dev/fquerysandbox'
