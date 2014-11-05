@@ -124,6 +124,9 @@ body {
 	padding: 0 10px 0 10px;
 	top: 0;
 }
+.expanded {
+	width: 100%;
+}
 .plugin-contents {
 	padding: 0 30px 0 30px;
 	clear: both;
@@ -159,10 +162,13 @@ body {
 	background-color: #111111;
 	opacity: 1.0;
 }
-.close-content {
+.right-icons {
+	margin: 0px 17px 10px 10px;
+}
+.panel-icon {
 	float: right;
 	padding: 1px;	
-	margin: 0px 17px 10px 10px;
+	margin-left: 10px;
 	width: 20px;
 	height: 20px;
 	cursor: pointer;
@@ -170,7 +176,7 @@ body {
 	opacity: 0.6;
 	background-color: #aaaaaa;
 }
-.close-content:hover {
+.panel-icon:hover {
 	opacity: 0.8;
 }
 .plugin-content[plugin="info"] img.plugin-icon {
@@ -241,6 +247,9 @@ body {
 	}
 	.top-bar {
 		padding: 0px;
+	}
+	.expand {
+		display: none;
 	}
 	.close-content {
 		padding: 10px 5px 5px 0;

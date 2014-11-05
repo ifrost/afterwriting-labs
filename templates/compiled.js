@@ -97,11 +97,15 @@ function program7(depth0,data) {
   buffer += "</ul>\r\n</div>\r\n<div class=\"footer\"></div>\r\n<!--- plugin content -->\r\n<div class=\"content\" style=\"display:none\">\r\n	<div class=\"top-bar\">\r\n		";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.plugins), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n		<img class=\"close-content\" src=\"";
+  buffer += "\r\n		\r\n		<div class=\"right-icons\">\r\n			<img class=\"close-content panel-icon\" src=\"";
   if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "gfx/icons/close.svg\" />\r\n	</div>\r\n	<div class=\"plugin-contents\">\r\n		";
+    + "gfx/icons/close.svg\" />\r\n			<img class=\"expand panel-icon\" src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/expand.svg\" />\r\n		</div>\r\n		\r\n	</div>\r\n	<div class=\"plugin-contents\">\r\n		";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.plugins), {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "</div>\r\n</div>\r\n<div id=\"tooltip\"></div>";
