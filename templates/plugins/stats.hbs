@@ -26,6 +26,12 @@
 <p class="info-content" section="stats-scene-length">Each bar represent one scene (white bars for day scenes, black bars for night scenes). Hover the mouse cursor over a bar to see estimated time of a scene. You can click on a bar to jump to selected scene in the editor.</p>
 <div id="stats-scene-length" width="100%"></div>
 
+<h2 style="margin-top: 30px; margin-left: 0">Locations breakdown
+	<div class="info-icon" section="stats-locations-breakdown">Info...</div>
+</h2>
+<p class="info-content" section="stats-locations-breakdown">More insight into locations. Blocks on the top strip represent amount of time spent in a location. If a location occurs more than once in the script, it's highlighted by a color (white colour is used for each locations occurring once).<br />Pie chart below shows time distribution for each location. Mouse over the blocks to see corresponding data on the pie chart (and vice versa).</p>
+<div id="locations-breakdown" />
+
 <h2 style="margin-top: 30px; margin-left: 0">Page balance
 	<div class="info-icon" section="stats-page-balance" />
 </h2>
@@ -109,6 +115,8 @@
 					}
 				}
 			});
+			
+			charts.locations_breakdown.render('#locations-breakdown', stats.data.locations_breakdown);
 
 		});
 	});

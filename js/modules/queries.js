@@ -170,6 +170,7 @@ define(function (require) {
 		query.enter(query.not(h.is('scene_heading')), function (item, fq) {
 			if (fq.current) {
 				fq.current.lines += item.lines.length;
+				fq.current.pages = fq.current.lines / data.config.print().lines_per_page;
 				fq.current.scenes_lines[fq.current.scenes_lines.length - 1] += item.lines.length;
 			}
 		});

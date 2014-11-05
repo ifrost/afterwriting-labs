@@ -20,7 +20,7 @@ define(['logger', 'utils/common', 'utils/pluginmanager', 'utils/layout', 'plugin
 		DEV_PLUGIN = require('plugins/dev/fquerysandbox');
 
 		if (DEV_PLUGIN) {
-			open.open_sample('my_living_memory');
+			open.open_sample('printing_trouble');
 
 			pm.switch_to(DEV_PLUGIN);
 
