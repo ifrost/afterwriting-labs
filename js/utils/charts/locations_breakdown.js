@@ -61,8 +61,8 @@ define(function (require) {
 
 		var vis = d3.select(id).append('svg:svg')
 			.attr('width', '98%')
-			.attr('height', '400px');
-		var h = 250;
+			.attr('height', '480px');
+		var h = 300;
 		var color = d3.scale.category20();
 
 		// scenes
@@ -101,17 +101,17 @@ define(function (require) {
 		});
 
 		var pie_chart = vis.append('g')
-			.attr('transform', 'translate(-100,0)')
+			.attr('transform', 'translate(-150,0)')
 			.append('svg:svg')
 			.data([aggregated_data_list])
-			.attr('height', 200)
-			.attr('width', 200)
+			.attr('height', 300)
+			.attr('width', 300)
 			.attr('x', '50%')
 			.attr('y', h * 0.5 + 30)
 			.append('g')
-			.attr('transform', 'translate(100,100)');
+			.attr('transform', 'translate(150,150)');
 
-		var arc = d3.svg.arc().outerRadius(100);
+		var arc = d3.svg.arc().outerRadius(150);
 		var pie = d3.layout.pie().value(function (d) {
 			return d.pages;
 		});
