@@ -40,6 +40,8 @@
 <!-- scripts -->
 <script>
 	require(['jquery', 'plugins/facts', 'utils/helper'], function($, facts, helper) {
+		var handlers_added = false;
+
 		facts.activate.add(function() {
 			var facts_data = facts.data.facts;
 			$('#facts-title').html(facts_data.title.replace(/\*/g, '').replace(/_/g, '').replace(/\n/g, ' / '));
@@ -66,6 +68,19 @@
 				$('.show-all-dialogues').show();
 				$('.show-top-dialogues').hide();
 				$('#facts-characters li.expandable').hide();
+			} else {
+				$('.expand-dialogue').hide();
+			}
+
+			if (facts_data.locations.length > 10) {
+				$('.show-all-locations').show();
+				$('.show-top-locations').hide();
+				$('#facts-locations li.expandable').hide();
+			} else {
+				$('.expand-locations').hide();
+			}
+
+			if (!handlers_added) {
 				$('.expand-dialogue').click(function() {
 					if ($(this).hasClass('show-all-dialogues')) {
 						$('.show-all-dialogues').hide();
@@ -78,14 +93,6 @@
 						duration: 200
 					});
 				});
-			} else {
-				$('.expand-dialogue').hide();
-			}
-
-			if (facts_data.locations.length > 10) {
-				$('.show-all-locations').show();
-				$('.show-top-locations').hide();
-				$('#facts-locations li.expandable').hide();
 				$('.expand-locations').click(function() {
 					if ($(this).hasClass('show-all-locations')) {
 						$('.show-all-locations').hide();
@@ -98,10 +105,8 @@
 						duration: 200
 					});
 				});
-			} else {
-				$('.expand-locations').hide();
+				handlers_added = true;
 			}
-
 		});
 
 	});

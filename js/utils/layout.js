@@ -80,6 +80,10 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 
 		return closed_plugin;
 	});
+	
+	module.toggle_expand = decorator(function() {		
+		$('.content').toggleClass('expanded');		
+	});
 
 	module.show_tooltip = function (text) {
 		$('#tooltip').css("visibility", "visible").html(text);
@@ -214,6 +218,11 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 		/** content close **/
 		$('.close-content').click(function () {
 			module.scopes.toolbar_close_content();
+		});
+		
+		$('.expand').click(function() {
+			module.toggle_expand();
+			calculate_content();
 		});
 
 		$('#back').click(function () {

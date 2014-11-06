@@ -48,6 +48,7 @@ define(function (require) {
 		layout.info_opened.add(function(section) {
 			track_event('feature', 'help', section);
 		});
+		layout.toggle_expand.add(track_handler('feature', 'expand'));
 
 		// info
 		info.download_clicked.add(track_handler('feature', 'download'));
