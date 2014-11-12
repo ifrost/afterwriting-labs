@@ -77,14 +77,6 @@ define(function (require) {
 		// stats
 		stats.goto.add(track_handler('feature', 'stats-scene-length-goto'));
 
-		// settings
-		settings.save.add(track_handler('feature', 'settings-save'));
-		settings.save.add(function () {
-			var c = settings.get_config();
-			track_event('settings', 'page-size-set', c.print().paper_size);
-		});
-		settings.reset.add(track_handler('feature', 'settings-reset'));
-
 	};
 
 	return module;

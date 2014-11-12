@@ -29,10 +29,6 @@
 </h1>
 <p class="info-content" section="settings-info">You can change configuration here. Some settings (e.g. page size, double space between scenes) may affect statistics which are based on assumption that 1 page = 1 minute of a movie .</p>
 <div class="settings-panel">
-	<p class="buttons">
-		<a href="#" class="settings-save inactive button">save settings</a>
-		<a href="#" class="settings-reset button">reset settings</a>
-	</p>
 	<table>
 		<tbody>
 			<tr>
@@ -154,10 +150,6 @@
 			</tr>
 		</tbody>
 	</table>
-	<p class="buttons">
-		<a href="#" class="settings-save inactive button">save settings</a>
-		<a href="#" class="settings-reset button">reset settings</a>
-	</p>
 </div>
 <script>
 	require(['plugins/settings'], function(settings) {
@@ -207,23 +199,7 @@
 
 		$('.plugin-content[plugin="settings"]').select('input, option').on('change keyup', function() {
 			$('.settings-save').removeClass('inactive');
-		});
-
-		$('.settings-reset').click(function() {
-			if ($(this).hasClass('inactive')) {
-				return;
-			}
-			settings.reset();
-			data_to_components();
-			$('.settings-save').addClass('inactive');
-		});
-
-		$('.settings-save').click(function() {
-			if ($(this).hasClass('inactive')) {
-				return;
-			}
 			components_to_data();
-			$('.settings-save').addClass('inactive');
 		});
 
 		settings.activate.add(function() {
