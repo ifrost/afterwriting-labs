@@ -74,11 +74,17 @@ define(function (require) {
 			action_lines: 0,
 			dialogue_lines: 0
 		});
+		basic.prepare(function(fq){
+			fq.current_scene_heading_token = null;
+		});
 		basic.count('action_lines', h.is('action', 'scene_heading'));
 		basic.count('dialogue_lines', h.is_dialogue());
 		basic.count('pages', h.is('page_break'));
 		basic.enter(h.is('scene_heading'), function (item, fq) {
-			fq.select().scenes++;
+			if (fq.current_scene_heading_token !== item.token) {
+				fq.select().scenes++;
+				fq.current_scene_heading_token = item.token;
+			}			
 		});
 		basic.enter(true, function (item, fq) {
 			var selector = fq.select();
