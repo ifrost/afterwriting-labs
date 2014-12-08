@@ -117,7 +117,18 @@
 				<td>
 					<input setting="embolden_scene_headers" type="checkbox">
 				</td>
-			</tr>			
+			</tr>		
+			<tr>
+				<td>Scene numbers:</td>
+				<td>
+					<select setting="scenes_numbers">
+						<option value="none">none</option>
+						<option value="left">left</option>
+						<option value="right">right</option>
+						<option value="both">both</option>
+					</select>
+				</td>
+			</tr>
 			<tr>
 				<th colspan="2">Miscellaneous</th>
 			</tr>
@@ -173,6 +184,7 @@
 			$('*[setting="print_header"]').val(c.print_header);
 			$('*[setting="print_footer"]').val(c.print_footer);
 			$('*[setting="print_watermark"]').val(c.print_watermark);
+			$('*[setting="scenes_numbers"]').val(c.scenes_numbers);
 		};
 
 		var components_to_data = function() {
@@ -194,6 +206,7 @@
 			c.print_footer = $('*[setting="print_footer"]').val();
 			c.print_watermark = $('*[setting="print_watermark"]').val();
 			c.print_profile = $('*[setting="print_profile"]').val();
+			c.scenes_numbers = $('*[setting="scenes_numbers"]').val();
 			settings.save();
 		};
 

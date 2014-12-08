@@ -12,7 +12,7 @@ define(function (require) {
 		synopsis: /^(?:\=(?!\=+) *)(.*)/,
 
 		scene_heading: /^((?:\*{0,3}_?)?(?:(?:int|ext|est|int\/ext|i\.?\/e\.?)[. ]).+)|^(?:\.(?!\.+))(.+)/i,
-		scene_number: /( *#(.+)# *)/,
+		scene_number: /#(.+)#/,
 
 		transition: /^((?:FADE (?:TO BLACK|OUT)|CUT TO BLACK)\.|.+ TO\:|^TO\:$)|^(?:> *)(.+)/,
 
@@ -58,6 +58,7 @@ define(function (require) {
 
 		var lines_length = lines.length,
 			current = 0,
+			scene_number = 1,
 			match, text, last_title_page_token,
 			token, last_was_separator = false,
 			token_category = 'none',
@@ -167,6 +168,12 @@ define(function (require) {
 						result.tokens.push(additional_separator);
 					}
 					token.type = 'scene_heading';
+					token.number = scene_number;
+					if (match = token.text.match(regex.scene_number)) {
+						token.text = token.text.replace(regex.scene_number, '');
+						token.number = match[1];
+					}
+					scene_number++;
 				} else if (token.text.match(regex.character)) {
 					if (i === lines_length || i === lines_length - 1 || lines[i + 1].length === 0) {
 						token.type = 'shot';

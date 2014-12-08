@@ -218,6 +218,7 @@ define(function (require) {
 
 		var y = 1,
 			page = 1,
+			scene_number,
 			current_section_level = 0,
 			section_number = helper.version_generator(),
 			text;
@@ -334,7 +335,29 @@ define(function (require) {
 						feed -= (feed - cfg.print().left_margin) / 2;
 					}
 
-					doc.text(text, feed, cfg.print().top_margin + cfg.print().font_height * y++, text_properties);
+					doc.text(text, feed, cfg.print().top_margin + cfg.print().font_height * y, text_properties);
+					
+					if (line.number) {
+						scene_number = String(line.number);
+						var scene_text_length = scene_number.length;
+						if (cfg.embolden_scene_headers) {
+							scene_number = '**' + scene_number + '**';
+						}
+						
+						var shift_scene_number;
+						
+						if (cfg.scenes_numbers === 'both' || cfg.scenes_numbers === 'left') {
+							shift_scene_number = (scene_text_length + 4) * cfg.print().font_width;
+							doc.text(scene_number, feed - shift_scene_number, cfg.print().top_margin + cfg.print().font_height * y, text_properties);
+						}
+						
+						if (cfg.scenes_numbers === 'both' || cfg.scenes_numbers === 'right') {
+							shift_scene_number = (cfg.print().scene_heading.max + 1) * cfg.print().font_width;
+							doc.text(scene_number, feed + shift_scene_number, cfg.print().top_margin + cfg.print().font_height * y, text_properties);
+						}
+					}
+					
+					y++;
 				}
 			}
 

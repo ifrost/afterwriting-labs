@@ -149,7 +149,8 @@ define(function (require) {
 		print_notes: false,
 		print_header: '',
 		print_footer: '',
-		print_watermark: ''
+		print_watermark: '',
+		scenes_numbers: 'none'
 	};
 	
 

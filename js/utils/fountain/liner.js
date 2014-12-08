@@ -164,6 +164,10 @@ define(function (require) {
 			}
 
 			split_token(token, max);
+			
+			if (token.is('scene_heading') && lines.length) {
+				token.lines[0].number = token.number;
+			}
 
 			token.lines.forEach(function (line) {
 				lines.push(line);
