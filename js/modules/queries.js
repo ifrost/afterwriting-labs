@@ -155,6 +155,9 @@ define(function (require) {
 			lines: 0,
 			scenes_lines: null
 		});
+		query.prepare(function(fq){
+			fq.current = null;
+		});
 		query.enter(h.is('scene_heading'), function (item, fq) {
 			var same_scene = fq.current && fq.current.token.location() === item.location();
 			fq.current = fq.select(same_scene ? fq.current.token : item);
