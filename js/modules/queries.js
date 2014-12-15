@@ -71,6 +71,7 @@ define(function (require) {
 			last_page_lines: 0,
 			scenes: 0,
 			pages: 0,
+			filled_pages: 0,
 			action_lines: 0,
 			dialogue_lines: 0
 		});
@@ -89,7 +90,8 @@ define(function (require) {
 		basic.enter(true, function (item, fq) {
 			var selector = fq.select();
 			if (item.is('page_break')) {
-				selector.last_page_lines = 0;
+				selector.filled_pages += (selector.last_page_lines+1) / data.config.print().lines_per_page;
+				selector.last_page_lines = 0;				
 			} else {
 				selector.last_page_lines++;
 			}
@@ -97,19 +99,25 @@ define(function (require) {
 		basic.exit(function (item) {
 			var all = item.action_lines + item.dialogue_lines;
 			item.pages = item.pages + item.last_page_lines / data.config.print().lines_per_page;
-			item.action_time = (item.action_lines / all) * item.pages;
-			item.dialogue_time = (item.dialogue_lines / all) * item.pages;
+			item.filled_pages += item.last_page_lines / data.config.print().lines_per_page;
+			item.action_time = (item.action_lines / all) * item.filled_pages;
+			item.dialogue_time = (item.dialogue_lines / all) * item.filled_pages;
 		});
 		basic.end(function (result) {
 			if (result.length === 0) {
 				result.push({
 					pages: 0.0,
+					filled_pages: 0.0,
 					scenes: 0,
 					action_time: 0.0,
 					dialogue_time: 0.0,
 					characters: [],
 					locations: []
 				});
+			}
+			else{
+				console.log(result[0].pages);
+				console.log(result[0].filled_pages);
 			}
 		});
 		return basic;
@@ -265,6 +273,8 @@ define(function (require) {
 		query.exit(function (selector) {
 			selector.dialogue_time = selector.dialogue_lines / selector.total_lines;
 			selector.action_time = selector.action_lines / selector.total_lines;
+			selector.dialogue_percentage = selector.dialogue_lines / selector.total_lines; 
+			selector.action_percentage = selector.action_lines / selector.total_lines; 
 		});
 		return query;
 	};

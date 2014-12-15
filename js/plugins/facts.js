@@ -19,6 +19,10 @@ define(function (require) {
 		facts.locations = queries.locations.run(data.parsed.tokens);
 	};
 
+	plugin.each_scene_on_new_page = function() {
+		return data.config.each_scene_on_new_page;
+	};
+	
 	plugin.activate = function () {
 		generate_data();
 	};

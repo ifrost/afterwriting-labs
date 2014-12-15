@@ -107,6 +107,12 @@
 				</td>
 			</tr>
 			<tr>
+				<td>Page break after a scene:</td>
+				<td>
+					<input setting="each_scene_on_new_page" type="checkbox">
+				</td>
+			</tr>
+			<tr>
 				<td>Prefix sections with numbers:</td>
 				<td>
 					<input setting="number_sections" type="checkbox">
@@ -172,6 +178,7 @@
 			$('*[setting="embolden_scene_headers"]').prop('checked', c.embolden_scene_headers);
 			$('*[setting="load_last_opened"]').prop('checked', c.load_last_opened);
 			$('*[setting="double_space_between_scenes"]').prop('checked', c.double_space_between_scenes);
+			$('*[setting="each_scene_on_new_page"]').prop('checked', c.each_scene_on_new_page);
 			$('*[setting="split_dialogue"]').prop('checked', c.split_dialogue);
 			$('*[setting="print_sections"]').prop('checked', c.print_sections);
 			$('*[setting="print_synopsis"]').prop('checked', c.print_synopsis);
@@ -194,6 +201,7 @@
 			c.embolden_scene_headers = $('*[setting="embolden_scene_headers"]').is(':checked');
 			c.load_last_opened = $('*[setting="load_last_opened"]').is(':checked');
 			c.double_space_between_scenes = $('*[setting="double_space_between_scenes"]').is(':checked');
+			c.each_scene_on_new_page = $('*[setting="each_scene_on_new_page"]').is(':checked');
 			c.split_dialogue = $('*[setting="split_dialogue"]').is(':checked');
 			c.print_sections = $('*[setting="print_sections"]').is(':checked');
 			c.print_synopsis = $('*[setting="print_synopsis"]').is(':checked');

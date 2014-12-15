@@ -150,7 +150,8 @@ define(function (require) {
 		print_header: '',
 		print_footer: '',
 		print_watermark: '',
-		scenes_numbers: 'none'
+		scenes_numbers: 'none',
+		each_scene_on_new_page: false
 	};
 	
 

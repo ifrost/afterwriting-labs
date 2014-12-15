@@ -163,10 +163,19 @@ define(function (require) {
 					token.type = 'section';
 				} else if (token.text.match(regex.scene_heading)) {
 					token.text = token.text.replace(/^\./, '');
-					if (cfg.double_space_between_scenes) {
+					if (cfg.each_scene_on_new_page && scene_number !== 1) {
+						var page_break = h.create_token({
+							type: 'page_break',
+							start: token.start,
+							end: token.end
+						});
+						result.tokens.push(page_break);
+					}
+					else if (cfg.double_space_between_scenes) {
 						var additional_separator = h.create_separator(token.start, token.end);
 						result.tokens.push(additional_separator);
 					}
+						
 					token.type = 'scene_heading';
 					token.number = scene_number;
 					if (match = token.text.match(regex.scene_number)) {
