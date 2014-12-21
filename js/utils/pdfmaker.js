@@ -220,6 +220,8 @@ define(function (require) {
 			page = 1,
 			scene_number,
 			current_section_level = 0,
+			current_section_number,
+			current_section_token,
 			section_number = helper.version_generator(),
 			text;
 
@@ -306,7 +308,15 @@ define(function (require) {
 						current_section_level = line.token.level;
 						feed += current_section_level * cfg.print().section.level_indent;
 						if (cfg.number_sections) {
-							text = section_number(line.token.level) + '. ' + text;
+							if (line.token !== current_section_token) {
+								current_section_number = section_number(line.token.level)
+								current_section_token = line.token;
+								text = current_section_number  + '. ' + text;
+							}
+							else {
+								text = Array(current_section_number.length + 3).join(' ') + text;								
+							}
+							
 						}
 					} else if (line.type === 'synopsis') {
 						feed += cfg.print().synopsis.padding || 0;
