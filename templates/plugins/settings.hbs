@@ -66,6 +66,24 @@
 				<td>
 					<input setting="print_notes" type="checkbox">
 				</td>
+			</tr>			
+			<tr>
+				<td>Print scene headers:</td>
+				<td>
+					<input setting="print_headers" type="checkbox">
+				</td>
+			</tr>			
+			<tr>
+				<td>Print action:</td>
+				<td>
+					<input setting="print_actions" type="checkbox">
+				</td>
+			</tr>			
+			<tr>
+				<td>Print dialogue:</td>
+				<td>
+					<input setting="print_dialogues" type="checkbox">
+				</td>
 			</tr>				
 			<tr>
 				<td>Header:</td>
@@ -183,6 +201,9 @@
 			$('*[setting="print_sections"]').prop('checked', c.print_sections);
 			$('*[setting="print_synopsis"]').prop('checked', c.print_synopsis);
 			$('*[setting="print_notes"]').prop('checked', c.print_notes);
+			$('*[setting="print_headers"]').prop('checked', c.print_headers);
+			$('*[setting="print_actions"]').prop('checked', c.print_actions);
+			$('*[setting="print_dialogues"]').prop('checked', c.print_dialogues);
 			$('*[setting="number_sections"]').prop('checked', c.number_sections);
 			$('*[setting="use_dual_dialogue"]').prop('checked', c.use_dual_dialogue);
 			$('*[setting="stats_keep_last_scene_time"]').prop('checked', c.stats_keep_last_scene_time);
@@ -206,6 +227,9 @@
 			c.print_sections = $('*[setting="print_sections"]').is(':checked');
 			c.print_synopsis = $('*[setting="print_synopsis"]').is(':checked');
 			c.print_notes = $('*[setting="print_notes"]').is(':checked');
+			c.print_headers = $('*[setting="print_headers"]').is(':checked');
+			c.print_actions = $('*[setting="print_actions"]').is(':checked');
+			c.print_dialogues = $('*[setting="print_dialogues"]').is(':checked');
 			c.number_sections = $('*[setting="number_sections"]').is(':checked');
 			c.use_dual_dialogue = $('*[setting="use_dual_dialogue"]').is(':checked');
 			c.stats_keep_last_scene_time = $('*[setting="stats_keep_last_scene_time"]').is(':checked');
