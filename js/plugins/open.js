@@ -8,6 +8,7 @@ define(function (require) {
 		helper = require('utils/helper'),
 		decorator = require('utils/decorator'),
 		$ = require('jquery'),
+		gd = require('utils/googledrive'),
 		finaldraft_converter = require('utils/converters/finaldraft'),
 		layout = require('utils/layout');
 
@@ -61,6 +62,10 @@ define(function (require) {
 	plugin.is_dropbox_available = function () {
 		return window.Dropbox && Dropbox.isBrowserSupported() && window.location.protocol !== 'file:';
 	};
+	
+	plugin.is_google_drive_available = function() {
+		return window.gapi && window.location.protocol !== 'file:';
+	};
 
 	plugin.open_from_dropbox = function () {
 		Dropbox.choose({
@@ -75,6 +80,10 @@ define(function (require) {
 			multiselect: false,
 			extensions: ['.fountain', '.spmd', '.txt', '.fdx']
 		});
+	};
+	
+	plugin.open_from_google_drive = function() {
+		gd.open();
 	};
 
 	plugin.init = function () {
