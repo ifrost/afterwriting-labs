@@ -170,7 +170,8 @@ define(function (require) {
 		print_watermark: '',
 		scenes_numbers: 'none',
 		each_scene_on_new_page: false,
-		use_print_settings_for_stats: true
+		use_print_settings_for_stats: true,
+		google_drive_trim_double_space: true
 	};
 	
 

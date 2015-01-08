@@ -83,7 +83,12 @@ define(function (require) {
 	};
 	
 	plugin.open_from_google_drive = function() {
-		gd.open();
+		gd.open(function(content){
+			if (data.config.google_drive_trim_double_space) {
+				content = content.replace(/\r\n\r\n/g,'\n');
+			}
+			set_script(content);
+		});
 	};
 
 	plugin.init = function () {
