@@ -7,11 +7,25 @@
 		<span>&nbsp;|&nbsp;
 			<a href="#" action="save-dropbox-fountain">send to Dropbox</a>
 		</span>
+		<span>&nbsp;|&nbsp;
+			<a href="#" action="save-gd-fountain">send to Google Drive</a>			
+			<div id="google-drive-div-fountain"></div>
+			<div id="container">
+			<div class="g-savetodrive"
+  
+   data-filename="script.pdf"
+   data-sitename="'afterwriting">
+</div></div>
+		</span>
 	</li>
 	<li>as .pdf:
 		<a href="#" action="save-pdf">download</a>
 		<span>&nbsp;|&nbsp;
 			<a href="#" action="save-dropbox-pdf">send to Dropbox</a>
+		</span>
+		<span>&nbsp;|&nbsp;
+			<a href="#" action="save-gd-pdf">send to Google Drive</a>
+			<div id="google-drive-div-pdf"></div>
 		</span>
 	</li>
 </ul>
@@ -21,9 +35,11 @@
 		$(document).ready(function() {
 			$('a[action="save-fountain"]').click(save.save_as_fountain);
 			$('a[action="save-dropbox-fountain"]').click(save.dropbox_fountain);
+			$('a[action="save-gd-fountain"]').click(save.google_drive_fountain);
 
 			$('a[action="save-pdf"]').click(save.save_as_pdf);
-			$('a[action="save-dropbox-pdf"]').click(save.dropbox_pdf);
+			$('a[action="save-dropbox-pdf"]').click(save.dropbox_pdf);				
+			$('a[action="save-gd-pdf"]').click(save.google_drive_pdf);
 
 			$('#save-filename').keyup(function() {
 				save.data.filename = $(this).val();
@@ -32,9 +48,15 @@
 			if (!save.is_dropbox_available()) {
 				$('a[action="save-dropbox-pdf"], a[action="save-dropbox-fountain"]').parent().hide();
 			}
+			if (!save.is_google_drive_available()) {
+				$('a[action="save-gd-pdf"], a[action="save-gd-fountain"]').parent().hide();
+			}
 
 			save.activate.add(function() {
 				$('#save-filename').val(save.data.filename);
+				
+				$('.g-savetodrive').attr('data-src', save.get_fountain_uri());
+				gapi.savetodrive.go('container');
 			});
 		});
 	});
