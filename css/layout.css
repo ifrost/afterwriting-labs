@@ -179,7 +179,7 @@ body {
 .panel-icon:hover {
 	opacity: 0.8;
 }
-.plugin-content[plugin="info"] img.plugin-icon {
+img.plugin-icon {
 	width: 14px;
 	height: 14px;
 	background: #333333;
@@ -189,6 +189,9 @@ body {
 	margin: 5px;
 	border-width: 0;
 	border-radius: 25%;
+}
+.plugin-content[plugin="editor"] img.plugin-icon {
+	margin: 0px;
 }
 /** footer **/
  .footer {

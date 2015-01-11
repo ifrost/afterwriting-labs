@@ -133,10 +133,23 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 this["JST"]["templates/plugins/editor.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  return "<h1>Editor\r\n	<span class=\"info-icon\" section=\"editor-info\" />\r\n</h1>\r\n<p class=\"info-content\" section=\"editor-info\">Just a basic editor. Use Ctrl-Space for auto-complete.</p>\r\n<textarea id=\"editor-textarea\" placeholder=\"Code goes here...\" class=\"to-the-bottom\"></textarea>\r\n<!-- scripts -->\r\n<script>\r\n	require(['jquery', 'plugins/editor', 'utils/layout'], function($, editor, layout) {\r\n		var cm = editor.create_editor($('#editor-textarea').get(0));\r\n\r\n		var editor_content = $('.plugin-content[plugin=\"editor\"]');\r\n\r\n		var resize = function() {\r\n\r\n			if (layout.small) {\r\n				editor.set_size(\"auto\", editor_content.height() - 70);\r\n			} else {\r\n				editor.set_size(\"700px\", editor_content.height() - 100);\r\n			}\r\n		};\r\n		\r\n		resize();\r\n		$(window).resize(resize);\r\n	});\r\n</script>";
+  buffer += "<h1>Editor\r\n	<span class=\"info-icon\" section=\"editor-info\" />\r\n	<div class=\"header-menu\" style=\"padding-right: 22px\">\r\n		<span><a href=\"#\" action=\"save-fountain\"><img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/other/download.svg\" class=\"icon small-icon\" /></a></span>\r\n		<span><a href=\"#\" action=\"save-dropbox-fountain\"><img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/other/dropbox.svg\" class=\"icon small-icon\" /></a></span>\r\n		<span><a href=\"#\" action=\"save-gd-fountain\"><img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/other/gd.svg\" class=\"icon small-icon\" /></a></span>\r\n	</div></h1>\r\n<p class=\"info-content\" section=\"editor-info\">Just a basic editor. Use Ctrl-Space for auto-complete.</p>\r\n<textarea id=\"editor-textarea\" placeholder=\"Code goes here...\" class=\"to-the-bottom\"></textarea>\r\n<!-- scripts -->\r\n<script>\r\n	require(['jquery', 'plugins/editor', 'utils/layout'], function($, editor, layout) {\r\n		var cm = editor.create_editor($('#editor-textarea').get(0));\r\n\r\n		var editor_content = $('.plugin-content[plugin=\"editor\"]');\r\n\r\n		var resize = function() {\r\n\r\n			if (layout.small) {\r\n				editor.set_size(\"auto\", editor_content.height() - 70);\r\n			} else {\r\n				editor.set_size(\"700px\", editor_content.height() - 100);\r\n			}\r\n		};\r\n\r\n		resize();\r\n		$(window).resize(resize);\r\n	});\r\n</script>";
+  return buffer;
   });
 
 this["JST"]["templates/plugins/facts.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -240,10 +253,23 @@ function program1(depth0,data) {
 this["JST"]["templates/plugins/preview.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  return "<h1>Preview\r\n	<span class=\"info-icon\" section=\"preview-info\" />\r\n</h1>\r\n<p class=\"info-content\" section=\"preview-info\">Can't see anything? You need a PDF plugin in your browser. (You can download pdf from\r\n	<a class=\"switch\" href=\"#\" plugin=\"save\">here</a>)</p>\r\n<div id=\"pdf-preview-iframe-container\" class=\"to-the-bottom\"></div>\r\n<!-- scripts -->\r\n<script>\r\n	require(['jquery', 'plugins/preview'], function($, preview) {\r\n		preview.activate.add(function() {\r\n			$('#pdf-preview-iframe-container').html('<p>Loading preview...</p><iframe id=\"pdf-preview-iframe\" style=\"height: 100%; width: 100%; display:none\"></iframe>');\r\n\r\n			setTimeout(function() {\r\n				preview.get_pdf(function(data) {\r\n					$(\"#pdf-preview-iframe-container p\").remove();\r\n					$(\"#pdf-preview-iframe\").attr('src', data.url).css('display', 'block');\r\n				});\r\n			}, 200);\r\n\r\n\r\n		});\r\n		preview.deactivate.add(function() {\r\n			$(\"#pdf-preview-iframe\").remove();\r\n		});\r\n	});\r\n</script>";
+  buffer += "<h1>Preview\r\n	<span class=\"info-icon\" section=\"preview-info\" />\r\n	<div class=\"header-menu\">\r\n		<span><a href=\"#\" action=\"save-pdf\"><img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/other/download.svg\" class=\"icon small-icon\" /></a></span>\r\n		<span><a href=\"#\" action=\"save-dropbox-pdf\"><img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/other/dropbox.svg\" class=\"icon small-icon\" /></a></span>\r\n		<span><a href=\"#\" action=\"save-gd-pdf\"><img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/other/gd.svg\" class=\"icon small-icon\" /></a></span>\r\n	</div>\r\n</h1>\r\n<p class=\"info-content\" section=\"preview-info\">Can't see anything? You need a PDF plugin in your browser. (You can download pdf from\r\n	<a class=\"switch\" href=\"#\" plugin=\"save\">here</a>)</p>\r\n<div id=\"pdf-preview-iframe-container\" class=\"to-the-bottom\"></div>\r\n<!-- scripts -->\r\n<script>\r\n	require(['jquery', 'plugins/preview'], function($, preview) {\r\n		preview.activate.add(function() {\r\n			$('#pdf-preview-iframe-container').html('<p>Loading preview...</p><iframe id=\"pdf-preview-iframe\" style=\"height: 100%; width: 100%; display:none\"></iframe>');\r\n\r\n			setTimeout(function() {\r\n				preview.get_pdf(function(data) {\r\n					$(\"#pdf-preview-iframe-container p\").remove();\r\n					$(\"#pdf-preview-iframe\").attr('src', data.url).css('display', 'block');\r\n				});\r\n			}, 200);\r\n\r\n\r\n		});\r\n		preview.deactivate.add(function() {\r\n			$(\"#pdf-preview-iframe\").remove();\r\n		});\r\n	});\r\n</script>";
+  return buffer;
   });
 
 this["JST"]["templates/plugins/save.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
