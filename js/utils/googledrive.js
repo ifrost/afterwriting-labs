@@ -63,11 +63,14 @@ define(function () {
 		gapi.client.drive.files.get({
 			fileId: id
 		}).execute(function (response) {
-
 			if (!response.error) {
-				download(response.exportLinks['text/plain'], function (content) {
+				var url = response.exportLinks && response.exportLinks['text/plain'] ? response.exportLinks['text/plain'] : response.downloadUrl;
+				download(url, function (content) {
 					module.current_content_callback(content, response.alternateLink);
 				});
+			}
+			else {
+				$.prompt('Could not open the file!');
 			}
 		});
 	}
