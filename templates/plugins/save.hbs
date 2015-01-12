@@ -53,10 +53,7 @@
 			}
 
 			save.activate.add(function() {
-				$('#save-filename').val(save.get_filename);
-				
-				$('.g-savetodrive').attr('data-src', save.get_fountain_uri());
-				gapi.savetodrive.go('container');
+				$('#save-filename').val(save.get_filename());
 			});
 		});
 	});

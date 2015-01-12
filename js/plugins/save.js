@@ -8,8 +8,6 @@ define(function (require) {
 		$ = require('jquery'),
 		data = require('modules/data');
 
-	require('impromptu');
-
 	var plugin = pm.create_plugin('save', 'save');
 
 	plugin.save_as_fountain = function () {
@@ -85,7 +83,7 @@ define(function (require) {
 	plugin.is_google_drive_available = function () {
 		return window.gapi && window.location.protocol !== 'file:';
 	};
-
+	
 	function get_filename() {
 		var title_token = data.get_title_page_token('title'), 
 			name='screenplay';
@@ -94,6 +92,8 @@ define(function (require) {
 		}
 		return name || 'screenplay';
 	};
+	
+	plugin.get_filename = get_filename;
 
 	return plugin;
 });
