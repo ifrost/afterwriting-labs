@@ -60,14 +60,18 @@
 		});
 		$('a[open-action="last"]').click(open.open_last_used);
 
+		if (open.is_dropbox_available()) {
+			$('a[open-action="dropbox"]').click(open.open_from_dropbox);
+		} else {
+			$('a[open-action="dropbox"]').parent().hide();
+		}
+		
 		if (open.is_google_drive_available()) {
 			$('a[open-action="googledrive"]').click(open.open_from_google_drive);
 		} else {
 			$('a[open-action="googledrive"]').parent().hide();
 		}
 		
-		
-
 		open.open_file_dialog.add(function() {
 			$("#open-file").click();
 		});

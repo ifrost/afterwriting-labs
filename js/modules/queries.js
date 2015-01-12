@@ -115,10 +115,6 @@ define(function (require) {
 					locations: []
 				});
 			}
-			else{
-				console.log(result[0].pages);
-				console.log(result[0].filled_pages);
-			}
 		});
 		return basic;
 	};
