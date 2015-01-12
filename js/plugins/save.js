@@ -5,7 +5,10 @@ define(function (require) {
 		saveAs = require('saveAs'),
 		preview = require('plugins/preview'),
 		gd = require('utils/googledrive'),
+		$ = require('jquery'),
 		data = require('modules/data');
+
+	require('impromptu');
 
 	var plugin = pm.create_plugin('save', 'save');
 
@@ -39,17 +42,42 @@ define(function (require) {
 	};
 
 	plugin.google_drive_fountain = function () {
+		google_drive_start();
 		var blob = new Blob([data.script()], {
 			type: "text/plain;charset=utf-8"
 		});
-		gd.save(blob, plugin.data.filename + '.fountain');
+		gd.save(blob, plugin.data.filename + '.fountain', google_drive_saved);
 	};
 
 	plugin.google_drive_pdf = function () {
+		google_drive_start();
 		var uri = preview.get_pdf(function (data) {
-			gd.save(data.blob, plugin.data.filename + '.pdf');
+			gd.save(data.blob, plugin.data.filename + '.pdf', google_drive_saved);
 		});
 	};
+
+	function google_drive_start() {
+		$.prompt('Please wait', {
+			title: 'Saving to Google Drive',
+			buttons: []
+		});
+	}
+
+	function google_drive_saved(data) {
+		$.prompt.close();
+		$.prompt('Saved as: ' + data.title, {
+			title: 'File saved!',
+			buttons: {
+				'Open in Google Drive': true,
+				'Close': false
+			},
+			submit: function (e, v, f, m) {
+				if (v) {
+					window.open(data.alternateLink, '_blank');
+				}
+			}
+		});
+	}
 
 	plugin.is_dropbox_available = function () {
 		return window.Dropbox !== undefined && Dropbox.isBrowserSupported() && window.location.protocol !== 'file:';

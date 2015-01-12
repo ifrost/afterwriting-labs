@@ -15,17 +15,17 @@ define(function () {
 		});
 	};
 
-	module.save = function (blob, filename) {
+	module.save = function (blob, filename, callback) {
 		gapi.auth.init(function () {
-			authorize(true, save_file.bind(this, blob, filename));
+			authorize(true, save_file.bind(this, blob, filename, callback));
 		});
 	};
 
-	function save_file(blob, filename, result) {
+	function save_file(blob, filename, callback, result) {
 		if (result && !result.error) {
-			upload(blob, filename);
+			upload(blob, filename, callback);
 		} else {
-			authorize(false, save_file.bind(this, blob, filename));
+			authorize(false, save_file.bind(this, blob, filename, callback));
 		}
 	}
 
@@ -83,7 +83,7 @@ define(function () {
 		});
 	}
 
-	function upload(blob, filename) {
+	function upload(blob, filename, callback) {
 		var boundary = '-------314159265358979323846';
 		var delimiter = "\r\n--" + boundary + "\r\n";
 		var close_delim = "\r\n--" + boundary + "--";
@@ -120,7 +120,7 @@ define(function () {
 				'body': multipartRequestBody
 			});
 
-			request.execute();
+			request.execute(callback);
 		};
 	}
 
