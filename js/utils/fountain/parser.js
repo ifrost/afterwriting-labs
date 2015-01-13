@@ -173,7 +173,7 @@ define(function (require) {
 						token.number = match[1];
 					}
 					scene_number++;
-				} else if (token.text === token.text.toUpperCase()) {					
+				} else if ((token.text.length > 0 && token.text[0] == '@') || token.text === token.text.toUpperCase()) {
 					if (i === lines_length || i === lines_length - 1 || lines[i + 1].length === 0) {
 						token.type = 'shot';
 					} else {
