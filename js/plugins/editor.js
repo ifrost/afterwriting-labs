@@ -1,20 +1,24 @@
 /* global define, setTimeout */
 define(function (require) {
-	
+
 	var pm = require('utils/pluginmanager'),
 		data = require('modules/data'),
+		gd = require('utils/googledrive'),
+		$ = require('jquery'),
 		cm = require('libs/codemirror/lib/codemirror');
-	
+
 	// codemirror plugins
 	require('libs/codemirror/addon/selection/active-line');
-    require('libs/codemirror/addon/hint/show-hint');
+	require('libs/codemirror/addon/hint/show-hint');
 	require('libs/codemirror/addon/hint/anyword-hint');
 	require('utils/fountain/cmmode');
-	
+
 	var plugin = pm.create_plugin('editor', 'write');
 	var editor;
 
-	plugin.data = {};
+	plugin.data = {
+		is_sync: false
+	};
 
 	plugin.create_editor = function (textarea) {
 		editor = cm.fromTextArea(textarea, {
@@ -51,6 +55,68 @@ define(function (require) {
 		plugin.data.scroll_info = null;
 
 		pm.switch_to(plugin);
+	};
+
+	plugin.sync_available = function () {
+		return data.data('gd-fileid') || data.data('db-link');
+	};
+
+	plugin.is_sync = function () {
+		return plugin.data.is_sync;
+	};
+
+	function prepare_gd_content(content) {
+		var result;
+		if (data.config.google_drive_trim_double_space) {
+			result = content.replace(/\r\n\r\n/g, '\n');
+		}
+		return result;
+	}
+
+	var confirm_sync = function (text, link) {
+		$.prompt(text, {
+			buttons: {
+				'Open file in a new window': true,
+				'Close': false
+			},
+			submit: function (e, v) {
+				if (v) {
+					window.open(link, '_blank');
+				}
+			}
+		});
+	}
+
+
+	plugin.toggle_sync = function () {
+		plugin.data.is_sync = !plugin.data.is_sync;
+		editor.setOption('readOnly', plugin.data.is_sync);
+		if (plugin.data.is_sync) {
+			if (data.data('gd-fileid')) {
+				confirm_sync('Content will be synced with Google Drive each 5 seconds', data.data('gd-link'));
+				gd.sync(data.data('gd-fileid'), 5000, function (content) {
+					data.script(prepare_gd_content(content));
+					plugin.activate();
+				});
+			} else if (data.data('db-link')) {
+				confirm_sync('Content will be synced with Dropbox each 5 seconds', data.data('db-link'));
+				plugin.data.db_interval = setInterval(function () {
+					$.ajax({
+						url: data.data('db-link')
+					}).done(function (content) {
+						data.script(content);
+						plugin.activate();
+					});
+				}, 5000);
+			}
+
+		} else {
+			if (data.data('gd-fileid')) {
+				gd.unsync();
+			} else if (data.data('db-link')) {
+				clearInterval(plugin.data.db_interval);
+			}
+		}
 	};
 
 	plugin.activate = function () {

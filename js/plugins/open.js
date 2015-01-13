@@ -62,14 +62,15 @@ define(function (require) {
 	plugin.is_dropbox_available = function () {
 		return window.Dropbox && Dropbox.isBrowserSupported() && window.location.protocol !== 'file:';
 	};
-	
-	plugin.is_google_drive_available = function() {
+
+	plugin.is_google_drive_available = function () {
 		return window.gapi && window.location.protocol !== 'file:';
 	};
 
 	plugin.open_from_dropbox = function () {
 		Dropbox.choose({
 			success: function (files) {
+				data.data('db-link', files[0].link);
 				$.ajax({
 					url: files[0].link
 				}).done(function (content) {
@@ -81,18 +82,28 @@ define(function (require) {
 			extensions: ['.fountain', '.spmd', '.txt', '.fdx']
 		});
 	};
-	
-	plugin.open_from_google_drive = function() {
-		gd.open(function(content){
-			if (data.config.google_drive_trim_double_space) {
-				content = content.replace(/\r\n\r\n/g,'\n');
-			}
-			set_script(content);
+
+	function prepare_gd_content(content) {
+		var result;
+		if (data.config.google_drive_trim_double_space) {
+			result = content.replace(/\r\n\r\n/g, '\n');
+		}
+		return result;		
+	}
+
+	plugin.open_from_google_drive = function () {
+		gd.open(function (content, link, fileid) {
+			set_script(prepare_gd_content(content));
+			data.data('gd-link', link);
+			data.data('gd-fileid', fileid);
 		});
 	};
 
 	plugin.init = function () {
 		log.info("Init: script handlers");
+		data.data('gd-link', '');
+		data.data('gd-fileid', '');
+		data.data('db-link', '');
 		data.script.add(function () {
 			var title = '';
 			data.data('last-used-script', data.script());
@@ -104,11 +115,11 @@ define(function (require) {
 					title_match = line.match(/title\:(.*)/i);
 					if (wait_for_non_empty) {
 						title = line.trim().replace(/\*/g, '').replace(/_/g, '');
-						wait_for_non_empty = ! title;
+						wait_for_non_empty = !title;
 					}
 					if (title_match) {
 						title = title_match[1].trim();
-						wait_for_non_empty = ! title;
+						wait_for_non_empty = !title;
 					}
 				});
 			}

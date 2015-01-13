@@ -1,18 +1,46 @@
 <h1>Editor
 	<span class="info-icon" section="editor-info" />
-	<div class="header-menu" style="padding-right: 22px">
-		<span><a href="#" action="save-fountain"><img src="{{static_path}}gfx/icons/other/download.svg" class="icon small-icon" /></a></span>
-		<span><a href="#" action="save-dropbox-fountain"><img src="{{static_path}}gfx/icons/other/dropbox.svg" class="icon small-icon" /></a></span>
-		<span><a href="#" action="save-gd-fountain"><img src="{{static_path}}gfx/icons/other/gd.svg" class="icon small-icon" /></a></span>
+	<div class="header-menu" style="padding-right: 22px">		
+		<span><a href="#" action="sync-fountain"><img class="sync-icon icon small-icon" /></a></span>
+		<span><a href="#" action="save-fountain"><img src="{{static_path}}gfx/icons/other/download.svg" class="icon small-icon" title="Download Fountain file" /></a></span>
+		<span><a href="#" action="save-dropbox-fountain"><img src="{{static_path}}gfx/icons/other/dropbox.svg" class="icon small-icon" title="Upload Fountain file to Dropbox" /></a></span>
+		<span><a href="#" action="save-gd-fountain"><img src="{{static_path}}gfx/icons/other/gd.svg" class="icon small-icon" title="Upload Fountain file to Google Drive" /></a></span>
 	</div></h1>
-<p class="info-content" section="editor-info">Just a basic editor. Use Ctrl-Space for auto-complete.</p>
+<p class="info-content" section="editor-info" style="clear:both">Just a basic editor. Use Ctrl-Space for auto-complete.</p>
 <textarea id="editor-textarea" placeholder="Code goes here..." class="to-the-bottom"></textarea>
 <!-- scripts -->
 <script>
-	require(['jquery', 'plugins/editor', 'utils/layout'], function($, editor, layout) {
+	require(['jquery', 'plugins/editor', 'utils/layout', 'utils/common'], function($, editor, layout, common) {
 		var cm = editor.create_editor($('#editor-textarea').get(0));
 
 		var editor_content = $('.plugin-content[plugin="editor"]');
+		
+		var sync_on_icon = common.data.static_path + 'gfx/icons/other/sync.svg',
+		    sync_off_icon = common.data.static_path + 'gfx/icons/other/no-sync.svg',
+			update_sync_layout = function() {
+				$('.sync-icon')
+					.attr('src', editor.is_sync() ? sync_on_icon : sync_off_icon)
+					.attr('title', 'Synchronization (' + editor.is_sync() ? 'on)' + 'off)';
+				$('.CodeMirror').css('opacity', editor.is_sync() ? 0.5 : 1);			
+			};
+		
+		$('a[action="sync-fountain"]').click(editor.toggle_sync);
+
+		
+		
+		editor.activate.add(function() {
+			if (editor.sync_available()) {
+				$('a[action="sync-fountain"]').parent().show();
+				update_sync_layout();
+			}
+			else {
+				$('a[action="sync-fountain"]').parent().hide();
+			}
+		});
+		
+		editor.toggle_sync.add(function() {
+			update_sync_layout();
+		});		
 
 		var resize = function() {
 
