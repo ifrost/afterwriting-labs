@@ -4,6 +4,7 @@ define(function (require) {
 	var pm = require('utils/pluginmanager'),
 		logger = require('logger'),
 		templates = require('templates'),
+		editor = require('plugins/editor'),
 		data = require('modules/data'),
 		helper = require('utils/helper'),
 		decorator = require('utils/decorator'),
@@ -19,6 +20,7 @@ define(function (require) {
 	var last_session_script;
 
 	var set_script = function (value) {
+		editor.set_sync(false);
 		data.script(value);
 		layout.show_main();
 	};
@@ -71,6 +73,8 @@ define(function (require) {
 		Dropbox.choose({
 			success: function (files) {
 				data.data('db-link', files[0].link);
+				data.data('gd-link', '');
+				data.data('gd-fileid', '');
 				$.ajax({
 					url: files[0].link
 				}).done(function (content) {
@@ -88,7 +92,7 @@ define(function (require) {
 		if (data.config.google_drive_trim_double_space) {
 			result = content.replace(/\r\n\r\n/g, '\n');
 		}
-		return result;		
+		return result;
 	}
 
 	plugin.open_from_google_drive = function () {
@@ -96,6 +100,7 @@ define(function (require) {
 			set_script(prepare_gd_content(content));
 			data.data('gd-link', link);
 			data.data('gd-fileid', fileid);
+			data.data('db-link', '');
 		});
 	};
 

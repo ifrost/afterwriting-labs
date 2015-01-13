@@ -103,9 +103,15 @@ define(function (require) {
 		}
 	};
 
-	plugin.toggle_sync = function () {
-		plugin.data.is_sync = !plugin.data.is_sync;
-		editor.setOption('readOnly', plugin.data.is_sync);
+	plugin.toggle_sync = function() {
+		plugin.set_sync(!plugin.data.is_sync);
+	};
+	
+	plugin.set_sync = function (value) {
+		plugin.data.is_sync = value;
+		if (editor) {			
+			editor.setOption('readOnly', plugin.data.is_sync);
+		}
 		if (plugin.data.is_sync) {
 			if (data.data('gd-fileid')) {
 				confirm_sync('Content will be synced with Google Drive each 3 seconds', data.data('gd-link'));
@@ -122,11 +128,8 @@ define(function (require) {
 			}
 
 		} else {
-			if (data.data('gd-fileid')) {
-				gd.unsync();
-			} else if (data.data('db-link')) {
-				clearInterval(plugin.data.db_interval);
-			}
+			gd.unsync();
+			clearInterval(plugin.data.db_interval);
 		}
 	};
 
