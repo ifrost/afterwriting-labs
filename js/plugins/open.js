@@ -87,17 +87,9 @@ define(function (require) {
 		});
 	};
 
-	function prepare_gd_content(content) {
-		var result;
-		if (data.config.google_drive_trim_double_space) {
-			result = content.replace(/\r\n\r\n/g, '\n');
-		}
-		return result;
-	}
-
 	plugin.open_from_google_drive = function () {
 		gd.open(function (content, link, fileid) {
-			set_script(prepare_gd_content(content));
+			set_script(content);
 			data.data('gd-link', link);
 			data.data('gd-fileid', fileid);
 			data.data('db-link', '');

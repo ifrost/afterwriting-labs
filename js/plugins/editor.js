@@ -69,14 +69,6 @@ define(function (require) {
 		return plugin.data.is_sync;
 	};
 
-	function prepare_gd_content(content) {
-		var result;
-		if (data.config.google_drive_trim_double_space) {
-			result = content.replace(/\r\n\r\n/g, '\n');
-		}
-		return result;
-	}
-
 	var confirm_sync = function (text, link) {
 		$.prompt(text, {
 			buttons: {
@@ -115,9 +107,7 @@ define(function (require) {
 		if (plugin.data.is_sync) {
 			if (data.data('gd-fileid')) {
 				confirm_sync('Content will be synced with Google Drive each 3 seconds', data.data('gd-link'));
-				gd.sync(data.data('gd-fileid'), 3000, function (content) {
-					handle_sync(prepare_gd_content(content));
-				});
+				gd.sync(data.data('gd-fileid'), 3000, handle_sync);
 			} else if (data.data('db-link')) {
 				confirm_sync('Content will be synced with Dropbox each 3 seconds', data.data('db-link'));
 				plugin.data.db_interval = setInterval(function () {

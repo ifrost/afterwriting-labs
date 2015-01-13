@@ -77,6 +77,7 @@ define(function () {
 			if (!response.error) {
 				var url = response.exportLinks && response.exportLinks['text/plain'] ? response.exportLinks['text/plain'] : response.downloadUrl;
 				download(url, function (content) {
+					content = content.replace(/\r\n\r\n/g, '\r\n');
 					content_callback(content, response.alternateLink, response.id);
 				});
 			}
