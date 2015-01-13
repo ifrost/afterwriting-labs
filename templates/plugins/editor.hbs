@@ -20,7 +20,7 @@
 			update_sync_layout = function() {
 				$('.sync-icon')
 					.attr('src', editor.is_sync() ? sync_on_icon : sync_off_icon)
-					.attr('title', 'Synchronization (' + editor.is_sync() ? 'on)' + 'off)';
+					.attr('title', 'Synchronization (' + editor.is_sync() ? 'on)' : 'off)');
 				$('.CodeMirror').css('opacity', editor.is_sync() ? 0.5 : 1);			
 			};
 		

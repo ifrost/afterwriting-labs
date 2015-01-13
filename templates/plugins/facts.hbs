@@ -42,7 +42,7 @@
 	require(['jquery', 'plugins/facts', 'utils/helper'], function($, facts, helper) {
 		var handlers_added = false;
 
-		facts.activate.add(function() {
+		facts.refresh.add(function() {
 			var facts_data = facts.data.facts;
 			$('#facts-title').html(facts_data.title.replace(/\*/g, '').replace(/_/g, '').replace(/\n/g, ' / '));
 			if (facts.each_scene_on_new_page()) {

@@ -31,6 +31,13 @@ define(function () {
 			_handlers.push(handler);
 		};
 		
+		runner.remove = function(handler) {
+			var index = _handlers.indexOf(handler);
+			if (index) {
+				_handlers.splice(index, 1);
+			}
+		};
+		
 		runner.decorated = true;
 
 		return runner;

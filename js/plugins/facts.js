@@ -3,6 +3,8 @@ define(function (require) {
 	var pm = require('utils/pluginmanager'),
 		data = require('modules/data'),
 		queries = require('modules/queries'),
+		editor = require('plugins/editor'),
+		decorator = require('utils/decorator'),
 		fhelpers = require('utils/fountain/helpers');
 
 	var plugin = pm.create_plugin('facts', 'facts');
@@ -23,10 +25,18 @@ define(function (require) {
 		return data.config.each_scene_on_new_page;
 	};
 	
-	plugin.activate = function () {
+	plugin.refresh = decorator(function(){
 		generate_data();
+	});
+	
+	plugin.activate = function () {
+		editor.synced.add(plugin.refresh);
+		plugin.refresh();
 	};
-
+	
+	plugin.deactivate = function() {
+		editor.synced.remove(plugin.refresh);
+	};
 
 	return plugin;
 });

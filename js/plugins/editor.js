@@ -3,6 +3,7 @@ define(function (require) {
 
 	var pm = require('utils/pluginmanager'),
 		data = require('modules/data'),
+		decorator = require('utils/decorator'),
 		gd = require('utils/googledrive'),
 		$ = require('jquery'),
 		cm = require('libs/codemirror/lib/codemirror');
@@ -14,11 +15,14 @@ define(function (require) {
 	require('utils/fountain/cmmode');
 
 	var plugin = pm.create_plugin('editor', 'write');
-	var editor;
+	var editor, last_content = '',
+		active = false;
 
 	plugin.data = {
 		is_sync: false
 	};
+
+	plugin.synced = decorator.signal();
 
 	plugin.create_editor = function (textarea) {
 		editor = cm.fromTextArea(textarea, {
@@ -87,27 +91,34 @@ define(function (require) {
 		});
 	}
 
+	var handle_sync = function (content) {
+		if (last_content != content) {
+			last_content = content;
+			data.script(content);
+			data.parse();
+			plugin.synced();
+			if (active) {
+				plugin.activate();
+			}
+		}
+	};
 
 	plugin.toggle_sync = function () {
 		plugin.data.is_sync = !plugin.data.is_sync;
 		editor.setOption('readOnly', plugin.data.is_sync);
 		if (plugin.data.is_sync) {
 			if (data.data('gd-fileid')) {
-				confirm_sync('Content will be synced with Google Drive each 5 seconds', data.data('gd-link'));
-				gd.sync(data.data('gd-fileid'), 5000, function (content) {
-					data.script(prepare_gd_content(content));
-					plugin.activate();
+				confirm_sync('Content will be synced with Google Drive each 3 seconds', data.data('gd-link'));
+				gd.sync(data.data('gd-fileid'), 3000, function (content) {
+					handle_sync(prepare_gd_content(content));
 				});
 			} else if (data.data('db-link')) {
-				confirm_sync('Content will be synced with Dropbox each 5 seconds', data.data('db-link'));
+				confirm_sync('Content will be synced with Dropbox each 3 seconds', data.data('db-link'));
 				plugin.data.db_interval = setInterval(function () {
 					$.ajax({
 						url: data.data('db-link')
-					}).done(function (content) {
-						data.script(content);
-						plugin.activate();
-					});
-				}, 5000);
+					}).done(handle_sync);
+				}, 3000);
 			}
 
 		} else {
@@ -120,7 +131,7 @@ define(function (require) {
 	};
 
 	plugin.activate = function () {
-
+		active = true;
 		setTimeout(function () {
 			editor.setValue(data.script() || "");
 			editor.focus();
@@ -143,6 +154,7 @@ define(function (require) {
 	};
 
 	plugin.deactivate = function () {
+		active = false;
 		save_state();
 	};
 

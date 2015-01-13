@@ -12,7 +12,7 @@
 <!-- scripts -->
 <script>
 	require(['jquery', 'plugins/preview'], function($, preview) {
-		preview.activate.add(function() {
+		preview.refresh.add(function() {
 			$('#pdf-preview-iframe-container').html('<p>Loading preview...</p><iframe id="pdf-preview-iframe" style="height: 100%; width: 100%; display:none"></iframe>');
 
 			setTimeout(function() {
