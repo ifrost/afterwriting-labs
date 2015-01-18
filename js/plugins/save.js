@@ -38,35 +38,48 @@ define(function (require) {
 		});
 	};
 
-	plugin.google_drive_fountain = function () {
-		data.parse();
-		google_drive_start();
-		var blob = new Blob([data.script()], {
-			type: "text/plain;charset=utf-8"
-		});
-		gd.save(blob, get_filename() + '.fountain', google_drive_saved);
-	};
 
-	plugin.google_drive_pdf = function () {
+	var google_drive_save = function (save_callback) {
 		gd.list(function (root) {
 			root = gd.convert_to_jstree(root);
 			tree.show({
 				data: [root],
 				callback: function (selected) {
 					google_drive_start();
-					var uri = preview.get_pdf(function (data) {
-						gd.save({
-							blob: data.blob,
-							filename: get_filename() + '.pdf',
-							callback: google_drive_saved,
-							parents: selected.data.isRoot ? [] : [selected.data],
-							fileid: selected.data.isFolder ? null : selected.data.id,
-						});
-					});
+					save_callback(selected);
 				}
 			});
 		});
+	};
 
+	plugin.google_drive_fountain = function () {
+		google_drive_save(function (selected) {
+			data.parse();
+			var blob = new Blob([data.script()], {
+				type: "text/plain;charset=utf-8"
+			});
+			gd.save({
+				blob: blob,
+				filename: get_filename() + '.fountain',
+				callback: google_drive_saved,
+				parents: selected.data.isRoot ? [] : [selected.data],
+				fileid: selected.data.isFolder ? null : selected.data.id,
+			});
+		});
+	};
+
+	plugin.google_drive_pdf = function () {
+		google_drive_save(function (selected) {
+			preview.get_pdf(function (data) {
+				gd.save({
+					blob: data.blob,
+					filename: get_filename() + '.pdf',
+					callback: google_drive_saved,
+					parents: selected.data.isRoot ? [] : [selected.data],
+					fileid: selected.data.isFolder ? null : selected.data.id,
+				});
+			});
+		});
 	};
 
 	function google_drive_start() {
