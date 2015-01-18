@@ -14,9 +14,9 @@ define(function () {
 		});
 	};
 
-	module.save = function (blob, filename, callback, fileid) {
+	module.save = function (options) {
 		gapi.auth.init(function () {
-			authorize(true, save_file.bind(this, blob, filename, callback, fileid));
+			authorize(true, save_file.bind(this, options));
 		});
 	};
 
@@ -97,7 +97,14 @@ define(function () {
 		});
 	}
 
-	function upload(blob, filename, callback, parents) {
+	function upload(options) {
+		var blob = options.blob,
+			filename = options.filename,
+			callback = options.callback,
+			parents = options.parents,
+			fileid = options.fileid,
+			isUpdate = fileid !== null;
+
 		var boundary = '-------314159265358979323846';
 		var delimiter = "\r\n--" + boundary + "\r\n";
 		var close_delim = "\r\n--" + boundary + "--";
@@ -106,10 +113,13 @@ define(function () {
 		reader.onload = function () {
 			var contentType = blob.type || 'application/octet-stream';
 			var metadata = {
-				'title': filename,
-				'mimeType': contentType,
-				'parents': parents || []
+				'mimeType': contentType
 			};
+
+			if (!isUpdate) {
+				metadata.title = filename;
+				metadata.parents = parents || []
+			}
 
 			var base64Data = btoa(reader.result);
 			var multipartRequestBody =
@@ -123,9 +133,13 @@ define(function () {
 				base64Data +
 				close_delim;
 
+			var path = '/upload/drive/v2/files/';
+			if (isUpdate) {
+				path += fileid;
+			}
 			var request = gapi.client.request({
-				'path': '/upload/drive/v2/files',
-				'method': 'POST',
+				'path': path,
+				'method': isUpdate ? 'PUT' : 'POST',
 				'params': {
 					'uploadType': 'multipart'
 				},
@@ -150,9 +164,9 @@ define(function () {
 	module.list = function (callback, folders_only) {
 		list(function (data) {
 			if (data.error) {
-				authorize(false, module.list.bind(null, callback, folders_only));
+				authorize(true, module.list.bind(null, callback, folders_only));
 			} else {
-				var items = data.items,
+				var items = data.items.filter(function (item) {return !item.explicitlyTrashed}),
 					map_items = {}, root = {
 						title: 'Google Drive (root)',
 						id: 'root',
@@ -186,7 +200,7 @@ define(function () {
 		var result = {
 			text: item.title,
 			id: item.id,
-			value: item,
+			data: item,
 			type: item.isFolder ? 'default' : 'file',
 			state: {
 				opened: item.isRoot

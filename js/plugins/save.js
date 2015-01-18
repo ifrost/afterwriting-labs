@@ -55,11 +55,17 @@ define(function (require) {
 				callback: function (selected) {
 					google_drive_start();
 					var uri = preview.get_pdf(function (data) {
-						gd.save(data.blob, get_filename() + '.pdf', google_drive_saved, selected.isRoot ? [] : [selected]);
+						gd.save({
+							blob: data.blob,
+							filename: get_filename() + '.pdf',
+							callback: google_drive_saved,
+							parents: selected.data.isRoot ? [] : [selected.data],
+							fileid: selected.data.isFolder ? null : selected.data.id,
+						});
 					});
 				}
 			});
-		}, true);
+		});
 
 	};
 
@@ -95,13 +101,20 @@ define(function (require) {
 	};
 
 	function get_filename() {
-		var title_token = data.get_title_page_token('title'),
-			name = 'screenplay';
-		if (title_token) {
-			name = title_token.text.replace(/[^a-zA-Z0-9]/g, ' ').split('\n').join(' ').replace(/\s+/g, ' ').trim();
+		if (!data.data('filename')) {
+			var title_token = data.get_title_page_token('title'),
+				name = 'screenplay';
+			if (title_token) {
+				name = title_token.text.replace(/[^a-zA-Z0-9]/g, ' ').split('\n').join(' ').replace(/\s+/g, ' ').trim();
+			}
+			data.data('filename', name || 'screenplay');
 		}
-		return name || 'screenplay';
+		return data.data('filename');
 	};
+
+	plugin.set_filename = function (value) {
+		data.data('filename', value);
+	}
 
 	plugin.get_filename = get_filename;
 

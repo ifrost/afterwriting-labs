@@ -20,9 +20,17 @@ define(function (require) {
 	var last_session_script;
 
 	var set_script = function (value) {
+		clear_last_opened();
 		editor.set_sync(false);
 		data.script(value);
 		layout.show_main();
+	};
+
+	var clear_last_opened = function () {
+		data.data('db-link', '');
+		data.data('gd-link', '');
+		data.data('gd-fileid', '');
+		data.data('filename', '');
 	};
 
 	plugin.open_last_used = function (startup) {
@@ -73,8 +81,6 @@ define(function (require) {
 		Dropbox.choose({
 			success: function (files) {
 				data.data('db-link', files[0].link);
-				data.data('gd-link', '');
-				data.data('gd-fileid', '');
 				$.ajax({
 					url: files[0].link
 				}).done(function (content) {
@@ -92,15 +98,11 @@ define(function (require) {
 			set_script(content);
 			data.data('gd-link', link);
 			data.data('gd-fileid', fileid);
-			data.data('db-link', '');
 		});
 	};
 
 	plugin.init = function () {
 		log.info("Init: script handlers");
-		data.data('gd-link', '');
-		data.data('gd-fileid', '');
-		data.data('db-link', '');
 		data.script.add(function () {
 			var title = '';
 			data.data('last-used-script', data.script());
@@ -130,6 +132,7 @@ define(function (require) {
 
 	var last_session_script_loaded = false;
 	if (data.data('last-used-date')) {
+		data.data('filename', '');
 		log.info('Last used exists. Loading: ', data.data('last-used-title'), data.data('last-used-date'));
 		plugin.context.last_used.script = data.data('last-used-script');
 		plugin.context.last_used.date = data.data('last-used-date');

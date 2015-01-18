@@ -42,7 +42,7 @@
 			$('a[action="save-gd-pdf"]').click(save.google_drive_pdf);
 
 			$('#save-filename').keyup(function() {
-				save.data.filename = $(this).val();
+				save.set_filename($(this).val());
 			});
 
 			if (!save.is_dropbox_available()) {
