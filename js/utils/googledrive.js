@@ -19,16 +19,16 @@ define(function () {
 			authorize(true, save_file.bind(this, blob, filename, callback, fileid));
 		});
 	};
-	
+
 	module.sync = function (fileid, timeout, sync_callback) {
-		module.sync_timeout = setInterval(function(){
-			load_file_info(fileid, function(content) {
+		module.sync_timeout = setInterval(function () {
+			load_file_info(fileid, function (content) {
 				sync_callback(content);
 			});
 		}, timeout);
 	};
-	
-	module.unsync = function() {
+
+	module.unsync = function () {
 		clearInterval(module.sync_timeout)
 	};
 
@@ -80,8 +80,7 @@ define(function () {
 					content = content.replace(/\r\n\r\n/g, '\r\n');
 					content_callback(content, response.alternateLink, response.id);
 				});
-			}
-			else {
+			} else {
 				$.prompt('Could not open the file!');
 			}
 		});
@@ -138,6 +137,38 @@ define(function () {
 			request.execute(callback);
 		};
 	}
+
+	var list = function (callback) {
+		var request = gapi.client.request({
+			path: '/drive/v2/files/',
+			method: 'GET'
+		});
+		request.execute(callback);
+	};
+
+	module.list = function (callback, folders_only) {
+		list(function (data) {
+			var items = data.items,
+				map_items = {}, root = {};
+			if (folders_only) {
+				items = items.filter(function (i) {
+					return i.mimeType === "application/vnd.google-apps.folder";
+				});
+			}
+			items.forEach(function (f) {
+				map_items[f.id] = f;
+			});
+			items.forEach(function (i) {
+				i.isFolder = i.mimeType === "application/vnd.google-apps.folder";
+				i.parents.forEach(function (p) {
+					var parent = map_items[p.id] || root;
+					parent.children = parent.children || [];
+					parent.children.push(i);
+				});
+			});
+			callback(root);
+		});
+	};
 
 	return module;
 
