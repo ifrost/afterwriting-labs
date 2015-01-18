@@ -160,6 +160,15 @@ a .icon:hover {
 	float: right;
 }
 
+#jstree-parent {
+	overflow: auto;
+	margin-right: 10px;
+}
+
+#jstree {
+	max-height: 200px;
+}
+
 /** small screens **/
 @media(max-width: 800px) {
 	h1 {

@@ -6,6 +6,7 @@ define(function (require) {
 		preview = require('plugins/preview'),
 		gd = require('utils/googledrive'),
 		$ = require('jquery'),
+		tree = require('utils/tree'),
 		data = require('modules/data');
 
 	var plugin = pm.create_plugin('save', 'save');
@@ -47,10 +48,24 @@ define(function (require) {
 	};
 
 	plugin.google_drive_pdf = function () {
+		tree.show({
+			data: [{
+					text: ' root',
+					state: {
+						selected: true
+					}
+				}],
+			callback: function (selected) {
+				console.log(selected);
+			}
+		});
+
+		/*
 		google_drive_start();
 		var uri = preview.get_pdf(function (data) {
 			gd.save(data.blob, get_filename() + '.pdf', google_drive_saved);
 		});
+		*/
 	};
 
 	function google_drive_start() {
@@ -83,16 +98,16 @@ define(function (require) {
 	plugin.is_google_drive_available = function () {
 		return window.gapi && window.location.protocol !== 'file:';
 	};
-	
+
 	function get_filename() {
-		var title_token = data.get_title_page_token('title'), 
-			name='screenplay';
+		var title_token = data.get_title_page_token('title'),
+			name = 'screenplay';
 		if (title_token) {
 			name = title_token.text.replace(/[^a-zA-Z0-9]/g, ' ').split('\n').join(' ').replace(/\s+/g, ' ').trim();
 		}
 		return name || 'screenplay';
 	};
-	
+
 	plugin.get_filename = get_filename;
 
 	return plugin;

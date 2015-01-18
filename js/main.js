@@ -10,7 +10,8 @@ require.config({
 		d3: 'libs/d3.min',
 		modernizr: 'libs/modernizr',
 		pdfkit: 'libs/pdfkit',
-		impromptu: 'libs/jquery-impromptu.min'
+		impromptu: 'libs/jquery-impromptu.min',
+		jstree: 'libs/jstree.min'
 	},
 	shim: {
 		handlebars: {
