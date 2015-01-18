@@ -97,7 +97,7 @@ define(function () {
 		});
 	}
 
-	function upload(blob, filename, callback) {
+	function upload(blob, filename, callback, parents) {
 		var boundary = '-------314159265358979323846';
 		var delimiter = "\r\n--" + boundary + "\r\n";
 		var close_delim = "\r\n--" + boundary + "--";
@@ -107,7 +107,8 @@ define(function () {
 			var contentType = blob.type || 'application/octet-stream';
 			var metadata = {
 				'title': filename,
-				'mimeType': contentType
+				'mimeType': contentType,
+				'parents': parents || []
 			};
 
 			var base64Data = btoa(reader.result);
@@ -148,26 +149,53 @@ define(function () {
 
 	module.list = function (callback, folders_only) {
 		list(function (data) {
-			var items = data.items,
-				map_items = {}, root = {};
-			if (folders_only) {
-				items = items.filter(function (i) {
-					return i.mimeType === "application/vnd.google-apps.folder";
+			if (data.error) {
+				authorize(false, module.list.bind(null, callback, folders_only));
+			} else {
+				var items = data.items,
+					map_items = {}, root = {
+						title: 'Google Drive (root)',
+						id: 'root',
+						isRoot: true,
+						isFolder: true,
+						children: []
+					};
+				if (folders_only) {
+					items = items.filter(function (i) {
+						return i.mimeType === "application/vnd.google-apps.folder";
+					});
+				}
+				items.forEach(function (f) {
+					map_items[f.id] = f;
+					f.children = [];
 				});
+				items.forEach(function (i) {
+					i.isFolder = i.mimeType === "application/vnd.google-apps.folder";
+					i.parents.forEach(function (p) {
+						var parent = map_items[p.id] || root;
+						parent.children.push(i);
+					});
+				});
+				callback(root);
 			}
-			items.forEach(function (f) {
-				map_items[f.id] = f;
-			});
-			items.forEach(function (i) {
-				i.isFolder = i.mimeType === "application/vnd.google-apps.folder";
-				i.parents.forEach(function (p) {
-					var parent = map_items[p.id] || root;
-					parent.children = parent.children || [];
-					parent.children.push(i);
-				});
-			});
-			callback(root);
 		});
+	};
+
+	module.convert_to_jstree = function (item) {
+		var children = item.children.map(module.convert_to_jstree);
+		var result = {
+			text: item.title,
+			id: item.id,
+			value: item,
+			type: item.isFolder ? 'default' : 'file',
+			state: {
+				opened: item.isRoot
+			}
+		};
+		if (children.length) {
+			result.children = children;
+		}
+		return result;
 	};
 
 	return module;

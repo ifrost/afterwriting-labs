@@ -15,11 +15,10 @@ define(function (require) {
 					var selected = $('#jstree').jstree(true).get_selected(true);
 					if (selected.length) {
 						options.callback(selected[0]);
-					}
-					else {
+					} else {
 						$.prompt("You didn't select anything.");
 					}
-					
+
 				} else {
 					$.prompt.close();
 				}
@@ -27,17 +26,23 @@ define(function (require) {
 		});
 
 		$('#jstree').jstree({
+			plugins: ['types'],
 			core: {
-				themes: {
-					stripes: false
+				data: options.data,
+			},
+			types: {
+				"default": {
+					"valid_children": ["default", "file"]
 				},
-				data: options.data
+				"file": {
+					"icon": "jstree-file"
+				}
 			}
 		});
 
 
 	};
-	
+
 	return module;
 
 });

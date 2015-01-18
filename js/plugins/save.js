@@ -48,24 +48,19 @@ define(function (require) {
 	};
 
 	plugin.google_drive_pdf = function () {
-		tree.show({
-			data: [{
-					text: ' root',
-					state: {
-						selected: true
-					}
-				}],
-			callback: function (selected) {
-				console.log(selected);
-			}
-		});
+		gd.list(function (root) {
+			root = gd.convert_to_jstree(root);
+			tree.show({
+				data: [root],
+				callback: function (selected) {
+					google_drive_start();
+					var uri = preview.get_pdf(function (data) {
+						gd.save(data.blob, get_filename() + '.pdf', google_drive_saved, selected.isRoot ? [] : [selected]);
+					});
+				}
+			});
+		}, true);
 
-		/*
-		google_drive_start();
-		var uri = preview.get_pdf(function (data) {
-			gd.save(data.blob, get_filename() + '.pdf', google_drive_saved);
-		});
-		*/
 	};
 
 	function google_drive_start() {
