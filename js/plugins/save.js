@@ -7,6 +7,7 @@ define(function (require) {
 		gd = require('utils/googledrive'),
 		$ = require('jquery'),
 		tree = require('utils/tree'),
+		decorator = require('utils/decorator'),
 		data = require('modules/data');
 
 	var plugin = pm.create_plugin('save', 'save');
@@ -38,16 +39,20 @@ define(function (require) {
 		});
 	};
 
+	// GOOGLE DRIVE
 
 	var google_drive_save = function (save_callback) {
-		gd.list(function (root) {
-			root = gd.convert_to_jstree(root);
-			tree.show({
-				data: [root],
-				callback: function (selected) {
-					google_drive_start();
-					save_callback(selected);
-				}
+		gd.auth(function () {
+			gd.list(function (root) {
+				root = gd.convert_to_jstree(root);
+				tree.show({
+					data: [root],
+					info: 'Select a file to override or choose a folder to save as a new file.',
+					callback: function (selected) {
+						$.prompt('Please wait');
+						save_callback(selected);
+					}
+				});
 			});
 		});
 	};
@@ -58,7 +63,7 @@ define(function (require) {
 			var blob = new Blob([data.script()], {
 				type: "text/plain;charset=utf-8"
 			});
-			gd.save({
+			gd.upload({
 				blob: blob,
 				filename: get_filename() + '.fountain',
 				callback: google_drive_saved,
@@ -70,8 +75,9 @@ define(function (require) {
 
 	plugin.google_drive_pdf = function () {
 		google_drive_save(function (selected) {
+			data.parse();
 			preview.get_pdf(function (data) {
-				gd.save({
+				gd.upload({
 					blob: data.blob,
 					filename: get_filename() + '.pdf',
 					callback: google_drive_saved,
@@ -82,15 +88,11 @@ define(function (require) {
 		});
 	};
 
-	function google_drive_start() {
-		$.prompt('Please wait', {
-			title: 'Saving to Google Drive',
-			buttons: []
-		});
-	}
-
+	plugin.gd_saved = decorator.signal();
+	
 	function google_drive_saved(data) {
 		$.prompt.close();
+		plugin.gd_saved(data);
 		$.prompt('Saved as: ' + data.title, {
 			title: 'File saved!',
 			buttons: {

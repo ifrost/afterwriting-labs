@@ -8,7 +8,8 @@ define(function (require) {
 		var buttons = {};
 		buttons[options.label || 'Save'] = true;
 		buttons['Cancel'] = false;
-		$.prompt('<div id="jstree-parent"><div id="jstree"></div></div>', {
+		var info = '<p>' + options.info + '</p>';
+		$.prompt(info + '<div id="jstree-parent"><div id="jstree"></div></div>', {
 			buttons: buttons,
 			submit: function (e, v, f, m) {
 				if (v) {

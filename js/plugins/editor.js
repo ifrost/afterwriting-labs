@@ -150,6 +150,10 @@ define(function (require) {
 		active = false;
 		save_state();
 	};
+	
+	plugin.is_active = function() {
+		return active;
+	};
 
 	return plugin;
 });

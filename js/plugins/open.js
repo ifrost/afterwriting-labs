@@ -10,6 +10,8 @@ define(function (require) {
 		decorator = require('utils/decorator'),
 		$ = require('jquery'),
 		gd = require('utils/googledrive'),
+		tree = require('utils/tree'),
+		save = require('plugins/save'),
 		finaldraft_converter = require('utils/converters/finaldraft'),
 		layout = require('utils/layout');
 
@@ -94,10 +96,33 @@ define(function (require) {
 	};
 
 	plugin.open_from_google_drive = function () {
-		gd.open(function (content, link, fileid) {
-			set_script(content);
-			data.data('gd-link', link);
-			data.data('gd-fileid', fileid);
+		gd.list(function (root) {
+			root = gd.convert_to_jstree(root);
+			tree.show({
+				label: 'Open',
+				data: [root],
+				callback: function (selected) {
+					if (selected.data.isFolder) {
+						$.prompt('Please select a file, not folder.', {
+							buttons: {
+								'Back': true,
+								'Cancel': false
+							},
+							submit: function (v, e, f, m) {
+								if (v) {
+									plugin.open_from_google_drive();
+								}
+							}
+						});
+					} else {
+						gd.load_file(selected.data.id, function (content, link, fileid) {
+							set_script(content);
+							data.data('gd-link', link);
+							data.data('gd-fileid', fileid);
+						});
+					}
+				}
+			});
 		});
 	};
 
@@ -123,6 +148,16 @@ define(function (require) {
 				});
 			}
 			data.data('last-used-title', title || 'No title');
+		});
+		save.gd_saved.add(function (item) {
+			clear_last_opened();
+			data.data('db-link', '');
+			data.data('gd-link', item.alternateLink);
+			data.data('gd-fileid', item.id);
+			data.data('filename', '');
+			if (editor.is_active) {
+				editor.activate();
+			}
 		});
 	};
 
