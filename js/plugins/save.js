@@ -108,7 +108,7 @@ define(function (require) {
 	}
 
 	plugin.is_dropbox_available = function () {
-		return window.Dropbox !== undefined && Dropbox.isBrowserSupported() && window.location.protocol !== 'file:';
+		return window.location.protocol !== 'file:';
 	};
 
 	plugin.is_google_drive_available = function () {

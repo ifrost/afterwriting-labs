@@ -10,6 +10,7 @@ define(function (require) {
 		decorator = require('utils/decorator'),
 		$ = require('jquery'),
 		gd = require('utils/googledrive'),
+		db = require('utils/dropbox'),
 		tree = require('utils/tree'),
 		save = require('plugins/save'),
 		finaldraft_converter = require('utils/converters/finaldraft'),
@@ -29,7 +30,7 @@ define(function (require) {
 	};
 
 	var clear_last_opened = function () {
-		data.data('db-link', '');
+		data.data('db-path', '');
 		data.data('gd-link', '');
 		data.data('gd-fileid', '');
 		data.data('filename', '');
@@ -72,7 +73,7 @@ define(function (require) {
 	};
 
 	plugin.is_dropbox_available = function () {
-		return window.Dropbox && Dropbox.isBrowserSupported() && window.location.protocol !== 'file:';
+		return window.location.protocol !== 'file:';
 	};
 
 	plugin.is_google_drive_available = function () {
@@ -80,19 +81,35 @@ define(function (require) {
 	};
 
 	plugin.open_from_dropbox = function () {
-		Dropbox.choose({
-			success: function (files) {
-				data.data('db-link', files[0].link);
-				$.ajax({
-					url: files[0].link
-				}).done(function (content) {
-					set_script(content);
-				});
-			},
-			linkType: 'direct',
-			multiselect: false,
-			extensions: ['.fountain', '.spmd', '.txt', '.fdx']
+		db.list(function (root) {
+			root = db.convert_to_jstree(root);
+			tree.show({
+				label: 'Open from Dropbox',
+				data: [root],
+				callback: function (selected) {
+					if (selected.data.isFolder) {
+						$.prompt('Please select a file, not folder.', {
+							buttons: {
+								'Back': true,
+								'Cancel': false
+							},
+							submit: function (v, e, f, m) {
+								if (v) {
+									plugin.open_from_dropbox();
+								}
+							}
+						});
+					} else {
+						console.log(selected);
+						db.load_file(selected.data.path, function (content) {
+							set_script(content);
+							data.data('db-path', selected.data.path);
+						});
+					}
+				}
+			});
 		});
+		
 	};
 
 	plugin.open_from_google_drive = function () {
@@ -151,7 +168,6 @@ define(function (require) {
 		});
 		save.gd_saved.add(function (item) {
 			clear_last_opened();
-			data.data('db-link', '');
 			data.data('gd-link', item.alternateLink);
 			data.data('gd-fileid', item.id);
 			data.data('filename', '');

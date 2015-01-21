@@ -5,6 +5,7 @@ define(function (require) {
 		data = require('modules/data'),
 		decorator = require('utils/decorator'),
 		gd = require('utils/googledrive'),
+		db = require('utils/dropbox'),
 		$ = require('jquery'),
 		cm = require('libs/codemirror/lib/codemirror');
 
@@ -62,7 +63,7 @@ define(function (require) {
 	};
 
 	plugin.sync_available = function () {
-		return data.data('gd-fileid') || data.data('db-link');
+		return data.data('gd-fileid') || data.data('db-path');
 	};
 
 	plugin.is_sync = function () {
@@ -108,18 +109,14 @@ define(function (require) {
 			if (data.data('gd-fileid')) {
 				confirm_sync('Content will be synced with Google Drive each 3 seconds', data.data('gd-link'));
 				gd.sync(data.data('gd-fileid'), 3000, handle_sync);
-			} else if (data.data('db-link')) {
-				confirm_sync('Content will be synced with Dropbox each 3 seconds', data.data('db-link'));
-				plugin.data.db_interval = setInterval(function () {
-					$.ajax({
-						url: data.data('db-link')
-					}).done(handle_sync);
-				}, 3000);
+			} else if (data.data('db-path')) {
+				confirm_sync('Content will be synced with Dropbox each 3 seconds', data.data('db-path'));
+				db.sync(data.data('db-path'), 3000, handle_sync);
 			}
 
 		} else {
 			gd.unsync();
-			clearInterval(plugin.data.db_interval);
+			db.unsync();
 		}
 	};
 
