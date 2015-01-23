@@ -11,18 +11,37 @@ define(function (require) {
 		sandbox: false
 	});
 
+	var client_authenticate = function (callback) {
+		if (client.isAuthenticated()) {
+			callback();
+		} else {
+			var popup = window.open('https://www.dropbox.com/1/oauth2/authorize?response_type=token&redirect_uri=http://localhost/html/token.html&client_id=inioj0mo28wjwcw', '_blank', 'width=500, height=500');
+			window.addEventListener('message', function (e) {
+				var token = /access_token=([^\&]*)/.exec(e.data)[1],
+					uid = /uid=([^\&]*)/.exec(e.data)[1];
+				console.log(token, uid);
+				client = new Dropbox.Client({
+					key: 'inioj0mo28wjwcw',
+					secret: 'in148e9jozcdgmg',
+					sandbox: false,
+					token: token,
+					uid: uid
+				});
+				popup.close();
+				callback();
+			});
+		}
+	};
+
 	var auth_method = function (method) {
 		return function () {
 			var method_args = arguments;
-			client.authenticate(function (error) {
-				if (error) {
-					$.prompt('Dropbox error');
-				} else {
-					method.apply(null, method_args);
-				}
+			client_authenticate(function () {
+				method.apply(null, method_args);
 			});
 		};
 	};
+
 
 	var item_to_data = function (item) {
 		return {
@@ -37,6 +56,7 @@ define(function (require) {
 
 	var list = function (callback) {
 		client.pullChanges(function (error, result) {
+			console.log(error, result);
 			var items = result.changes.filter(function (file) {
 				return !file.wasRemoved;
 			});
@@ -59,14 +79,12 @@ define(function (require) {
 				files.push(data);
 			});
 
-			files.sort(function(a,b){
+			files.sort(function (a, b) {
 				if (a.isFolder && !b.isFolder) {
 					return -1;
-				}
-				else if (!a.isFolder && b.isFolder) {
+				} else if (!a.isFolder && b.isFolder) {
 					return 1;
-				}
-				else {
+				} else {
 					return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
 				}
 			});
@@ -79,15 +97,16 @@ define(function (require) {
 		});
 	};
 	module.list = auth_method(list);
-	
-	var load_file = function(path, callback) {
-		client.readFile(path, {blob: true}, function(error, blob){
+
+	var load_file = function (path, callback) {
+		client.readFile(path, {
+			blob: true
+		}, function (error, blob) {
 			if (error) {
 				$.prompt('Cannot open the file');
-			}
-			else {
+			} else {
 				var fileReader = new FileReader();
-				fileReader.onload = function() {
+				fileReader.onload = function () {
 					callback(this.result);
 				};
 				fileReader.readAsText(blob);
@@ -95,7 +114,7 @@ define(function (require) {
 		});
 	};
 	module.load_file = auth_method(load_file);
-	
+
 	module.sync = function (path, timeout, sync_callback) {
 		module.sync_timeout = setInterval(function () {
 			module.load_file(path, function (content) {
