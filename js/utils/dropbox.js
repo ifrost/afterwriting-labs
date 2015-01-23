@@ -67,6 +67,7 @@ define(function (require) {
 				'name': 'Dropbox',
 				'content': []
 			};
+			//root.entry = root;
 			var folders = {
 				'/': root
 			};
@@ -144,6 +145,10 @@ define(function (require) {
 		return result;
 	};
 
+	var save = function(path, data, callback) {
+		client.writeFile(path, data, {}, callback);
+	};
+	module.save = auth_method(save);
 
 	return module;
 

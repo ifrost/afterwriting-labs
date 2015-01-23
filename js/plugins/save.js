@@ -5,6 +5,7 @@ define(function (require) {
 		saveAs = require('saveAs'),
 		preview = require('plugins/preview'),
 		gd = require('utils/googledrive'),
+		db = require('utils/dropbox'),
 		$ = require('jquery'),
 		tree = require('utils/tree'),
 		decorator = require('utils/decorator'),
@@ -26,16 +27,51 @@ define(function (require) {
 		});
 	};
 
+	// DROPBOX
+
+	var dropbox_save = function (save_callback) {
+		db.list(function (root) {
+			root = db.convert_to_jstree(root);
+			tree.show({
+				data: [root],
+				info: 'Select a file to override or choose a folder to save as a new file.',
+				callback: function (selected) {
+					$.prompt('Please wait');
+					save_callback(selected);
+				}
+			});
+		});
+	};
+
+	var dropbox_saved = function () {
+		$.prompt.close();
+		$.prompt('File saved!');
+	}
+
 	plugin.dropbox_fountain = function () {
 		data.parse();
-		var encoded = window.btoa(data.script());
-		var uri = 'data:text/plain;base64,' + encoded;
-		Dropbox.save(uri, get_filename() + '.fountain');
+		dropbox_save(function (selected) {
+			var path = selected.data.entry.path,
+				blob = new Blob([data.script()], {
+					type: "text/plain;charset=utf-8"
+				});
+			if (selected.data.isFolder) {
+				path += '/' + get_filename() + '.fountain';
+			}
+			db.save(path, blob, dropbox_saved);
+		});
 	};
 
 	plugin.dropbox_pdf = function () {
-		var uri = preview.get_pdf(function (data) {
-			Dropbox.save(data.url, get_filename() + '.pdf');
+		dropbox_save(function (selected) {
+			var path = selected.data.entry.path;
+			if (selected.data.isFolder) {
+				path += '/' + get_filename() + '.pdf';
+			}
+			data.parse();
+			preview.get_pdf(function (data) {
+				db.save(path, data.blob, dropbox_saved);
+			});
 		});
 	};
 
@@ -89,7 +125,7 @@ define(function (require) {
 	};
 
 	plugin.gd_saved = decorator.signal();
-	
+
 	function google_drive_saved(data) {
 		$.prompt.close();
 		plugin.gd_saved(data);
