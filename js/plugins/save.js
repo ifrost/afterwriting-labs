@@ -29,11 +29,12 @@ define(function (require) {
 
 	// DROPBOX
 
-	var dropbox_save = function (save_callback) {
+	var dropbox_save = function (save_callback, selected) {
 		db.list(function (root) {
 			root = db.convert_to_jstree(root);
 			tree.show({
 				data: [root],
+				selected: selected,
 				info: 'Select a file to override or choose a folder to save as a new file.',
 				callback: function (selected) {
 					$.prompt('Please wait');
@@ -58,8 +59,11 @@ define(function (require) {
 			if (selected.data.isFolder) {
 				path += '/' + get_filename() + '.fountain';
 			}
-			db.save(path, blob, dropbox_saved);
-		});
+			db.save(path, blob, function(){
+				dropbox_saved();
+				data.data('db-path', path);
+			});			
+		}, data.data('db-path'));
 	};
 
 	plugin.dropbox_pdf = function () {
@@ -69,20 +73,24 @@ define(function (require) {
 				path += '/' + get_filename() + '.pdf';
 			}
 			data.parse();
-			preview.get_pdf(function (data) {
-				db.save(path, data.blob, dropbox_saved);
+			preview.get_pdf(function (result) {
+				db.save(path, result.blob, function() {
+					dropbox_saved();
+					data.data('db-pdf-path', path);
+				});
 			});
-		});
+		}, data.data('db-pdf-path'));
 	};
 
 	// GOOGLE DRIVE
 
-	var google_drive_save = function (save_callback) {
+	var google_drive_save = function (save_callback, selected) {
 		gd.auth(function () {
 			gd.list(function (root) {
 				root = gd.convert_to_jstree(root);
 				tree.show({
 					data: [root],
+					selected: selected,
 					info: 'Select a file to override or choose a folder to save as a new file.',
 					callback: function (selected) {
 						$.prompt('Please wait');
