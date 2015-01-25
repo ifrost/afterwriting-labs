@@ -17,6 +17,10 @@ define(function (require) {
 		} else {
 			var popup = window.open('https://www.dropbox.com/1/oauth2/authorize?response_type=token&redirect_uri=http://localhost/html/token.html&client_id=inioj0mo28wjwcw', '_blank', 'width=500, height=500');
 			window.addEventListener('message', function (e) {
+				if (e.origin.indexOf('afterwriting.com') == -1 || e.origin.indexOf('localhost') == -1) {
+					return;
+				}
+				
 				var token = /access_token=([^\&]*)/.exec(e.data)[1],
 					uid = /uid=([^\&]*)/.exec(e.data)[1];
 				client = new Dropbox.Client({
@@ -54,6 +58,8 @@ define(function (require) {
 	};
 
 	var list = function (callback, options) {
+		options = options || {};
+		
 		client.pullChanges(function (error, result) {
 			var items = result.changes.filter(function (file) {
 				return !file.wasRemoved;

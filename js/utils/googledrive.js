@@ -181,6 +181,8 @@ define(function () {
 	 * Generate list of files/folders
 	 */
 	var list = function (callback, options) {
+		options = options || {};
+		
 		var request = gapi.client.request({
 			path: '/drive/v2/files/',
 			method: 'GET'
