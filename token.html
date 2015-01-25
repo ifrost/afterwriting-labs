@@ -1,0 +1,30 @@
+<html>
+	<body onload="send_message()">
+		<span id="alert" />
+		<script>
+			function send_message() {
+				var sent = false,
+					url = window.location.href,
+					origin,
+					allowed = ['afterwriting.com', 'www.afterwriting.com', 'local.afterwriting.com', 'ifrost.github.io', 'localhost'];
+
+				try {
+					origin = window.opener.location.origin
+					allowed.forEach(function(o) {
+						var r = new RegExp('http(s)?://' + o + '(/)?');
+						if (r.test(origin)) {
+							window.opener.postMessage(url, origin);
+							sent = true;
+						}
+					});
+				} catch (e) {}
+
+				if (!sent) {
+					document.getElementById('alert').innerHTML = 'Authorization failed.';
+				}
+
+			}
+		</script>
+	</body>
+
+</html>
