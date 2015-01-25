@@ -10,9 +10,11 @@
 
 				try {
 					origin = window.opener.location.origin
+					console.log(origin);
 					allowed.forEach(function(o) {
 						var r = new RegExp('http(s)?://' + o + '(/)?');
 						if (r.test(origin)) {
+							console.log('sent to', origin);
 							window.opener.postMessage(url, origin);
 							sent = true;
 						}
