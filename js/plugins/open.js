@@ -171,7 +171,15 @@ define(function (require) {
 			data.data('gd-fileid', item.id);
 			data.data('filename', '');
 			if (editor.is_active) {
-				editor.activate();
+				editor.activate(); // refresj
+			}
+		});
+		save.db_saved.add(function(path) {
+			clear_last_opened();
+			data.data('db-path', path);
+			data.data('filename', '');
+			if (editor.is_active) {
+				editor.activate(); // refresh
 			}
 		});
 	};

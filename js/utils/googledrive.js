@@ -55,7 +55,7 @@ define(function () {
 			module.access_token = result.access_token;
 			callback();
 		} else {
-			$.prompt('Error: cannot authorize to Google Drive. Please try again.');
+			$.prompt('Google Drive authorization failed.');
 		}
 
 	};
@@ -89,7 +89,9 @@ define(function () {
 			if (!response.error) {
 				var url = response.exportLinks && response.exportLinks['text/plain'] ? response.exportLinks['text/plain'] : response.downloadUrl;
 				download(url, function (content) {
-					content = content.replace(/\r\n\r\n/g, '\r\n');
+					if (response.mimeType === "application/vnd.google-apps.document") {
+						content = content.replace(/\r\n\r\n/g, '\r\n');
+					}					
 					content_callback(content, response.alternateLink, response.id);
 				});
 			} else {
@@ -122,6 +124,7 @@ define(function () {
 			callback = options.callback,
 			parents = options.parents,
 			fileid = options.fileid,
+			convert = options.convert,
 			isUpdate = fileid !== null;
 
 		var boundary = '-------314159265358979323846';
@@ -161,7 +164,7 @@ define(function () {
 				'method': isUpdate ? 'PUT' : 'POST',
 				'params': {
 					'uploadType': 'multipart',
-					'convert': true
+					'convert': convert
 				},
 				'headers': {
 					'Content-Type': 'multipart/mixed; boundary="' + boundary + '"'
@@ -177,7 +180,7 @@ define(function () {
 	/**
 	 * Generate list of files/folders
 	 */
-	var list = function (callback, folders_only) {
+	var list = function (callback, options) {
 		var request = gapi.client.request({
 			path: '/drive/v2/files/',
 			method: 'GET'
@@ -195,11 +198,11 @@ define(function () {
 					children: []
 				};
 
-			if (folders_only) {
-				items = items.filter(function (i) {
-					return i.mimeType === "application/vnd.google-apps.folder";
-				});
-			}
+			
+			items = items.filter(function (i) {
+				return !options.pdfOnly || i.mimeType === "application/pdf" || i.mimeType === "application/vnd.google-apps.folder";
+			});
+			
 			items.forEach(function (f) {
 				map_items[f.id] = f;
 				f.children = [];

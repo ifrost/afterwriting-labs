@@ -29,7 +29,7 @@ define(function (require) {
 
 	// DROPBOX
 
-	var dropbox_save = function (save_callback, selected) {
+	var dropbox_save = function (save_callback, selected, options) {
 		db.list(function (root) {
 			root = db.convert_to_jstree(root);
 			tree.show({
@@ -41,10 +41,10 @@ define(function (require) {
 					save_callback(selected);
 				}
 			});
-		});
+		}, options || {});
 	};
 
-	var dropbox_saved = function () {
+	var file_saved = function () {
 		$.prompt.close();
 		$.prompt('File saved!');
 	}
@@ -60,8 +60,8 @@ define(function (require) {
 				path += '/' + get_filename() + '.fountain';
 			}
 			db.save(path, blob, function(){
-				dropbox_saved();
-				data.data('db-path', path);
+				file_saved();
+				plugin.db_saved(path);
 			});			
 		}, data.data('db-path'));
 	};
@@ -75,16 +75,16 @@ define(function (require) {
 			data.parse();
 			preview.get_pdf(function (result) {
 				db.save(path, result.blob, function() {
-					dropbox_saved();
+					file_saved();
 					data.data('db-pdf-path', path);
 				});
 			});
-		}, data.data('db-pdf-path'));
+		}, data.data('db-pdf-path'), {pdfOnly: true});
 	};
 
 	// GOOGLE DRIVE
 
-	var google_drive_save = function (save_callback, selected) {
+	var google_drive_save = function (save_callback, selected, options) {
 		gd.auth(function () {
 			gd.list(function (root) {
 				root = gd.convert_to_jstree(root);
@@ -97,7 +97,7 @@ define(function (require) {
 						save_callback(selected);
 					}
 				});
-			});
+			}, options || {});
 		});
 	};
 
@@ -110,11 +110,15 @@ define(function (require) {
 			gd.upload({
 				blob: blob,
 				filename: get_filename() + '.fountain',
-				callback: google_drive_saved,
+				callback: function(file) {
+					file_saved();
+					plugin.gd_saved(file);
+				},
+				convert: false,
 				parents: selected.data.isRoot ? [] : [selected.data],
 				fileid: selected.data.isFolder ? null : selected.data.id,
 			});
-		});
+		}, data.data('gd-fileid'));
 	};
 
 	plugin.google_drive_pdf = function () {
@@ -124,32 +128,20 @@ define(function (require) {
 				gd.upload({
 					blob: data.blob,
 					filename: get_filename() + '.pdf',
-					callback: google_drive_saved,
+					callback: function(file) {
+						file_saved();
+						data.data('gd-pdf-id', file.id);
+					},
+					convert: false,
 					parents: selected.data.isRoot ? [] : [selected.data],
 					fileid: selected.data.isFolder ? null : selected.data.id,
 				});
 			});
-		});
+		},  data.data('gd-pdf-id'), {pdfOnly: true});
 	};
 
 	plugin.gd_saved = decorator.signal();
-
-	function google_drive_saved(data) {
-		$.prompt.close();
-		plugin.gd_saved(data);
-		$.prompt('Saved as: ' + data.title, {
-			title: 'File saved!',
-			buttons: {
-				'Open in Google Drive': true,
-				'Close': false
-			},
-			submit: function (e, v, f, m) {
-				if (v) {
-					window.open(data.alternateLink, '_blank');
-				}
-			}
-		});
-	}
+	plugin.db_saved = decorator.signal();
 
 	plugin.is_dropbox_available = function () {
 		return window.location.protocol !== 'file:';

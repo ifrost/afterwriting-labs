@@ -17,7 +17,7 @@ define(function (require) {
 		} else {
 			var popup = window.open('https://www.dropbox.com/1/oauth2/authorize?response_type=token&redirect_uri=http://localhost/html/token.html&client_id=inioj0mo28wjwcw', '_blank', 'width=500, height=500');
 			window.addEventListener('message', function (e) {
-				var token = /access_token=([^\&]*)/.exec(e.data)[1],					
+				var token = /access_token=([^\&]*)/.exec(e.data)[1],
 					uid = /uid=([^\&]*)/.exec(e.data)[1];
 				client = new Dropbox.Client({
 					key: 'inioj0mo28wjwcw',
@@ -53,7 +53,7 @@ define(function (require) {
 		};
 	};
 
-	var list = function (callback) {
+	var list = function (callback, options) {
 		client.pullChanges(function (error, result) {
 			var items = result.changes.filter(function (file) {
 				return !file.wasRemoved;
@@ -70,6 +70,11 @@ define(function (require) {
 				'/': root
 			};
 			var files = [];
+
+			items = items.filter(function (i) {
+				return !options.pdfOnly || i.stat.isFolder || i.stat.mimeType === "application/pdf";
+			});
+
 			items.forEach(function (item) {
 				var data = item_to_data(item);
 				if (data.isFolder) {
@@ -143,7 +148,7 @@ define(function (require) {
 		return result;
 	};
 
-	var save = function(path, data, callback) {
+	var save = function (path, data, callback) {
 		client.writeFile(path, data, {}, callback);
 	};
 	module.save = auth_method(save);
