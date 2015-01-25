@@ -3,12 +3,7 @@
 		<span id="alert" />
 		<script>
 			function send_message() {
-				var sent = false,
-					url = window.location.href,
-					origin = window.opener.location.origin;
-
-				window.opener.postMessage(url, 'http://afterwriting.com');
-
+				window.opener.postMessage(window.location.href, 'http://afterwriting.com');
 			}
 		</script>
 	</body>
