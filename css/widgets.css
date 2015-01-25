@@ -156,8 +156,10 @@ a .icon:hover {
 	height: 20px;
 	margin-right: 2px;
 }
+
 .header-menu {
 	float: right;
+	margin: 20px 0 0 0;
 }
 
 #jstree-parent {
@@ -166,7 +168,7 @@ a .icon:hover {
 }
 
 #jstree {
-	max-height: 200px;
+	max-height: 250px;
 }
 
 /** small screens **/

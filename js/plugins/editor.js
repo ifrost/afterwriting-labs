@@ -97,7 +97,20 @@ define(function (require) {
 	};
 
 	plugin.toggle_sync = function() {
+		last_content = '';
 		plugin.set_sync(!plugin.data.is_sync);
+	};
+	
+	plugin.store = function() {
+		data.data('editor-last-state', data.script());
+	};
+	
+	plugin.restore = function() {
+		data.script(data.data('editor-last-state'));
+		data.parse();
+		if (active) {
+			plugin.activate();
+		}
 	};
 	
 	plugin.set_sync = function (value) {

@@ -33,10 +33,11 @@ define(function (require) {
 			},
 			types: {
 				"default": {
-					"valid_children": ["default", "file"]
+					"valid_children": ["default", "file"],
+					"icon": "aw-jstree-folder"
 				},
 				"file": {
-					"icon": "jstree-file"
+					"icon": "aw-jstree-file"
 				}
 			}
 		}).on('ready.jstree', function () {

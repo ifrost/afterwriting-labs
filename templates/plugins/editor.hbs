@@ -1,11 +1,12 @@
-<h1>Editor
+<h1 style="float:left">Editor
 	<span class="info-icon" section="editor-info" />
-	<div class="header-menu" style="padding-right: 22px">		
-		<span><a href="#" action="sync-fountain"><img class="sync-icon icon small-icon" /></a></span>
-		<span><a href="#" action="save-fountain"><img src="{{static_path}}gfx/icons/other/download.svg" class="icon small-icon" title="Download Fountain file" /></a></span>
+</h1>
+<div class="header-menu">		
+		<span><a href="#" action="sync-fountain" title="Load content from cloud"><img class="sync-icon icon small-icon" /></a>&nbsp;|&nbsp;</span>
+		<span>save .fountain: <a href="#" action="save-fountain"><img src="{{static_path}}gfx/icons/other/download.svg" class="icon small-icon" title="Download Fountain file" /></a></span>
 		<span><a href="#" action="save-dropbox-fountain"><img src="{{static_path}}gfx/icons/other/dropbox.svg" class="icon small-icon" title="Upload Fountain file to Dropbox" /></a></span>
 		<span><a href="#" action="save-gd-fountain"><img src="{{static_path}}gfx/icons/other/gd.svg" class="icon small-icon" title="Upload Fountain file to Google Drive" /></a></span>
-	</div></h1>
+	</div><div style="clear:both"/>
 <p class="info-content" section="editor-info" style="clear:both">Just a basic editor. Use Ctrl-Space for auto-complete.</p>
 <textarea id="editor-textarea" placeholder="Code goes here..." class="to-the-bottom"></textarea>
 <!-- scripts -->
@@ -20,13 +21,34 @@
 			update_sync_layout = function() {
 				$('.sync-icon')
 					.attr('src', editor.is_sync() ? sync_on_icon : sync_off_icon)
-					.attr('title', 'Synchronization (' + editor.is_sync() ? 'on)' : 'off)');
+					.attr('title', editor.is_sync() ? 'Turn synchroznization off' : 'Turn synchronization on');
 				$('.CodeMirror').css('opacity', editor.is_sync() ? 0.5 : 1);			
 			};
 		
-		$('a[action="sync-fountain"]').click(editor.toggle_sync);
-
-		
+		$('a[action="sync-fountain"]').click(function(){
+			if (editor.is_sync()) {
+				editor.toggle_sync();
+				$.prompt('Synchornization turned off.', {
+					buttons: {'Load version before sync': true, 'Keep content': false, },
+					submit: function(e,v) {
+						if (v) {
+							editor.restore();							
+						}
+					}
+				});
+			}
+			else {
+				editor.store();
+				$.prompt("Content will be replaced with the file from the cloud.", {
+					buttons: {'OK': true, 'Cancel': false},
+					submit: function(e,v) {
+						if (v) {
+							editor.toggle_sync();
+						}
+					}
+				});
+			}
+		});		
 		
 		editor.activate.add(function() {
 			if (editor.sync_available()) {
@@ -47,7 +69,7 @@
 			if (layout.small) {
 				editor.set_size("auto", editor_content.height() - 70);
 			} else {
-				editor.set_size("700px", editor_content.height() - 100);
+				editor.set_size("auto", editor_content.height() - 100);
 			}
 		};
 
