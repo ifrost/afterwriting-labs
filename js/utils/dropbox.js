@@ -1,13 +1,20 @@
 /* global define, Dropbox, FileReader */
 define(function (require) {
 
-	var $ = require('jquery');
+	var $ = require('jquery'),
+		key = 'inioj0mo28wjwcw',
+		secret = 'in148e9jozcdgmg',
+		redirect_uri = 'https://ifrost.github.io/afterwriting-labs/token.html';
+	
+	if (window.location.href.indexOf('dev=true') != -1) {
+		redirect_uri = 'http://localhost/local/token.html';
+	}
 
 	var module = {};
 
 	var client = new Dropbox.Client({
-		key: 'inioj0mo28wjwcw',
-		secret: 'in148e9jozcdgmg',
+		key: key,
+		secret: secret,
 		sandbox: false
 	});
 
@@ -15,9 +22,9 @@ define(function (require) {
 		if (client.isAuthenticated()) {
 			callback();
 		} else {
-			var popup = window.open('https://www.dropbox.com/1/oauth2/authorize?response_type=token&redirect_uri=https://ifrost.github.io/afterwriting-labs/token.html&client_id=inioj0mo28wjwcw', '_blank', 'width=500, height=500');
+			var popup = window.open('https://www.dropbox.com/1/oauth2/authorize?response_type=token&redirect_uri=' + redirect_uri + '&client_id=inioj0mo28wjwcw', '_blank', 'width=500, height=500');
 			window.addEventListener('message', function (e) {
-				if (e.origin.indexOf('afterwriting.com') == -1 || e.origin.indexOf('localhost') == -1) {
+				if (e.origin.indexOf('afterwriting.com') == -1 && e.origin.indexOf('localhost') == -1) {
 					return;
 				}
 				
