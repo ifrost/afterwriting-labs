@@ -43,14 +43,30 @@ define(function (require) {
 		for (var before = index - 1; before && !(lines[before].text); before--) {}
 		for (var after = index + 1; after < lines.length && !(lines[after].text); after++) {}
 
+		// possible break is after this token
 		var token_on_break = lines[index];
+		
 		var token_after = lines[after];
 		var token_before = lines[before];
 
 		if (token_on_break.is("scene_heading") && !token_after.is("scene_heading")) {
 			return false;
+		}
+		else if (token_after.is('transition') && !token_on_break.is('transition')) {
+			return false;
+		}
+		// less then 4 lines and break not after the whole action block
+		else if (token_on_break.is('action') &&
+				token_on_break.token.lines.length < 4 &&
+				token_on_break.token.lines.indexOf(token_on_break) != token_on_break.token.lines.length - 1) {
+			return false;
+		}
+		else if (token_on_break.is('action') && 
+				token_on_break.token.lines.length >= 4 &&
+				(token_on_break.token.lines.indexOf(token_on_break) == 0 ||
+				token_on_break.token.lines.indexOf(token_on_break) >= token_on_break.token.lines.length - 2)) {
+			return false;
 		} else if (cfg.split_dialogue && token_on_break.is("dialogue") && token_after && token_after.is("dialogue") && token_before.is("dialogue") && !(token_on_break.dual)) {
-
 			for (var character = before; lines[character].type != "character"; character--) {}
 			lines.splice(index, 0, h.create_line({
 				type: "parenthetical",
@@ -63,7 +79,6 @@ define(function (require) {
 		} else if (lines[index].is_dialogue() != -1 &&  lines[after] && lines[after].is("dialogue", "parenthetical")) {
 			return false; // or break
 		}
-
 		return true;
 	};
 
