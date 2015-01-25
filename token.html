@@ -5,25 +5,9 @@
 			function send_message() {
 				var sent = false,
 					url = window.location.href,
-					origin,
-					allowed = ['afterwriting.com', 'www.afterwriting.com', 'local.afterwriting.com', 'ifrost.github.io', 'localhost'];
+					origin = window.opener.location.origin;
 
-				try {
-					origin = window.opener.location.origin
-					console.log(origin);
-					allowed.forEach(function(o) {
-						var r = new RegExp('http(s)?://' + o + '(/)?');
-						if (r.test(origin)) {
-							console.log('sent to', origin);
-							window.opener.postMessage(url, origin);
-							sent = true;
-						}
-					});
-				} catch (e) {}
-
-				if (!sent) {
-					document.getElementById('alert').innerHTML = 'Authorization failed.';
-				}
+				window.opener.postMessage(url, 'http://afterwriting.com');
 
 			}
 		</script>
