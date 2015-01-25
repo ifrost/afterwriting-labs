@@ -15,7 +15,7 @@ define(function (require) {
 		if (client.isAuthenticated()) {
 			callback();
 		} else {
-			var popup = window.open('https://www.dropbox.com/1/oauth2/authorize?response_type=token&redirect_uri=http://localhost/html/token.html&client_id=inioj0mo28wjwcw', '_blank', 'width=500, height=500');
+			var popup = window.open('https://www.dropbox.com/1/oauth2/authorize?response_type=token&redirect_uri=https://ifrost.github.io/afterwriting-labs/token.html&client_id=inioj0mo28wjwcw', '_blank', 'width=500, height=500');
 			window.addEventListener('message', function (e) {
 				if (e.origin.indexOf('afterwriting.com') == -1 || e.origin.indexOf('localhost') == -1) {
 					return;
