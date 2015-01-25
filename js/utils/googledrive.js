@@ -52,11 +52,10 @@ define(function () {
 
 	var handle_auth_fallback = function (callback, result) {
 		if (result && !result.error) {
-			console.log(result);
 			module.access_token = result.access_token;
 			callback();
 		} else {
-			console.log(result);
+			$.prompt('Error: cannot authorize to Google Drive. Please try again.');
 		}
 
 	};

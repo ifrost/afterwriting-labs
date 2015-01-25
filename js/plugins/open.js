@@ -100,7 +100,6 @@ define(function (require) {
 							}
 						});
 					} else {
-						console.log(selected);
 						db.load_file(selected.data.path, function (content) {
 							set_script(content);
 							data.data('db-path', selected.data.path);

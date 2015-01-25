@@ -4,9 +4,7 @@
 function pass_token() {
 	var url = window.location.href,
 		hashIndex = url.indexOf('#');
-	console.log(window.opener, url);
-	var l = window.opener.postMessage(url, 'http://local.afterwriting.com');
-	console.log(l);
+	var l = window.opener.postMessage(url, '*');
 }
 </script>
 </body>
