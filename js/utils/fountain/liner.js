@@ -55,16 +55,25 @@ define(function (require) {
 		else if (token_after.is('transition') && !token_on_break.is('transition')) {
 			return false;
 		}
-		// less then 4 lines and break not after the whole action block
+		// action block 1,2 or 3 lines.
+		// don't break unless it's the last line
 		else if (token_on_break.is('action') &&
 				token_on_break.token.lines.length < 4 &&
 				token_on_break.token.lines.indexOf(token_on_break) != token_on_break.token.lines.length - 1) {
 			return false;
 		}
+		// for and more lines
+		// break on any line different than first and penultimate
+		// ex.
+		// aaaaaaaaa <--- don't break after this line
+		// aaaaaaaaa <--- allow breaking after this line
+		// aaaaaaaaa <--- allow breaking after this line
+		// aaaaaaaaa <--- don't break after this line 
+		// aaaaaaaaa <--- allow breaking after this line
 		else if (token_on_break.is('action') && 
 				token_on_break.token.lines.length >= 4 &&
 				(token_on_break.token.lines.indexOf(token_on_break) == 0 ||
-				token_on_break.token.lines.indexOf(token_on_break) >= token_on_break.token.lines.length - 2)) {
+				token_on_break.token.lines.indexOf(token_on_break) != token_on_break.token.lines.length - 2)) {
 			return false;
 		} else if (cfg.split_dialogue && token_on_break.is("dialogue") && token_after && token_after.is("dialogue") && token_before.is("dialogue") && !(token_on_break.dual)) {
 			for (var character = before; lines[character].type != "character"; character--) {}
