@@ -11,7 +11,8 @@ require.config({
 		modernizr: 'libs/modernizr',
 		pdfkit: 'libs/pdfkit',
 		impromptu: 'libs/jquery-impromptu.min',
-		jstree: 'libs/jstree.min'
+		jstree: 'libs/jstree.min',
+		cookie: 'libs/jquery.cookie'
 	},
 	shim: {
 		handlebars: {

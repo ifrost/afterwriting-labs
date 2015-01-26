@@ -3,40 +3,53 @@ define(function (require) {
 
 	var $ = require('jquery'),
 		key = 'inioj0mo28wjwcw',
-		secret = 'in148e9jozcdgmg',
 		redirect_uri = 'https://ifrost.github.io/afterwriting-labs/token.html';
-	
+
 	if (window.location.href.indexOf('dev=true') != -1) {
 		redirect_uri = 'http://localhost/local/token.html';
 	}
 
-	var module = {};
-
-	var client = new Dropbox.Client({
-		key: key,
-		secret: secret,
-		sandbox: false
-	});
+	var module = {}, client;
 
 	var client_authenticate = function (callback) {
+		client = new Dropbox.Client({
+			key: key,
+			token: $.cookie('dbt'),
+			uid: $.cookie('dbu'),
+			sandbox: false
+		});
 		if (client.isAuthenticated()) {
 			callback();
 		} else {
-			var popup = window.open('https://www.dropbox.com/1/oauth2/authorize?response_type=token&redirect_uri=' + redirect_uri + '&client_id=inioj0mo28wjwcw', '_blank', 'width=500, height=500');
+			var state = Dropbox.Util.Oauth.randomAuthStateParam();
+			var popup = window.open('https://www.dropbox.com/1/oauth2/authorize?response_type=token&redirect_uri=' + redirect_uri + '&client_id=' + key + '&state=' + state, '_blank', 'width=500, height=500');
 			window.addEventListener('message', function (e) {
 				if (e.origin.indexOf('afterwriting.com') == -1 && e.origin.indexOf('localhost') == -1) {
 					return;
 				}
 				
+				if (/error=/.test(e.data)) {
+					return;
+				}
+				
 				var token = /access_token=([^\&]*)/.exec(e.data)[1],
-					uid = /uid=([^\&]*)/.exec(e.data)[1];
+					uid = /uid=([^\&]*)/.exec(e.data)[1],
+					state_r = /state=([^\&]*)/.exec(e.data)[1];
+
+				if (state !== state_r) {
+					return;
+				}
+
+				$.cookie('dbt', token);
+				$.cookie('dbu', uid);
+				
 				client = new Dropbox.Client({
-					key: 'inioj0mo28wjwcw',
-					secret: 'in148e9jozcdgmg',
+					key: key,
 					sandbox: false,
 					token: token,
 					uid: uid
 				});
+
 				popup.close();
 				callback();
 			});
@@ -66,7 +79,7 @@ define(function (require) {
 
 	var list = function (callback, options) {
 		options = options || {};
-		
+
 		client.pullChanges(function (error, result) {
 			var items = result.changes.filter(function (file) {
 				return !file.wasRemoved;
