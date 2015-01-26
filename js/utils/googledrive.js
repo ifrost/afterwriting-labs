@@ -96,6 +96,7 @@ define(function () {
 				});
 			} else {
 				$.prompt('Could not open the file!');
+				content_callback(undefined);
 			}
 		});
 	};

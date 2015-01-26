@@ -134,6 +134,7 @@ define(function (require) {
 		}, function (error, blob) {
 			if (error) {
 				$.prompt('Cannot open the file');
+				callback(undefined);
 			} else {
 				var fileReader = new FileReader();
 				fileReader.onload = function () {

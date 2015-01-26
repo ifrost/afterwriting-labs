@@ -85,7 +85,13 @@ define(function (require) {
 	}
 
 	var handle_sync = function (content) {
-		if (last_content != content) {
+		if (content === undefined) {
+			plugin.toggle_sync();
+			if (active) {
+				plugin.activate();
+			}			
+		}
+		else if (last_content != content) {
 			last_content = content;
 			data.script(content);
 			data.parse();
@@ -96,34 +102,32 @@ define(function (require) {
 		}
 	};
 
-	plugin.toggle_sync = function() {
+	plugin.toggle_sync = function () {
 		last_content = '';
 		plugin.set_sync(!plugin.data.is_sync);
 	};
-	
-	plugin.store = function() {
+
+	plugin.store = function () {
 		data.data('editor-last-state', data.script());
 	};
-	
-	plugin.restore = function() {
+
+	plugin.restore = function () {
 		data.script(data.data('editor-last-state'));
 		data.parse();
 		if (active) {
 			plugin.activate();
 		}
 	};
-	
+
 	plugin.set_sync = function (value) {
 		plugin.data.is_sync = value;
-		if (editor) {			
+		if (editor) {
 			editor.setOption('readOnly', plugin.data.is_sync);
 		}
 		if (plugin.data.is_sync) {
 			if (data.data('gd-fileid')) {
-				confirm_sync('Content will be synced with Google Drive each 3 seconds', data.data('gd-link'));
 				gd.sync(data.data('gd-fileid'), 3000, handle_sync);
 			} else if (data.data('db-path')) {
-				confirm_sync('Content will be synced with Dropbox each 3 seconds', data.data('db-path'));
 				db.sync(data.data('db-path'), 3000, handle_sync);
 			}
 
@@ -160,8 +164,8 @@ define(function (require) {
 		active = false;
 		save_state();
 	};
-	
-	plugin.is_active = function() {
+
+	plugin.is_active = function () {
 		return active;
 	};
 
