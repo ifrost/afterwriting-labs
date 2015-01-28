@@ -86,6 +86,7 @@ define(function (require) {
 			tree.show({
 				info: 'Please select file to open.',
 				data: [root],
+				label: 'Open',
 				callback: function (selected) {
 					if (selected.data.isFolder) {
 						$.prompt('Please select a file, not folder.', {

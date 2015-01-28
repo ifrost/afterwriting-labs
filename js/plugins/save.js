@@ -14,6 +14,8 @@ define(function (require) {
 
 	var plugin = pm.create_plugin('save', 'save');
 
+	// LOCAL
+
 	plugin.save_as_fountain = function () {
 		forms.text('Select file name: ', data.data('fountain-filename') || 'screenplay.fountain', function (result) {
 			data.parse();
@@ -28,7 +30,7 @@ define(function (require) {
 
 	plugin.save_as_pdf = function () {
 		forms.text('Select file name: ', data.data('pdf-filename') || 'screenplay.pdf', function (result) {
-			var blob = preview.get_pdf(function (pdf) {
+			preview.get_pdf(function (pdf) {
 				data.data('pdf-filename', result.text);
 				data.data('fountain-filename', result.text.split('.')[0] + '.fountain');
 				saveAs(pdf.blob, result.text);
@@ -38,149 +40,118 @@ define(function (require) {
 
 	// DROPBOX
 
-	var dropbox_save = function (save_callback, selected, options, default_filename) {
-		options = options || {};
-		options.before = function() {
-			$.prompt('Please wait...');
-		};
-		options.after = $.prompt.close;
-		db.list(function (root) {
-			root = db.convert_to_jstree(root);
-			tree.show({
-				data: [root],
-				selected: selected,
-				filename: default_filename,
-				save: true,
-				info: 'Select a file to override or choose a folder to save as a new file.',
-				callback: function (selected, filename) {
-					$.prompt('Please wait');
-					if (filename) {
-						plugin.set_filename(filename);
-					}
-					save_callback(selected, filename);
-				}
-			});
-		}, options);
-	};
-
-	var file_saved = function () {
-		$.prompt.close();
-		$.prompt('File saved!');
-	}
-
 	plugin.dropbox_fountain = function () {
-		data.parse();
-		dropbox_save(function (selected, filename) {
-			var path = selected.data.entry.path,
-				blob = new Blob([data.script()], {
-					type: "text/plain;charset=utf-8"
-				});
-			if (selected.data.isFolder) {
-				path += '/' + filename;
-			}
-			db.save(path, blob, function () {
-				if (filename) {
-					data.data('fountain-filename', filename);
+		save_to_cloud({
+			client: db,
+			save_callback: function (selected, filename) {
+				data.parse();
+				var path = selected.data.entry.path,
+					blob = new Blob([data.script()], {
+						type: "text/plain;charset=utf-8"
+					});
+				if (selected.data.isFolder) {
+					path += '/' + filename;
 				}
-				file_saved();
-				plugin.db_saved(path);
-			});
-		}, data.data('db-path'), {}, 'screenplay.fountain');
-	};
-
-	plugin.dropbox_pdf = function () {
-		dropbox_save(function (selected, filename) {
-			var path = selected.data.entry.path;
-			if (selected.data.isFolder) {
-				path += '/' + filename;
-			}
-			data.parse();
-			preview.get_pdf(function (result) {
-				db.save(path, result.blob, function () {
-					if (filename) {
-						data.data('pdf-filename', filename);
-					}
-					file_saved();
-					data.data('db-pdf-path', path);
-				});
-			});
-		}, data.data('db-pdf-path'), {
-			pdfOnly: true
-		}, 'screenplay.pdf');
-	};
-
-	// GOOGLE DRIVE
-
-	var google_drive_save = function (save_callback, selected, options, default_filename) {
-		options = options || {};
-		options.before = function() {
-			$.prompt('Please wait...');
-		};
-		options.after = $.prompt.close;
-		gd.list(function (root) {
-			root = gd.convert_to_jstree(root);
-			tree.show({
-				data: [root],
-				save: true,
-				filename: default_filename,
-				selected: selected,
-				info: 'Select a file to override or choose a folder to save as a new file.',
-				callback: function (selected, filename) {
-					$.prompt('Please wait');
-					if (filename) {
-						plugin.set_filename(filename);
-					}
-					save_callback(selected, filename);
-				}
-			});
-		}, options);
-	};
-
-	plugin.google_drive_fountain = function () {
-		google_drive_save(function (selected, filename) {
-			data.parse();
-			var blob = new Blob([data.script()], {
-				type: "text/plain;charset=utf-8"
-			});
-			gd.upload({
-				blob: blob,
-				convert: /\.gdoc$/.test(filename),
-				filename: filename,
-				callback: function (file) {
+				db.save(path, blob, function () {
 					if (filename) {
 						data.data('fountain-filename', filename);
 					}
 					file_saved();
-					plugin.gd_saved(file);
-				},
-				parents: selected.data.isRoot ? [] : [selected.data],
-				fileid: selected.data.isFolder ? null : selected.data.id,
-			});
-		}, data.data('gd-fileid'), {}, 'screenplay.fountain');
+					plugin.db_saved(path);
+				});
+			},
+			selected: data.data('db-path'),
+			list_options: {},
+			default_filename: 'screenplay.fountain'
+		});
 	};
 
-	plugin.google_drive_pdf = function () {
-		google_drive_save(function (selected, filename) {
-			data.parse();
-			preview.get_pdf(function (pdf) {
-				gd.upload({
-					blob: pdf.blob,
-					filename: filename,
-					callback: function (file) {
+	plugin.dropbox_pdf = function () {
+		save_to_cloud({
+			client: db,
+			save_callback: function (selected, filename) {
+				var path = selected.data.entry.path;
+				if (selected.data.isFolder) {
+					path += '/' + filename;
+				}
+				data.parse();
+				preview.get_pdf(function (result) {
+					db.save(path, result.blob, function () {
 						if (filename) {
 							data.data('pdf-filename', filename);
 						}
 						file_saved();
-						data.data('gd-pdf-id', file.id);
+						data.data('db-pdf-path', path);
+					});
+				});
+			},
+			selected: data.data('db-pdf-path'),
+			list_options: {
+				pdfOnly: true
+			},
+			default_filename: 'screenplay.pdf'
+		});
+	};
+
+	// GOOGLE DRIVE
+
+	plugin.google_drive_fountain = function () {
+		save_to_cloud({
+			client: gd,
+			save_callback: function (selected, filename) {
+				data.parse();
+				var blob = new Blob([data.script()], {
+					type: "text/plain;charset=utf-8"
+				});
+				gd.upload({
+					blob: blob,
+					convert: /\.gdoc$/.test(filename),
+					filename: filename,
+					callback: function (file) {
+						if (filename) {
+							data.data('fountain-filename', filename);
+						}
+						file_saved();
+						plugin.gd_saved(file);
 					},
-					convert: false,
 					parents: selected.data.isRoot ? [] : [selected.data],
 					fileid: selected.data.isFolder ? null : selected.data.id,
 				});
-			});
-		}, data.data('gd-pdf-id'), {
-			pdfOnly: true
-		}, 'screenplay.pdf');
+			},
+			selected: data.data('gd-fileid'),
+			list_options: {},
+			default_filename: 'screenplay.fountain'
+		});
+	};
+
+	plugin.google_drive_pdf = function () {
+		save_to_cloud({
+			client: gd,
+			save_callback: function (selected, filename) {
+				data.parse();
+				preview.get_pdf(function (pdf) {
+					gd.upload({
+						blob: pdf.blob,
+						filename: filename,
+						callback: function (file) {
+							if (filename) {
+								data.data('pdf-filename', filename);
+							}
+							file_saved();
+							data.data('gd-pdf-id', file.id);
+						},
+						convert: false,
+						parents: selected.data.isRoot ? [] : [selected.data],
+						fileid: selected.data.isFolder ? null : selected.data.id,
+					});
+				});
+			},
+			selected: data.data('gd-pdf-id'),
+			list_options: {
+				pdfOnly: true
+			},
+			default_filename: 'screenplay.pdf'
+		});
 	};
 
 	plugin.gd_saved = decorator.signal();
@@ -194,15 +165,54 @@ define(function (require) {
 		return window.gapi && window.location.protocol !== 'file:';
 	};
 
-	function get_filename() {
+	plugin.set_filename = function (value) {
+		data.data('filename', value);
+	};
+
+	plugin.get_filename = function () {
 		return data.data('filename');
 	};
 
-	plugin.set_filename = function (value) {
-		data.data('filename', value);
-	}
+	/**
+	 * Save to the cloud using options:
+	 *  client - cloud client (dropox/googledrive)
+	 *  list_options - options passed to the client's list call
+	 *  selected - selected item
+	 *  default_filename - default filename if none has been used before
+	 *  save_callback - function call to save the file
+	 */
+	var save_to_cloud = function (options) {
+		options.list_options = options.list_options || {};
+		options.list_options.before = function () {
+			$.prompt('Please wait...');
+		};
+		options.list_options.after = $.prompt.close;
+		options.client.list(function (root) {
+			root = options.client.convert_to_jstree(root);
+			tree.show({
+				data: [root],
+				selected: options.selected,
+				filename: options.default_filename,
+				save: true,
+				info: 'Select a file to override or choose a folder to save as a new file.',
+				callback: function (selected, filename) {
+					$.prompt('Please wait');
+					if (filename) {
+						plugin.set_filename(filename);
+					}
+					options.save_callback(selected, filename);
+				}
+			});
+		}, options.list_options);
+	};
 
-	plugin.get_filename = get_filename;
+	/**
+	 * Display file saved message
+	 */
+	var file_saved = function () {
+		$.prompt.close();
+		$.prompt('File saved!');
+	};
 
 	return plugin;
 });
