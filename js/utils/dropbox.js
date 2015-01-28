@@ -79,6 +79,10 @@ define(function (require) {
 
 	var list = function (callback, options) {
 		options = options || {};
+		
+		if (options.before) {
+			options.before();
+		}
 
 		client.pullChanges(function (error, result) {
 			var items = result.changes.filter(function (file) {
@@ -122,6 +126,9 @@ define(function (require) {
 				folders[file.folder || '/'].content.push(file);
 			});
 
+			if (options.after) {
+				options.after();
+			}
 			callback(root);
 
 		});

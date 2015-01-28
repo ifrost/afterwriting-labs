@@ -39,6 +39,11 @@ define(function (require) {
 	// DROPBOX
 
 	var dropbox_save = function (save_callback, selected, options, default_filename) {
+		options = options || {};
+		options.before = function() {
+			$.prompt('Please wait...');
+		};
+		options.after = $.prompt.close;
 		db.list(function (root) {
 			root = db.convert_to_jstree(root);
 			tree.show({
@@ -55,7 +60,7 @@ define(function (require) {
 					save_callback(selected, filename);
 				}
 			});
-		}, options || {});
+		}, options);
 	};
 
 	var file_saved = function () {
@@ -107,25 +112,28 @@ define(function (require) {
 	// GOOGLE DRIVE
 
 	var google_drive_save = function (save_callback, selected, options, default_filename) {
-		gd.auth(function () {
-			gd.list(function (root) {
-				root = gd.convert_to_jstree(root);
-				tree.show({
-					data: [root],
-					save: true,
-					filename: default_filename,
-					selected: selected,
-					info: 'Select a file to override or choose a folder to save as a new file.',
-					callback: function (selected, filename) {
-						$.prompt('Please wait');
-						if (filename) {
-							plugin.set_filename(filename);
-						}
-						save_callback(selected, filename);
+		options = options || {};
+		options.before = function() {
+			$.prompt('Please wait...');
+		};
+		options.after = $.prompt.close;
+		gd.list(function (root) {
+			root = gd.convert_to_jstree(root);
+			tree.show({
+				data: [root],
+				save: true,
+				filename: default_filename,
+				selected: selected,
+				info: 'Select a file to override or choose a folder to save as a new file.',
+				callback: function (selected, filename) {
+					$.prompt('Please wait');
+					if (filename) {
+						plugin.set_filename(filename);
 					}
-				});
-			}, options);
-		});
+					save_callback(selected, filename);
+				}
+			});
+		}, options);
 	};
 
 	plugin.google_drive_fountain = function () {

@@ -188,6 +188,10 @@ define(function () {
 	var list = function (callback, options) {
 		options = options || {};
 		
+		if (options.before) {
+			options.before();
+		}
+		
 		var request = gapi.client.request({
 			path: '/drive/v2/files/',
 			method: 'GET'
@@ -221,6 +225,9 @@ define(function () {
 					parent.children.push(i);
 				});
 			});
+			if (options.after) {
+				options.after();
+			}
 			callback(root);
 
 		});

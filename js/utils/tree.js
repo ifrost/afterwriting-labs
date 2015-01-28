@@ -3,9 +3,9 @@ define(function (require) {
 	var $ = require('jquery');
 
 	var module = {};
-	
+
 	var parent_folder_for_new, new_id;
-	
+
 	module.show = function (options) {
 		var buttons = {};
 		buttons[options.label || 'Save'] = true;
@@ -22,17 +22,18 @@ define(function (require) {
 							e.preventDefault();
 							$('#jstree').jstree(true).open_node(selected[0].id);
 							$('#jstree').jstree(true).deselect_node(selected[0].id);
-							$('#jstree').jstree(true).create_node(selected[0].id, {text: options.filename || "newfile", type:"file"}, "first", function(node) {
+							$('#jstree').jstree(true).create_node(selected[0].id, {
+								text: options.filename || "newfile",
+								type: "file"
+							}, "first", function (node) {
 								new_id = node.id;
 								$('#jstree').jstree(true).select_node(new_id);
 								$('#jstree').jstree(true).edit(new_id);
 							});
-						}
-						else {
+						} else {
 							if (options.save && selected[0].id == new_id) {
 								options.callback(parent_folder_for_new, selected[0].text);
-							}
-							else {
+							} else {
 								options.callback(selected[0]);
 							}
 						}
@@ -40,40 +41,41 @@ define(function (require) {
 						$.prompt("You didn't select anything.");
 					}
 
-				} else {					
+				} else {
 					$.prompt.close();
 				}
-			}
-		});
-
-		$('#jstree').jstree({
-			plugins: ['types'],
-			core: {
-				data: options.data,
-				check_callback: true,
-				multiple: false
 			},
-			types: {
-				"default": {
-					"valid_children": ["default", "file"],
-					"icon": "aw-jstree-folder"
-				},
-				"file": {
-					"icon": "aw-jstree-file"
-				}
-			}
-		}).on('ready.jstree', function () {
-			if (options.selected) {
-				$('#jstree').jstree(true).select_node(options.selected);
-				var parent_top = $('#jstree-parent').position().top
-				var element_top = $('#jstree li[id="' + options.selected + '"').position().top;
-				var parent_half_height = $('#jstree-parent').height() / 2;
-				$('#jstree-parent').scrollTop(element_top - parent_top - parent_half_height);
-			}
-		}).on('changed.jstree', function() {
-			var selected = $('#jstree').jstree(true).get_selected();
-			if (selected != new_id) {
-				$('#jstree').jstree(true).delete_node(new_id);
+			loaded: function () {
+				$('#jstree').jstree({
+					plugins: ['types'],
+					core: {
+						data: options.data,
+						check_callback: true,
+						multiple: false
+					},
+					types: {
+						"default": {
+							"valid_children": ["default", "file"],
+							"icon": "aw-jstree-folder"
+						},
+						"file": {
+							"icon": "aw-jstree-file"
+						}
+					}
+				}).on('ready.jstree', function () {
+					if (options.selected) {
+						$('#jstree').jstree(true).select_node(options.selected);
+						var parent_top = $('#jstree-parent').position().top
+						var element_top = $('#jstree li[id="' + options.selected + '"').position().top;
+						var parent_half_height = $('#jstree-parent').height() / 2;
+						$('#jstree-parent').scrollTop(element_top - parent_top - parent_half_height);
+					}
+				}).on('changed.jstree', function () {
+					var selected = $('#jstree').jstree(true).get_selected();
+					if (selected != new_id) {
+						$('#jstree').jstree(true).delete_node(new_id);
+					}
+				});
 			}
 		});
 

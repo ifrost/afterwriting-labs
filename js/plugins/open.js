@@ -93,7 +93,7 @@ define(function (require) {
 								'Back': true,
 								'Cancel': false
 							},
-							submit: function (v, e, f, m) {
+							submit: function (v) {
 								if (v) {
 									back_callback();
 								}
@@ -104,8 +104,13 @@ define(function (require) {
 					}
 				}
 			});
+		}, {
+			before: function() {
+				$.prompt('Please wait...');
+			},
+			after: $.prompt.close
 		});
-	}
+	};
 
 	plugin.open_from_dropbox = function () {
 		open_from_cloud(db, plugin.open_from_dropbox, function (selected) {
