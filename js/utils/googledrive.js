@@ -121,13 +121,17 @@ define(function () {
 	 */
 	var upload = function (options) {
 		var blob = options.blob,
-			filename = options.filename,
+			filename = options.filename || 'newfile',
 			callback = options.callback,
 			parents = options.parents,
 			fileid = options.fileid,
 			convert = options.convert,
 			isUpdate = fileid !== null;
 
+		if (convert) {
+			filename = filename.replace(/\.gdoc$/,'');
+		}
+		
 		var boundary = '-------314159265358979323846';
 		var delimiter = "\r\n--" + boundary + "\r\n";
 		var close_delim = "\r\n--" + boundary + "--";

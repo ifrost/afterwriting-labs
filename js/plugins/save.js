@@ -8,25 +8,34 @@ define(function (require) {
 		db = require('utils/dropbox'),
 		$ = require('jquery'),
 		tree = require('utils/tree'),
+		forms = require('utils/forms'),
 		decorator = require('utils/decorator'),
 		data = require('modules/data');
 
 	var plugin = pm.create_plugin('save', 'save');
 
 	plugin.save_as_fountain = function () {
-		data.parse();
-		var blob = new Blob([data.script()], {
-			type: "text/plain;charset=utf-8"
+		forms.text('Select file name: ', data.data('fountain-filename') || 'screenplay.fountain', function (result) {
+			data.parse();
+			var blob = new Blob([data.script()], {
+				type: "text/plain;charset=utf-8"
+			});
+			data.data('fountain-filename', result.text);
+			data.data('pdf-filename', result.text.split('.')[0] + '.pdf');
+			saveAs(blob, result.text);
 		});
-		saveAs(blob, get_filename() + '.fountain');
 	};
 
 	plugin.save_as_pdf = function () {
-		var blob = preview.get_pdf(function (data) {
-			saveAs(data.blob, get_filename() + '.pdf');
+		forms.text('Select file name: ', data.data('pdf-filename') || 'screenplay.pdf', function (result) {
+			var blob = preview.get_pdf(function (pdf) {
+				data.data('pdf-filename', result.text);
+				data.data('fountain-filename', result.text.split('.')[0] + '.fountain');
+				saveAs(pdf.blob, result.text);
+			});
 		});
 	};
-	
+
 	// DROPBOX
 
 	var dropbox_save = function (save_callback, selected, options, default_filename) {
@@ -64,13 +73,13 @@ define(function (require) {
 			if (selected.data.isFolder) {
 				path += '/' + filename;
 			}
-			db.save(path, blob, function(){
+			db.save(path, blob, function () {
 				if (filename) {
 					data.data('fountain-filename', filename);
-				}				
+				}
 				file_saved();
 				plugin.db_saved(path);
-			});			
+			});
 		}, data.data('db-path'), {}, 'screenplay.fountain');
 	};
 
@@ -82,7 +91,7 @@ define(function (require) {
 			}
 			data.parse();
 			preview.get_pdf(function (result) {
-				db.save(path, result.blob, function() {
+				db.save(path, result.blob, function () {
 					if (filename) {
 						data.data('pdf-filename', filename);
 					}
@@ -90,7 +99,9 @@ define(function (require) {
 					data.data('db-pdf-path', path);
 				});
 			});
-		}, data.data('db-pdf-path'), {pdfOnly: true}, 'screenplay.pdf');
+		}, data.data('db-pdf-path'), {
+			pdfOnly: true
+		}, 'screenplay.pdf');
 	};
 
 	// GOOGLE DRIVE
@@ -99,7 +110,7 @@ define(function (require) {
 		gd.auth(function () {
 			gd.list(function (root) {
 				root = gd.convert_to_jstree(root);
-				tree.show({					
+				tree.show({
 					data: [root],
 					save: true,
 					filename: default_filename,
@@ -125,15 +136,15 @@ define(function (require) {
 			});
 			gd.upload({
 				blob: blob,
+				convert: /\.gdoc$/.test(filename),
 				filename: filename,
-				callback: function(file) {
+				callback: function (file) {
 					if (filename) {
 						data.data('fountain-filename', filename);
 					}
 					file_saved();
 					plugin.gd_saved(file);
 				},
-				convert: false,
 				parents: selected.data.isRoot ? [] : [selected.data],
 				fileid: selected.data.isFolder ? null : selected.data.id,
 			});
@@ -147,7 +158,7 @@ define(function (require) {
 				gd.upload({
 					blob: pdf.blob,
 					filename: filename,
-					callback: function(file) {
+					callback: function (file) {
 						if (filename) {
 							data.data('pdf-filename', filename);
 						}
@@ -159,7 +170,9 @@ define(function (require) {
 					fileid: selected.data.isFolder ? null : selected.data.id,
 				});
 			});
-		},  data.data('gd-pdf-id'), {pdfOnly: true}, 'screenplay.pdf');
+		}, data.data('gd-pdf-id'), {
+			pdfOnly: true
+		}, 'screenplay.pdf');
 	};
 
 	plugin.gd_saved = decorator.signal();

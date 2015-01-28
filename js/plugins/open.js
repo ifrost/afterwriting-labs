@@ -95,7 +95,7 @@ define(function (require) {
 							},
 							submit: function (v, e, f, m) {
 								if (v) {
-									back_callback()
+									back_callback();
 								}
 							}
 						});
