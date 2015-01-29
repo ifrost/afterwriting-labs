@@ -49,7 +49,7 @@ define(function () {
 		});
 	};
 	
-	decorator.property = function () {
+	decorator.property = function (setter) {
 		var _value;
 		var property = decorator(function(value) {
 			if (arguments.length === 0) {
@@ -57,7 +57,7 @@ define(function () {
 				return _value;
 			}
 			else {
-				_value = value;
+				_value = setter ? setter(value) : value;
 				return _value;
 			}
 		});

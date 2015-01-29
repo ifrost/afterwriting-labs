@@ -29,9 +29,9 @@
 			if (editor.is_sync()) {
 				editor.toggle_sync();
 				$.prompt('Synchornization turned off.', {
-					buttons: {'Load version before sync': true, 'Keep content': false, },
+					buttons: {'Keep content': true, 'Load version before sync': false},
 					submit: function(e,v) {
-						if (v) {
+						if (!v) {
 							editor.restore();							
 						}
 					}
@@ -39,7 +39,7 @@
 			}
 			else {
 				editor.store();
-				$.prompt("Content will be replaced with the file from the cloud.", {
+				$.prompt("You can start writing in your editor. Content will be synchronized with ’afterwriting! PDF preview, facts and stats will be automatically upated.", {
 					buttons: {'OK': true, 'Cancel': false},
 					submit: function(e,v) {
 						if (v) {
