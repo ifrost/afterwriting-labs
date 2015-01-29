@@ -77,7 +77,9 @@ define(function (require) {
 		save.save_as_fountain.add(track_handler('feature', 'save-fountain'));
 		save.save_as_pdf.add(track_handler('feature', 'save-pdf'));
 		save.dropbox_fountain.add(track_handler('feature', 'save-fountain-dropbox'));
+		save.google_drive_fountain.add(track_handler('feature', 'save-fountain-googledrive'));
 		save.dropbox_pdf.add(track_handler('feature', 'save-pdf-dropbox'));
+		save.google_drive_pdf.add(track_handler('feature', 'save-pdf-googledrive'));
 
 		// stats
 		stats.goto.add(track_handler('feature', 'stats-scene-length-goto'));
