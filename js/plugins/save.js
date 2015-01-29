@@ -165,14 +165,6 @@ define(function (require) {
 		return window.gapi && window.location.protocol !== 'file:';
 	};
 
-	plugin.set_filename = function (value) {
-		data.data('filename', value);
-	};
-
-	plugin.get_filename = function () {
-		return data.data('filename');
-	};
-
 	/**
 	 * Save to the cloud using options:
 	 *  client - cloud client (dropox/googledrive)
@@ -197,9 +189,6 @@ define(function (require) {
 				info: 'Select a file to override or choose a folder to save as a new file.',
 				callback: function (selected, filename) {
 					$.prompt('Please wait');
-					if (filename) {
-						plugin.set_filename(filename);
-					}
 					options.save_callback(selected, filename);
 				}
 			});
