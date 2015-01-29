@@ -1,8 +1,8 @@
-/* global define, Dropbox, FileReader */
+/* global define, Dropbox, window, FileReader */
 define(function (require) {
 
 	var $ = require('jquery'),
-		key = 'inioj0mo28wjwcw',
+		key = 'p5kky1t8t9c5pqy',
 		redirect_uri = 'https://ifrost.github.io/afterwriting-labs/token.html';
 
 	if (window.location.href.indexOf('dev=true') != -1) {
