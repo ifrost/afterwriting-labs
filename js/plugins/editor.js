@@ -7,6 +7,7 @@ define(function (require) {
 		gd = require('utils/googledrive'),
 		db = require('utils/dropbox'),
 		$ = require('jquery'),
+		converter = require('utils/converters/scriptconverter'),
 		cm = require('libs/codemirror/lib/codemirror');
 
 	// codemirror plugins
@@ -70,21 +71,8 @@ define(function (require) {
 		return plugin.data.is_sync;
 	};
 
-	var confirm_sync = function (text, link) {
-		$.prompt(text, {
-			buttons: {
-				'Open file in a new window': true,
-				'Close': false
-			},
-			submit: function (e, v) {
-				if (v) {
-					window.open(link, '_blank');
-				}
-			}
-		});
-	}
-
 	var handle_sync = function (content) {
+		content = converter.to_fountain(content).value;
 		if (content === undefined) {
 			plugin.toggle_sync();
 			if (active) {

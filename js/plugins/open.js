@@ -13,7 +13,6 @@ define(function (require) {
 		db = require('utils/dropbox'),
 		tree = require('utils/tree'),
 		save = require('plugins/save'),
-		finaldraft_converter = require('utils/converters/finaldraft'),
 		layout = require('utils/layout');
 
 	var log = logger.get('open');
@@ -33,7 +32,10 @@ define(function (require) {
 		data.data('db-path', '');
 		data.data('gd-link', '');
 		data.data('gd-fileid', '');
-		data.data('filename', '');
+		data.data('gd-pdf-id', '');
+		data.data('db-pdf-path', '');
+		data.data('fountain-filename', '');
+		data.data('pdf-filename', '');
 	};
 
 	plugin.open_last_used = function (startup) {
@@ -44,20 +46,15 @@ define(function (require) {
 	};
 
 	plugin.open_file = function (selected_file) {
-		var callback = decorator.signal();
+		var finished = decorator.signal();
 		var fileReader = new FileReader();
 		fileReader.onload = function () {
-			var format = 'fountain';
-			var value = this.result;
-			if (/<\?xml/.test(value)) {
-				value = finaldraft_converter.to_fountain(value);
-				format = 'fdx';
-			}
+			var value = this.result;			
 			set_script(value);
-			callback(format);
+			finished(data.format);
 		};
 		fileReader.readAsText(selected_file);
-		return callback;
+		return finished;
 	};
 
 	plugin.open_file_dialog = decorator.signal();
@@ -106,7 +103,7 @@ define(function (require) {
 				}
 			});
 		}, {
-			before: function() {
+			before: function () {
 				$.prompt('Please wait...');
 			},
 			after: $.prompt.close
@@ -114,22 +111,28 @@ define(function (require) {
 	};
 
 	plugin.open_from_dropbox = function () {
+		var finished = decorator.signal();
 		open_from_cloud(db, plugin.open_from_dropbox, function (selected) {
 			db.load_file(selected.data.path, function (content) {
 				set_script(content);
 				data.data('db-path', selected.data.path);
+				finished(data.format);
 			});
-		});		
+		});
+		return finished;
 	};
 
 	plugin.open_from_google_drive = function () {
+		var finished = decorator.signal();
 		open_from_cloud(gd, plugin.open_from_google_drive, function (selected) {
 			gd.load_file(selected.data.id, function (content, link, fileid) {
 				set_script(content);
 				data.data('gd-link', link);
 				data.data('gd-fileid', fileid);
+				finished(data.format);
 			});
 		});
+		return finished;
 	};
 
 	plugin.init = function () {

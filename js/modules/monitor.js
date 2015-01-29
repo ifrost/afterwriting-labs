@@ -63,7 +63,12 @@ define(function (require) {
 		open.open_file.add(function (format) {
 			track_event('feature', 'open-file-opened', format);
 		});
-		open.open_from_dropbox.add(track_handler('feature', 'open-dropbox'));
+		open.open_from_dropbox.add(function(format){
+			track_event('feature', 'open-dropbox', format);
+		});
+		open.open_from_google_drive.add(function(format){
+			track_event('feature', 'open-googledrive', format);
+		});
 		open.open_last_used.add(function (startup) {
 			track_event('feature', 'open-last-used', startup === true ? 'startup' : 'manual');
 		});

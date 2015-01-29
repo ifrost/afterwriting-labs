@@ -1,9 +1,10 @@
-/* global define, localStorage, window */
+/* global define, window */
 define(function (require) {
 	
 	var Modernizr = require('modernizr'),
 		fparser = require('utils/fountain/parser'),
 		fliner = require('utils/fountain/liner'), 
+		converter = require('utils/converters/scriptconverter'),
 		decorator = require('utils/decorator');
 
 	var plugin = {};
@@ -24,8 +25,14 @@ define(function (require) {
 			}
 		}
 	};
+	
+	plugin.format = '';
 
-	plugin.script = decorator.property();
+	plugin.script = decorator.property(function(value){
+		var result = converter.to_fountain(value);		
+		plugin.format = result.format;
+		return result.value;
+	});
 	
 	plugin.parse = decorator(function() {
 		plugin.parsed = fparser.parse(plugin.script(), plugin.config);

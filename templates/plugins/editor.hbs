@@ -51,13 +51,8 @@
 		});		
 		
 		editor.activate.add(function() {
-			if (editor.sync_available()) {
-				$('a[action="sync-fountain"]').parent().show();
-				update_sync_layout();
-			}
-			else {
-				$('a[action="sync-fountain"]').parent().hide();
-			}
+			$('a[action="sync-fountain"]').parent().toggle(editor.sync_available());			
+			update_sync_layout();
 		});
 		
 		editor.toggle_sync.add(function() {
