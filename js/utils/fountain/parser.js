@@ -174,7 +174,7 @@ define(function (require) {
 					}
 					scene_number++;
 				} else if ((token.text.length > 0 && token.text[0] == '@') || token.text === token.text.toUpperCase()) {
-					if (i === lines_length || i === lines_length - 1 || lines[i + 1].length === 0) {
+					if (i === lines_length || i === lines_length - 1 || lines[i + 1].trim().length === 0) {
 						token.type = 'shot';
 					} else {
 						state = 'dialogue';
