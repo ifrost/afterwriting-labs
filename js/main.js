@@ -12,7 +12,9 @@ require.config({
 		pdfkit: 'libs/pdfkit',
 		impromptu: 'libs/jquery-impromptu.min',
 		jstree: 'libs/jstree.min',
-		cookie: 'libs/jquery.cookie'
+		cookie: 'libs/jquery.cookie',
+		dropbox: 'libs/dropbox.min',
+		async: 'libs/requirejs/async'
 	},
 	shim: {
 		handlebars: {
@@ -26,6 +28,9 @@ require.config({
 		},
 		modernizr: {
 			exports: 'Modernizr'
+		},
+		dropbox: {
+			exports: 'Dropbox'
 		}
 	}
 });

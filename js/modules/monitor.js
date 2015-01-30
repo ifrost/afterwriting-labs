@@ -1,4 +1,4 @@
-/* global define, ga */
+/* global define, ga, window, document */
 define(function (require) {
 
 	var logger = require('logger'),
@@ -20,12 +20,32 @@ define(function (require) {
 			log.info('Event sent', category, action, label || '');
 			ga('send', 'event', category, action, label);
 		}
+		else {
+			log.debug('Google Analytics not loaded yet.');
+		}
 	};
 
 	var track_handler = function (category, action, label) {
 		return function () {
 			track_event(category, action, label);
 		};
+	};
+
+	module.prepare = function () {
+		(function (i, s, o, g, r, a, m) {
+			i['GoogleAnalyticsObject'] = r;
+			i[r] = i[r] || function () {
+				(i[r].q = i[r].q || []).push(arguments)
+			}, i[r].l = 1 * new Date();
+			a = s.createElement(o),
+			m = s.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = g;
+			m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'http://www.google-analytics.com/analytics.js', 'ga');
+
+		ga('create', 'UA-53953908-1', 'auto');
+		ga('send', 'pageview');
 	};
 
 	module.windup = function () {
@@ -44,8 +64,8 @@ define(function (require) {
 		});
 		layout.scopes.back_close_content.add(function (plugin) {
 			track_event('navigation', 'back-close', plugin.name);
-		});		
-		layout.info_opened.add(function(section) {
+		});
+		layout.info_opened.add(function (section) {
 			track_event('feature', 'help', section);
 		});
 		layout.toggle_expand.add(track_handler('feature', 'expand'));
@@ -63,10 +83,10 @@ define(function (require) {
 		open.open_file.add(function (format) {
 			track_event('feature', 'open-file-opened', format);
 		});
-		open.open_from_dropbox.add(function(format){
+		open.open_from_dropbox.add(function (format) {
 			track_event('feature', 'open-dropbox', format);
 		});
-		open.open_from_google_drive.add(function(format){
+		open.open_from_google_drive.add(function (format) {
 			track_event('feature', 'open-googledrive', format);
 		});
 		open.open_last_used.add(function (startup) {

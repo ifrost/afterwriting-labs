@@ -1,10 +1,15 @@
 /* global define, gapi, setInterval, clearInterval, $, FileReader, btoa */
-define(function () {
+define(['async!https://apis.google.com/js/platform.js!onload',
+		'async!https://apis.google.com/js/client.js!onload'],
+		function () {
+	
 	var client_id = '540351787353-3jf0j12ccl0tmv2nbkcdncu0tuegjkos.apps.googleusercontent.com',
 		scope = ['https://www.googleapis.com/auth/drive'],
 		module = {};
-
-	gapi.load('auth');
+	
+	module.prepare = function() {
+		gapi.load('auth');
+	}
 
 	/**
 	 * Authorize and run the callback after authorization
