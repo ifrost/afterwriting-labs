@@ -223,7 +223,8 @@ define(function (require) {
 			current_section_number,
 			current_section_token,
 			section_number = helper.version_generator(),
-			text;
+			text,
+			after_section = false; // helpful to determine synopsis indentation
 
 		var print_header_and_footer = function () {
 			if (cfg.print_header) {
@@ -267,7 +268,7 @@ define(function (require) {
 
 		print_watermark();
 		print_header_and_footer();
-		lines.forEach(function (line) {
+		lines.forEach(function (line) {			
 			if (line.type == "page_break") {
 				y = 1;
 				doc.addPage();
@@ -320,8 +321,11 @@ define(function (require) {
 						}
 					} else if (line.type === 'synopsis') {
 						feed += cfg.print().synopsis.padding || 0;
-						if (cfg.print().synopsis.feed_with_last_section) {
+						if (cfg.print().synopsis.feed_with_last_section && after_section) {
 							feed += current_section_level * cfg.print().section.level_indent;
+						}
+						else {
+							feed = cfg.print().action.feed;
 						}
 					}
 
@@ -369,6 +373,14 @@ define(function (require) {
 					
 					y++;
 				}
+			}
+			
+			
+			// clear after section
+			if (line.type === 'section') {
+				after_section = true;
+			} else if (line.type !== 'separator' && line.type !== 'synopsis') {
+				after_section = false;
 			}
 
 		});
