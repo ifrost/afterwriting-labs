@@ -27,7 +27,7 @@ module.exports = function (grunt) {
 					optimize: "uglify",
 					baseUrl: "js",
 					mainConfigFile: 'js/afterwriting-bootstrap.js',
-					include: ["libs/require", "afterwriting-bootstrap"],					
+					include: ["libs/require", "afterwriting-bootstrap"],
 					out: "bundle/js/afterwriting.js",
 					onBuildWrite: function (moduleName, path, contents) {
 						if (moduleName === 'logger') {
@@ -126,20 +126,31 @@ module.exports = function (grunt) {
 				src: ['html/*'],
 				overwrite: true,
 				replacements: [{
-					from: /last_update[=?0-9a-z\-_]*\"/g,
-					to: "last_update=<%= grunt.template.today('yyyy-mm-dd_HH-MM') %>\""
+						from: /last_update[=?0-9a-z\-_]*\"/g,
+						to: "last_update=<%= grunt.template.today('yyyy-mm-dd_HH-MM') %>\""
                 }]
 			},
 			footer: {
 				src: ['js/utils/common.js'],
 				overwrite: true,
 				replacements: [{
-					from: /footer: '[^']*'/g,
-					to: "footer: 'version: <%= pkg.version %> (<%= grunt.template.today('yyyy/mm/dd') %>)'"
+						from: /footer: '[^']*'/g,
+						to: "footer: 'version: <%= pkg.version %> (<%= grunt.template.today('yyyy/mm/dd') %>)'"
                 }]
 			}
 		},
-		bumpup: 'package.json'
+		bumpup: 'package.json',
+		jshint: {
+			options: {
+				jshintrc: '.jshintrc',
+				reporter: require('jshint-stylish')
+			},
+			check: {				
+				files: {
+					src: ["js/*", "!js/libs/**"]
+				}
+			}
+		}
 
 	});
 
@@ -151,6 +162,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-compress');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-git');
 	grunt.loadNpmTasks('grunt-bumpup');
 	grunt.loadNpmTasks('grunt-text-replace');

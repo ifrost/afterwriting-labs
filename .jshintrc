@@ -1,0 +1,19 @@
+{
+	"indent": 4,
+	"eqeqeq": true,
+	"eqnull": true,
+	"expr": true,
+	"latedef": true,
+	"loopfunc": true,
+	"curly": true,
+	"evil": true,
+	"undef": true,
+	"onevar": true,
+	"noarg": true,
+	"unused": true,
+	"globals": {
+		"define": false,
+		"window": false,
+		"document": false
+	}
+}
