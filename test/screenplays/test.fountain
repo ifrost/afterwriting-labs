@@ -4,11 +4,11 @@ Title:
 Credit: written by
 Author: 
 	Author 1,
-    **Author 2** & Author 3
+	**Author 2** & Author 3
 Source: script based on...
 Notes: 
 	Additional notes (1)
-    Additional notes (2)
+	Additional notes (2)
 Date: 01/12/2010
 Contact:
 	e-mail: email@email.com
@@ -110,7 +110,9 @@ Action.
 VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY LONG NAME
 Hello, my name is Very Very Very Very Very Very Very Very Very Very Very Very Very Very Very Very Very Very Very Very Very Very Very Very Very Very Very Very Very Very Long Name.
 
-# Act 4: Latin characters
+# Act 4: Misc
+
+## Latin characters
 
 INT. LATIN TEST - DAWN
 
@@ -128,4 +130,31 @@ Blåbærsyltetøy
 SPANISH
 El pingüino Wenceslao hizo kilómetros bajo exhaustiva lluvia y frío, añoraba a su querido cachorro.
 
+## Forced elements
 
+.WNĘTRZE. FORCED ELEMENTS - NIGHT
+
+!INT. ACTION
+
+@McCABE
+~Happy birthday to you!
+
+> FADE TO GREEN.
+
+## Sections and synopsis
+
+= Section synopsis
+
+### Subsection
+
+= Subsection synopsis
+
+= Additional synopsis
+
+INT. SCENE - DAY
+
+= Scene synopsis
+
+Action.
+
+> THE END.
