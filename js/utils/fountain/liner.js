@@ -79,10 +79,16 @@ define(function (require) {
 			for (var character = before; lines[character].type != "character"; character--) {}
 			lines.splice(index, 0, h.create_line({
 				type: "parenthetical",
-				text: MORE
+				text: MORE,
+				start: token_on_break.start,
+				end: token_on_break.end,
+				token: token_on_break.token
 			}), h.create_line({
 				type: "character",
-				text: lines[character].text.trim() + " " + (lines[character].text.indexOf(CONTD) !== -1 ? '' : CONTD)
+				text: lines[character].text.trim() + " " + (lines[character].text.indexOf(CONTD) !== -1 ? '' : CONTD),
+				start: token_after.start,
+				end: token_after.end,
+				token: token_on_break.token
 			}));
 			return true;
 		} else if (lines[index].is_dialogue() != -1 &&  lines[after] && lines[after].is("dialogue", "parenthetical")) {
