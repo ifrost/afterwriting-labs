@@ -49,10 +49,10 @@ define(function (require) {
 		var token_after = lines[after];
 		var token_before = lines[before];
 
-		if (token_on_break.is("scene_heading") && !token_after.is("scene_heading")) {
+		if (token_on_break.is("scene_heading") && token_after && !token_after.is("scene_heading")) {
 			return false;
 		}
-		else if (token_after.is('transition') && !token_on_break.is('transition')) {
+		else if (token_after && token_after.is('transition') && !token_on_break.is('transition')) {
 			return false;
 		}
 		// action block 1,2 or 3 lines.
@@ -73,7 +73,7 @@ define(function (require) {
 		else if (token_on_break.is('action') && 
 				token_on_break.token.lines.length >= 4 &&
 				(token_on_break.token.lines.indexOf(token_on_break) == 0 ||
-				token_on_break.token.lines.indexOf(token_on_break) != token_on_break.token.lines.length - 2)) {
+				token_on_break.token.lines.indexOf(token_on_break) == token_on_break.token.lines.length - 2)) {
 			return false;
 		} else if (cfg.split_dialogue && token_on_break.is("dialogue") && token_after && token_after.is("dialogue") && token_before.is("dialogue") && !(token_on_break.dual)) {
 			for (var character = before; lines[character].type != "character"; character--) {}
