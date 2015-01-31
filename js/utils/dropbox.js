@@ -25,7 +25,7 @@ define(function (require) {
 			var state = Dropbox.Util.Oauth.randomAuthStateParam();
 			var popup = window.open('https://www.dropbox.com/1/oauth2/authorize?response_type=token&redirect_uri=' + redirect_uri + '&client_id=' + key + '&state=' + state, '_blank', 'width=500, height=500');
 			window.addEventListener('message', function (e) {
-				if (e.origin.indexOf('afterwriting.com') == -1 && e.origin.indexOf('localhost') == -1) {
+				if (e.origin !== 'http://afterwriting.com' && e.origin !== 'http://localhost:8000') {
 					return;
 				}
 				
