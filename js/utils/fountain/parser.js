@@ -173,6 +173,12 @@ define(function (require) {
 						token.number = match[1];
 					}
 					scene_number++;
+				} else if (token.text.match(regex.page_break)) {
+					token.text = '';
+					token.type = 'page_break';
+				} else if (token.text.length && token.text[0] === '!') {
+					token.type = 'action';
+					token.text = token.text.substr(1);
 				} else if ((token.text.length > 0 && token.text[0] == '@') || token.text === token.text.toUpperCase()) {
 					if (i === lines_length || i === lines_length - 1 || lines[i + 1].trim().length === 0) {
 						token.type = 'shot';
@@ -195,12 +201,6 @@ define(function (require) {
 						}
 						last_character_index = result.tokens.length;
 					}
-				} else if (token.text.match(regex.page_break)) {
-					token.text = '';
-					token.type = 'page_break';
-				} else if (token.text.length && token.text[0] === '!') {
-					token.type = 'action';
-					token.text = token.text.substr(1);
 				}
 				else {
 					token.type = 'action';
@@ -256,7 +256,12 @@ define(function (require) {
 			}
 			previous_type = current_token.type;
 			current_index++;
-		}		
+		}	
+		
+		// clean separators at the end
+		while (result.tokens.length > 0 && result.tokens[result.tokens.length-1].type === 'separator') {
+			result.tokens.pop();
+		}
 
 		return result;
 	};
