@@ -45,12 +45,12 @@ define(function (require) {
 			client: db,
 			save_callback: function (selected, filename) {
 				data.parse();
-				var path = selected.data.entry.path,
+				var path = selected.data.path,
 					blob = new Blob([data.script()], {
 						type: "text/plain;charset=utf-8"
 					});
 				if (selected.data.isFolder) {
-					path += '/' + filename;
+					path += (path[path.length - 1] !== '/' ? '/' : '') + filename;
 				}
 				db.save(path, blob, function () {
 					if (filename) {
@@ -70,9 +70,9 @@ define(function (require) {
 		save_to_cloud({
 			client: db,
 			save_callback: function (selected, filename) {
-				var path = selected.data.entry.path;
+				var path = selected.data.path;
 				if (selected.data.isFolder) {
-					path += '/' + filename;
+					path += (path[path.length - 1] !== '/' ? '/' : '') + filename;
 				}
 				data.parse();
 				preview.get_pdf(function (result) {
