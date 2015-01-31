@@ -27,8 +27,7 @@ module.exports = function (grunt) {
 					optimize: "uglify",
 					baseUrl: "js",
 					mainConfigFile: 'js/afterwriting-bootstrap.js',
-					include: "afterwriting-bootstrap",
-					name: "libs/almond",
+					include: ["libs/require", "afterwriting-bootstrap"],					
 					out: "bundle/js/afterwriting.js",
 					onBuildWrite: function (moduleName, path, contents) {
 						if (moduleName === 'logger') {
