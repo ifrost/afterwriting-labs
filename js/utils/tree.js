@@ -47,11 +47,15 @@ define(function (require) {
 			},
 			loaded: function () {
 				$('#jstree').jstree({
-					plugins: ['types'],
+					plugins: ['types', 'search'],
 					core: {
 						data: options.data,
 						check_callback: true,
 						multiple: false
+					},
+					search: {
+						show_only_matches: true,
+						search_leaves_only: true
 					},
 					types: {
 						"default": {
@@ -63,9 +67,21 @@ define(function (require) {
 						}
 					}
 				}).on('ready.jstree', function () {
+					if (options.search) {
+						var search_input = $('<p>find: <input/> (min. 3 characters)</p>');
+						
+						search_input.find('input').keyup(function () {
+							var query = $(this).val();
+							if (query.length >= 3) {
+								$('#jstree').jstree(true).search(query);
+							}
+						});
+						
+						search_input.insertBefore('#jstree-parent');
+					}
 					if (options.selected) {
 						$('#jstree').jstree(true).select_node(options.selected);
-						var parent_top = $('#jstree-parent').position().top
+						var parent_top = $('#jstree-parent').position().top;
 						var element_top = $('#jstree li[id="' + options.selected + '"').position().top;
 						var parent_half_height = $('#jstree-parent').height() / 2;
 						$('#jstree-parent').scrollTop(element_top - parent_top - parent_half_height);
