@@ -12,7 +12,7 @@ define(function (require) {
 		synopsis: /^(?:\=(?!\=+) *)(.*)/,
 
 		scene_heading: /^((?:\*{0,3}_?)?(?:(?:int|ext|est|int\/ext|i\.?\/e\.?)[. ]).+)|^(?:\.(?!\.+))(.+)/i,
-		scene_number: /( *#(.+)# *)/,
+		scene_number: /#(.+)#/,
 
 		transition: /^((?:FADE (?:TO BLACK|OUT)|CUT TO BLACK)\.|.+ TO\:|^TO\:$)|^(?:> *)(.+)/,
 
@@ -58,6 +58,7 @@ define(function (require) {
 
 		var lines_length = lines.length,
 			current = 0,
+			scene_number = 1,
 			match, text, last_title_page_token,
 			token, last_was_separator = false,
 			token_category = 'none',
@@ -148,27 +149,38 @@ define(function (require) {
 					token.text = token.text.replace(/> ?/, '');
 					token.type = 'transition';
 				} else if (match = token.text.match(regex.synopsis)) {
-					if (!cfg.print_synopsis) {
-						continue;
-					}
 					token.text = match[1];
 					token.type = 'synopsis';
 				} else if (match = token.text.match(regex.section)) {
-					if (!cfg.print_sections) {
-						continue;
-					}
 					token.level = match[1].length;
 					token.text = match[2];
 					token.type = 'section';
 				} else if (token.text.match(regex.scene_heading)) {
 					token.text = token.text.replace(/^\./, '');
-					if (cfg.double_space_between_scenes) {
-						var additional_separator = h.create_separator(token.start, token.end);
-						result.tokens.push(additional_separator);
+					if (cfg.each_scene_on_new_page && scene_number !== 1) {
+						var page_break = h.create_token({
+							type: 'page_break',
+							start: token.start,
+							end: token.end
+						});
+						result.tokens.push(page_break);
 					}
+						
 					token.type = 'scene_heading';
-				} else if (token.text.match(regex.character)) {
-					if (i === lines_length || i === lines_length - 1 || lines[i + 1].length === 0) {
+					token.number = scene_number;
+					if (match = token.text.match(regex.scene_number)) {
+						token.text = token.text.replace(regex.scene_number, '');
+						token.number = match[1];
+					}
+					scene_number++;
+				} else if (token.text.match(regex.page_break)) {
+					token.text = '';
+					token.type = 'page_break';
+				} else if (token.text.length && token.text[0] === '!') {
+					token.type = 'action';
+					token.text = token.text.substr(1);
+				} else if ((token.text.length > 0 && token.text[0] == '@') || token.text === token.text.toUpperCase()) {
+					if (i === lines_length || i === lines_length - 1 || lines[i + 1].trim().length === 0) {
 						token.type = 'shot';
 					} else {
 						state = 'dialogue';
@@ -189,12 +201,6 @@ define(function (require) {
 						}
 						last_character_index = result.tokens.length;
 					}
-				} else if (token.text.match(regex.page_break)) {
-					token.text = '';
-					token.type = 'page_break';
-				} else if (token.text.length && token.text[0] === '!') {
-					token.type = 'action';
-					token.text = token.text.substr(1);
 				}
 				else {
 					token.type = 'action';
@@ -209,8 +215,8 @@ define(function (require) {
 					token.dual = 'right';
 				}
 			}
-
-			last_was_separator = false;
+			
+			last_was_separator = false;										
 
 			if (token_category === 'script' && state !== 'ignore') {
 				if (token.is('scene_heading', 'transition')) {
@@ -221,8 +227,40 @@ define(function (require) {
 				}
 				token.text = token.text.trim();
 				result.tokens.push(token);
-			}
+			}		
 			
+		}	
+		
+		var current_index = 0, previous_type = null;
+		// tidy up sepataors
+		while (current_index < result.tokens.length) {
+			var current_token = result.tokens[current_index];
+			
+			if (
+				(!cfg.print_actions && current_token.is("action", "transition", "centered", "shot")) ||
+				(!cfg.print_notes && current_token.type == "note") ||
+				(!cfg.print_headers && current_token.type == "scene_heading") ||
+				(!cfg.print_sections && current_token.type == "section") ||
+				(!cfg.print_synopsis && current_token.type == "synopsis") ||
+				(!cfg.print_dialogues && current_token.is_dialogue()) ||
+				(current_token.is('separator') && previous_type == 'separator')) {
+
+				result.tokens.splice(current_index, 1);
+				continue;
+			}			
+			
+			if (cfg.double_space_between_scenes && current_token.is('scene_heading') && current_token.number !== 1) {
+				var additional_separator = h.create_separator(token.start, token.end);
+				result.tokens.splice(current_index, 0, additional_separator);
+				current_index++;
+			}
+			previous_type = current_token.type;
+			current_index++;
+		}	
+		
+		// clean separators at the end
+		while (result.tokens.length > 0 && result.tokens[result.tokens.length-1].type === 'separator') {
+			result.tokens.pop();
 		}
 
 		return result;

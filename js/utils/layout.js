@@ -1,6 +1,6 @@
-/* global define, document, window, setTimeout */
-define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanager', 'utils/common', 'templates', 'utils/decorator'], function ($, temlates, data, Handlebars, pm, common, templates, decorator) {
-
+/* global define, document, window, setTimeout, require */
+define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanager', 'utils/common', 'templates', 'utils/decorator', 'impromptu', 'jstree', 'cookie'], function ($, temlates, data, Handlebars, pm, common, templates, decorator, impromptu, jstree, cookie) {
+	
 	var module = {
 		only_active_visible: true
 	};

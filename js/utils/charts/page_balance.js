@@ -27,8 +27,8 @@ define(function (require) {
 			.attr('height', page_height)
 			.style('margin', 5)
 			.on("mouseover", function (d) {
-			var action = helper.format_time(d.action_time);
-			var dialogue = helper.format_time(d.dialogue_time);
+			var action = Math.round(d.action_percentage * 100) + '%';
+			var dialogue = Math.round(d.dialogue_percentage * 100) + '%';
 			var action_legend = ' (<div style="width:10px;height:8px;background-color:#eeeeee;display:inline-block"></div>)';
 			var dialogue_legend = ' (<div style="width:10px;height:8px;background-color:#777777;display:inline-block"></div>)';
 			layout.show_tooltip("Page #" + d.page_number + "<br />Action: " + action + action_legend + '<br />Dialogue: ' + dialogue + dialogue_legend);

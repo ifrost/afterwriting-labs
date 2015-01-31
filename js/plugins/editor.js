@@ -1,20 +1,30 @@
 /* global define, setTimeout */
 define(function (require) {
-	
+
 	var pm = require('utils/pluginmanager'),
 		data = require('modules/data'),
+		decorator = require('utils/decorator'),
+		gd = require('utils/googledrive'),
+		db = require('utils/dropbox'),
+		$ = require('jquery'),
+		converter = require('utils/converters/scriptconverter'),
 		cm = require('libs/codemirror/lib/codemirror');
-	
+
 	// codemirror plugins
 	require('libs/codemirror/addon/selection/active-line');
-    require('libs/codemirror/addon/hint/show-hint');
+	require('libs/codemirror/addon/hint/show-hint');
 	require('libs/codemirror/addon/hint/anyword-hint');
 	require('utils/fountain/cmmode');
-	
-	var plugin = pm.create_plugin('editor', 'write');
-	var editor;
 
-	plugin.data = {};
+	var plugin = pm.create_plugin('editor', 'write');
+	var editor, last_content = '',
+		active = false;
+
+	plugin.data = {
+		is_sync: false
+	};
+
+	plugin.synced = decorator.signal();
 
 	plugin.create_editor = function (textarea) {
 		editor = cm.fromTextArea(textarea, {
@@ -53,8 +63,70 @@ define(function (require) {
 		pm.switch_to(plugin);
 	};
 
-	plugin.activate = function () {
+	plugin.sync_available = function () {
+		return data.data('gd-fileid') || data.data('db-path');
+	};
 
+	plugin.is_sync = function () {
+		return plugin.data.is_sync;
+	};
+
+	var handle_sync = function (content) {
+		content = converter.to_fountain(content).value;
+		if (content === undefined) {
+			plugin.toggle_sync();
+			if (active) {
+				plugin.activate();
+			}			
+		}
+		else if (last_content != content) {
+			last_content = content;
+			data.script(content);
+			data.parse();
+			plugin.synced();
+			if (active) {
+				plugin.activate();
+			}
+		}
+	};
+
+	plugin.toggle_sync = function () {
+		last_content = '';
+		plugin.set_sync(!plugin.data.is_sync);
+	};
+
+	plugin.store = function () {
+		data.data('editor-last-state', data.script());
+	};
+
+	plugin.restore = function () {
+		data.script(data.data('editor-last-state'));
+		data.parse();
+		if (active) {
+			plugin.activate();
+		}
+	};
+
+	plugin.set_sync = function (value) {
+		plugin.data.is_sync = value;
+		if (editor) {
+			editor.setOption('readOnly', plugin.data.is_sync);
+		}
+		if (plugin.data.is_sync) {
+			if (data.data('gd-fileid')) {
+				gd.sync(data.data('gd-fileid'), 3000, handle_sync);
+			} else if (data.data('db-path')) {
+				db.sync(data.data('db-path'), 3000, handle_sync);
+			}
+
+		} else {
+			gd.unsync();
+			db.unsync();
+		}
+	};
+
+	plugin.activate = function () {
+		active = true;
 		setTimeout(function () {
 			editor.setValue(data.script() || "");
 			editor.focus();
@@ -77,7 +149,12 @@ define(function (require) {
 	};
 
 	plugin.deactivate = function () {
+		active = false;
 		save_state();
+	};
+
+	plugin.is_active = function () {
+		return active;
 	};
 
 	return plugin;

@@ -1,13 +1,18 @@
-<h1>Preview
+<h1 style="float:left">Preview
 	<span class="info-icon" section="preview-info" />
 </h1>
+<div class="header-menu">
+	<span>save .pdf: <a href="#" action="save-pdf"><img src="{{static_path}}gfx/icons/other/download.svg" class="icon small-icon" title="Download PDF" /></a></span>
+	<span><a href="#" action="save-dropbox-pdf"><img src="{{static_path}}gfx/icons/other/dropbox.svg" class="icon small-icon" title="Upload PDF to Dropbox" /></a></span>
+	<span><a href="#" action="save-gd-pdf"><img src="{{static_path}}gfx/icons/other/gd.svg" class="icon small-icon" title="Upload PDF to Google Drive" /></a></span>
+</div><div style="clear:both"/>
 <p class="info-content" section="preview-info">Can't see anything? You need a PDF plugin in your browser. (You can download pdf from
 	<a class="switch" href="#" plugin="save">here</a>)</p>
 <div id="pdf-preview-iframe-container" class="to-the-bottom"></div>
 <!-- scripts -->
 <script>
 	require(['jquery', 'plugins/preview'], function($, preview) {
-		preview.activate.add(function() {
+		preview.refresh.add(function() {
 			$('#pdf-preview-iframe-container').html('<p>Loading preview...</p><iframe id="pdf-preview-iframe" style="height: 100%; width: 100%; display:none"></iframe>');
 
 			setTimeout(function() {
@@ -15,7 +20,7 @@
 					$("#pdf-preview-iframe-container p").remove();
 					$("#pdf-preview-iframe").attr('src', data.url).css('display', 'block');
 				});
-			}, 200);
+			}, 0);
 
 
 		});

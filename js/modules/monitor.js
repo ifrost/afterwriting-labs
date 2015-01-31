@@ -1,4 +1,4 @@
-/* global define, ga */
+/* global define, ga, window, document */
 define(function (require) {
 
 	var logger = require('logger'),
@@ -19,6 +19,8 @@ define(function (require) {
 		if (window.ga) {
 			log.info('Event sent', category, action, label || '');
 			ga('send', 'event', category, action, label);
+		} else {
+			log.debug('Event not sent:', category, action, label || '', ' [Google Analytics not loaded.]');
 		}
 	};
 
@@ -26,6 +28,26 @@ define(function (require) {
 		return function () {
 			track_event(category, action, label);
 		};
+	};
+
+	module.prepare = function () {
+		if (window.location.protocol !== 'file:') {
+			(function (i, s, o, g, r, a, m) {
+				i['GoogleAnalyticsObject'] = r;
+				i[r] = i[r] || function () {
+					(i[r].q = i[r].q || []).push(arguments);
+				};
+				i[r].l = 1 * new Date();
+				a = s.createElement(o);
+				m = s.getElementsByTagName(o)[0];
+				a.async = 1;
+				a.src = g;
+				m.parentNode.insertBefore(a, m);
+			})(window, document, 'script', 'http://www.google-analytics.com/analytics.js', 'ga');
+
+			ga('create', 'UA-53953908-1', 'auto');
+			ga('send', 'pageview');
+		}
 	};
 
 	module.windup = function () {
@@ -44,8 +66,8 @@ define(function (require) {
 		});
 		layout.scopes.back_close_content.add(function (plugin) {
 			track_event('navigation', 'back-close', plugin.name);
-		});		
-		layout.info_opened.add(function(section) {
+		});
+		layout.info_opened.add(function (section) {
 			track_event('feature', 'help', section);
 		});
 		layout.toggle_expand.add(track_handler('feature', 'expand'));
@@ -63,7 +85,12 @@ define(function (require) {
 		open.open_file.add(function (format) {
 			track_event('feature', 'open-file-opened', format);
 		});
-		open.open_from_dropbox.add(track_handler('feature', 'open-dropbox'));
+		open.open_from_dropbox.add(function (format) {
+			track_event('feature', 'open-dropbox', format);
+		});
+		open.open_from_google_drive.add(function (format) {
+			track_event('feature', 'open-googledrive', format);
+		});
 		open.open_last_used.add(function (startup) {
 			track_event('feature', 'open-last-used', startup === true ? 'startup' : 'manual');
 		});
@@ -72,18 +99,12 @@ define(function (require) {
 		save.save_as_fountain.add(track_handler('feature', 'save-fountain'));
 		save.save_as_pdf.add(track_handler('feature', 'save-pdf'));
 		save.dropbox_fountain.add(track_handler('feature', 'save-fountain-dropbox'));
+		save.google_drive_fountain.add(track_handler('feature', 'save-fountain-googledrive'));
 		save.dropbox_pdf.add(track_handler('feature', 'save-pdf-dropbox'));
+		save.google_drive_pdf.add(track_handler('feature', 'save-pdf-googledrive'));
 
 		// stats
 		stats.goto.add(track_handler('feature', 'stats-scene-length-goto'));
-
-		// settings
-		settings.save.add(track_handler('feature', 'settings-save'));
-		settings.save.add(function () {
-			var c = settings.get_config();
-			track_event('settings', 'page-size-set', c.print().paper_size);
-		});
-		settings.reset.add(track_handler('feature', 'settings-reset'));
 
 	};
 

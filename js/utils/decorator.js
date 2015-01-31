@@ -31,6 +31,13 @@ define(function () {
 			_handlers.push(handler);
 		};
 		
+		runner.remove = function(handler) {
+			var index = _handlers.indexOf(handler);
+			if (index) {
+				_handlers.splice(index, 1);
+			}
+		};
+		
 		runner.decorated = true;
 
 		return runner;
@@ -42,7 +49,7 @@ define(function () {
 		});
 	};
 	
-	decorator.property = function () {
+	decorator.property = function (setter) {
 		var _value;
 		var property = decorator(function(value) {
 			if (arguments.length === 0) {
@@ -50,7 +57,7 @@ define(function () {
 				return _value;
 			}
 			else {
-				_value = value;
+				_value = setter ? setter(value) : value;
 				return _value;
 			}
 		});

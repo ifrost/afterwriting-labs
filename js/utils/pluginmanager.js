@@ -20,7 +20,8 @@ define(function(require){
 			data: {},
 			name: name,
 			title: title,
-			class: 'inactive'
+			class: 'inactive',
+			log: logger.get('name')
 		};
 	};
 

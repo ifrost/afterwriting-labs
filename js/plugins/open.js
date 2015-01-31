@@ -4,11 +4,15 @@ define(function (require) {
 	var pm = require('utils/pluginmanager'),
 		logger = require('logger'),
 		templates = require('templates'),
+		editor = require('plugins/editor'),
 		data = require('modules/data'),
 		helper = require('utils/helper'),
 		decorator = require('utils/decorator'),
 		$ = require('jquery'),
-		finaldraft_converter = require('utils/converters/finaldraft'),
+		gd = require('utils/googledrive'),
+		db = require('utils/dropbox'),
+		tree = require('utils/tree'),
+		save = require('plugins/save'),
 		layout = require('utils/layout');
 
 	var log = logger.get('open');
@@ -18,8 +22,20 @@ define(function (require) {
 	var last_session_script;
 
 	var set_script = function (value) {
+		clear_last_opened();
+		editor.set_sync(false);
 		data.script(value);
 		layout.show_main();
+	};
+
+	var clear_last_opened = function () {
+		data.data('db-path', '');
+		data.data('gd-link', '');
+		data.data('gd-fileid', '');
+		data.data('gd-pdf-id', '');
+		data.data('db-pdf-path', '');
+		data.data('fountain-filename', '');
+		data.data('pdf-filename', '');
 	};
 
 	plugin.open_last_used = function (startup) {
@@ -30,20 +46,15 @@ define(function (require) {
 	};
 
 	plugin.open_file = function (selected_file) {
-		var callback = decorator.signal();
+		var finished = decorator.signal();
 		var fileReader = new FileReader();
 		fileReader.onload = function () {
-			var format = 'fountain';
-			var value = this.result;
-			if (/<\?xml/.test(value)) {
-				value = finaldraft_converter.to_fountain(value);
-				format = 'fdx';
-			}
+			var value = this.result;			
 			set_script(value);
-			callback(format);
+			finished(data.format);
 		};
 		fileReader.readAsText(selected_file);
-		return callback;
+		return finished;
 	};
 
 	plugin.open_file_dialog = decorator.signal();
@@ -59,22 +70,69 @@ define(function (require) {
 	};
 
 	plugin.is_dropbox_available = function () {
-		return window.Dropbox && Dropbox.isBrowserSupported() && window.location.protocol !== 'file:';
+		return window.location.protocol !== 'file:';
+	};
+
+	plugin.is_google_drive_available = function () {
+		return window.gapi && window.location.protocol !== 'file:';
+	};
+
+	var open_from_cloud = function (client, back_callback, load_callback) {
+		client.list(function (root) {
+			root = client.convert_to_jstree(root);
+			tree.show({
+				info: 'Please select file to open.',
+				data: [root],
+				label: 'Open',
+				callback: function (selected) {
+					if (selected.data.isFolder) {
+						$.prompt('Please select a file, not folder.', {
+							buttons: {
+								'Back': true,
+								'Cancel': false
+							},
+							submit: function (v) {
+								if (v) {
+									back_callback();
+								}
+							}
+						});
+					} else {
+						load_callback(selected);
+					}
+				}
+			});
+		}, {
+			before: function () {
+				$.prompt('Please wait...');
+			},
+			after: $.prompt.close
+		});
 	};
 
 	plugin.open_from_dropbox = function () {
-		Dropbox.choose({
-			success: function (files) {
-				$.ajax({
-					url: files[0].link
-				}).done(function (content) {
-					set_script(content);
-				});
-			},
-			linkType: 'direct',
-			multiselect: false,
-			extensions: ['.fountain', '.spmd', '.txt', '.fdx']
+		var finished = decorator.signal();
+		open_from_cloud(db, plugin.open_from_dropbox, function (selected) {
+			db.load_file(selected.data.path, function (content) {
+				set_script(content);
+				data.data('db-path', selected.data.path);
+				finished(data.format);
+			});
 		});
+		return finished;
+	};
+
+	plugin.open_from_google_drive = function () {
+		var finished = decorator.signal();
+		open_from_cloud(gd, plugin.open_from_google_drive, function (selected) {
+			gd.load_file(selected.data.id, function (content, link, fileid) {
+				set_script(content);
+				data.data('gd-link', link);
+				data.data('gd-fileid', fileid);
+				finished(data.format);
+			});
+		});
+		return finished;
 	};
 
 	plugin.init = function () {
@@ -90,15 +148,32 @@ define(function (require) {
 					title_match = line.match(/title\:(.*)/i);
 					if (wait_for_non_empty) {
 						title = line.trim().replace(/\*/g, '').replace(/_/g, '');
-						wait_for_non_empty = ! title;
+						wait_for_non_empty = !title;
 					}
 					if (title_match) {
 						title = title_match[1].trim();
-						wait_for_non_empty = ! title;
+						wait_for_non_empty = !title;
 					}
 				});
 			}
 			data.data('last-used-title', title || 'No title');
+		});
+		save.gd_saved.add(function (item) {
+			clear_last_opened();
+			data.data('gd-link', item.alternateLink);
+			data.data('gd-fileid', item.id);
+			data.data('filename', '');
+			if (editor.is_active) {
+				editor.activate(); // refresj
+			}
+		});
+		save.db_saved.add(function (path) {
+			clear_last_opened();
+			data.data('db-path', path);
+			data.data('filename', '');
+			if (editor.is_active) {
+				editor.activate(); // refresh
+			}
 		});
 	};
 
@@ -108,6 +183,7 @@ define(function (require) {
 
 	var last_session_script_loaded = false;
 	if (data.data('last-used-date')) {
+		data.data('filename', '');
 		log.info('Last used exists. Loading: ', data.data('last-used-title'), data.data('last-used-date'));
 		plugin.context.last_used.script = data.data('last-used-script');
 		plugin.context.last_used.date = data.data('last-used-date');

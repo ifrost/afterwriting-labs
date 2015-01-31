@@ -1,9 +1,10 @@
-/* global define, localStorage, window */
+/* global define, window */
 define(function (require) {
 	
 	var Modernizr = require('modernizr'),
 		fparser = require('utils/fountain/parser'),
 		fliner = require('utils/fountain/liner'), 
+		converter = require('utils/converters/scriptconverter'),
 		decorator = require('utils/decorator');
 
 	var plugin = {};
@@ -24,12 +25,33 @@ define(function (require) {
 			}
 		}
 	};
+	
+	plugin.format = '';
 
-	plugin.script = decorator.property();
+	plugin.script = decorator.property(function(value){
+		var result = converter.to_fountain(value);		
+		plugin.format = result.format;
+		return result.value;
+	});
 	
 	plugin.parse = decorator(function() {
 		plugin.parsed = fparser.parse(plugin.script(), plugin.config);
 		plugin.parsed.lines = fliner.line(plugin.parsed.tokens, plugin.config);
+		
+		if (plugin.config.use_print_settings_for_stats) {
+			plugin.parsed_stats = plugin.parsed;
+		}
+		else {			
+			var stats_config = Object.create(plugin.config);
+			stats_config.print_actions = true;
+			stats_config.print_headers = true;
+			stats_config.print_dialogues = true;
+			stats_config.print_sections = false;
+			stats_config.print_notes = false;
+			stats_config.print_synopsis = false;
+			plugin.parsed_stats = fparser.parse(plugin.script(), stats_config);
+			plugin.parsed_stats.lines = fliner.line(plugin.parsed_stats.tokens, stats_config);
+		}
 	});
 	
 	plugin.get_title_page_token = function(type) {
@@ -142,6 +164,9 @@ define(function (require) {
 		double_space_between_scenes: false,
 		print_sections: false,
 		print_synopsis: false,
+		print_actions: true,
+		print_headers: true,
+		print_dialogues: true,
 		number_sections: false,
 		use_dual_dialogue: true,
 		stats_keep_last_scene_time: true,
@@ -149,7 +174,10 @@ define(function (require) {
 		print_notes: false,
 		print_header: '',
 		print_footer: '',
-		print_watermark: ''
+		print_watermark: '',
+		scenes_numbers: 'none',
+		each_scene_on_new_page: false,
+		use_print_settings_for_stats: true
 	};
 	
 

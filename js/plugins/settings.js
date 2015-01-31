@@ -20,11 +20,6 @@ define(function (require) {
 		return data.default_config;
 	};
 
-	plugin.reset = function () {
-		data.reset_config();
-		data.script(data.script());
-	};
-
 	plugin.windup = function () {
 		if (data.config.load_last_opened) {
 			open.open_last_used(true);

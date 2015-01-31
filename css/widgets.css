@@ -151,6 +151,26 @@ a .icon:hover {
 	opacity: 1.0;
 }
 
+.small-icon {
+	width: 20px;
+	height: 20px;
+	margin-right: 2px;
+}
+
+.header-menu {
+	float: right;
+	margin: 20px 0 0 0;
+}
+
+#jstree-parent {
+	overflow: auto;
+	margin-right: 10px;
+}
+
+#jstree {
+	max-height: 250px;
+}
+
 /** small screens **/
 @media(max-width: 800px) {
 	h1 {

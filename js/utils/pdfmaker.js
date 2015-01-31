@@ -218,9 +218,13 @@ define(function (require) {
 
 		var y = 1,
 			page = 1,
+			scene_number,
 			current_section_level = 0,
+			current_section_number,
+			current_section_token,
 			section_number = helper.version_generator(),
-			text;
+			text,
+			after_section = false; // helpful to determine synopsis indentation
 
 		var print_header_and_footer = function () {
 			if (cfg.print_header) {
@@ -264,7 +268,7 @@ define(function (require) {
 
 		print_watermark();
 		print_header_and_footer();
-		lines.forEach(function (line) {
+		lines.forEach(function (line) {			
 			if (line.type == "page_break") {
 				y = 1;
 				doc.addPage();
@@ -305,12 +309,23 @@ define(function (require) {
 						current_section_level = line.token.level;
 						feed += current_section_level * cfg.print().section.level_indent;
 						if (cfg.number_sections) {
-							text = section_number(line.token.level) + '. ' + text;
+							if (line.token !== current_section_token) {
+								current_section_number = section_number(line.token.level)
+								current_section_token = line.token;
+								text = current_section_number  + '. ' + text;
+							}
+							else {
+								text = Array(current_section_number.length + 3).join(' ') + text;								
+							}
+							
 						}
 					} else if (line.type === 'synopsis') {
 						feed += cfg.print().synopsis.padding || 0;
-						if (cfg.print().synopsis.feed_with_last_section) {
+						if (cfg.print().synopsis.feed_with_last_section && after_section) {
 							feed += current_section_level * cfg.print().section.level_indent;
+						}
+						else {
+							feed = cfg.print().action.feed;
 						}
 					}
 
@@ -334,8 +349,38 @@ define(function (require) {
 						feed -= (feed - cfg.print().left_margin) / 2;
 					}
 
-					doc.text(text, feed, cfg.print().top_margin + cfg.print().font_height * y++, text_properties);
+					doc.text(text, feed, cfg.print().top_margin + cfg.print().font_height * y, text_properties);
+					
+					if (line.number) {
+						scene_number = String(line.number);
+						var scene_text_length = scene_number.length;
+						if (cfg.embolden_scene_headers) {
+							scene_number = '**' + scene_number + '**';
+						}
+						
+						var shift_scene_number;
+						
+						if (cfg.scenes_numbers === 'both' || cfg.scenes_numbers === 'left') {
+							shift_scene_number = (scene_text_length + 4) * cfg.print().font_width;
+							doc.text(scene_number, feed - shift_scene_number, cfg.print().top_margin + cfg.print().font_height * y, text_properties);
+						}
+						
+						if (cfg.scenes_numbers === 'both' || cfg.scenes_numbers === 'right') {
+							shift_scene_number = (cfg.print().scene_heading.max + 1) * cfg.print().font_width;
+							doc.text(scene_number, feed + shift_scene_number, cfg.print().top_margin + cfg.print().font_height * y, text_properties);
+						}
+					}
+					
+					y++;
 				}
+			}
+			
+			
+			// clear after section
+			if (line.type === 'section') {
+				after_section = true;
+			} else if (line.type !== 'separator' && line.type !== 'synopsis') {
+				after_section = false;
 			}
 
 		});

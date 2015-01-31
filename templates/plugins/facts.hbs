@@ -42,11 +42,17 @@
 	require(['jquery', 'plugins/facts', 'utils/helper'], function($, facts, helper) {
 		var handlers_added = false;
 
-		facts.activate.add(function() {
+		facts.refresh.add(function() {
 			var facts_data = facts.data.facts;
 			$('#facts-title').html(facts_data.title.replace(/\*/g, '').replace(/_/g, '').replace(/\n/g, ' / '));
-			$('#facts-pages').html(facts_data.pages.toFixed(2));
-			$('#facts-time').html(helper.format_time(facts_data.pages));
+			if (facts.each_scene_on_new_page()) {
+				var text = facts_data.pages.toFixed(2) + ' (text: ' + facts_data.filled_pages.toFixed(2) + ')'
+				$('#facts-pages').html(text);
+			}
+			else {
+				$('#facts-pages').html(facts_data.pages.toFixed(2));
+			}			
+			$('#facts-time').html(helper.format_time(facts_data.filled_pages));
 			$('#facts-scenes').html(facts_data.scenes);
 			$('#facts-action-time').html(helper.format_time(facts_data.action_time));
 			$('#facts-dialogue-time').html(helper.format_time(facts_data.dialogue_time));
