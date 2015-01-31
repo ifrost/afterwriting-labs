@@ -1,14 +1,19 @@
-/* global define, gapi, setInterval, clearInterval, $, FileReader, btoa */
-define(['async!https://apis.google.com/js/platform.js!onload',
-		'async!https://apis.google.com/js/client.js!onload'],
-		function () {
-	
+/* global define, window, document, gapi, setInterval, clearInterval, $, FileReader, btoa */
+define(function () {
+
 	var client_id = '540351787353-3jf0j12ccl0tmv2nbkcdncu0tuegjkos.apps.googleusercontent.com',
 		scope = ['https://www.googleapis.com/auth/drive'],
 		module = {};
-	
-	module.prepare = function() {
-		gapi.load('auth');
+
+	if (window.location.protocol !== 'file:') {
+		var tag = document.createElement('script'),
+			script_tag = document.getElementsByTagName('script')[0];
+		tag.async = 1;
+		tag.src = 'https://apis.google.com/js/client.js';
+		tag.onload = function () {
+			gapi.load('auth');
+		}
+		script_tag.parentNode.insertBefore(tag, script_tag);
 	}
 
 	/**
@@ -29,7 +34,7 @@ define(['async!https://apis.google.com/js/platform.js!onload',
 			module.auth(function () {
 				method.apply(null, method_args);
 			});
-		}
+		};
 	};
 
 	/**
@@ -96,7 +101,7 @@ define(['async!https://apis.google.com/js/platform.js!onload',
 				download(url, function (content) {
 					if (response.mimeType === "application/vnd.google-apps.document") {
 						content = content.replace(/\r\n\r\n/g, '\r\n');
-					}					
+					}
 					content_callback(content, response.alternateLink, response.id);
 				});
 			} else {
@@ -134,9 +139,9 @@ define(['async!https://apis.google.com/js/platform.js!onload',
 			isUpdate = fileid !== null;
 
 		if (convert) {
-			filename = filename.replace(/\.gdoc$/,'');
+			filename = filename.replace(/\.gdoc$/, '');
 		}
-		
+
 		var boundary = '-------314159265358979323846';
 		var delimiter = "\r\n--" + boundary + "\r\n";
 		var close_delim = "\r\n--" + boundary + "--";
@@ -192,11 +197,11 @@ define(['async!https://apis.google.com/js/platform.js!onload',
 	 */
 	var list = function (callback, options) {
 		options = options || {};
-		
+
 		if (options.before) {
 			options.before();
 		}
-		
+
 		var request = gapi.client.request({
 			path: '/drive/v2/files/',
 			method: 'GET'
@@ -214,11 +219,11 @@ define(['async!https://apis.google.com/js/platform.js!onload',
 					children: []
 				};
 
-			
+
 			items = items.filter(function (i) {
 				return !options.pdfOnly || i.mimeType === "application/pdf" || i.mimeType === "application/vnd.google-apps.folder";
 			});
-			
+
 			items.forEach(function (f) {
 				map_items[f.id] = f;
 				f.children = [];

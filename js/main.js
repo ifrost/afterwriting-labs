@@ -13,8 +13,7 @@ require.config({
 		impromptu: 'libs/jquery-impromptu.min',
 		jstree: 'libs/jstree.min',
 		cookie: 'libs/jquery.cookie',
-		dropbox: 'libs/dropbox.min',
-		async: 'libs/requirejs/async'
+		dropbox: 'libs/dropbox.min'
 	},
 	shim: {
 		handlebars: {
