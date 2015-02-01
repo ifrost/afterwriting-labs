@@ -78,7 +78,7 @@ define(function (require) {
 		basic.prepare(function(fq){
 			fq.current_scene_heading_token = null;
 		});
-		basic.count('action_lines', h.is('action', 'scene_heading'));
+		basic.count('action_lines', h.is('action', 'scene_heading', 'shot'));
 		basic.count('dialogue_lines', h.is_dialogue());
 		basic.count('pages', h.is('page_break'));
 		basic.enter(h.is('scene_heading'), function (item, fq) {
