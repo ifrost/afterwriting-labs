@@ -1,4 +1,3 @@
-/* global define, setTimeout */
 define(function (require) {
 
 	var pm = require('utils/pluginmanager'),
@@ -6,7 +5,6 @@ define(function (require) {
 		decorator = require('utils/decorator'),
 		gd = require('utils/googledrive'),
 		db = require('utils/dropbox'),
-		$ = require('jquery'),
 		converter = require('utils/converters/scriptconverter'),
 		cm = require('libs/codemirror/lib/codemirror');
 
@@ -79,7 +77,7 @@ define(function (require) {
 				plugin.activate();
 			}			
 		}
-		else if (last_content != content) {
+		else if (last_content !== content) {
 			last_content = content;
 			data.script(content);
 			data.parse();

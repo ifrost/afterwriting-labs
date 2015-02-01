@@ -1,4 +1,3 @@
-/* global define */
 define(function () {
 
 	var operators = {};
@@ -9,7 +8,7 @@ define(function () {
 
 	operators.is = function () {
 		var types = Array.prototype.slice.call(arguments);
-		return types.indexOf(this.type) != -1;
+		return types.indexOf(this.type) !== -1;
 	};
 
 	operators.is_dialogue = function () {
@@ -19,7 +18,7 @@ define(function () {
 	operators.name = function () {
 		var character = this.text;
 		var p = character.indexOf('(');
-		if (p != -1) {
+		if (p !== -1) {
 			character = character.substring(0, p);
 		}
 		character = character.trim();
@@ -30,7 +29,7 @@ define(function () {
 		var location = this.text.trim();
 		location = location.replace(/^(INT.?\/.EXT\.?)|(I\/E)|(INT\.?)|(EXT\.?)/, '');
 		var dash = location.lastIndexOf(' - ');
-		if (dash != -1) {
+		if (dash !== -1) {
 			location = location.substring(0, dash);
 		}
 		return location.trim();

@@ -1,9 +1,8 @@
-/* global define */
 define(function (require) {
 	var d3 = require('d3'),
 		$ = require('jquery'),
-		layout = require('utils/layout'),
-		helper = require('utils/helper');
+		layout = require('utils/layout');
+	
 	var plugin = {};
 
 	var page_width = 25,
@@ -15,7 +14,7 @@ define(function (require) {
 		if (data.length < 1) {
 			$(id).append('<p class="error">Sorry, there is not enough data to display the chart. Add at least one scene to your script.</p>');
 			return;
-		};
+		}
 
 		var vis = d3.select(id);
 
@@ -51,7 +50,7 @@ define(function (require) {
 			.attr('y', 0)
 			.attr('width', page_width)
 			.attr('height', function (d) {
-			return d.action_time * page_height
+			return d.action_time * page_height;
 		})
 			.attr('stroke', 'none')
 			.attr('fill', '#eeeeee');
@@ -59,11 +58,11 @@ define(function (require) {
 		pages.append('rect')
 			.attr('x', 0)
 			.attr('y', function (d) {
-			return d.action_time * page_height
+			return d.action_time * page_height;
 		})
 			.attr('width', page_width)
 			.attr('height', function (d) {
-			return d.dialogue_time * page_height
+			return d.dialogue_time * page_height;
 		})
 			.attr('stroke', 'none')
 			.attr('fill', '#777777');

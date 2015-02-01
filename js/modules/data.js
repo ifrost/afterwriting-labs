@@ -1,4 +1,3 @@
-/* global define, window */
 define(function (require) {
 	
 	var Modernizr = require('modernizr'),

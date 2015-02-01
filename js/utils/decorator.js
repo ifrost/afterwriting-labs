@@ -1,4 +1,3 @@
-/* global define */
 define(function () {
 
 	var decorator = function (func) {

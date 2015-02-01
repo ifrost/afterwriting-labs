@@ -1,16 +1,12 @@
-/* global define, ga, window, document */
+/*jshint -W069 */
 define(function (require) {
 
 	var logger = require('logger'),
 		info = require('plugins/info'),
 		open = require('plugins/open'),
 		save = require('plugins/save'),
-		editor = require('plugins/editor'),
-		preview = require('plugins/preview'),
-		facts = require('plugins/facts'),
 		stats = require('plugins/stats'),
-		layout = require('utils/layout'),
-		settings = require('plugins/settings');
+		layout = require('utils/layout');
 
 	var module = {};
 	var log = logger.get('monitor');

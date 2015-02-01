@@ -1,4 +1,4 @@
-/* global define */
+/*jshint -W084 */
 define(function (require) {
 
 	var h = require('utils/fountain/helpers');
@@ -71,9 +71,9 @@ define(function (require) {
 
 
 		var reduce_comment = function (prev, current) {
-			if (current == '/*') {
+			if (current === '/*') {
 				nested_comments++;
-			} else if (current == '*/') {
+			} else if (current === '*/') {
 				nested_comments--;
 			} else if (!nested_comments) {
 				prev = prev + current;
@@ -91,10 +91,10 @@ define(function (require) {
 			// replace inline comments
 			text = text.split(/(\/\*){1}|(\*\/){1}|([^\/\*]+)/g).filter(if_not_empty).reduce(reduce_comment, '');
 
-			if (nested_comments && state != 'ignore') {
+			if (nested_comments && state !== 'ignore') {
 				cache_state_for_comment = state;
 				state = 'ignore';
-			} else if (state == 'ignore') {
+			} else if (state === 'ignore') {
 				state = cache_state_for_comment;
 			}
 
@@ -179,7 +179,7 @@ define(function (require) {
 				} else if (token.text.length && token.text[0] === '!') {
 					token.type = 'action';
 					token.text = token.text.substr(1);
-				} else if ((token.text.length > 0 && token.text[0] == '@') || token.text === token.text.toUpperCase()) {
+				} else if ((token.text.length > 0 && token.text[0] === '@') || token.text === token.text.toUpperCase()) {
 					if (i === lines_length || i === lines_length - 1 || lines[i + 1].trim().length === 0) {
 						token.type = 'shot';
 					} else {
@@ -190,7 +190,7 @@ define(function (require) {
 							if (cfg.use_dual_dialogue) {
 								// update last dialogue to be dual:left
 								var dialogue_tokens = ['dialogue', 'character', 'parenthetical'];
-								while (dialogue_tokens.indexOf(result.tokens[last_character_index].type) != -1) {
+								while (dialogue_tokens.indexOf(result.tokens[last_character_index].type) !== -1) {
 									result.tokens[last_character_index].dual = 'left';
 									last_character_index++;
 								}
@@ -222,7 +222,7 @@ define(function (require) {
 				if (token.is('scene_heading', 'transition')) {
 					token.text = token.text.toUpperCase();
 				}
-				if (token.text && token.text[0] == '~') {
+				if (token.text && token.text[0] === '~') {
 					token.text = '*' + token.text.substr(1) + '*';
 				}
 				token.text = token.text.trim();
@@ -238,12 +238,12 @@ define(function (require) {
 			
 			if (
 				(!cfg.print_actions && current_token.is("action", "transition", "centered", "shot")) ||
-				(!cfg.print_notes && current_token.type == "note") ||
-				(!cfg.print_headers && current_token.type == "scene_heading") ||
-				(!cfg.print_sections && current_token.type == "section") ||
-				(!cfg.print_synopsis && current_token.type == "synopsis") ||
+				(!cfg.print_notes && current_token.type === "note") ||
+				(!cfg.print_headers && current_token.type === "scene_heading") ||
+				(!cfg.print_sections && current_token.type === "section") ||
+				(!cfg.print_synopsis && current_token.type === "synopsis") ||
 				(!cfg.print_dialogues && current_token.is_dialogue()) ||
-				(current_token.is('separator') && previous_type == 'separator')) {
+				(current_token.is('separator') && previous_type === 'separator')) {
 
 				result.tokens.splice(current_index, 1);
 				continue;

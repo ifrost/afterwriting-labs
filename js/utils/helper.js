@@ -1,4 +1,3 @@
-/* global define */
 define(function (require) {
 
 	var data = require('modules/data'),
@@ -10,14 +9,14 @@ define(function (require) {
 		var hours = Math.floor(total / 60);
 		var minutes = Math.floor(total % 60);
 		var seconds = Math.round(60 * (total % 1));
-		if (seconds == 60) {
+		if (seconds === 60) {
 			minutes++;
 			seconds = 0;
 		}
 		
 		var string_time = function (value) {
 			value = value.toString();
-			return value.length == 1 ? '0' + value : value;
+			return value.length === 1 ? '0' + value : value;
 		};
 
 		var result = hours ? string_time(hours) + ':' : '';

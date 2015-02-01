@@ -1,4 +1,3 @@
-/* global define, XMLSerializer */
 define(function (require) {
 
 	var finaldraft_converter = require('utils/converters/finaldraft'),

@@ -1,4 +1,3 @@
-/* global define */
 define(function (require) {
 	var d3 = require('d3'),
 		$ = require('jquery');
@@ -12,7 +11,7 @@ define(function (require) {
 		if (data.length <= 1) {
 			$(id).append('<p class="error">Sorry, there is not enough data to display the chart. Add at least two speaking characters to your script.</p>');
 			return;
-		};	
+		}
 		
 		for (var i=0; i<data.length; i++) {
 			if (data[i][config.label].length > MAX_CHARACTER_NAME) {
@@ -123,9 +122,9 @@ define(function (require) {
 
 			var to;
 			for (var j = 0; j < links.length; j++) {
-				if (links[j].from == i) {
+				if (links[j].from === i) {
 					to = links[j].to;
-				} else if (links[j].to == i) {
+				} else if (links[j].to === i) {
 					to = links[j].from;
 				} else {
 					continue;

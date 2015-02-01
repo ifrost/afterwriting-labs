@@ -1,4 +1,3 @@
-/* global define */
 define(function (require) {
 	var d3 = require('d3'),
 		$ = require('jquery'),
@@ -12,7 +11,7 @@ define(function (require) {
 		if (data.length < 1) {
 			$(id).append('<p class="error">Sorry, there is not enough data to display the chart. Add at least one scene to your script.</p>');
 			return;
-		};
+		}
 
 		var max = 0;
 		data.forEach(function (item) {

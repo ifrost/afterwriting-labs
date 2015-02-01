@@ -1,3 +1,4 @@
+/*jshint -W069 */
 define(function (require) {
 
 	var $ = require('jquery');
@@ -13,7 +14,7 @@ define(function (require) {
 		var info = '<p>' + options.info + '</p>';
 		$.prompt(info + '<div id="jstree-parent"><div id="jstree"></div></div>', {
 			buttons: buttons,
-			submit: function (e, v, f, m) {
+			submit: function (e, v) {
 				if (v) {
 					var selected = $('#jstree').jstree(true).get_selected(true);
 					if (selected.length) {
@@ -31,7 +32,7 @@ define(function (require) {
 								$('#jstree').jstree(true).edit(new_id);
 							});
 						} else {
-							if (options.save && selected[0].id == new_id) {
+							if (options.save && selected[0].id === new_id) {
 								options.callback(parent_folder_for_new, selected[0].text);
 							} else {
 								options.callback(selected[0]);
@@ -88,7 +89,7 @@ define(function (require) {
 					}
 				}).on('changed.jstree', function () {
 					var selected = $('#jstree').jstree(true).get_selected();
-					if (selected != new_id) {
+					if (selected !== new_id) {
 						$('#jstree').jstree(true).delete_node(new_id);
 					}
 				});

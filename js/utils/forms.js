@@ -1,4 +1,3 @@
-/* global define */
 define(function (require) {
 	var $ = require('jquery');
 
@@ -10,7 +9,7 @@ define(function (require) {
 
 		$.prompt(html, {
 			promptspeed: 200,
-			loaded: function (e) {
+			loaded: function () {
 				setTimeout(function () {
 					$(this).find('.text_input').select().focus();
 				}.bind(this), 300);
@@ -25,7 +24,7 @@ define(function (require) {
 				}
 			}
 		});
-	}
+	};
 
 	return module;
 });

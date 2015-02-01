@@ -1,4 +1,3 @@
-/* global define, window, FileReader */
 define(function (require) {
 
 	var $ = require('jquery'),
@@ -6,7 +5,7 @@ define(function (require) {
 		key = 'p5kky1t8t9c5pqy',
 		redirect_uri = 'https://ifrost.github.io/afterwriting-labs/token.html';
 
-	if (window.location.href.indexOf('dev=true') != -1) {
+	if (window.location.href.indexOf('dev=true') !== -1) {
 		redirect_uri = 'http://localhost:8000/local/token.html';
 	}
 
@@ -163,7 +162,7 @@ define(function (require) {
 	};
 
 	module.unsync = function () {
-		clearInterval(module.sync_timeout)
+		clearInterval(module.sync_timeout);
 	};
 
 	module.convert_to_jstree = function (item) {

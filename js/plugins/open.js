@@ -1,4 +1,3 @@
-/* global define, window, FileReader */
 define(function (require) {
 
 	var pm = require('utils/pluginmanager'),

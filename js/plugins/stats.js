@@ -1,14 +1,11 @@
-/* global define */
 define(function (require) {
 
 	var pm = require('utils/pluginmanager'),
-		logger = require('logger'),
 		editor = require('plugins/editor'),
 		data = require('modules/data'),
 		decorator = require('utils/decorator'),
 		queries = require('modules/queries');
 	
-	var log = logger.get('stats');
 	var plugin = pm.create_plugin('stats', 'stats');
 
 	plugin.goto = function (line) {

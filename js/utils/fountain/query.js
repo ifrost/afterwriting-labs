@@ -1,4 +1,3 @@
-/* global define */
 define(function () {
 
 	var fquerybuilder = function (key_name, base, config) {

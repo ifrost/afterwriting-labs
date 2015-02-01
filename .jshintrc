@@ -11,9 +11,11 @@
 	"onevar": true,
 	"noarg": true,
 	"unused": true,
+	"browser": true,
 	"globals": {
 		"define": false,
-		"window": false,
-		"document": false
+		"require": false,
+		"gapi": false,
+		"ga": false
 	}
 }

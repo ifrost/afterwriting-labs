@@ -19,11 +19,11 @@ define(function (require) {
 		query.count('value', h.has_scene_time('DAY'), 'DAY', true)
 			.count('value', h.has_scene_time('NIGHT'), 'NIGHT', true)
 			.count('value', h.has_scene_time('DUSK'), 'DUSK', true)
-			.count('value', h.has_scene_time('DAWN'), 'DAWN', true)
+			.count('value', h.has_scene_time('DAWN'), 'DAWN', true);
 		query.enter(h.is('scene_heading'), function (item, fq) {
 			if (data.config.stats_keep_last_scene_time && fq.last_selection) {
 				fq.last_selection.value++;
-			};
+			}
 		});
 		query.exit(function (item, fq) {
 			fq.recognized_scenes += item.value;
