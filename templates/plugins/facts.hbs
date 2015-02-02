@@ -50,7 +50,7 @@
 				$('#facts-pages').html(text);
 			}
 			else {
-				$('#facts-pages').html(facts_data.pages.toFixed(2));
+				$('#facts-pages').html(facts_data.pages.toFixed(2) + ' <span style="opacity:0.5">(' + helper.eights(facts_data.pages) + ')</span>');
 			}			
 			$('#facts-time').html(helper.format_time(facts_data.filled_pages));
 			$('#facts-scenes').html(facts_data.scenes);

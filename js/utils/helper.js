@@ -32,6 +32,30 @@ define(function (require) {
 	module.lines_to_minutes = function (lines) {
 		return lines / data.config.print().lines_per_page;
 	};
+	
+	var EIGHTS_LEVELS = [0.0625, 0.1875, 0.3125, 0.4375, 0.5625, 0.6875, 0.8125, 0.9375, 1.0625];
+	
+	module.eights = function(value) {
+		var full = Math.floor(value),
+			rest = value % 1,
+			eight;
+		
+		for (var i=8; i>=0; i--) {
+			if (rest <= EIGHTS_LEVELS[i]) {
+				eight = i;
+			}
+		}
+		
+		if (eight === 8) {
+			full++;
+			eight = 0;
+		}
+		
+		var result = full ? full : '';
+		result += eight ? ' <sup>' + eight + '</sup>&frasl;<sub>8</sub>' : '';
+		
+		return result;
+	};
 
 	module.version_generator = function (current) {
 		current = current || "0";

@@ -171,6 +171,16 @@ a .icon:hover {
 	max-height: 250px;
 }
 
+sup {
+	vertical-align: super;
+	font-size: smaller;
+}
+
+sub { 
+	vertical-align: sub;
+	font-size: smaller;
+}
+
 /** small screens **/
 @media(max-width: 800px) {
 	h1 {
