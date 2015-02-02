@@ -25,18 +25,22 @@
 		<span id="facts-dialogue-time"></span>
 	</li>
 </ul>
+<div id="facts-time-of-speaking-container">
 <h2>Time of speaking</h2>
 <span class="content-expander expand-dialogue show-all-dialogues" style="margin-left: 20px">Top 10 characters shown. Click here to show all&nbsp;
 	<span class="nof-dialogues"></span>.</span>
 <span class="content-expander expand-dialogue show-top-dialogues" style="display:none; margin-left: 20px">All&nbsp;
 	<span class="nof-dialogues"></span>&nbsp;characters shown. Click here to show Top 10 only.</span>
 <ol id="facts-characters"></ol>
+</div>
+<div id="facts-locations-contaner">
 <h2>Locations</h2>
 <span class="content-expander expand-locations show-all-locations" style="margin-left: 20px">Top 10 locations shown. Click here to show all&nbsp;
 	<span class="nof-locations"></span>.</span>
 <span class="content-expander expand-locations show-top-locations" style="display:none; margin-left: 20px">All
 	<span class="nof-locations"></span>&nbsp;locations shown. Click here to show Top 10 only.</span>
 <ol id="facts-locations"></ol>
+</div>
 <!-- scripts -->
 <script>
 	require(['jquery', 'plugins/facts', 'utils/helper'], function($, facts, helper) {
@@ -44,14 +48,17 @@
 
 		facts.refresh.add(function() {
 			var facts_data = facts.data.facts;
-			$('#facts-title').html(facts_data.title.replace(/\*/g, '').replace(/_/g, '').replace(/\n/g, ' / '));
-			if (facts.each_scene_on_new_page()) {
-				var text = facts_data.pages.toFixed(2) + ' (text: ' + facts_data.filled_pages.toFixed(2) + ')'
-				$('#facts-pages').html(text);
+			$('#facts-title').html(facts_data.title.replace(/\*/g, '').replace(/_/g, '').replace(/\n/g, ' / ') || '-');
+						
+			var	pages_text = facts_data.pages.toFixed(2);			
+			var eights = helper.eights(facts_data.pages),
+				eights_text = eights ? ' ~ ' + eights  : '';
+			pages_text += eights_text;
+			if (facts.each_scene_on_new_page()) {				
+				pages_text += ' ~ ' + facts_data.filled_pages.toFixed(2) + ' without page breaks';
 			}
-			else {
-				$('#facts-pages').html(facts_data.pages.toFixed(2) + ' <span style="opacity:0.5">(' + helper.eights(facts_data.pages) + ')</span>');
-			}			
+			$('#facts-pages').html(pages_text);
+			
 			$('#facts-time').html(helper.format_time(facts_data.filled_pages));
 			$('#facts-scenes').html(facts_data.scenes);
 			$('#facts-action-time').html(helper.format_time(facts_data.action_time));
@@ -70,12 +77,26 @@
 			$('.nof-locations').html(facts_data.locations.length);
 
 
+			if (facts_data.characters.length === 0) {
+				$('#facts-time-of-speaking-container').hide();
+			}
+			else {
+				$('#facts-time-of-speaking-container').show();
+			}
+			
 			if (facts_data.characters.length > 10) {
 				$('.show-all-dialogues').show();
 				$('.show-top-dialogues').hide();
 				$('#facts-characters li.expandable').hide();
 			} else {
 				$('.expand-dialogue').hide();
+			}
+			
+			if (facts_data.locations.length === 0) {
+				$('#facts-locations-contaner').hide();
+			}
+			else {
+				$('#facts-locations-contaner').show();
 			}
 
 			if (facts_data.locations.length > 10) {
