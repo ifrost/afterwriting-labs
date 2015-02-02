@@ -267,10 +267,10 @@ define(function (require) {
 			selector.total_lines++;
 		});
 		query.exit(function (selector) {
-			selector.dialogue_time = selector.dialogue_lines / selector.total_lines;
-			selector.action_time = selector.action_lines / selector.total_lines;
-			selector.dialogue_percentage = selector.dialogue_lines / selector.total_lines; 
-			selector.action_percentage = selector.action_lines / selector.total_lines; 
+			selector.dialogue_time = selector.total_lines ? selector.dialogue_lines / selector.total_lines : 0;
+			selector.action_time = selector.total_lines ? selector.action_lines / selector.total_lines : 0;
+			selector.dialogue_percentage = selector.total_lines ? selector.dialogue_lines / selector.total_lines : 0; 
+			selector.action_percentage = selector.total_lines ? selector.action_lines / selector.total_lines : 0; 
 		});
 		return query;
 	};
