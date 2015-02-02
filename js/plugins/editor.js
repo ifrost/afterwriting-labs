@@ -105,6 +105,8 @@ define(function (require) {
 		}
 	};
 
+	plugin.synced = decorator.signal();
+	
 	plugin.set_sync = function (value) {
 		plugin.data.is_sync = value;
 		if (editor) {
@@ -113,8 +115,10 @@ define(function (require) {
 		if (plugin.data.is_sync) {
 			if (data.data('gd-fileid')) {
 				gd.sync(data.data('gd-fileid'), 3000, handle_sync);
+				plugin.synced('google-drive');
 			} else if (data.data('db-path')) {
 				db.sync(data.data('db-path'), 3000, handle_sync);
+				plugin.synced('drobox');
 			}
 
 		} else {

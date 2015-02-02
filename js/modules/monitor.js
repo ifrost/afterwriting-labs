@@ -5,6 +5,7 @@ define(function (require) {
 		info = require('plugins/info'),
 		open = require('plugins/open'),
 		save = require('plugins/save'),
+		editor = require('plugins/editor'),
 		stats = require('plugins/stats'),
 		layout = require('utils/layout');
 
@@ -89,6 +90,11 @@ define(function (require) {
 		});
 		open.open_last_used.add(function (startup) {
 			track_event('feature', 'open-last-used', startup === true ? 'startup' : 'manual');
+		});
+		
+		// editor
+		editor.synced.add(function(cloud){
+			track_event('feature', 'sync', cloud);
 		});
 
 		// save 
