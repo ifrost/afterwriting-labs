@@ -73,30 +73,51 @@ define(function (require) {
 			pages: 0,
 			filled_pages: 0,
 			action_lines: 0,
-			dialogue_lines: 0
+			dialogue_lines: 0,
+			action_scenes: 0,
+			dialogue_scenes: 0
 		});
-		basic.prepare(function(fq){
+		basic.prepare(function (fq) {
 			fq.current_scene_heading_token = null;
+			fq.dialogue_in_the_scene = false;
 		});
 		basic.count('action_lines', h.is('action', 'scene_heading', 'shot'));
 		basic.count('dialogue_lines', h.is_dialogue());
 		basic.count('pages', h.is('page_break'));
+		basic.enter(h.is_dialogue(), function (item, fq) {
+			fq.dialogue_in_the_scene = true;
+		});
 		basic.enter(h.is('scene_heading'), function (item, fq) {
 			if (fq.current_scene_heading_token !== item.token) {
 				fq.select().scenes++;
 				fq.current_scene_heading_token = item.token;
-			}			
+				if (fq.select().scenes > 1) {
+					if (fq.dialogue_in_the_scene) {
+						fq.select().dialogue_scenes += 1;
+					} else {
+						fq.select().action_scenes += 1;
+					}
+					fq.dialogue_in_the_scene = false;
+				}
+			}
 		});
 		basic.enter(true, function (item, fq) {
 			var selector = fq.select();
 			if (item.is('page_break')) {
-				selector.filled_pages += (selector.last_page_lines+1) / data.config.print().lines_per_page;
-				selector.last_page_lines = 0;				
+				selector.filled_pages += (selector.last_page_lines + 1) / data.config.print().lines_per_page;
+				selector.last_page_lines = 0;
 			} else {
 				selector.last_page_lines++;
 			}
 		});
-		basic.exit(function (item) {
+		basic.exit(function (item, fq) {
+			// last scene
+			if (fq.dialogue_in_the_scene) {
+				fq.select().dialogue_scenes++;
+			} else {
+				fq.select().action_scenes++;
+			}
+
 			var all = item.action_lines + item.dialogue_lines;
 			item.pages = item.pages + item.last_page_lines / data.config.print().lines_per_page;
 			item.filled_pages += item.last_page_lines / data.config.print().lines_per_page;
@@ -111,12 +132,43 @@ define(function (require) {
 					scenes: 0,
 					action_time: 0.0,
 					dialogue_time: 0.0,
+					dialogue_lines: 0,
 					characters: [],
 					locations: []
 				});
 			}
 		});
 		return basic;
+	};
+
+	var apply_character_levels = function (plan, basics) {
+		plan.sort(function (a, b) {
+			return b.nof_scenes - a.nof_scenes;
+		});
+		
+		var level = 1,
+			prev, post, prev_top = 0;
+		
+		var level_value = function (character) {
+			return character.nof_scenes * character.lines / basics.dialogue_lines;
+		};
+		
+		if (plan.length > 0) {
+			plan[0].level = 1;
+			for (var i = 1; i < plan.length; i++) {
+				if (i === plan.length - 1) {
+					plan[i].level = level;
+				} else {
+					prev = level_value(plan[i]) / level_value(plan[prev_top]);
+					post = level_value(plan[i + 1]) / level_value(plan[i]);
+					if (post > prev && level < 3) {
+						level++;
+						prev_top = i;
+					}
+					plan[i].level = level;
+				}
+			}
+		}
 	};
 
 	var create_characters = function () {
@@ -142,7 +194,9 @@ define(function (require) {
 			characters_query.exit(function (selection) {
 				selection.time = (selection.lines / basics.dialogue_lines) * basics.dialogue_time;
 			});
-			return characters_query.run(tokens, config);
+			var list = characters_query.run(tokens, config);
+			apply_character_levels(list.concat(), basics);
+			return list;
 		};
 		return runner;
 	};
@@ -165,7 +219,7 @@ define(function (require) {
 			lines: 0,
 			scenes_lines: null
 		});
-		query.prepare(function(fq){
+		query.prepare(function (fq) {
 			fq.current = null;
 		});
 		query.enter(h.is('scene_heading'), function (item, fq) {
@@ -269,8 +323,8 @@ define(function (require) {
 		query.exit(function (selector) {
 			selector.dialogue_time = selector.total_lines ? selector.dialogue_lines / selector.total_lines : 0;
 			selector.action_time = selector.total_lines ? selector.action_lines / selector.total_lines : 0;
-			selector.dialogue_percentage = selector.total_lines ? selector.dialogue_lines / selector.total_lines : 0; 
-			selector.action_percentage = selector.total_lines ? selector.action_lines / selector.total_lines : 0; 
+			selector.dialogue_percentage = selector.total_lines ? selector.dialogue_lines / selector.total_lines : 0;
+			selector.action_percentage = selector.total_lines ? selector.action_lines / selector.total_lines : 0;
 		});
 		return query;
 	};

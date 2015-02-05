@@ -19,6 +19,12 @@ define(function (require) {
 		facts.characters = queries.characters.run(data.parsed_stats.tokens, basics, {sort_by: 'lines'});
 		facts.locations = queries.locations.run(data.parsed_stats.tokens);
 	};
+	
+	plugin.get_characters_by_level = function(level) {
+		return plugin.data.facts.characters.filter(function(character){
+			return character.level === level;
+		});
+	};
 
 	plugin.each_scene_on_new_page = function() {
 		return data.config.each_scene_on_new_page;
