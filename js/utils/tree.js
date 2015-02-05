@@ -55,11 +55,14 @@ define(function (require) {
 					},
 					types: {
 						"default": {
-							"valid_children": ["default", "file"],
+							"valid_children": ["default", "file", "shared-file"],
 							"icon": "aw-jstree-folder"
 						},
 						"file": {
 							"icon": "aw-jstree-file"
+						},
+						"shared-file": {
+							"icon": "aw-jstree-shared-file"
 						}
 					}
 				}).on('ready.jstree', function () {

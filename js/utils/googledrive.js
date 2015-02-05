@@ -191,7 +191,7 @@ define(function () {
 		};
 	};
 	module.upload = auth_method(upload);
-
+	
 	/**
 	 * Generate list of files/folders
 	 */
@@ -204,14 +204,28 @@ define(function () {
 
 		var request = gapi.client.request({
 			path: '/drive/v2/files/',
-			method: 'GET'
-		});
-
-		request.execute(function (data) {
-			var items = data.items.filter(function (item) {
+			method: 'GET',
+			params: {
+				corpus: "DOMAIN",
+				q: 'trashed=false'
+			}
+		});		
+		
+		var download_callback = function(all_items, final_callback, data){
+			all_items = all_items.concat(data.items);
+			if (data.nextLink) {
+				gapi.client.request({path: data.nextLink}).execute(download_callback.bind(null, all_items, final_callback));
+			}
+			else {
+				final_callback(all_items);
+			}
+		};
+		
+		request.execute(download_callback.bind(null, [], function (items) {
+			items = items.filter(function (item) {
 				return !item.explicitlyTrashed && !item.labels.trashed;
-			}),
-				map_items = {}, root = {
+			});
+			var map_items = {}, root = {
 					title: 'Google Drive (root)',
 					id: 'root',
 					isRoot: true,
@@ -226,21 +240,35 @@ define(function () {
 
 			items.forEach(function (f) {
 				map_items[f.id] = f;
+				f.isFolder = f.mimeType === "application/vnd.google-apps.folder";
 				f.children = [];
 			});
-			items.forEach(function (i) {
-				i.isFolder = i.mimeType === "application/vnd.google-apps.folder";
-				i.parents.forEach(function (p) {
-					var parent = map_items[p.id] || root;
-					parent.children.push(i);
-				});
+			items.sort(function(a,b){
+				if (a.isFolder && !b.isFolder) {
+					return -1;
+				}
+				else if (!a.isFolder && b.isFolder) {
+					return 1;
+				}
+				return a.title > b.title ? 1 : -1;
+			});
+			items.forEach(function (i) {				
+				if (!i.parents || i.parents.length === 0) {
+					root.children.push(i);
+				}
+				else {
+					i.parents.forEach(function (p) {
+						var parent = map_items[p.id] || root;
+						parent.children.push(i);
+					});
+				}
 			});
 			if (options.after) {
 				options.after();
 			}
 			callback(root);
 
-		});
+		}));
 	};
 	module.list = auth_method(list);
 
@@ -252,8 +280,8 @@ define(function () {
 		var result = {
 			text: item.title,
 			id: item.id,
-			data: item,
-			type: item.isFolder ? 'default' : 'file',
+			data: item,			
+			type: item.isFolder ? 'default' : (item.shared ? 'shared-file' : 'file'),
 			state: {
 				opened: item.isRoot
 			}
