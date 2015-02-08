@@ -64,11 +64,14 @@ define(function (require) {
 		}
 		return result;
 	};
+	
+	var A4_DEFAULT_MAX = 58,
+		US_DEFAULT_MAX = 61;
 
 	var print_profiles = {
 		"a4": {
 			paper_size: "a4",
-			lines_per_page: 58,
+			lines_per_page: 57,
 			top_margin: 1.0,
 			page_width: 8.27,
 			page_height: 11.7,
@@ -86,36 +89,40 @@ define(function (require) {
 			},
 			scene_heading: {
 				feed: 1.5,
-				max: 58
+				max: A4_DEFAULT_MAX
 			},
 			action: {
 				feed: 1.5,
-				max: 58
+				max: A4_DEFAULT_MAX
+			},
+			shot: {
+				feed: 1.5,
+				max: A4_DEFAULT_MAX
 			},
 			character: {
-				feed: 3.7,
+				feed: 3.5,
 				max: 33
 			},
 			parenthetical: {
-				feed: 3.1,
-				max: 35
+				feed: 3,
+				max: 26
 			},
 			dialogue: {
 				feed: 2.5,
-				max: 33
+				max: 36
 			},
 			transition: {
 				feed: 0.0,
-				max: 58
+				max: A4_DEFAULT_MAX
 			},
 			centered: {
 				feed: 1.5,
 				style: 'center',
-				max: 58
+				max: A4_DEFAULT_MAX
 			},
 			synopsis: {
 				feed: 0.5,
-				max: 58,
+				max: A4_DEFAULT_MAX,
 				italic: true,
 				color: '#888888',
 				padding: 0,
@@ -123,7 +130,7 @@ define(function (require) {
 			},
 			section: {
 				feed: 0.5,
-				max: 58,
+				max: A4_DEFAULT_MAX,
 				color: '#555555',
 				level_indent: 0.2
 			},
@@ -138,18 +145,16 @@ define(function (require) {
 	print_profiles.usletter = JSON.parse(JSON.stringify(print_profiles.a4));
 	var letter  = print_profiles.usletter;
 	letter.paper_size = 'letter';
-	letter.lines_per_page = 54;
+	letter.lines_per_page = 55;
 	letter.page_width = 8.5;
 	letter.page_height = 11;
-	letter.scene_heading.max = 60;
-	letter.action.max = 60;
-	letter.character.max = 35;
-	letter.parenthetical.max = 38;
-	letter.dialogue.max = 35;
-	letter.transition.max = 60;
-	letter.centered.max = 60;
-	letter.synopsis.max = 60;
-	letter.section.max = 60;
+	
+	letter.scene_heading.max = US_DEFAULT_MAX;
+	letter.action.max = US_DEFAULT_MAX;
+	letter.shot.max = US_DEFAULT_MAX;
+	letter.transition.max = US_DEFAULT_MAX;
+	letter.section.max = US_DEFAULT_MAX;
+	letter.synopsis.max = US_DEFAULT_MAX;
 
 	plugin.default_config = {
 		show_background_image: true,

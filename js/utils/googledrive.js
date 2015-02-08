@@ -174,7 +174,8 @@ define(function (require) {
 			if (isUpdate) {
 				path += fileid;
 			}
-			var request = gapi.client.request({
+			
+			gapi.client.request({
 				'path': path,
 				'method': isUpdate ? 'PUT' : 'POST',
 				'params': {
@@ -185,13 +186,19 @@ define(function (require) {
 					'Content-Type': 'multipart/mixed; boundary="' + boundary + '"'
 				},
 				'body': multipartRequestBody
-			});
+			}).then(
+				function(response){
+					callback(response.result);
+				}, 
+				function(response) {
+					$.prompt.close();
+					$.prompt(response.result.error.message);
+				});
 
-			request.execute(callback);
 		};
 	};
 	module.upload = auth_method(upload);
-
+	
 	/**
 	 * Generate list of files/folders
 	 */
@@ -204,14 +211,28 @@ define(function (require) {
 
 		var request = gapi.client.request({
 			path: '/drive/v2/files/',
-			method: 'GET'
-		});
-
-		request.execute(function (data) {
-			var items = data.items.filter(function (item) {
+			method: 'GET',
+			params: {
+				corpus: "DOMAIN",
+				q: 'trashed=false'
+			}
+		});		
+		
+		var download_callback = function(all_items, final_callback, data){
+			all_items = all_items.concat(data.items);
+			if (data.nextLink) {
+				gapi.client.request({path: data.nextLink}).execute(download_callback.bind(null, all_items, final_callback));
+			}
+			else {
+				final_callback(all_items);
+			}
+		};
+		
+		request.execute(download_callback.bind(null, [], function (items) {
+			items = items.filter(function (item) {
 				return !item.explicitlyTrashed && !item.labels.trashed;
-			}),
-				map_items = {}, root = {
+			});
+			var map_items = {}, root = {
 					title: 'Google Drive (root)',
 					id: 'root',
 					isRoot: true,
@@ -226,21 +247,36 @@ define(function (require) {
 
 			items.forEach(function (f) {
 				map_items[f.id] = f;
+				f.isFolder = f.mimeType === "application/vnd.google-apps.folder";
+				f.disabled = options.writeOnly && f.userPermission && f.userPermission.role && ["owner", "writer"].indexOf(f.userPermission.role) === -1;
 				f.children = [];
 			});
-			items.forEach(function (i) {
-				i.isFolder = i.mimeType === "application/vnd.google-apps.folder";
-				i.parents.forEach(function (p) {
-					var parent = map_items[p.id] || root;
-					parent.children.push(i);
-				});
+			items.sort(function(a,b){
+				if (a.isFolder && !b.isFolder) {
+					return -1;
+				}
+				else if (!a.isFolder && b.isFolder) {
+					return 1;
+				}
+				return a.title > b.title ? 1 : -1;
+			});
+			items.forEach(function (i) {				
+				if (!i.parents || i.parents.length === 0) {
+					root.children.push(i);
+				}
+				else {
+					i.parents.forEach(function (p) {
+						var parent = map_items[p.id] || root;
+						parent.children.push(i);
+					});
+				}
 			});
 			if (options.after) {
 				options.after();
 			}
 			callback(root);
 
-		});
+		}));
 	};
 	module.list = auth_method(list);
 
@@ -250,12 +286,13 @@ define(function (require) {
 	module.convert_to_jstree = function (item) {
 		var children = item.children.map(module.convert_to_jstree);
 		var result = {
-			text: item.title,
+			text: item.title + (item.disabled ? ' (no permissions)' : ''),
 			id: item.id,
-			data: item,
-			type: item.isFolder ? 'default' : 'file',
+			data: item,			
+			type: item.isFolder ? 'default' : (item.shared ? 'shared-file' : 'file'),
 			state: {
-				opened: item.isRoot
+				opened: item.isRoot,
+				disabled: item.disabled
 			}
 		};
 		if (children.length) {

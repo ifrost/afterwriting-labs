@@ -118,7 +118,9 @@ define(function (require) {
 				});
 			},
 			selected: data.data('gd-fileid'),
-			list_options: {},
+			list_options: {
+				writeOnly: true
+			},
 			default_filename: 'screenplay.fountain'
 		});
 	};
@@ -147,7 +149,8 @@ define(function (require) {
 			},
 			selected: data.data('gd-pdf-id'),
 			list_options: {
-				pdfOnly: true
+				pdfOnly: true,
+				writeOnly: true
 			},
 			default_filename: 'screenplay.pdf'
 		});
@@ -187,7 +190,7 @@ define(function (require) {
 				save: true,
 				info: 'Select a file to override or choose a folder to save as a new file.',
 				callback: function (selected, filename) {
-					$.prompt('Please wait');
+					$.prompt('Please wait...');
 					options.save_callback(selected, filename);
 				}
 			});
