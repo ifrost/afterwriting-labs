@@ -1,3 +1,7 @@
+.jstree-disabled {
+	font-style: italic;
+	opacity: 0.5;
+}
 .jstree-icon.jstree-themeicon.aw-jstree-shared-file.jstree-themeicon-custom {
 	background-size: 12px;
 	background-position: 6px 6px;

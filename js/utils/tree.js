@@ -66,9 +66,9 @@ define(function (require) {
 						}
 					}
 				}).on('ready.jstree', function () {
-					if (options.selected) {
+					if (options.selected && !$('#jstree').jstree(true).get_node(options.selected).state.disabled) {
 						$('#jstree').jstree(true).select_node(options.selected);
-						var parent_top = $('#jstree-parent').position().top
+						var parent_top = $('#jstree-parent').position().top;
 						var element_top = $('#jstree li[id="' + options.selected + '"').position().top;
 						var parent_half_height = $('#jstree-parent').height() / 2;
 						$('#jstree-parent').scrollTop(element_top - parent_top - parent_half_height);

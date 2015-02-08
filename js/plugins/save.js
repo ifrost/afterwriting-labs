@@ -119,7 +119,9 @@ define(function (require) {
 				});
 			},
 			selected: data.data('gd-fileid'),
-			list_options: {},
+			list_options: {
+				writeOnly: true
+			},
 			default_filename: 'screenplay.fountain'
 		});
 	};
@@ -148,7 +150,8 @@ define(function (require) {
 			},
 			selected: data.data('gd-pdf-id'),
 			list_options: {
-				pdfOnly: true
+				pdfOnly: true,
+				writeOnly: true
 			},
 			default_filename: 'screenplay.pdf'
 		});

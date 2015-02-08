@@ -174,7 +174,8 @@ define(function () {
 			if (isUpdate) {
 				path += fileid;
 			}
-			var request = gapi.client.request({
+			
+			gapi.client.request({
 				'path': path,
 				'method': isUpdate ? 'PUT' : 'POST',
 				'params': {
@@ -185,9 +186,15 @@ define(function () {
 					'Content-Type': 'multipart/mixed; boundary="' + boundary + '"'
 				},
 				'body': multipartRequestBody
-			});
+			}).then(
+				function(response){
+					callback(response.result);
+				}, 
+				function(response) {
+					$.prompt.close();
+					$.prompt(response.result.error.message);
+				});
 
-			request.execute(callback);
 		};
 	};
 	module.upload = auth_method(upload);
@@ -241,6 +248,7 @@ define(function () {
 			items.forEach(function (f) {
 				map_items[f.id] = f;
 				f.isFolder = f.mimeType === "application/vnd.google-apps.folder";
+				f.disabled = options.writeOnly && f.userPermission && f.userPermission.role && ["owner", "writer"].indexOf(f.userPermission.role) === -1;
 				f.children = [];
 			});
 			items.sort(function(a,b){
@@ -278,12 +286,13 @@ define(function () {
 	module.convert_to_jstree = function (item) {
 		var children = item.children.map(module.convert_to_jstree);
 		var result = {
-			text: item.title,
+			text: item.title + (item.disabled ? ' (no permissions)' : ''),
 			id: item.id,
 			data: item,			
 			type: item.isFolder ? 'default' : (item.shared ? 'shared-file' : 'file'),
 			state: {
-				opened: item.isRoot
+				opened: item.isRoot,
+				disabled: item.disabled
 			}
 		};
 		if (children.length) {
