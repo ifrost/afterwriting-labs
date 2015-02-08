@@ -144,7 +144,7 @@ define(function (require) {
 			if (data.script()) {
 				var title_match;
 				var wait_for_non_empty = false;
-				data.script().split('\n').forEach(function (line) {
+				data.script().split('\n').some(function (line) {
 					title_match = line.match(/title\:(.*)/i);
 					if (wait_for_non_empty) {
 						title = line.trim().replace(/\*/g, '').replace(/_/g, '');
@@ -154,6 +154,7 @@ define(function (require) {
 						title = title_match[1].trim();
 						wait_for_non_empty = !title;
 					}
+					return title && !wait_for_non_empty;
 				});
 			}
 			data.data('last-used-title', title || 'No title');

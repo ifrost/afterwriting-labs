@@ -55,17 +55,22 @@ define(function (require) {
 					},
 					types: {
 						"default": {
-							"valid_children": ["default", "file"],
+							"valid_children": ["default", "file", "shared-file"],
 							"icon": "aw-jstree-folder"
 						},
 						"file": {
 							"icon": "aw-jstree-file"
+						},
+						"shared-file": {
+							"icon": "aw-jstree-shared-file"
 						}
 					}
 				}).on('ready.jstree', function () {
 					if (options.selected) {
-						$('#jstree').jstree(true).select_node(options.selected);
-						var parent_top = $('#jstree-parent').position().top
+						if (!$('#jstree').jstree(true).get_node(options.selected).state.disabled) {
+							$('#jstree').jstree(true).select_node(options.selected);
+						}
+						var parent_top = $('#jstree-parent').position().top;
 						var element_top = $('#jstree li[id="' + options.selected + '"').position().top;
 						var parent_half_height = $('#jstree-parent').height() / 2;
 						$('#jstree-parent').scrollTop(element_top - parent_top - parent_half_height);

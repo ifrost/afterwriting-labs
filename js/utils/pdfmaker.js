@@ -216,7 +216,7 @@ define(function (require) {
 			doc.addPage();
 		}
 
-		var y = 1,
+		var y = 0,
 			page = 1,
 			scene_number,
 			current_section_level = 0,
@@ -233,7 +233,7 @@ define(function (require) {
 				});
 			}
 			if (cfg.print_footer) {
-				doc.format_text(cfg.print_footer, 1.5, cfg.print().page_height - 0.6, {
+				doc.format_text(cfg.print_footer, 1.5, cfg.print().page_height - 0.5, {
 					color: '#777777'
 				});
 			}
@@ -270,7 +270,7 @@ define(function (require) {
 		print_header_and_footer();
 		lines.forEach(function (line) {			
 			if (line.type == "page_break") {
-				y = 1;
+				y = 0;
 				doc.addPage();
 				page++;
 

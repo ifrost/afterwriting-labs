@@ -187,7 +187,7 @@ define(function (require) {
 		_state = 'normal';
 
 		tokens.forEach(function (token) {
-			var max = (cfg.print()[token.type] || {}).max || 99999;
+			var max = (cfg.print()[token.type] || {}).max || cfg.print().action.max;
 
 			if (token.dual) {
 				max *= cfg.print().dual_max_factor;
