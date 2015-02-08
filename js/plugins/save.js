@@ -191,7 +191,7 @@ define(function (require) {
 				save: true,
 				info: 'Select a file to override or choose a folder to save as a new file.',
 				callback: function (selected, filename) {
-					$.prompt('Please wait');
+					$.prompt('Please wait...');
 					options.save_callback(selected, filename);
 				}
 			});
