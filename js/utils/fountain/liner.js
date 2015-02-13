@@ -181,10 +181,11 @@ define(function (require) {
 
 	module.line = function (tokens, cfg) {
 
-		var lines = [];
+		var lines = [],
+			global_index = 0;
 
 		_state = 'normal';
-
+		
 		tokens.forEach(function (token) {
 			var max = (cfg.print()[token.type] || {}).max || cfg.print().action.max;
 
@@ -198,7 +199,9 @@ define(function (require) {
 				token.lines[0].number = token.number;
 			}
 
-			token.lines.forEach(function (line) {
+			token.lines.forEach(function (line, index) {
+				line.local_index = index;
+				line.global_index = global_index++;
 				lines.push(line);
 			});
 		});
