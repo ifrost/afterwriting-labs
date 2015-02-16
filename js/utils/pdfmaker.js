@@ -43,7 +43,7 @@ define(function (require) {
 		};
 		var doc = new PDFDocument(options);
 		doc.font(fonts.prime.normal);
-		doc.fontSize(12);
+		doc.fontSize(cfg.print().font_size || 12);
 
 		// convert points to inches for text
 		doc.reset_format = function () {
@@ -298,7 +298,7 @@ define(function (require) {
 				} else {
 					var feed = (cfg.print()[line.type] || {}).feed || cfg.print().action.feed;
 					if (line.type === "transition") {
-						feed = cfg.print().action.feed + cfg.print().action.max * 0.1 - line.text.length * 0.1;
+						feed = cfg.print().action.feed + cfg.print().action.max * cfg.print().font_width - line.text.length * cfg.print().font_width;
 					}
 					if (line.type === "scene_heading" && cfg.embolden_scene_headers) {
 						text = '**' + text + '**';
