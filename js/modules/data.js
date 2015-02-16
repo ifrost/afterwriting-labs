@@ -1,14 +1,19 @@
 /* global define, window */
 define(function (require) {
-	
+
 	var Modernizr = require('modernizr'),
 		fparser = require('utils/fountain/parser'),
-		fliner = require('utils/fountain/liner'), 
+		fliner = require('utils/fountain/liner'),
 		converter = require('utils/converters/scriptconverter'),
 		decorator = require('utils/decorator');
 
 	var plugin = {};
 	var _tempStorage = {};
+	var url_params = {};
+
+	window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
+		url_params[key] = value;
+	});
 
 	plugin.data = function (key, value) {
 		if (Modernizr.localstorage) {
@@ -25,23 +30,22 @@ define(function (require) {
 			}
 		}
 	};
-	
+
 	plugin.format = '';
 
-	plugin.script = decorator.property(function(value){
-		var result = converter.to_fountain(value);		
+	plugin.script = decorator.property(function (value) {
+		var result = converter.to_fountain(value);
 		plugin.format = result.format;
 		return result.value;
 	});
-	
-	plugin.parse = decorator(function() {
+
+	plugin.parse = decorator(function () {
 		plugin.parsed = fparser.parse(plugin.script(), plugin.config);
 		plugin.parsed.lines = fliner.line(plugin.parsed.tokens, plugin.config);
-		
+
 		if (plugin.config.use_print_settings_for_stats) {
 			plugin.parsed_stats = plugin.parsed;
-		}
-		else {			
+		} else {
 			var stats_config = Object.create(plugin.config);
 			stats_config.print_actions = true;
 			stats_config.print_headers = true;
@@ -53,11 +57,11 @@ define(function (require) {
 			plugin.parsed_stats.lines = fliner.line(plugin.parsed_stats.tokens, stats_config);
 		}
 	});
-	
-	plugin.get_title_page_token = function(type) {
+
+	plugin.get_title_page_token = function (type) {
 		var result = null;
 		if (plugin.parsed && plugin.parsed.title_page) {
-			plugin.parsed.title_page.forEach(function(token){
+			plugin.parsed.title_page.forEach(function (token) {
 				if (token.is(type)) {
 					result = token;
 				}
@@ -65,7 +69,7 @@ define(function (require) {
 		}
 		return result;
 	};
-	
+
 	var A4_DEFAULT_MAX = 58,
 		US_DEFAULT_MAX = 61;
 
@@ -139,23 +143,41 @@ define(function (require) {
 				color: '#888888',
 				italic: true
 			}
-			
+
 		},
 	};
 
 	print_profiles.usletter = JSON.parse(JSON.stringify(print_profiles.a4));
-	var letter  = print_profiles.usletter;
+	var letter = print_profiles.usletter;
 	letter.paper_size = 'letter';
 	letter.lines_per_page = 55;
 	letter.page_width = 8.5;
 	letter.page_height = 11;
-	
+
 	letter.scene_heading.max = US_DEFAULT_MAX;
 	letter.action.max = US_DEFAULT_MAX;
 	letter.shot.max = US_DEFAULT_MAX;
 	letter.transition.max = US_DEFAULT_MAX;
 	letter.section.max = US_DEFAULT_MAX;
 	letter.synopsis.max = US_DEFAULT_MAX;
+
+	// font size = experimental feature
+	if (url_params.fontSize) {
+		[print_profiles.usletter, print_profiles.a4].forEach(function (profile) {
+			var font_size = parseInt(url_params.fontSize),
+				up = font_size / 12.0,
+				down = 12.0 / font_size;
+			profile.font_size = font_size;
+			profile.lines_per_page = Math.floor(profile.lines_per_page * down);
+			profile.font_width = profile.font_width * up;
+			profile.font_height = profile.font_height * up;
+			Object.keys(profile).forEach(function (key) {
+				if (typeof (profile[key]) === "object") {
+					profile[key].max = Math.floor(profile[key].max * down);
+				}
+			});
+		});
+	}
 
 	plugin.default_config = {
 		show_background_image: true,
@@ -184,7 +206,7 @@ define(function (require) {
 		each_scene_on_new_page: false,
 		use_print_settings_for_stats: true
 	};
-	
+
 
 	plugin.default_config.print = function () {
 		return print_profiles[plugin.config.print_profile];
@@ -200,20 +222,19 @@ define(function (require) {
 	};
 
 	plugin.load_config = function () {
-		plugin.config = Object.create(plugin.default_config);		
+		plugin.config = Object.create(plugin.default_config);
 		var overrides;
 		try {
 			overrides = JSON.parse(plugin.data('config'));
-		}
-		catch (error) {
+		} catch (error) {
 			overrides = {};
 		}
 		for (var attrname in overrides) {
 			plugin.config[attrname] = overrides[attrname];
 		}
 	};
-	
-	plugin.prepare = function() {
+
+	plugin.prepare = function () {
 		plugin.load_config();
 	};
 
