@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+console.info("'afterwriting command line interface");
+console.info("www: http://afterwriting.com\n");
+
 global.window = undefined;
 
 var stdio = require('stdio');
@@ -10,18 +13,18 @@ var ops = stdio.getopt({
 	'source': {
 		key: 'source',
 		args: 1,
-		description: 'screenplay file (.fountain or .fdx)',
+		description: 'Fountain screenplay to load',
 		mandatory: true
 	},
 	'pdf': {
 		key: 'pdf',
 		args: '*',
-		description: 'generate pdf'
+		description: 'output PDF filename'
 	},
 	'config': {
 		key: 'config',
 		args: 1,
-		description: 'config file'
+		description: 'configuration file'
 	},
 	'overwrite': {
 		key: 'overwrite',

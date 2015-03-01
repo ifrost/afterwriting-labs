@@ -18,7 +18,7 @@
 	"print_watermark": "",
 	"scenes_numbers": "none",
 	"each_scene_on_new_page": false,
-	"variables": {
+	"snippets": {
 		"protagonist": "$bond.last",
 		"antagonist": "Dr. Julius No",
 		"location": "room",

@@ -25,7 +25,7 @@ define('utils/fountain/preprocessor', function (require) {
 		return text.replace(new RegExp(value, "g"), new_value);
 	}
 
-	module.process_variables = function (text, variables) {
+	module.process_snippets = function (text, variables) {
 		var merged_variables = {}, all_variables;
 		
 		merge_keys(variables || {}, merged_variables);
