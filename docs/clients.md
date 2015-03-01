@@ -1,9 +1,180 @@
 Afterwriting Command Line Interface
 ===================================
 
+Afterwriting CLI is a command line tool that lets you generate PDF from your fountain script using node.js.
+
 Installation
 ------------
 
 Install [node.js](http://nodejs.org/).
 
-Download project sources - https://github.com/ifrost/afterwriting-labs/releases/latest
+Download project sources - https://github.com/ifrost/afterwriting-labs/releases/latest. Extract all files and open a terminal window:
+
+    > cd afterwriting-labs
+    > npm install
+    > node awc.js --help
+
+Usage
+-----
+
+Example:
+
+    > node awc.js --source my_draft.fountain --pdf screenplay.pdf
+    
+This command will convert script from *screenplay.fountain* into PDF and it will save it as *screenplay.pdf*.
+
+If name of the output PDF differs from the screenplay file name, you can just write, e.g.:
+
+    > node awc.js --source screenplay.fountain --pdf
+    
+The script will prompt you for confirmation if the PDF file already exists. If you want to always overwrite existing files, pass --overwrite option:
+
+    > node awc.js --source screenplay.fountain --pdf --overwrite
+    
+If you need to customize your PDF you can pass a config file:
+
+    > node awc.js --source screenplay.fountain --pdf --config config.json
+
+Config file
+-----------
+
+Config should be a JSON with this structure:
+
+	{
+		"embolden_scene_headers": false,
+		"show_page_numbers": true,
+		"split_dialogue": true,
+		"print_title_page": true,
+		"print_profile": "a4",
+		"double_space_between_scenes": false,
+		"print_sections": false,
+		"print_synopsis": false,
+		"print_actions": true,
+		"print_headers": true,
+		"print_dialogues": true,
+		"number_sections": false,
+		"use_dual_dialogue": true,
+		"print_notes": false,
+		"print_header": "",
+		"print_footer": "",
+		"print_watermark": "",
+		"scenes_numbers": "none",
+		"each_scene_on_new_page": false,
+	}
+
+| Option        | Value           | Description |
+| ------------- |:-------------:| -----|
+| embolden_scene_headers     | true/false | - |
+| show_page_numbers      | true/false      | - |
+| split_dialogue | true/false      | whether to split dialogue between pages or not |
+| print_title_page | true/false | - |
+| print_profile | "a4"/"usletter" | paper size |
+| double_space_between_scenes | true/false | - |
+| print_sections | true/false | print sections (marked with #) |
+| print_synopsis | true/false | print synopsis (market with =) |
+| print_actions | true/false | print action blocks |
+| print_headers | true/false | print scene headers |
+| print_dialogues | true/false | print dialogues |
+| number_sections | true/false | auto-numbering sections |
+| use_dual_dialogue | true/false | print dual dialogue in two columns |
+| print_notes | true/false | print notes |
+| print_header | string | a text to put on the top of the page |
+| print_footer | string | a text to put on the bottom of the page |
+| print_watermark | string | watermark text |
+| scenes_numbers | "none"/"left"/"right"/"both" | side of auto-numbering scenes |
+| each_scene_on_new_page | true/false | break page after a scene |
+
+Variables
+---------
+
+In your config file you can add reusable snippets. Each time you use a snippet in your script it will be replaced with a specified text. Example:
+
+The config file:
+
+	{
+		"embolden_scene_headers": false,
+		...
+		"each_scene_on_new_page": false,
+		"snippets": {
+			"protagonist": "$bond.last",
+			"antagonist": "Dr. Julius No",
+			"location": "room",
+			"bond": {			
+				"first": "James",
+				"last": "Bond",
+				"name": "$bond.first $bond.last"
+			}
+		}
+	}
+
+The script:
+
+    INT. $LOCATION - DAY
+    
+    $PROTAGONIST enters the $location. $Antagonist attacks him.
+    
+    $ANTAGONIST
+    Aaaaa!
+    
+    $Protagonists kills $Antagonist.
+    
+    $BOND.LAST
+    My name is $bond.last, $bond.name.
+
+
+The output:
+
+    BOND enters the room. Dr. Julius No attacks him.
+    
+    DR. JULIUS NO
+    Aaaaa!
+    
+    James Bond kills Dr. Julius No.
+    
+    BOND
+    My name is Bond, James Bond.
+    
+    
+The simplest way of using snippets is to just define corresponding text:
+
+    "snippets": {
+			"protagonist": "Bond",
+			"antagonist": "Dr. Julius No",
+		}
+    
+To use your snippet in the script just simply put a $ sign before it. There are three ways of injecting a snippet:
+
+* $snippet - snippet injected as defined in the conifg
+* $SNIPPET - upper cased snippet
+* $Snippet - capitalized snippet
+
+You can nest snippets:
+
+    "snippets": {
+			"name": "$first $last",
+			"first": "John",
+			"last": "Doe"
+		}
+
+If you need to organize your snippets you can describe them as a hierachy:
+
+    "snippets": {
+			"bond": {			
+				"first": "James",
+				"last": "Bond",
+				"name": "$bond.first $bond.last"
+			}
+    }
+    
+A hierachy will be converted to a flat list of snippets equivalent to:
+
+    "snippets": {
+			"bond.name": "James Bond",
+			"bond.first": "James",
+			"bond.last": "Bond"
+    }
+
+Known issues
+------------
+
+* converting directly from the .fdx files doesn't work (use web based app to convert from FinalDraft)
