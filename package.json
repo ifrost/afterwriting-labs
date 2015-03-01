@@ -41,5 +41,9 @@
   },
   "licenses": {
     "type": "MIT"
+  },
+  "dependencies": {
+    "d3": "^3.5.5",
+    "stdio": "^0.2.7"
   }
 }
