@@ -14,4 +14,4 @@ Grunt tasks
 Command Line Interface
 ----------------------
 
-[CLI for node.js](docs/client.md)
+[CLI for node.js](docs/clients.md)
