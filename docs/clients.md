@@ -148,8 +148,8 @@ The output:
 The simplest way of using snippets is by defining corresponding text:
 
     "snippets": {
-	"protagonist": "Bond",
-	"antagonist": "Dr. Julius No"
+        "protagonist": "Bond",
+        "antagonist": "Dr. Julius No"
     }
     
 To use your snippet in the script just simply put a $ sign before it. There are three ways of injecting a snippet:
@@ -161,27 +161,27 @@ To use your snippet in the script just simply put a $ sign before it. There are 
 You can nest snippets:
 
     "snippets": {
-	"name": "$first $last",
-	"first": "John",
-	"last": "Doe"
+        "name": "$first $last",
+        "first": "John",
+        "last": "Doe"
     }
 
 If you need to organize your snippets you can put them in a hierachy:
 
     "snippets": {
-	"bond": {			
-		"first": "James",
-		"last": "Bond",
-		"name": "$bond.first $bond.last"
-	}
+    "bond": {
+        "first": "James",
+        "last": "Bond",
+        "name": "$bond.first $bond.last"
+        }
     }
     
 That hierachy will be converted to a flat list of snippets equivalent to:
 
     "snippets": {
-	"bond.name": "James Bond",
-	"bond.first": "James",
-	"bond.last": "Bond"
+        "bond.name": "James Bond",
+        "bond.first": "James",
+        "bond.last": "Bond"
     }
 
 Known issues
