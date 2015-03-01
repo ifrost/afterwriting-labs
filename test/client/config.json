@@ -17,5 +17,15 @@
 	"print_footer": "",
 	"print_watermark": "",
 	"scenes_numbers": "none",
-	"each_scene_on_new_page": false
+	"each_scene_on_new_page": false,
+	"variables": {
+		"protagonist": "$bond.last",
+		"antagonist": "Dr. Julius No",
+		"location": "room",
+		"bond": {			
+			"first": "James",
+			"last": "Bond",
+			"name": "$bond.first $bond.last"
+		}
+	}
 }

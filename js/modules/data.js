@@ -4,6 +4,7 @@ define('modules/data', function (require) {
 		fparser = require('utils/fountain/parser'),
 		fliner = require('utils/fountain/liner'),
 		converter = require('utils/converters/scriptconverter'),
+		preprocessor = require('utils/fountain/preprocessor'),
 		decorator = require('utils/decorator');
 
 	var plugin = {};
@@ -36,6 +37,7 @@ define('modules/data', function (require) {
 
 	plugin.script = decorator.property(function (value) {
 		var result = converter.to_fountain(value);
+		result.value = preprocessor.process_variables(value, plugin.config.variables);
 		plugin.format = result.format;
 		return result.value;
 	});
