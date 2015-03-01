@@ -1,4 +1,4 @@
-/* global define, ga, window, document */
+/*jshint -W069 */
 define(function (require) {
 
 	var logger = require('logger'),
@@ -6,11 +6,8 @@ define(function (require) {
 		open = require('plugins/open'),
 		save = require('plugins/save'),
 		editor = require('plugins/editor'),
-		preview = require('plugins/preview'),
-		facts = require('plugins/facts'),
 		stats = require('plugins/stats'),
-		layout = require('utils/layout'),
-		settings = require('plugins/settings');
+		layout = require('utils/layout');
 
 	var module = {};
 	var log = logger.get('monitor');
@@ -93,6 +90,11 @@ define(function (require) {
 		});
 		open.open_last_used.add(function (startup) {
 			track_event('feature', 'open-last-used', startup === true ? 'startup' : 'manual');
+		});
+		
+		// editor
+		editor.synced.add(function(cloud){
+			track_event('feature', 'sync', cloud);
 		});
 
 		// save 

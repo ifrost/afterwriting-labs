@@ -1,19 +1,21 @@
-/* global define, window */
-define(function (require) {
+define('modules/data', function (require) {
 
 	var Modernizr = require('modernizr'),
 		fparser = require('utils/fountain/parser'),
 		fliner = require('utils/fountain/liner'),
 		converter = require('utils/converters/scriptconverter'),
+		preprocessor = require('utils/fountain/preprocessor'),
 		decorator = require('utils/decorator');
 
 	var plugin = {};
 	var _tempStorage = {};
 	var url_params = {};
 
-	window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
-		url_params[key] = value;
-	});
+	if (window && window.location && window.location.search) {
+		window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
+			url_params[key] = value;
+		});
+	}
 
 	plugin.data = function (key, value) {
 		if (Modernizr.localstorage) {
@@ -35,6 +37,7 @@ define(function (require) {
 
 	plugin.script = decorator.property(function (value) {
 		var result = converter.to_fountain(value);
+		result.value = preprocessor.process_snippets(result.value, plugin.config.snippets);
 		plugin.format = result.format;
 		return result.value;
 	});
@@ -221,13 +224,14 @@ define(function (require) {
 		plugin.load_config();
 	};
 
-	plugin.load_config = function () {
+	plugin.load_config = function (overrides) {
 		plugin.config = Object.create(plugin.default_config);
-		var overrides;
-		try {
-			overrides = JSON.parse(plugin.data('config'));
-		} catch (error) {
-			overrides = {};
+		if (!overrides) {
+			try {
+				overrides = JSON.parse(plugin.data('config'));
+			} catch (error) {
+				overrides = {};
+			}
 		}
 		for (var attrname in overrides) {
 			plugin.config[attrname] = overrides[attrname];

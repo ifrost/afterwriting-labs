@@ -1,4 +1,4 @@
-define(function(require){
+define('utils/fonts', function(){
 	
 	var fonts = {};
 	

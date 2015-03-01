@@ -1,4 +1,3 @@
-/* global define */
 define(function (require) {
 	var pm = require('utils/pluginmanager'),
 		fhelpers = require('utils/fountain/helpers'),
@@ -15,7 +14,7 @@ define(function (require) {
 		window.fhelpers = fhelpers;
 		window.helper = helper;
 		window.queries = queries;
-	}
+	};
 	
 	return plugin;
 });

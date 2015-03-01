@@ -1,4 +1,3 @@
-/* global define */
 define(function (require) {
 	var d3 = require('d3'),
 		$ = require('jquery'),
@@ -84,7 +83,7 @@ define(function (require) {
 			return 'location location' + aggregated_data[item.location].location_index;
 		})
 			.attr('fill', function (item) {
-			return item.occurrences.length == 1 ? '#ffffff' : color(item.location);
+			return item.occurrences.length === 1 ? '#ffffff' : color(item.location);
 		})
 			.on("mouseover", function (d) {
 			var occurences = 'occurrences: ' + aggregated_data[d.location].occurrences;

@@ -1,4 +1,3 @@
-/* global define, Blob, window */
 define(function (require) {
 
 	var pm = require('utils/pluginmanager'),

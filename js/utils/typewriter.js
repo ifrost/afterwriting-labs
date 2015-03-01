@@ -1,4 +1,3 @@
-/* global define */
 define(function (require) {
 	var jsPDF = require('jspdf'),
 		data = require('modules/data'),
@@ -110,7 +109,7 @@ define(function (require) {
 		var text;
 		
 		lines.forEach(function (line) {
-			if (line.type == "page_break") {
+			if (line.type === "page_break") {
 				y = 1;
 				doc.addPage();
 				page++;
@@ -131,10 +130,10 @@ define(function (require) {
 					center(text, cfg.print().top_margin + cfg.print().font_height * y++);
 				} else {
 					var feed = (cfg.print()[line.type] || {}).feed || cfg.print().action.feed;
-					if (line.type == "transition") {
+					if (line.type === "transition") {
 						feed = cfg.print().action.feed + cfg.print().action.max * 0.1 - line.text.length * 0.1;
 					}
-					if (line.type == "scene_heading" && cfg.embolden_scene_headers) {
+					if (line.type === "scene_heading" && cfg.embolden_scene_headers) {
 						doc.setFontType("bold");
 					} else {
 						doc.setFontType("normal");

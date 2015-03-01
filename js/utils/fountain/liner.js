@@ -1,5 +1,4 @@
-/* global define */
-define(function (require) {
+define('utils/fountain/liner', function (require) {
 
 	var h = require('utils/fountain/helpers');
 
@@ -59,7 +58,7 @@ define(function (require) {
 		// don't break unless it's the last line
 		else if (token_on_break.is('action') &&
 				token_on_break.token.lines.length < 4 &&
-				token_on_break.token.lines.indexOf(token_on_break) != token_on_break.token.lines.length - 1) {
+				token_on_break.token.lines.indexOf(token_on_break) !== token_on_break.token.lines.length - 1) {
 			return false;
 		}
 		// for and more lines
@@ -72,11 +71,11 @@ define(function (require) {
 		// aaaaaaaaa <--- allow breaking after this line
 		else if (token_on_break.is('action') && 
 				token_on_break.token.lines.length >= 4 &&
-				(token_on_break.token.lines.indexOf(token_on_break) == 0 ||
-				token_on_break.token.lines.indexOf(token_on_break) == token_on_break.token.lines.length - 2)) {
+				(token_on_break.token.lines.indexOf(token_on_break) === 0 ||
+				token_on_break.token.lines.indexOf(token_on_break) === token_on_break.token.lines.length - 2)) {
 			return false;
 		} else if (cfg.split_dialogue && token_on_break.is("dialogue") && token_after && token_after.is("dialogue") && token_before.is("dialogue") && !(token_on_break.dual)) {
-			for (var character = before; lines[character].type != "character"; character--) {}
+			for (var character = before; lines[character].type !== "character"; character--) {}
 			lines.splice(index, 0, h.create_line({
 				type: "parenthetical",
 				text: MORE,
@@ -91,7 +90,7 @@ define(function (require) {
 				token: token_on_break.token
 			}));
 			return true;
-		} else if (lines[index].is_dialogue() != -1 &&  lines[after] && lines[after].is("dialogue", "parenthetical")) {
+		} else if (lines[index].is_dialogue() !== -1 &&  lines[after] && lines[after].is("dialogue", "parenthetical")) {
 			return false; // or break
 		}
 		return true;
@@ -106,7 +105,7 @@ define(function (require) {
 		var p, internal_break = 0;
 
 		for (var i = 0; i < lines.length && i < max; i++) {
-			if (lines[i].type == 'page_break') {
+			if (lines[i].type === 'page_break') {
 				internal_break = i;
 			}
 		}
@@ -171,7 +170,7 @@ define(function (require) {
 		while (any_unfolded_dual_dialogue_exists) {
 			var left_index = get_first_unfolded_dual_left();
 			var right_index = left_index === -1 ? -1 : get_first_unfolded_dual_right_index_from(left_index);
-			any_unfolded_dual_dialogue_exists = left_index != -1 && right_index != -1;
+			any_unfolded_dual_dialogue_exists = left_index !== -1 && right_index !== -1;
 			if (any_unfolded_dual_dialogue_exists) {
 				fold_dual_dialogue(left_index, right_index);
 			}
@@ -182,10 +181,11 @@ define(function (require) {
 
 	module.line = function (tokens, cfg) {
 
-		var lines = [];
+		var lines = [],
+			global_index = 0;
 
 		_state = 'normal';
-
+		
 		tokens.forEach(function (token) {
 			var max = (cfg.print()[token.type] || {}).max || cfg.print().action.max;
 
@@ -199,7 +199,9 @@ define(function (require) {
 				token.lines[0].number = token.number;
 			}
 
-			token.lines.forEach(function (line) {
+			token.lines.forEach(function (line, index) {
+				line.local_index = index;
+				line.global_index = global_index++;
 				lines.push(line);
 			});
 		});

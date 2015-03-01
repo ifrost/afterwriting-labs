@@ -1,4 +1,3 @@
-/* global define */
 define(function (require) {
 	var d3 = require('d3'),
 		$ = require('jquery'),
@@ -9,11 +8,11 @@ define(function (require) {
 	plugin.render = function (id, data, config) {
 		$(id).empty();
 
-		var count = data.reduce(function(prev, curr){return prev + curr[config.value]},0);
+		var count = data.reduce(function(prev, curr){return prev + curr[config.value];},0);
 		if (count === 0 || isNaN(count)) {
 			$(id).append('<p class="error">Sorry, there is not enough data to display the chart. Add at least one scene to your script.</p>');
 			return;
-		};
+		}
 
 		var vis = d3.select(id)
 			.append('svg:svg')

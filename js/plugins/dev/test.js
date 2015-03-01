@@ -1,4 +1,3 @@
-/* global define */
 define(function (require) {
 	var pm = require('utils/pluginmanager'),
 		fparser = require('utils/fountain/parser'),

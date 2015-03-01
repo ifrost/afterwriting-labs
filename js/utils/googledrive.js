@@ -1,8 +1,8 @@
-/* global define, window, document, gapi, setInterval, clearInterval, $, FileReader, btoa */
-define(function () {
+define(function (require) {
 
 	var client_id = '540351787353-3jf0j12ccl0tmv2nbkcdncu0tuegjkos.apps.googleusercontent.com',
 		scope = ['https://www.googleapis.com/auth/drive'],
+		$ = require('jquery'),
 		module = {};
 
 	if (window.location.protocol !== 'file:') {
@@ -12,7 +12,7 @@ define(function () {
 		tag.src = 'https://apis.google.com/js/client.js';
 		tag.onload = function () {
 			gapi.load('auth');
-		}
+		};
 		script_tag.parentNode.insertBefore(tag, script_tag);
 	}
 
@@ -46,7 +46,7 @@ define(function () {
 			scope: scope,
 			immediate: immediate,
 		}, callback);
-	}
+	};
 
 	/**
 	 * Handle authorization. If authorization fails - tries to auth with immediate=false
@@ -85,7 +85,7 @@ define(function () {
 	 * Clears synchornization
 	 */
 	module.unsync = function () {
-		clearInterval(module.sync_timeout)
+		clearInterval(module.sync_timeout);
 	};
 
 	/**

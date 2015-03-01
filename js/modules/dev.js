@@ -1,4 +1,3 @@
-/* global define */
 define(['logger', 'utils/common', 'utils/pluginmanager', 'utils/layout', 'plugins/open'], function (logger, common, pm, layout, open) {
 	var module = {};
 

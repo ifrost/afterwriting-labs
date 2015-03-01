@@ -1,4 +1,3 @@
-/* global define */
 define(function () {
 
 	var fquerybuilder = function (key_name, base, config) {
@@ -99,16 +98,16 @@ define(function () {
 				fquery.lock = false;
 			});
 
+			if (fquery.exit_handler) {
+				fquery.result.forEach(function (item) {
+					fquery.exit_handler(item, fquery);
+				});
+			}
+			
 			if (config.sort_by) {
 				var sort_prop = config.sort_by;
 				fquery.result.sort(function (a, b) {
 					return config.asc ? a[sort_prop] - b[sort_prop] : b[sort_prop] - a[sort_prop];
-				});
-			}
-
-			if (fquery.exit_handler) {
-				fquery.result.forEach(function (item) {
-					fquery.exit_handler(item, fquery);
 				});
 			}
 			
