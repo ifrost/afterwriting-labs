@@ -37,7 +37,7 @@ define('modules/data', function (require) {
 
 	plugin.script = decorator.property(function (value) {
 		var result = converter.to_fountain(value);
-		result.value = preprocessor.process_variables(value, plugin.config.variables);
+		result.value = preprocessor.process_variables(result.value, plugin.config.variables);
 		plugin.format = result.format;
 		return result.value;
 	});

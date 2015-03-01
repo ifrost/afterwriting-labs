@@ -28,9 +28,9 @@ define('utils/fountain/preprocessor', function (require) {
 	module.process_variables = function (text, variables) {
 		var merged_variables = {}, all_variables;
 		
-		merge_keys(variables, merged_variables);
+		merge_keys(variables || {}, merged_variables);
 		
-		all_variables = Object.keys(merged_variables || {});
+		all_variables = Object.keys(merged_variables);
 		
 		all_variables.sort(function(a,b){
 			var a_value = merged_variables[a];
