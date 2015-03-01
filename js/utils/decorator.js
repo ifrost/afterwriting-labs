@@ -1,4 +1,4 @@
-define(function () {
+define('utils/decorator', function () {
 
 	var decorator = function (func) {
 		var _handlers = [],

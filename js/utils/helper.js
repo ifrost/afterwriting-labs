@@ -1,4 +1,4 @@
-define(function (require) {
+define('utils/helper', function (require) {
 
 	var data = require('modules/data'),
 		d3 = require('d3');

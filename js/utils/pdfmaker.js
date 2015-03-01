@@ -1,4 +1,4 @@
-define(function (require) {
+define('utils/pdfmaker', function (require) {
 
 	var PDFDocument = require('pdfkit'),
 		fonts = require('utils/fonts'),
@@ -7,9 +7,10 @@ define(function (require) {
 
 	var module = {};
 
-	var create_simplestream = function () {
+	var create_simplestream = function (filepath) {
 		var simplestream = {
-			chunks: []
+			chunks: [],
+			filepath: filepath
 		};
 		simplestream.on = function (event, callback) {
 			this.callback = callback;
@@ -20,11 +21,23 @@ define(function (require) {
 			this.chunks.push(chunk);
 		};
 		simplestream.end = function () {
-			simplestream.blob = new Blob(simplestream.chunks, {
-				type: "application/pdf"
-			});
-			simplestream.url = URL.createObjectURL(this.blob);
-			this.callback(simplestream);
+			if (simplestream.filepath) {
+				var fsmodule = 'fs';
+				var fs = require(fsmodule); // bypass requirejs minification/optimization
+				var stream = fs.createWriteStream(simplestream.filepath, {encoding: "binary"});
+				stream.on('finish', this.callback);
+				simplestream.chunks.forEach(function(buffer){
+					stream.write(new Buffer(buffer.toString('base64'), 'base64'));
+				});  				
+				stream.end();
+			}
+			else {
+				simplestream.blob = new Blob(simplestream.chunks, {
+					type: "application/pdf"
+				});
+				simplestream.url = URL.createObjectURL(this.blob);
+				this.callback(simplestream);
+			}
 		};
 		return simplestream;
 	};
@@ -119,8 +132,8 @@ define(function (require) {
 		return doc;
 	}
 
-	function finishDoc(doc, callback) {
-		var stream = doc.pipe(create_simplestream());
+	function finishDoc(doc, callback, filepath) {
+		var stream = doc.pipe(create_simplestream(filepath));
 		doc.end();
 		stream.on('finish', callback);
 	}
@@ -386,10 +399,10 @@ define(function (require) {
 
 	}
 
-	module.get_pdf = function (callback) {
-		var doc = initDoc();
+	module.get_pdf = function (callback, filepath) {
+		var doc = initDoc();		
 		generate(doc);
-		finishDoc(doc, callback);
+		finishDoc(doc, callback, filepath);	
 	};
 
 	return module;
