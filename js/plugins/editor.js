@@ -1,4 +1,3 @@
-/* global define, setTimeout */
 define(function (require) {
 
 	var pm = require('utils/pluginmanager'),
@@ -6,7 +5,6 @@ define(function (require) {
 		decorator = require('utils/decorator'),
 		gd = require('utils/googledrive'),
 		db = require('utils/dropbox'),
-		$ = require('jquery'),
 		converter = require('utils/converters/scriptconverter'),
 		cm = require('libs/codemirror/lib/codemirror');
 
@@ -79,7 +77,7 @@ define(function (require) {
 				plugin.activate();
 			}			
 		}
-		else if (last_content != content) {
+		else if (last_content !== content) {
 			last_content = content;
 			data.script(content);
 			data.parse();
@@ -107,6 +105,8 @@ define(function (require) {
 		}
 	};
 
+	plugin.synced = decorator.signal();
+	
 	plugin.set_sync = function (value) {
 		plugin.data.is_sync = value;
 		if (editor) {
@@ -115,8 +115,10 @@ define(function (require) {
 		if (plugin.data.is_sync) {
 			if (data.data('gd-fileid')) {
 				gd.sync(data.data('gd-fileid'), 3000, handle_sync);
+				plugin.synced('google-drive');
 			} else if (data.data('db-path')) {
 				db.sync(data.data('db-path'), 3000, handle_sync);
+				plugin.synced('drobox');
 			}
 
 		} else {

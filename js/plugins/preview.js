@@ -1,9 +1,7 @@
-/* global define */
 define(function (require) {
 	
 	var pm = require('utils/pluginmanager'),
 		editor = require('plugins/editor'),
-		data = require('modules/data'),
 		decorator = require('utils/decorator'),
 		pdfmaker = require('utils/pdfmaker');
 	

@@ -1,4 +1,3 @@
-/* global define */
 define(['logger', 'utils/common', 'utils/pluginmanager', 'utils/layout', 'plugins/open'], function (logger, common, pm, layout, open) {
 	var module = {};
 
@@ -17,7 +16,7 @@ define(['logger', 'utils/common', 'utils/pluginmanager', 'utils/layout', 'plugin
 		layout.set_footer(footer);
 		
 
-		DEV_PLUGIN = require('plugins/dev/fquerysandbox');
+		var DEV_PLUGIN = require('plugins/dev/fquerysandbox');
 
 		if (DEV_PLUGIN) {
 			open.open_sample('printing_trouble');

@@ -1,5 +1,4 @@
-/* global define */
-define(function (require) {
+define('utils/pdfmaker', function (require) {
 
 	var PDFDocument = require('pdfkit'),
 		fonts = require('utils/fonts'),
@@ -8,9 +7,10 @@ define(function (require) {
 
 	var module = {};
 
-	var create_simplestream = function () {
+	var create_simplestream = function (filepath) {
 		var simplestream = {
-			chunks: []
+			chunks: [],
+			filepath: filepath
 		};
 		simplestream.on = function (event, callback) {
 			this.callback = callback;
@@ -21,11 +21,23 @@ define(function (require) {
 			this.chunks.push(chunk);
 		};
 		simplestream.end = function () {
-			simplestream.blob = new Blob(simplestream.chunks, {
-				type: "application/pdf"
-			});
-			simplestream.url = URL.createObjectURL(this.blob)
-			this.callback(simplestream);
+			if (simplestream.filepath) {
+				var fsmodule = 'fs';
+				var fs = require(fsmodule); // bypass requirejs minification/optimization
+				var stream = fs.createWriteStream(simplestream.filepath, {encoding: "binary"});
+				stream.on('finish', this.callback);
+				simplestream.chunks.forEach(function(buffer){
+					stream.write(new Buffer(buffer.toString('base64'), 'base64'));
+				});  				
+				stream.end();
+			}
+			else {
+				simplestream.blob = new Blob(simplestream.chunks, {
+					type: "application/pdf"
+				});
+				simplestream.url = URL.createObjectURL(this.blob);
+				this.callback(simplestream);
+			}
 		};
 		return simplestream;
 	};
@@ -34,7 +46,7 @@ define(function (require) {
 		var cfg = data.config;
 		var options = {
 			compress: false,
-			size: cfg.print().paper_size == "a4" ? 'A4' : 'LETTER',
+			size: cfg.print().paper_size === "a4" ? 'A4' : 'LETTER',
 			margins: {
 				top: 0,
 				left: 0,
@@ -76,24 +88,24 @@ define(function (require) {
 			}
 
 			var split_for_fromatting = text.split(/(\*{1,3})|(_)|(\[\[)|(\]\])|([^\*_\[\]]+)/g).filter(function (a) {
-				return a
+				return a;
 			});
 			var font_width = cfg.print().font_width;
 			for (var i = 0; i < split_for_fromatting.length; i++) {
 				var elem = split_for_fromatting[i];
-				if (elem == '***') {
+				if (elem === '***') {
 					doc.format_state.italic = !doc.format_state.italic;
 					doc.format_state.bold = !doc.format_state.bold;
 				} else if (elem === '**') {
 					doc.format_state.bold = !doc.format_state.bold;
-				} else if (elem == '*') {
+				} else if (elem === '*') {
 					doc.format_state.italic = !doc.format_state.italic;
-				} else if (elem == '_') {
+				} else if (elem === '_') {
 					doc.format_state.underline = !doc.format_state.underline;
-				} else if (elem == '[[') {
+				} else if (elem === '[[') {
 					doc.format_state.override_color = (cfg.print().note && cfg.print().note.color) || '#000000';
 					doc.fill(doc.format_state.override_color);
-				} else if (elem == ']]') {
+				} else if (elem === ']]') {
 					doc.format_state.override_color = null;
 					doc.fill('black');
 				} else {
@@ -120,8 +132,8 @@ define(function (require) {
 		return doc;
 	}
 
-	function finishDoc(doc, callback) {
-		var stream = doc.pipe(create_simplestream());
+	function finishDoc(doc, callback, filepath) {
+		var stream = doc.pipe(create_simplestream(filepath));
 		doc.end();
 		stream.on('finish', callback);
 	}
@@ -249,7 +261,7 @@ define(function (require) {
 					watermark, len;
 				
 				// underline and rotate pdfkit bug (?) workaround
-				watermark = cfg.print_watermark.replace(/_/g,'')
+				watermark = cfg.print_watermark.replace(/_/g,'');
 				
 				// unformat
 				len = watermark.replace(/\*/g,'').length;
@@ -269,7 +281,7 @@ define(function (require) {
 		print_watermark();
 		print_header_and_footer();
 		lines.forEach(function (line) {			
-			if (line.type == "page_break") {
+			if (line.type === "page_break") {
 				y = 0;
 				doc.addPage();
 				page++;
@@ -282,7 +294,7 @@ define(function (require) {
 				}
 				print_watermark();
 				print_header_and_footer();
-			} else if (line.type == "separator") {
+			} else if (line.type === "separator") {
 				y++;
 			} else {
 				// formatting not supported yet
@@ -301,7 +313,7 @@ define(function (require) {
 					if (line.type === "transition") {
 						feed = cfg.print().action.feed + cfg.print().action.max * cfg.print().font_width - line.text.length * cfg.print().font_width;
 					}
-					if (line.type == "scene_heading" && cfg.embolden_scene_headers) {
+					if (line.type === "scene_heading" && cfg.embolden_scene_headers) {
 						text = '**' + text + '**';
 					}
 
@@ -310,7 +322,7 @@ define(function (require) {
 						feed += current_section_level * cfg.print().section.level_indent;
 						if (cfg.number_sections) {
 							if (line.token !== current_section_token) {
-								current_section_number = section_number(line.token.level)
+								current_section_number = section_number(line.token.level);
 								current_section_token = line.token;
 								text = current_section_number  + '. ' + text;
 							}
@@ -387,10 +399,10 @@ define(function (require) {
 
 	}
 
-	module.get_pdf = function (callback) {
-		var doc = initDoc();
+	module.get_pdf = function (callback, filepath) {
+		var doc = initDoc();		
 		generate(doc);
-		finishDoc(doc, callback);
+		finishDoc(doc, callback, filepath);	
 	};
 
 	return module;

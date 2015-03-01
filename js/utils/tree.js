@@ -1,3 +1,4 @@
+/*jshint -W069 */
 define(function (require) {
 
 	var $ = require('jquery');
@@ -13,7 +14,7 @@ define(function (require) {
 		var info = '<p>' + options.info + '</p>';
 		$.prompt(info + '<div id="jstree-parent"><div id="jstree"></div></div>', {
 			buttons: buttons,
-			submit: function (e, v, f, m) {
+			submit: function (e, v) {
 				if (v) {
 					var selected = $('#jstree').jstree(true).get_selected(true);
 					if (selected.length) {
@@ -31,7 +32,7 @@ define(function (require) {
 								$('#jstree').jstree(true).edit(new_id);
 							});
 						} else {
-							if (options.save && selected[0].id == new_id) {
+							if (options.save && selected[0].id === new_id) {
 								options.callback(parent_folder_for_new, selected[0].text);
 							} else {
 								options.callback(selected[0]);
@@ -47,11 +48,15 @@ define(function (require) {
 			},
 			loaded: function () {
 				$('#jstree').jstree({
-					plugins: ['types'],
+					plugins: ['types', 'search'],
 					core: {
 						data: options.data,
 						check_callback: true,
 						multiple: false
+					},
+					search: {
+						show_only_matches: true,
+						search_leaves_only: true
 					},
 					types: {
 						"default": {
@@ -66,10 +71,23 @@ define(function (require) {
 						}
 					}
 				}).on('ready.jstree', function () {
+					if (options.search) {
+						var search_input = $('<p>find: <input/> (min. 3 characters)</p>');
+						
+						search_input.find('input').keyup(function () {
+							var query = $(this).val();
+							if (query.length >= 3) {
+								$('#jstree').jstree(true).search(query);
+							}
+						});
+						
+						search_input.insertBefore('#jstree-parent');
+					}
 					if (options.selected) {
 						if (!$('#jstree').jstree(true).get_node(options.selected).state.disabled) {
 							$('#jstree').jstree(true).select_node(options.selected);
 						}
+
 						var parent_top = $('#jstree-parent').position().top;
 						var element_top = $('#jstree li[id="' + options.selected + '"').position().top;
 						var parent_half_height = $('#jstree-parent').height() / 2;
@@ -77,7 +95,7 @@ define(function (require) {
 					}
 				}).on('changed.jstree', function () {
 					var selected = $('#jstree').jstree(true).get_selected();
-					if (selected != new_id) {
+					if (selected !== new_id) {
 						$('#jstree').jstree(true).delete_node(new_id);
 					}
 				});
