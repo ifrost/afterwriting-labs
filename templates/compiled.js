@@ -191,7 +191,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "gfx/icons/open.svg\" class=\"plugin-icon\" />&nbsp;/&nbsp;\r\n		<img src=\"gfx/icons/save.svg\" class=\"plugin-icon\" />&nbsp;\r\n		<em>Open / Save</em>&nbsp;- open a .fountain or .fdx file from disk, Dropbox or use a sample, save as .fountain or as PDF.</li>\r\n	<li>\r\n		<img src=\"";
+    + "gfx/icons/open.svg\" class=\"plugin-icon\" />&nbsp;/&nbsp;\r\n		<img src=\"";
+  if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "gfx/icons/save.svg\" class=\"plugin-icon\" />&nbsp;\r\n		<em>Open / Save</em>&nbsp;- open a .fountain or .fdx file from disk, Dropbox or use a sample, save as .fountain or as PDF.</li>\r\n	<li>\r\n		<img src=\"";
   if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
