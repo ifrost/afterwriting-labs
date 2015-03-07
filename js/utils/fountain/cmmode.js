@@ -1,43 +1,29 @@
 define(function (require) {
 	"use strict";
-	
+
 	var CodeMirror = require('libs/codemirror/lib/codemirror');
 
-	CodeMirror.defineMode("fountain", function () {
-		var last;
+	CodeMirror.defineMode('fountain', function (config) {
 
-		// our various parsers
-		var parsers = {
+		var mode = {};
 
-			// the main tokenizer
-			tokenizer: function (stream) {
-				if (stream.match(/^((INT.\/.EXT\.)|(I\/E)|(INT\.)|(EXT\.)).*$/, true)) {
-					return "scene-header";
-				} else {
-					stream.next();
-					return null;
-				}
+		mode.startState = function () {
+			return {};
+		};
+
+		mode.token = function (stream, state) {
+			if (stream.match(/^(?!\!)(\..*|(?:INT|EXT|EST|INT\.?\/EXT\.?|I\/E)(\.| ))(.*)$/, true, true)) {
+				return 'scene-header';
+			} else if (stream.match(/^=.*$/, true)) {
+				return 'synopsis';
+			} else if (stream.match(/^#.*$/, true)) {
+				return 'section';
 			}
+			stream.skipToEnd();
 		};
 
+		return mode;
 
-		// the public API for CodeMirror
-		return {
-			startState: function () {
-				return {
-					tokenize: parsers.tokenizer,
-					mode: "fountain",
-					last: null,
-					depth: 0
-				};
-			},
-			token: function (stream, state) {
-				var style = state.tokenize(stream, state);
-				state.last = last;
-				return style;
-			},
-			electricChars: ""
-		};
 	});
 
 	CodeMirror.defineMIME("text/fountain", "fountain");
