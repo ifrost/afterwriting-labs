@@ -381,6 +381,12 @@ div.CodeMirror-cursors {
 	border: 1px solid #555;	
 }
 
-.cm-s-default .cm-scene-header {
+.cm-s-default .cm-scene-header,
+.cm-s-default .cm-section {
 	font-weight: bold;
+}
+
+.cm-s-default .cm-synopsis,
+.cm-s-default .cm-section {
+	color: #666666;
 }
