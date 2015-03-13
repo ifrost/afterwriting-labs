@@ -39,6 +39,18 @@ define(function (require) {
 		return query;
 	};
 
+	var create_int_and_ext = function () {
+
+		var query = fquery('label', {value: 0});
+		query.prepare(function (fq) {
+			fq.recognized_scenes = 0;
+		});
+		query.enter(h.is('scene_heading'), function (item, fq) {
+			fq.select(item.location_type()).value++;			
+		});
+		return query;
+	};
+
 	var create_scene_length = function () {
 		var query = fquery('token', {
 			length: 0
@@ -49,6 +61,7 @@ define(function (require) {
 		query.enter(h.is('scene_heading'), function (token, fq) {
 			fq.current_header = fq.select(token);
 			fq.current_header.header = token.text;
+			fq.current_header.location_type = token.location_type();
 		});
 		query.enter(true, function (item, fq) {
 			if (fq.current_header) {
@@ -145,14 +158,14 @@ define(function (require) {
 		plan.sort(function (a, b) {
 			return b.nof_scenes - a.nof_scenes;
 		});
-		
+
 		var level = 1,
 			prev, post, prev_top = 0;
-		
+
 		var level_value = function (character) {
 			return character.nof_scenes * character.lines / basics.dialogue_lines;
 		};
-		
+
 		if (plan.length > 0) {
 			plan[0].level = 1;
 			for (var i = 1; i < plan.length; i++) {
@@ -424,6 +437,7 @@ define(function (require) {
 
 	plugin.windup = function () {
 		plugin.days_and_nights = create_days_and_nights();
+		plugin.int_and_ext = create_int_and_ext();
 		plugin.scene_length = create_scene_length();
 		plugin.characters = create_characters();
 		plugin.locations = create_locations();
