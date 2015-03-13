@@ -64,7 +64,7 @@ define('utils/fountain/parser', function (require) {
 			token_category = 'none',
 			last_character_index,
 			dual_right,
-			state = 'title_page',
+			state = 'normal',
 			cache_state_for_comment,
 			nested_comments = 0,
 			title_page_started = false;
@@ -116,11 +116,18 @@ define('utils/fountain/parser', function (require) {
 					continue;
 				} else {
 					// ignore blank separators
+					if (title_page_started) {
+						state = 'normal';
+					}
 					continue;
 				}
 			}
 
 			token_category = 'script';
+			
+			if (!title_page_started && regex.title_page.test(token.text)) {
+				state = 'title_page';
+			}
 
 			if (state === 'title_page') {
 				if (regex.title_page.test(token.text)) {
@@ -134,8 +141,6 @@ define('utils/fountain/parser', function (require) {
 				} else if (title_page_started) {
 					last_title_page_token.text += (last_title_page_token.text ? "\n" : "") + token.text;
 					continue;
-				} else {
-					state = 'normal';
 				}
 			}
 
@@ -221,6 +226,7 @@ define('utils/fountain/parser', function (require) {
 			if (token_category === 'script' && state !== 'ignore') {
 				if (token.is('scene_heading', 'transition')) {
 					token.text = token.text.toUpperCase();
+					title_page_started = true; // ignore title tags after first heading
 				}
 				if (token.text && token.text[0] === '~') {
 					token.text = '*' + token.text.substr(1) + '*';
