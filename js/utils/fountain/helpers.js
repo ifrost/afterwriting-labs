@@ -27,7 +27,7 @@ define('utils/fountain/helpers', function () {
 
 	operators.location = function () {
 		var location = this.text.trim();
-		location = location.replace(/^(INT.?\/.EXT\.?)|(I\/E)|(INT\.?)|(EXT\.?)/, '');
+		location = location.replace(/^(INT\.?\/EXT\.?)|(I\/E)|(INT\.?)|(EXT\.?)/, '');
 		var dash = location.lastIndexOf(' - ');
 		if (dash !== -1) {
 			location = location.substring(0, dash);
@@ -39,6 +39,20 @@ define('utils/fountain/helpers', function () {
 		var suffix = this.text.substring(this.text.indexOf(' - '));
 		return this.is('scene_heading') && suffix.indexOf(time) !== -1;
 	};
+	
+	operators.location_type = function() {
+		var location = this.text.trim();
+		if (/^I(NT.?)?\/E(XT.?)?/.test(location)) {
+			return 'mixed';
+		}
+		else if (/^INT.?/.test(location)) {
+			return 'int';
+		}
+		else if (/^EXT.?/.test(location)) {
+			return 'ext';
+		}
+		return 'other';
+	};	
 
 	var enrich_token = function (token) {
 		for (var name in operators) {

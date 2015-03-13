@@ -15,6 +15,7 @@ define(function (require) {
 	plugin.refresh = decorator(function () {
 		plugin.is_active = true;
 		plugin.data.days_and_nights = queries.days_and_nights.run(data.parsed_stats.tokens);
+		plugin.data.int_and_ext = queries.int_and_ext.run(data.parsed_stats.tokens);
 		plugin.data.scenes = queries.scene_length.run(data.parsed_stats.tokens);
 		var basics = queries.basics.run(data.parsed_stats.lines);
 		plugin.data.who_with_who = queries.dialogue_breakdown.run(data.parsed_stats.tokens, basics, data.config.stats_who_with_who_max);
