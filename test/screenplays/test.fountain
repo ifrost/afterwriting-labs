@@ -1,3 +1,8 @@
+[[Script note.
+- blah blah blah
+- blah blah blah
+]]
+
 Title: 
 	_Screenplay title_
 	Second line
@@ -62,6 +67,10 @@ INT. FORMATTING - DAY
 Normal test, _underline test_, *italic test*, **bold test**, ***bold and italic test***, _*underline and italic test*_, _**underline and bold test_**, _***underline, bold and italic test***_.
 
 _Long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long **(with nested bold)** long long long long underlined text._
+
+EXT. ESCAPING FORMATTING - NIGHT
+
+What the f\*ck! Escape\_escape\*escape. 
 
 > CENTERED, **BOLD**, _UNDERLINE_ <
 

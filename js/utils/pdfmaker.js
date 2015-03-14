@@ -87,9 +87,8 @@ define('utils/pdfmaker', function (require) {
 				text = text.replace(/\[\[/g, '*[[').replace(/\]\]/g, ']]*');
 			}
 
-			var split_for_fromatting = text.split(/(\*{1,3})|(_)|(\[\[)|(\]\])|([^\*_\[\]]+)/g).filter(function (a) {
-				return a;
-			});
+			var split_for_fromatting = text.split(/(\\\*)|(\*{1,3})|(\\?_)|(\[\[)|(\]\])/g).filter(function(a){return a });
+			
 			var font_width = cfg.print().font_width;
 			for (var i = 0; i < split_for_fromatting.length; i++) {
 				var elem = split_for_fromatting[i];
@@ -117,6 +116,9 @@ define('utils/pdfmaker', function (require) {
 						doc.font(fonts.prime.italic);
 					} else {
 						doc.font(fonts.prime.normal);
+					}
+					if (elem === '\\_' || elem === '\\*') {
+						elem = elem.substr(1,1);						
 					}
 					inner_text.call(doc, elem, x * 72, y * 72, {
 						underline: doc.format_state.underline,
@@ -342,7 +344,7 @@ define('utils/pdfmaker', function (require) {
 					}
 
 
-					if (cfg.print()[line.type] && cfg.print()[line.type].italic) {
+					if (cfg.print()[line.type] && cfg.print()[line.type].italic && text) {
 						text = '*' + text + '*';
 					}
 

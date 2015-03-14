@@ -9,10 +9,15 @@ define('utils/converters/finaldraft', function (require) {
 		var type = $(paragraph).attr('Type');
 		var align = $(paragraph).attr('Alignment');
 		var page_break = $(paragraph).attr('StartsNewPage');
-		var text = $(paragraph).find('Text').map(function () {
-			var text = $(this).text();
-			return text;
-		}).get().join('');
+		var text = $(paragraph).find('> Text').map(function () {
+			return $(this).text();
+		}).get().join(' ');
+		var notes = $(paragraph).find('ScriptNote Paragraph Text').map(function(){
+			return '[[' + $(this).text() + ']]';
+		}).get();
+		if (notes.length) {
+			text += ' ' + notes.join(' ');
+		}
 		text = $('<div/>').html(text).text();
 		text = text.replace(/’/g, "'").replace(/”/g,'"').replace(/“/g,'"').replace(/‘/g,"'");
 
@@ -32,9 +37,17 @@ define('utils/converters/finaldraft', function (require) {
 		if (align === 'Center') {
 			text = '> ' + text.split('\n').join(' ') + ' <';
 		}
-		if (type === 'Scene Heading' && !(/^((?:\*{0,3}_?)?(?:(?:int|ext|est|i\/e)[. ]).+)|^(?:\.(?!\.+))(.+)/i.test(text))) {
-			text = '.' + text;
-		}
+		if (type === 'Scene Heading') {
+			if (!(/^((?:\*{0,3}_?)?(?:(?:int|ext|est|i\/e)[. ]).+)|^(?:\.(?!\.+))(.+)/i.test(text))) {
+				text = '.' + text;		
+			}			
+			var synopsis = $(paragraph).find('SceneProperties Paragraph Text');
+			if (synopsis.length) {
+				text += '\n\n' + synopsis.map(function(){
+					return '= ' + $(this).text();
+				}).get().join('\n\n');
+			}
+		}		
 		if (type !== 'Parenthetical' && type !== 'Dialogue') {
 			text = '\n' + text;
 		}
