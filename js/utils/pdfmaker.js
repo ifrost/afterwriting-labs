@@ -344,7 +344,7 @@ define('utils/pdfmaker', function (require) {
 					}
 
 
-					if (cfg.print()[line.type] && cfg.print()[line.type].italic) {
+					if (cfg.print()[line.type] && cfg.print()[line.type].italic && text) {
 						text = '*' + text + '*';
 					}
 
