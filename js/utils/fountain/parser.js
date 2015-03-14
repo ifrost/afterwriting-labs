@@ -155,7 +155,7 @@ define('utils/fountain/parser', function (require) {
 					token.type = 'transition';
 				} else if (match = token.text.match(regex.synopsis)) {
 					token.text = match[1];
-					token.type = 'synopsis';
+					token.type = token.text ? 'synopsis' : 'separator';
 				} else if (match = token.text.match(regex.section)) {
 					token.level = match[1].length;
 					token.text = match[2];
