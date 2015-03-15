@@ -3,8 +3,17 @@ define('utils/helper', function (require) {
 	var data = require('modules/data'),
 		d3 = require('d3');
 
+	/**
+	 * Basic helpers
+	 * @exports utils/helper
+	 */
 	var module = {};
 
+	/**
+	 * Formats time based on total seconds.
+	 * @param {number} total number of seconds
+	 * @returns {string} formatted string
+	 */
 	module.format_time = function (total) {
 		var hours = Math.floor(total / 60);
 		var minutes = Math.floor(total % 60);
