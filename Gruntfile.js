@@ -1,5 +1,13 @@
 module.exports = function (grunt) {
 
+	var test_specs = grunt.file.expand({
+		filter: "isFile",
+		cwd: "test/js"
+	}, ["**/*.js"]);
+	var test_specs_list = test_specs.map(function (name) {
+		return "'../test/js/" + name.substr(0, name.length - 3) + "'";
+	}).join(', ');
+
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		watch: {
@@ -32,7 +40,7 @@ module.exports = function (grunt) {
 					onBuildWrite: function (moduleName, path, contents) {
 						if (moduleName === 'logger') {
 							contents = contents.replace(/\/\/invoke[\s\S]*\/\/\/invoke/g, '');
-						} else if (moduleName == 'libs/codemirror/lib/codemirror' || moduleName == 'pdfkit') {
+						} else if (moduleName === 'libs/codemirror/lib/codemirror' || moduleName === 'pdfkit') {
 							contents = '';
 						}
 						return contents;
@@ -55,7 +63,7 @@ module.exports = function (grunt) {
 				},
 				src: ['bundle/js/afterwriting.js', 'js/libs/codemirror/lib/codemirror.js', 'js/libs/pdfkit.js'],
 				dest: 'bundle/js/afterwriting.js'
-			},
+			}
 		},
 		clean: {
 			bootstrap: ['js/afterwriting-bootstrap.js', 'afterwriting.html']
@@ -90,6 +98,11 @@ module.exports = function (grunt) {
 				options: {
 					branch: 'master'
 				}
+			},
+			develop: {
+				options: {
+					branch: 'develop'
+				}
 			}
 		},
 		gitmerge: {
@@ -103,6 +116,37 @@ module.exports = function (grunt) {
 			pages: {
 				options: {
 					branch: 'gh-pages'
+				}
+			},
+			master: {
+				options: {
+					branch: 'master'
+				}
+			},
+			develop: {
+				options: {
+					branch: 'develop'
+				}
+			}
+		},
+		gitadd: {
+			all: {
+				options: {
+					all: true
+				}
+			}
+		},
+		gitcommit: {
+			version: {
+				options: {
+					message: "v<%= pkg.version %>"
+				}
+			}
+		},
+		gittag: {
+			version: {
+				options: {
+					tag: "v<%= pkg.version %>"
 				}
 			}
 		},
@@ -145,12 +189,61 @@ module.exports = function (grunt) {
 				jshintrc: '.jshintrc',
 				reporter: require('jshint-stylish')
 			},
-			check: {				
+			check: {
 				files: {
 					src: ["js/*", "!js/libs/**"]
 				}
 			}
-		}
+		},
+
+		template: {
+			test: {
+				options: {
+					data: {
+						mode: "__TEST",
+						specs: test_specs_list
+					}
+				},
+				files: {
+					'test/runner.html': ['test/template/runner.template']
+				}
+			},
+			coverage: {
+				options: {
+					data: {
+						mode: "__COVERAGE",
+						specs: test_specs_list
+					}
+				},
+				files: {
+					'test/coverage.html': ['test/template/runner.template']
+				}
+			}
+		},
+
+		shell: {
+			istanbul_instrument: {
+				command: 'istanbul instrument --output coverage/js --no-impact js'
+			},
+			jsdoc: {
+				command: 'jsdoc -c jsdoc.conf.json'
+			}
+		},
+
+		mocha: {
+			coverage: {
+				src: ['test/coverage.html'],
+				options: {
+					run: false,
+					coverage: {
+						htmlReport: 'coverage/html'
+					}
+				}
+			},
+			test: {
+				src: ['test/runner.html']
+			}
+		},
 
 	});
 
@@ -166,9 +259,21 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-git');
 	grunt.loadNpmTasks('grunt-bumpup');
 	grunt.loadNpmTasks('grunt-text-replace');
+	grunt.loadNpmTasks('grunt-mocha-phantom-istanbul')
+	grunt.loadNpmTasks('grunt-shell');
+	grunt.loadNpmTasks('grunt-template');
 
+	grunt.registerTask('test', ['template:test', 'mocha:test']);
+	grunt.registerTask('coverage', ['template:coverage', 'shell:istanbul_instrument', 'mocha:coverage']);
+	grunt.registerTask('doc', ['shell:jsdoc']);
 
 	grunt.registerTask('build', ['handlebars', 'replace', 'concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'clean']);
-	grunt.registerTask('deploy', ['gitcheckout:pages', 'gitmerge:master', 'gitpush:pages', 'gitcheckout:master']);
+					   
+	grunt.registerTask('prepare', function (type) {
+		grunt.task.run('bumpup:' + type);
+		grunt.task.run(['build']);
+	});
+	
+	grunt.registerTask('release', ['gitadd:all', 'gitcommit:version', 'gittag:version', 'gitcheckout:pages', 'gitmerge:master', 'gitpush:pages', 'gitcheckout:develop', 'gitmerge:master']);
 
 };

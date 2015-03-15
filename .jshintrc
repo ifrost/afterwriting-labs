@@ -16,6 +16,10 @@
 		"define": false,
 		"require": false,
 		"gapi": false,
-		"ga": false
+		"ga": false,
+		"describe": false,
+		"it": false,
+		"chai": false,
+		"sinon": false
 	}
 }
