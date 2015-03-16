@@ -13,7 +13,7 @@ module.exports = function (grunt) {
 		watch: {
 			templates: {
 				files: ['**/*.hbs'],
-				tasks: ['handlebars'],
+				tasks: ['handlebars:compile'],
 				options: {
 					spawn: false,
 				},
@@ -26,6 +26,14 @@ module.exports = function (grunt) {
 				},
 				files: {
 					'templates/compiled.js': ['**/*.hbs', '**/*.fountain']
+				}
+			},
+			test: {
+				options: {
+					amd: true
+				},
+				files: {
+					'test/screenplays.js': ['test/**/*.fdx', 'test/**/*.fountain']
 				}
 			}
 		},
@@ -263,11 +271,11 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-shell');
 	grunt.loadNpmTasks('grunt-template');
 
-	grunt.registerTask('test', ['template:test', 'mocha:test']);
+	grunt.registerTask('test', ['handlebars:test', 'template:test', 'mocha:test']);
 	grunt.registerTask('coverage', ['template:coverage', 'shell:istanbul_instrument', 'mocha:coverage']);
 	grunt.registerTask('doc', ['shell:jsdoc']);
 
-	grunt.registerTask('build', ['handlebars', 'replace', 'concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'clean']);
+	grunt.registerTask('build', ['handlebars:compile', 'replace', 'concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'clean']);
 					   
 	grunt.registerTask('prepare', function (type) {
 		grunt.task.run('bumpup:' + type);
