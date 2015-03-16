@@ -1,6 +1,6 @@
 {
   "name": "afterwriting",
-  "version": "1.1.15",
+  "version": "1.2.0",
   "description": "Screewriting tools",
   "keywords": [
     "screenwriting",
@@ -18,8 +18,10 @@
     "url": "git://github.com/ifrost/afterwriting-labs.git"
   },
   "devDependencies": {
+    "chai": "^2.1.1",
     "grunt": "~0.4.1",
     "grunt-bumpup": "^0.6.1",
+    "grunt-cli": "^0.1.13",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-compress": "^0.13.0",
     "grunt-contrib-concat": "^0.5.0",
@@ -29,10 +31,17 @@
     "grunt-contrib-jshint": "^0.11.0",
     "grunt-contrib-requirejs": "^0.4.4",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-git": "^0.2.14",
+    "grunt-git": "^0.3.4",
+    "grunt-mocha-istanbul": "^2.3.1",
+    "grunt-mocha-phantom-istanbul": "^0.2.1",
+    "grunt-shell": "^1.1.2",
     "grunt-simple-mocha": "~0.4.0",
+    "grunt-template": "^0.2.3",
     "grunt-text-replace": "^0.3.12",
-    "jshint-stylish": "^1.0.0"
+    "istanbul": "^0.3.7",
+    "jshint-stylish": "^1.0.0",
+    "mocha": "^2.2.1",
+    "sinon": "^1.14.0"
   },
   "peerDependencies": {
     "grunt": "~0.4.0"
