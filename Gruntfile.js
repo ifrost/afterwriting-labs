@@ -33,7 +33,7 @@ module.exports = function (grunt) {
 					amd: true
 				},
 				files: {
-					'test/screenplays.js': ['test/**/*.fdx', 'test/**/*.fountain']
+					'templates/test_screenplays.js': ['test/**/*.fdx', 'test/**/*.fountain']
 				}
 			}
 		},
@@ -231,7 +231,8 @@ module.exports = function (grunt) {
 
 		shell: {
 			istanbul_instrument: {
-				command: 'istanbul instrument --output coverage/js --no-impact js'
+				command: 'istanbul instrument --output coverage/js --no-impact js && istanbul instrument --output coverage/templates --no-impact templates'
+				
 			},
 			jsdoc: {
 				command: 'jsdoc -c jsdoc.conf.json'

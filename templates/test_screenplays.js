@@ -17,7 +17,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<FinalDraft DocumentType=\"Script\" Template=\"No\" Version=\"1\">\n  <Content>\n    <Paragraph Type=\"Action\">\n      <ScriptNote ID=\"2\">\n        <Paragraph>\n          <Text Font=\"Courier Final Draft\">Note in action. Note. Note. Note.</Text>\n        </Paragraph>\n      </ScriptNote>\n      <Text>Action. Action.</Text>\n    </Paragraph>\n  </Content>\n </FinalDraft>\n";
+  return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<FinalDraft DocumentType=\"Script\" Template=\"No\" Version=\"1\">\r\n  <Content>\r\n    <Paragraph Type=\"Action\">\r\n      <ScriptNote ID=\"2\">\r\n        <Paragraph>\r\n          <Text Font=\"Courier Final Draft\">Note in action. Note. Note. Note.</Text>\r\n        </Paragraph>\r\n      </ScriptNote>\r\n      <Text>Action. Action.</Text>\r\n    </Paragraph>\r\n  </Content>\r\n </FinalDraft>\r\n";
   });
 
 this["JST"]["test/screenplays/fdx/synopsis.fdx"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -44,7 +44,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "\nINT. SCENE HEADING - DAY\n\n[[Note in scene heading.]]\n";
+  return "\r\nINT. SCENE HEADING - DAY\r\n\r\n[[Note in scene heading.]]\r\n";
   });
 
 this["JST"]["test/screenplays/fdx/note.fountain"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -53,7 +53,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "\nAction. Action. [[Note in action. Note. Note. Note.]]\n";
+  return "\r\nAction. Action. [[Note in action. Note. Note. Note.]]\r\n";
   });
 
 this["JST"]["test/screenplays/fdx/synopsis.fountain"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -62,7 +62,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "\nINT. SCENE HEADING - DAY\n\n= Here is the synopsis.\n";
+  return "\r\nINT. SCENE HEADING - DAY\r\n\r\n= Here is the synopsis.\r\n";
   });
 
 this["JST"]["test/screenplays/test.fountain"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

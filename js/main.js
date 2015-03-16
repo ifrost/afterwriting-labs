@@ -4,6 +4,7 @@
 		baseUrl: 'js',
 		paths: {
 			templates: '../templates/compiled',
+			test_screenplays: '../templates/test_screenplays',
 			jquery: 'libs/jquery-1.11.1.min',
 			handlebars: 'libs/handlebars',
 			logger: 'libs/logger',
