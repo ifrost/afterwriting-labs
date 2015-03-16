@@ -15,9 +15,7 @@ define('utils/converters/finaldraft', function (require) {
 		var notes = $(paragraph).find('ScriptNote Paragraph Text').map(function(){
 			return '[[' + $(this).text() + ']]';
 		}).get();
-		if (notes.length) {
-			text += ' ' + notes.join(' ');
-		}
+		
 		text = $('<div/>').html(text).text();
 		text = text.replace(/’/g, "'").replace(/”/g,'"').replace(/“/g,'"').replace(/‘/g,"'");
 
@@ -28,6 +26,16 @@ define('utils/converters/finaldraft', function (require) {
 		if (type === 'Character' || type === 'Scene Heading' || type === 'Transition') {
 			text = text.toUpperCase();
 		}
+		
+		if (notes.length) {
+			if (type === 'Scene Heading') {
+				text += '\n\n' + notes.join('\n\n');
+			}
+			else {
+				text += ' ' + notes.join(' ');
+			}
+		}
+		
 		if (type === 'Character' && dual) {
 			text += ' ^';
 		}
