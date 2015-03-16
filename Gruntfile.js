@@ -277,11 +277,6 @@ module.exports = function (grunt) {
 	grunt.registerTask('doc', ['shell:jsdoc']);
 
 	grunt.registerTask('build', ['handlebars:compile', 'replace', 'concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'clean']);
-					   
-	grunt.registerTask('prepare', function (type) {
-		grunt.task.run('bumpup:' + type);
-		grunt.task.run(['build']);
-	});
 	
 	grunt.registerTask('release', ['gitadd:all', 'gitcommit:version', 'gittag:version', 'gitcheckout:pages', 'gitmerge:master', 'gitpush:pages', 'gitcheckout:develop', 'gitmerge:master']);
 
