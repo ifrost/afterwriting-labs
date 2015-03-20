@@ -276,7 +276,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('coverage', ['template:coverage', 'shell:istanbul_instrument', 'mocha:coverage']);
 	grunt.registerTask('doc', ['shell:jsdoc']);
 
-	grunt.registerTask('build', ['handlebars:compile', 'replace', 'concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'doc', 'clean']);
+	grunt.registerTask('build', ['test','handlebars:compile', 'replace', 'concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'doc', 'clean']);
 	
 	grunt.registerTask('release', ['gitadd:all', 'gitcommit:version', 'gittag:version', 'gitcheckout:pages', 'gitmerge:master', 'gitpush:pages', 'gitcheckout:develop', 'gitmerge:master']);
 
