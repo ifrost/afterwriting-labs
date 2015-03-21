@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: utils/helper</title>
+    <title>JSDoc: Module: utils/fn</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: utils/helper</h1>
+    <h1 class="page-title">Module: utils/fn</h1>
 
     
 
@@ -38,7 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Basic helpers</div>
+            <div class="description">Functional helpers</div>
         
 
         
@@ -87,7 +87,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_helper.js.html">utils/helper.js</a>, <a href="utils_helper.js.html#line10">line 10</a>
+        <a href="utils_fn.js.html">utils/fn.js</a>, <a href="utils_fn.js.html#line7">line 7</a>
     </li></ul></dd>
     
 
@@ -137,14 +137,14 @@
 
     
 
-    <h4 class="name" id=".format_time"><span class="type-signature">(static) </span>format_time<span class="signature">(total)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    <h4 class="name" id=".conflate"><span class="type-signature">(static) </span>conflate<span class="signature">(caller, tester, final_callback)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Formats time based on total seconds.
+    Conflates calls for "paginated" calls, for example Dropbox API returnsFor more details - see the test.{has_more: true, changes: [...]} if there are more results to poll, and{has_more: false, changes: [...]} if there are no more results.
 </div>
 
 
@@ -180,13 +180,13 @@
 
         <tr>
             
-                <td class="name"><code>total</code></td>
+                <td class="name"><code>caller</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">function</span>
 
 
             
@@ -196,7 +196,53 @@
 
             
 
-            <td class="description last">number of seconds</td>
+            <td class="description last">function used to make the call, caller(conflate_callback, last_response_arg1, last_response_arg2...) - conflate callback should be used as the main callback for the action</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tester</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">function that should return true if another call should be takes, tester(last_response_arg1, last_response_arg2...)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>final_callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">function that will be called after all results are collected, accepts on argument with list of all response arguments passed to the result callback: final_callback([[first_response_arg1, first_response_arg2...],[second_response_arg1, second_response_arg2, ...],...).</td>
         </tr>
 
     
@@ -237,7 +283,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_helper.js.html">utils/helper.js</a>, <a href="utils_helper.js.html#line17">line 17</a>
+        <a href="utils_fn.js.html">utils/fn.js</a>, <a href="utils_fn.js.html#line19">line 19</a>
     </li></ul></dd>
     
 
@@ -260,28 +306,6 @@
 
 
 
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    formatted string
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">string</span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
