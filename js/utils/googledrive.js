@@ -3,6 +3,7 @@ define(function (require) {
 	var client_id = '540351787353-3jf0j12ccl0tmv2nbkcdncu0tuegjkos.apps.googleusercontent.com',
 		scope = ['https://www.googleapis.com/auth/drive'],
 		$ = require('jquery'),
+		fn = require('utils/fn'),
 		module = {};
 
 	if (window.location.protocol !== 'file:') {
@@ -218,17 +219,28 @@ define(function (require) {
 			}
 		});		
 		
-		var download_callback = function(all_items, final_callback, data){
-			all_items = all_items.concat(data.items);
-			if (data.nextLink) {
-				gapi.client.request({path: data.nextLink}).execute(download_callback.bind(null, all_items, final_callback));
+		var conflate_caller = function(conflate_callback, data) {
+			if (data) {
+				gapi.client.request({path: data.nextLink}).execute(conflate_callback);
 			}
 			else {
-				final_callback(all_items);
+				request.execute(conflate_callback);
 			}
 		};
 		
-		request.execute(download_callback.bind(null, [], function (items) {
+		var conflate_tester = function(data) {
+			return data.nextLink;
+		};
+		
+		var conflate_final = function(results) {
+			var items = [];
+			results.forEach(function(args){
+				items = items.concat(args[0].items);
+			});
+			pull_callback(items);
+		};
+		
+		var pull_callback = function (items) {
 			items = items.filter(function (item) {
 				return !item.explicitlyTrashed && !item.labels.trashed;
 			});
@@ -276,7 +288,9 @@ define(function (require) {
 			}
 			callback(root);
 
-		}));
+		};
+		
+		fn.conflate(conflate_caller, conflate_tester, conflate_final);
 	};
 	module.list = auth_method(list);
 
