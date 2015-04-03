@@ -18,6 +18,8 @@ define(function (require) {
 				return 'synopsis';
 			} else if (stream.match(/^#.*$/, true)) {
 				return 'section';
+			} else if (stream.match(/^  $/, true)) {
+				return 'force-blank-line';
 			}
 			stream.skipToEnd();
 		};

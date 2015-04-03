@@ -390,3 +390,10 @@ div.CodeMirror-cursors {
 .cm-s-default .cm-section {
 	color: #666666;
 }
+
+.cm-s-default .cm-force-blank-line {
+	background-color: #ff9999;
+}
+.cm-s-default .cm-force-blank-line:before {
+	content: "  non-breaking line";
+}

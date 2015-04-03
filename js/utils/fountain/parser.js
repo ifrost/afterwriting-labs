@@ -106,7 +106,7 @@ define('utils/fountain/parser', function (require) {
 			token = create_token(text, current, i);
 			current = token.end + 1;
 
-			if (text.trim().length === 0) {
+			if (text.trim().length === 0 && text !== "  ") {
 				if (!last_was_separator) {
 					state = 'normal';
 					dual_right = false;
