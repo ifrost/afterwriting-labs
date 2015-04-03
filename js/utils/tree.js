@@ -28,7 +28,11 @@ define(function (require) {
 								type: "file"
 							}, "first", function (node) {
 								new_id = node.id;
-								$('#jstree').jstree(true).select_node(new_id);
+								try {
+									$('#jstree').jstree(true).select_node(new_id);
+								} catch (e) {
+									$('#jstree').jstree(true).select_node(new_id);
+								}
 								$('#jstree').jstree(true).edit(new_id);
 							});
 						} else {
@@ -73,14 +77,14 @@ define(function (require) {
 				}).on('ready.jstree', function () {
 					if (options.search) {
 						var search_input = $('<p>find: <input/> (min. 3 characters)</p>');
-						
+
 						search_input.find('input').keyup(function () {
 							var query = $(this).val();
 							if (query.length >= 3) {
 								$('#jstree').jstree(true).search(query);
 							}
 						});
-						
+
 						search_input.insertBefore('#jstree-parent');
 					}
 					if (options.selected) {
