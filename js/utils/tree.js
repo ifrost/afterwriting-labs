@@ -28,7 +28,7 @@ define(function (require) {
 								type: "file"
 							}, "first", function (node) {
 								new_id = node.id;
-								$('#jstree').jstree(true).select_node(new_id);
+								$('#jstree').jstree(true).select_node(new_id);								
 								$('#jstree').jstree(true).edit(new_id);
 							});
 						} else {
@@ -73,14 +73,14 @@ define(function (require) {
 				}).on('ready.jstree', function () {
 					if (options.search) {
 						var search_input = $('<p>find: <input/> (min. 3 characters)</p>');
-						
+
 						search_input.find('input').keyup(function () {
 							var query = $(this).val();
 							if (query.length >= 3) {
 								$('#jstree').jstree(true).search(query);
 							}
 						});
-						
+
 						search_input.insertBefore('#jstree-parent');
 					}
 					if (options.selected) {
@@ -95,7 +95,7 @@ define(function (require) {
 					}
 				}).on('changed.jstree', function () {
 					var selected = $('#jstree').jstree(true).get_selected();
-					if (selected !== new_id) {
+					if (selected[0] !== new_id) {
 						$('#jstree').jstree(true).delete_node(new_id);
 					}
 				});

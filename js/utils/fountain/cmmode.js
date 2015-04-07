@@ -12,12 +12,14 @@ define(function (require) {
 		};
 
 		mode.token = function (stream, state) {
-			if (stream.match(/^(?!\!)(\..*|(?:INT|EXT|EST|INT\.?\/EXT\.?|I\/E)(\.| ))(.*)$/, true, true)) {
+			if (stream.match(/^(?!\!)(\.[^\.]{1}.*|(?:INT|EXT|EST|INT\.?\/EXT\.?|I\/E)(\.| ))(.*)$/, true, true)) {
 				return 'scene-header';
 			} else if (stream.match(/^=.*$/, true)) {
 				return 'synopsis';
 			} else if (stream.match(/^#.*$/, true)) {
 				return 'section';
+			} else if (stream.match(/^  $/, true)) {
+				return 'force-blank-line';
 			}
 			stream.skipToEnd();
 		};

@@ -1,6 +1,7 @@
 define(function (require) {
 
 	var $ = require('jquery'),
+		fn = require('utils/fn'),
 		Dropbox = require('dropbox'),
 		key = 'p5kky1t8t9c5pqy',
 		redirect_uri = 'https://ifrost.github.io/afterwriting-labs/token.html';
@@ -27,11 +28,11 @@ define(function (require) {
 				if (e.origin !== 'https://ifrost.github.io' && e.origin !== 'http://afterwriting.com' && e.origin !== 'http://localhost:8000') {
 					return;
 				}
-				
+
 				if (/error=/.test(e.data)) {
 					return;
 				}
-				
+
 				var token = /access_token=([^\&]*)/.exec(e.data)[1],
 					uid = /uid=([^\&]*)/.exec(e.data)[1],
 					state_r = /state=([^\&]*)/.exec(e.data)[1];
@@ -42,7 +43,7 @@ define(function (require) {
 
 				$.cookie('dbt', token);
 				$.cookie('dbu', uid);
-				
+
 				client = new Dropbox.Client({
 					key: key,
 					sandbox: false,
@@ -79,12 +80,12 @@ define(function (require) {
 
 	var list = function (callback, options) {
 		options = options || {};
-		
+
 		if (options.before) {
 			options.before();
 		}
 
-		client.pullChanges(function (error, result) {
+		var pull_callback = function (error, result) {
 			var items = result.changes.filter(function (file) {
 				return !file.wasRemoved;
 			});
@@ -131,7 +132,28 @@ define(function (require) {
 			}
 			callback(root);
 
-		});
+		};
+
+		var conflate_caller = function (conflate_callback, error, result) {
+			client.pullChanges(result ? result.cursorTag : null, conflate_callback);
+		};
+
+		var conflate_tester = function (error, result) {
+			return !error && result.shouldPullAgain;
+		};
+
+		var conflate_final = function (results) {
+			var last_error = results[results.length - 1][0];
+			var final_result = {
+				changes: []
+			};
+			results.forEach(function (args) {
+				final_result.changes = final_result.changes.concat(args[1].changes);
+			});
+			pull_callback(last_error, final_result);
+		};
+
+		fn.conflate(conflate_caller, conflate_tester, conflate_final);
 	};
 	module.list = auth_method(list);
 
