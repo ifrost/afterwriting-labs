@@ -70,7 +70,10 @@ define('utils/pdfmaker', function (require) {
 		};
 		doc.reset_format();
 		var inner_text = doc.text;
-		doc.simple_text = inner_text;
+		doc.simple_text = function(){
+			doc.font(fonts.prime.normal);
+			inner_text.apply(doc, arguments);
+		}
 		doc.format_text = function (text, x, y, options) {
 			var cache_current_state = doc.format_state;
 			doc.reset_format();
