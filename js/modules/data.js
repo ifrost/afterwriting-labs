@@ -207,7 +207,9 @@ define('modules/data', function (require) {
 		print_watermark: '',
 		scenes_numbers: 'none',
 		each_scene_on_new_page: false,
-		use_print_settings_for_stats: true
+		use_print_settings_for_stats: true,
+		scene_continuation_bottom: false,
+		scene_continuation_top: false
 	};
 
 

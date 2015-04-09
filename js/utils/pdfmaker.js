@@ -24,14 +24,15 @@ define('utils/pdfmaker', function (require) {
 			if (simplestream.filepath) {
 				var fsmodule = 'fs';
 				var fs = require(fsmodule); // bypass requirejs minification/optimization
-				var stream = fs.createWriteStream(simplestream.filepath, {encoding: "binary"});
+				var stream = fs.createWriteStream(simplestream.filepath, {
+					encoding: "binary"
+				});
 				stream.on('finish', this.callback);
-				simplestream.chunks.forEach(function(buffer){
+				simplestream.chunks.forEach(function (buffer) {
 					stream.write(new Buffer(buffer.toString('base64'), 'base64'));
-				});  				
+				});
 				stream.end();
-			}
-			else {
+			} else {
 				simplestream.blob = new Blob(simplestream.chunks, {
 					type: "application/pdf"
 				});
@@ -69,7 +70,10 @@ define('utils/pdfmaker', function (require) {
 		};
 		doc.reset_format();
 		var inner_text = doc.text;
-		doc.simple_text = inner_text;
+		doc.simple_text = function(){
+			doc.font(fonts.prime.normal);
+			inner_text.apply(doc, arguments);
+		}
 		doc.format_text = function (text, x, y, options) {
 			var cache_current_state = doc.format_state;
 			doc.reset_format();
@@ -87,8 +91,10 @@ define('utils/pdfmaker', function (require) {
 				text = text.replace(/\[\[/g, '*[[').replace(/\]\]/g, ']]*');
 			}
 
-			var split_for_fromatting = text.split(/(\\\*)|(\*{1,3})|(\\?_)|(\[\[)|(\]\])/g).filter(function(a){return a });
-			
+			var split_for_fromatting = text.split(/(\\\*)|(\*{1,3})|(\\?_)|(\[\[)|(\]\])/g).filter(function (a) {
+				return a
+			});
+
 			var font_width = cfg.print().font_width;
 			for (var i = 0; i < split_for_fromatting.length; i++) {
 				var elem = split_for_fromatting[i];
@@ -118,7 +124,7 @@ define('utils/pdfmaker', function (require) {
 						doc.font(fonts.prime.normal);
 					}
 					if (elem === '\\_' || elem === '\\*') {
-						elem = elem.substr(1,1);						
+						elem = elem.substr(1, 1);
 					}
 					inner_text.call(doc, elem, x * 72, y * 72, {
 						underline: doc.format_state.underline,
@@ -233,6 +239,7 @@ define('utils/pdfmaker', function (require) {
 		var y = 0,
 			page = 1,
 			scene_number,
+			scene_continuations = {},
 			current_section_level = 0,
 			current_section_number,
 			current_section_token,
@@ -252,53 +259,78 @@ define('utils/pdfmaker', function (require) {
 				});
 			}
 		};
-		
-	
-		var print_watermark = function() {
+
+
+		var print_watermark = function () {
 			if (cfg.print_watermark) {
-				var options = {origin: [0, 0]}, 
-					font_size, 
-					angle=Math.atan(cfg.print().page_height/cfg.print().page_width)*180/Math.PI,
+				var options = {
+					origin: [0, 0]
+				},
+					font_size,
+					angle = Math.atan(cfg.print().page_height / cfg.print().page_width) * 180 / Math.PI,
 					diagonal,
 					watermark, len;
-				
+
 				// underline and rotate pdfkit bug (?) workaround
-				watermark = cfg.print_watermark.replace(/_/g,'');
-				
+				watermark = cfg.print_watermark.replace(/_/g, '');
+
 				// unformat
-				len = watermark.replace(/\*/g,'').length;
-				
-				diagonal = Math.sqrt(Math.pow(cfg.print().page_width,2) + Math.pow(cfg.print().page_height,2));
+				len = watermark.replace(/\*/g, '').length;
+
+				diagonal = Math.sqrt(Math.pow(cfg.print().page_width, 2) + Math.pow(cfg.print().page_height, 2));
 				diagonal -= 4;
-				
+
 				font_size = (1.667 * diagonal) / len * 72;
 				doc.fontSize(font_size);
 				doc.rotate(angle, options);
-				doc.format_text(watermark, 2, -(font_size/2)/72, {color: '#eeeeee', line_break: false});
-				doc.rotate(-angle, options);				
+				doc.format_text(watermark, 2, -(font_size / 2) / 72, {
+					color: '#eeeeee',
+					line_break: false
+				});
+				doc.rotate(-angle, options);
 				doc.fontSize(12);
 			}
 		};
 
 		print_watermark();
 		print_header_and_footer();
-		lines.forEach(function (line) {			
+		lines.forEach(function (line) {
 			if (line.type === "page_break") {
+
+				if (cfg.scene_continuation_bottom && line.scene_split) {
+					var scene_continued_text = '(' + (cfg.text.scene_continued || 'CONTINUED') + ')';
+					var feed = cfg.print().action.feed + cfg.print().action.max * cfg.print().font_width - scene_continued_text.length * cfg.print().font_width;
+					doc.simple_text(scene_continued_text, feed * 72, (cfg.print().top_margin + cfg.print().font_height * (y + 2)) * 72);
+				}
+
 				y = 0;
 				doc.addPage();
 				page++;
 
+				var number_y = cfg.print().page_number_top_margin;
+
+				if (cfg.scene_continuation_top && line.scene_split) {
+					scene_continuations[scene_number] = scene_continuations[scene_number] || 0;
+					scene_continuations[scene_number]++;
+
+					var scene_continued = (cfg.scenes_numbers !== 'none' && scene_number ? scene_number + ' ' : '') + 'CONTINUED:';
+					scene_continued += scene_continuations[scene_number] > 1 ? ' (' + scene_continuations[scene_number] + ')' : '';
+
+					scene_continued = scene_continued.replace(/\*/g, '');
+					doc.simple_text(scene_continued, cfg.print().action.feed * 72, number_y * 72);
+				}
+
 				if (cfg.show_page_numbers) {
 					var page_num = page.toFixed() + ".";
 					var number_x = cfg.print().action.feed + cfg.print().action.max * cfg.print().font_width - page_num.length * cfg.print().font_width;
-					var number_y = cfg.print().page_number_top_margin;
 					doc.simple_text(page_num, number_x * 72, number_y * 72);
 				}
 				print_watermark();
 				print_header_and_footer();
+
 			} else if (line.type === "separator") {
 				y++;
-			} else {
+			} else {				
 				// formatting not supported yet
 				text = line.text;
 				text = text.trim();
@@ -326,19 +358,17 @@ define('utils/pdfmaker', function (require) {
 							if (line.token !== current_section_token) {
 								current_section_number = section_number(line.token.level);
 								current_section_token = line.token;
-								text = current_section_number  + '. ' + text;
+								text = current_section_number + '. ' + text;
+							} else {
+								text = Array(current_section_number.length + 3).join(' ') + text;
 							}
-							else {
-								text = Array(current_section_number.length + 3).join(' ') + text;								
-							}
-							
+
 						}
 					} else if (line.type === 'synopsis') {
 						feed += cfg.print().synopsis.padding || 0;
 						if (cfg.print().synopsis.feed_with_last_section && after_section) {
 							feed += current_section_level * cfg.print().section.level_indent;
-						}
-						else {
+						} else {
 							feed = cfg.print().action.feed;
 						}
 					}
@@ -364,32 +394,32 @@ define('utils/pdfmaker', function (require) {
 					}
 
 					doc.text(text, feed, cfg.print().top_margin + cfg.print().font_height * y, text_properties);
-					
+
 					if (line.number) {
 						scene_number = String(line.number);
 						var scene_text_length = scene_number.length;
 						if (cfg.embolden_scene_headers) {
 							scene_number = '**' + scene_number + '**';
 						}
-						
+
 						var shift_scene_number;
-						
+
 						if (cfg.scenes_numbers === 'both' || cfg.scenes_numbers === 'left') {
 							shift_scene_number = (scene_text_length + 4) * cfg.print().font_width;
 							doc.text(scene_number, feed - shift_scene_number, cfg.print().top_margin + cfg.print().font_height * y, text_properties);
 						}
-						
+
 						if (cfg.scenes_numbers === 'both' || cfg.scenes_numbers === 'right') {
 							shift_scene_number = (cfg.print().scene_heading.max + 1) * cfg.print().font_width;
 							doc.text(scene_number, feed + shift_scene_number, cfg.print().top_margin + cfg.print().font_height * y, text_properties);
 						}
 					}
-					
+
 					y++;
 				}
 			}
-			
-			
+
+
 			// clear after section
 			if (line.type === 'section') {
 				after_section = true;
@@ -402,9 +432,9 @@ define('utils/pdfmaker', function (require) {
 	}
 
 	module.get_pdf = function (callback, filepath) {
-		var doc = initDoc();		
+		var doc = initDoc();
 		generate(doc);
-		finishDoc(doc, callback, filepath);	
+		finishDoc(doc, callback, filepath);
 	};
 
 	return module;
