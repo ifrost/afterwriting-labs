@@ -60,49 +60,49 @@
 				<td>
 					<input setting="print_synopsis" type="checkbox">
 				</td>
-			</tr>		
+			</tr>
 			<tr>
 				<td>Print notes:</td>
 				<td>
 					<input setting="print_notes" type="checkbox">
 				</td>
-			</tr>			
+			</tr>
 			<tr>
 				<td>Print scene headers:</td>
 				<td>
 					<input setting="print_headers" type="checkbox">
 				</td>
-			</tr>			
+			</tr>
 			<tr>
 				<td>Print action:</td>
 				<td>
 					<input setting="print_actions" type="checkbox">
 				</td>
-			</tr>			
+			</tr>
 			<tr>
 				<td>Print dialogue:</td>
 				<td>
 					<input setting="print_dialogues" type="checkbox">
 				</td>
-			</tr>				
+			</tr>
 			<tr>
 				<td>Header:</td>
 				<td>
 					<input setting="print_header" type="text">
 				</td>
-			</tr>							
+			</tr>
 			<tr>
 				<td>Footer:</td>
 				<td>
 					<input setting="print_footer" type="text">
 				</td>
-			</tr>	
+			</tr>
 			<tr>
 				<td>Watermark:</td>
 				<td>
 					<input setting="print_watermark" type="text">
 				</td>
-			</tr>				
+			</tr>
 			<tr>
 				<th colspan="2">Layout</th>
 			</tr>
@@ -141,7 +141,7 @@
 				<td>
 					<input setting="embolden_scene_headers" type="checkbox">
 				</td>
-			</tr>		
+			</tr>
 			<tr>
 				<td>Scene numbers:</td>
 				<td>
@@ -151,6 +151,18 @@
 						<option value="right">right</option>
 						<option value="both">both</option>
 					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Scene continuation (the bottom of a page):</td>
+				<td>
+					<input setting="scene_continuation_bottom" type="checkbox">
+				</td>
+			</tr>
+			<tr>
+				<td>Scene continuation(the top of the next page):</td>
+				<td>
+					<input setting="scene_continuation_top" type="checkbox">
 				</td>
 			</tr>
 			<tr>
@@ -178,7 +190,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td><em>"Who with who"</em> max characters:</td>
+				<td>
+					<em>"Who with who"</em>max characters:</td>
 				<td>
 					<input setting="stats_who_with_who_max" type="input" style="width: 50px">
 				</td>
@@ -207,6 +220,8 @@
 			$('*[setting="number_sections"]').prop('checked', c.number_sections);
 			$('*[setting="use_dual_dialogue"]').prop('checked', c.use_dual_dialogue);
 			$('*[setting="stats_keep_last_scene_time"]').prop('checked', c.stats_keep_last_scene_time);
+			$('*[setting="scene_continuation_top"]').prop('checked', c.scene_continuation_top);
+			$('*[setting="scene_continuation_bottom"]').prop('checked', c.scene_continuation_bottom);
 			$('*[setting="print_profile"]').val(c.print_profile);
 			$('*[setting="stats_who_with_who_max"]').val(c.stats_who_with_who_max);
 			$('*[setting="print_header"]').val(c.print_header);
@@ -233,6 +248,8 @@
 			c.number_sections = $('*[setting="number_sections"]').is(':checked');
 			c.use_dual_dialogue = $('*[setting="use_dual_dialogue"]').is(':checked');
 			c.stats_keep_last_scene_time = $('*[setting="stats_keep_last_scene_time"]').is(':checked');
+			c.scene_continuation_top = $('*[setting="scene_continuation_top"]').is(':checked');
+			c.scene_continuation_bottom = $('*[setting="scene_continuation_bottom"]').is(':checked');
 			c.stats_who_with_who_max = parseInt($('*[setting="stats_who_with_who_max"]').val());
 			c.print_header = $('*[setting="print_header"]').val();
 			c.print_footer = $('*[setting="print_footer"]').val();

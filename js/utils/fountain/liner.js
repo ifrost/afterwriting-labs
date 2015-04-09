@@ -38,27 +38,26 @@ define('utils/fountain/liner', function (require) {
 	var default_breaker = function (index, lines, cfg) {
 		var CONTD = cfg.text.continued || "(CONT'D)";
 		var MORE = cfg.text.more || "(MORE)";
-		
+
 		for (var before = index - 1; before && !(lines[before].text); before--) {}
 		for (var after = index + 1; after < lines.length && !(lines[after].text); after++) {}
 
 		// possible break is after this token
 		var token_on_break = lines[index];
-		
+
 		var token_after = lines[after];
 		var token_before = lines[before];
 
 		if (token_on_break.is("scene_heading") && token_after && !token_after.is("scene_heading")) {
 			return false;
-		}
-		else if (token_after && token_after.is('transition') && !token_on_break.is('transition')) {
+		} else if (token_after && token_after.is('transition') && !token_on_break.is('transition')) {
 			return false;
 		}
 		// action block 1,2 or 3 lines.
 		// don't break unless it's the last line
 		else if (token_on_break.is('action') &&
-				token_on_break.token.lines.length < 4 &&
-				token_on_break.token.lines.indexOf(token_on_break) !== token_on_break.token.lines.length - 1) {
+			token_on_break.token.lines.length < 4 &&
+			token_on_break.token.lines.indexOf(token_on_break) !== token_on_break.token.lines.length - 1) {
 			return false;
 		}
 		// for and more lines
@@ -69,10 +68,10 @@ define('utils/fountain/liner', function (require) {
 		// aaaaaaaaa <--- allow breaking after this line
 		// aaaaaaaaa <--- don't break after this line 
 		// aaaaaaaaa <--- allow breaking after this line
-		else if (token_on_break.is('action') && 
-				token_on_break.token.lines.length >= 4 &&
-				(token_on_break.token.lines.indexOf(token_on_break) === 0 ||
-				token_on_break.token.lines.indexOf(token_on_break) === token_on_break.token.lines.length - 2)) {
+		else if (token_on_break.is('action') &&
+			token_on_break.token.lines.length >= 4 &&
+			(token_on_break.token.lines.indexOf(token_on_break) === 0 ||
+			token_on_break.token.lines.indexOf(token_on_break) === token_on_break.token.lines.length - 2)) {
 			return false;
 		} else if (cfg.split_dialogue && token_on_break.is("dialogue") && token_after && token_after.is("dialogue") && token_before.is("dialogue") && !(token_on_break.dual)) {
 			for (var character = before; lines[character].type !== "character"; character--) {}
@@ -90,7 +89,7 @@ define('utils/fountain/liner', function (require) {
 				token: token_on_break.token
 			}));
 			return true;
-		} else if (lines[index].is_dialogue() !== -1 &&  lines[after] && lines[after].is("dialogue", "parenthetical")) {
+		} else if (lines[index].is_dialogue() !== -1 && lines[after] && lines[after].is("dialogue", "parenthetical")) {
 			return false; // or break
 		}
 		return true;
@@ -122,8 +121,25 @@ define('utils/fountain/liner', function (require) {
 			p = internal_break - 1;
 		}
 		var page = lines.slice(0, p + 1);
+
+		// if scene is not finished (next not empty token is not a heading) - add (CONTINUED)			
+		var next_page_line_index = p + 1,
+			next_page_line = null,
+			scene_split = false;
+		while (next_page_line_index < lines.length && next_page_line === null) {
+			if (lines[next_page_line_index].type !== 'separator' && lines[next_page_line_index].type !== 'page_break') {
+				next_page_line = lines[next_page_line_index];
+			}
+			next_page_line_index++;
+		}
+		
+		if (next_page_line && next_page_line.type !== 'scene_heading') {
+			scene_split = true;			
+		}
+
 		page.push(h.create_line({
-			type: "page_break"
+			type: "page_break",
+			scene_split: scene_split
 		}));
 		var append = break_lines(lines.slice(p + 1), max, breaker, cfg);
 		return page.concat(append);
@@ -185,7 +201,7 @@ define('utils/fountain/liner', function (require) {
 			global_index = 0;
 
 		_state = 'normal';
-		
+
 		tokens.forEach(function (token) {
 			var max = (cfg.print()[token.type] || {}).max || cfg.print().action.max;
 
@@ -194,7 +210,7 @@ define('utils/fountain/liner', function (require) {
 			}
 
 			split_token(token, max);
-			
+
 			if (token.is('scene_heading') && lines.length) {
 				token.lines[0].number = token.number;
 			}
