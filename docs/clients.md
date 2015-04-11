@@ -67,7 +67,7 @@ The output can be customized using configuration file passed as --config paramet
 		"print_footer": "",
 		"print_watermark": "",
 		"scenes_numbers": "none",
-		"each_scene_on_new_page": false,
+		"each_scene_on_new_page": false
 	}
 
 Available options:
