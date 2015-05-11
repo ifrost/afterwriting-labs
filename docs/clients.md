@@ -13,8 +13,8 @@ Installation
 
 **Using npm:**
 
-   > npm install afterwriting -g
-   > afterwriting --help
+    > npm install afterwriting -g
+    > afterwriting --help
 
 **From sources:**
 
@@ -140,6 +140,8 @@ The script:
 
 
 The output:
+
+    INT. ROOM - DAY
 
     BOND enters the room. Dr. Julius No attacks him.
     
