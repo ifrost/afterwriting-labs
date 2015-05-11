@@ -45,7 +45,7 @@ require = function () {
  */
 require.config = function(value) {
 	config = value;
-}
+};
 
 /**
  * modified define

@@ -5,9 +5,7 @@ console.info("www: http://afterwriting.com\n");
 
 global.window = undefined;
 
-var stdio = require('stdio');
 var fs = require('fs');
-
 var stdio = require('stdio');
 var ops = stdio.getopt({
 	'source': {
@@ -64,7 +62,7 @@ function validate_options() {
 
 function file_exits(path) {
 	try {
-		fs.statSync(path);		
+		fs.statSync(path);
 		return true;
 	} catch (e) {
 		return false;
