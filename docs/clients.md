@@ -11,6 +11,13 @@ Afterwriting CLI requires node.js. To install it, follow instructions on [node.j
 Installation
 ------------
 
+**Using npm:**
+
+   > npm install afterwriting -g
+   > afterwriting --help
+
+**From sources:**
+
 Download project sources - https://github.com/ifrost/afterwriting-labs/releases/latest. Extract all files and open a terminal window:
 
     > cd afterwriting-labs
