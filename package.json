@@ -1,6 +1,6 @@
 {
   "name": "afterwriting",
-  "version": "1.2.3",
+  "version": "1.2.5",
   "description": "Screewriting tools",
   "keywords": [
     "screenwriting",
@@ -13,6 +13,7 @@
     "email": "pm.jamroz@gmail.com",
     "url": "http://about.me/piotr.jamroz"
   },
+  "bin": "./awc.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/ifrost/afterwriting-labs.git"
@@ -43,9 +44,6 @@
     "mocha": "^2.2.1",
     "sinon": "^1.14.0"
   },
-  "peerDependencies": {
-    "grunt": "~0.4.0"
-  },
   "engines": {
     "node": ">=0.10.0"
   },
@@ -53,8 +51,9 @@
     "type": "MIT"
   },
   "dependencies": {
+    "grunt": "~0.4.0",
     "d3": "^3.5.5",
-    "jquery": "^2.1.3",
-    "stdio": "^0.2.7"
+    "stdio": "^0.2.7",
+    "jquery": "^2.1.4"
   }
 }

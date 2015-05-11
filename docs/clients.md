@@ -6,7 +6,7 @@ Afterwriting CLI is a command line tool that lets you generate PDF from your fou
 Requirements
 ------------
 
-Afterriting CLI requires node.js. To install it, follow instructions on [node.js website](http://nodejs.org/).
+Afterwriting CLI requires node.js. To install it, follow instructions on [node.js website](http://nodejs.org/).
 
 Installation
 ------------
