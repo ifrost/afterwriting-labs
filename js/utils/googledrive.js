@@ -199,12 +199,14 @@ define(function (require) {
 		};
 	};
 	module.upload = auth_method(upload);
-	
+
 	/**
 	 * Generate list of files/folders
 	 */
 	var list = function (callback, options) {
 		options = options || {};
+
+		options.error = options.error || function() {};
 
 		if (options.before) {
 			options.before();
@@ -217,21 +219,33 @@ define(function (require) {
 				corpus: "DOMAIN",
 				q: 'trashed=false'
 			}
-		});		
-		
+		});
+
 		var conflate_caller = function(conflate_callback, data) {
 			if (data) {
-				gapi.client.request({path: data.nextLink}).execute(conflate_callback);
+				gapi.client.request({path: data.nextLink}).then(function(response){
+						conflate_callback(response.result);
+					},
+					function(response) {
+						$.prompt.close();
+						$.prompt(response.result.error.message);
+					});
 			}
 			else {
-				request.execute(conflate_callback);
+				request.then(function(response){
+						conflate_callback(response.result);
+					},
+					function(response) {
+						$.prompt.close();
+						$.prompt(response.result.error.message);
+					});
 			}
 		};
-		
+
 		var conflate_tester = function(data) {
 			return data.nextLink;
 		};
-		
+
 		var conflate_final = function(results) {
 			var items = [];
 			results.forEach(function(args){
