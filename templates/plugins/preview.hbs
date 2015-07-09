@@ -8,7 +8,10 @@
 </div><div style="clear:both"/>
 <p class="info-content" section="preview-info">Can't see anything? You need a PDF plugin in your browser. (You can download pdf from
 	<a class="switch" href="#" plugin="save">here</a>)</p>
-<div id="pdf-preview-iframe-container" class="to-the-bottom"></div>
+<div id="pdf-preview-iframe-container" class="to-the-bottom" style="display:none"></div>
+<div id="pdf-preview-pdfjs-container" class="to-the-bottom">
+	<canvas id="pdf-canvas" style="border:1px solid black;" />
+</div>
 <!-- scripts -->
 <script>
 	require(['jquery', 'plugins/preview'], function($, preview) {
