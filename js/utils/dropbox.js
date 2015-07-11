@@ -130,7 +130,7 @@ define(function (require) {
 			if (options.after) {
 				options.after();
 			}
-			callback(root);
+			callback([root]);
 
 		};
 

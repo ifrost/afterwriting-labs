@@ -48,7 +48,7 @@ define(function (require) {
 		var finished = decorator.signal();
 		var fileReader = new FileReader();
 		fileReader.onload = function () {
-			var value = this.result;			
+			var value = this.result;
 			set_script(value);
 			finished(data.format);
 		};
@@ -78,10 +78,10 @@ define(function (require) {
 
 	var open_from_cloud = function (client, back_callback, load_callback) {
 		client.list(function (root) {
-			root = client.convert_to_jstree(root);
+			root = typeof root !== 'function' ? client.convert_to_jstree(root) : root;
 			tree.show({
 				info: 'Please select file to open.',
-				data: [root],
+				data: root,
 				label: 'Open',
 				search: true,
 				callback: function (selected) {
@@ -106,7 +106,8 @@ define(function (require) {
 			before: function () {
 				$.prompt('Please wait...');
 			},
-			after: $.prompt.close
+			after: $.prompt.close,
+			lazy: data.config.cloud_lazy_loading
 		});
 	};
 

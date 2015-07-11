@@ -196,6 +196,15 @@
 					<input setting="stats_who_with_who_max" type="input" style="width: 50px">
 				</td>
 			</tr>
+			<tr>
+				<th colspan="2">Experimental</th>
+			</tr>
+			<tr>
+				<td>GoogleDrive lazy loading:</td>
+				<td>
+					<input setting="cloud_lazy_loading" type="checkbox">
+				</td>
+			</tr>
 		</tbody>
 	</table>
 </div>
@@ -222,6 +231,7 @@
 			$('*[setting="stats_keep_last_scene_time"]').prop('checked', c.stats_keep_last_scene_time);
 			$('*[setting="scene_continuation_top"]').prop('checked', c.scene_continuation_top);
 			$('*[setting="scene_continuation_bottom"]').prop('checked', c.scene_continuation_bottom);
+			$('*[setting="cloud_lazy_loading"]').prop('checked', c.cloud_lazy_loading);
 			$('*[setting="print_profile"]').val(c.print_profile);
 			$('*[setting="stats_who_with_who_max"]').val(c.stats_who_with_who_max);
 			$('*[setting="print_header"]').val(c.print_header);
@@ -250,6 +260,7 @@
 			c.stats_keep_last_scene_time = $('*[setting="stats_keep_last_scene_time"]').is(':checked');
 			c.scene_continuation_top = $('*[setting="scene_continuation_top"]').is(':checked');
 			c.scene_continuation_bottom = $('*[setting="scene_continuation_bottom"]').is(':checked');
+			c.cloud_lazy_loading = $('*[setting="cloud_lazy_loading"]').is(':checked');
 			c.stats_who_with_who_max = parseInt($('*[setting="stats_who_with_who_max"]').val());
 			c.print_header = $('*[setting="print_header"]').val();
 			c.print_footer = $('*[setting="print_footer"]').val();
