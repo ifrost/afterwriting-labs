@@ -121,7 +121,7 @@ define(function (require) {
 			selected_parents: data.data('gd-parents'),
 			list_options: {
 				writeOnly: true,
-				lazy: true
+				lazy: data.config.cloud_lazy_loading
 			},
 			default_filename: 'screenplay.fountain'
 		});
@@ -159,7 +159,7 @@ define(function (require) {
 			list_options: {
 				pdfOnly: true,
 				writeOnly: true,
-				lazy: true
+				lazy: data.config.cloud_lazy_loading
 			},
 			default_filename: 'screenplay.pdf'
 		});
