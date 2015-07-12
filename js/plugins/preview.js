@@ -8,13 +8,17 @@ define(function (require) {
 	var plugin = pm.create_plugin('preview', 'view');
 	
 	plugin.get_pdf = function(callback) {
+		pdfmaker.get_pdf(callback);
+	};
+
+	plugin.get_pdfjs = function() {
 		PDFJS.disableWebGL = false;
 		pdfmaker.get_pdf(function(data){
 			setTimeout(function(){
 				PDFJS.getDocument(data.url).then(function(pdf) {
 					// Using promise to fetch the page
 					pdf.getPage(2).then(function(page) {
-						var scale = 1.1;
+						var scale = 1;
 						var viewport = page.getViewport(scale);
 
 						//
@@ -40,9 +44,9 @@ define(function (require) {
 				});
 			}, 100);
 		});
-	};
-	
-	plugin.refresh = decorator.signal();		
+	}
+
+	plugin.refresh = decorator.signal();
 	
 	plugin.activate = function() {
 		editor.synced.add(plugin.refresh);

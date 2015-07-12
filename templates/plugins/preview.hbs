@@ -10,21 +10,35 @@
 	<a class="switch" href="#" plugin="save">here</a>)</p>
 <div id="pdf-preview-iframe-container" class="to-the-bottom" style="display:none"></div>
 <div id="pdf-preview-pdfjs-container" class="to-the-bottom">
-	<canvas id="pdf-canvas" style="border:1px solid black;" />
+	<canvas id="pdf-canvas" />
 </div>
 <!-- scripts -->
 <script>
-	require(['jquery', 'plugins/preview'], function($, preview) {
+	require(['jquery', 'plugins/preview', 'modules/data'], function($, preview, data) {
 		preview.refresh.add(function() {
-			$('#pdf-preview-iframe-container').html('<p>Loading preview...</p><iframe id="pdf-preview-iframe" style="height: 100%; width: 100%; display:none"></iframe>');
+			if (data.config.pdfjs_viewer) {
+				$('#pdf-preview-iframe-container').hide();
+				$('#pdf-preview-pdfjs-container').show();
+			}
+			else {
+				$('#pdf-preview-iframe-container').show();
+				$('#pdf-preview-pdfjs-container').hide();
+			}
+			
+			$('#pdf-preview-iframe-container').html('<p>Loading preview...</p><iframe id="pdf-preview-iframe" style="height: 100%; width: 100%; display:none"  type="application/pdf"></iframe>');
 
 			setTimeout(function() {
-				preview.get_pdf(function(data) {
-					$("#pdf-preview-iframe-container p").remove();
-					$("#pdf-preview-iframe").attr('src', data.url).css('display', 'block');
-				});
+				if (!data.config.pdfjs_viewer) {
+					preview.get_pdf(function (data) {
+						$("#pdf-preview-iframe-container p").remove();
+						//$("#pdf-preview-iframe").attr('src', data.url).css('display', 'block');
+						$("#pdf-preview-iframe").attr('src', 'js/libs/pdfjs/web/viewer.html?file=' + encodeURIComponent(data.url)).css('display', 'block');
+					});
+				}
+				else {
+					preview.get_pdfjs();
+				}
 			}, 0);
-
 
 		});
 		preview.deactivate.add(function() {
