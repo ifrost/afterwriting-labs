@@ -209,7 +209,9 @@ define(function (require) {
 		options.error = options.error || function() {};
 
 		if (options.lazy) {
-			callback(lazy_list);
+			callback(function(node, callback){
+				lazy_list(options, node, callback);
+			});
 			return;
 		}
 
@@ -316,13 +318,17 @@ define(function (require) {
 	 * @param node - node to load
 	 * @param callback - callback run after children are loaded
 	 */
-	var lazy_list = function(node, callback) {
+	var lazy_list = function(options, node, callback) {
 		var folder = node.id === '#' ? 'root' : node.id;
+		var options ={
+			folder: folder,
+			pdfOnly: options.pdfOnly,
+			writeOnly: options.writeOnly
+		};
 		module.list(function(item){
 			var loaded_node = module.convert_to_jstree(item);
 			callback.call(this, node.id === '#' ? loaded_node : loaded_node.children);
-		},{folder:folder});
-
+		}, options);
 	};
 
 	/**
