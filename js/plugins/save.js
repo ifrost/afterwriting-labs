@@ -114,12 +114,14 @@ define(function (require) {
 						plugin.gd_saved(file);
 					},
 					parents: selected.data.isRoot ? [] : [selected.data],
-					fileid: selected.data.isFolder ? null : selected.data.id,
+					fileid: selected.data.isFolder ? null : selected.data.id
 				});
 			},
 			selected: data.data('gd-fileid'),
+			selected_parents: data.data('gd-parents'),
 			list_options: {
-				writeOnly: true
+				writeOnly: true,
+				lazy: data.config.cloud_lazy_loading
 			},
 			default_filename: 'screenplay.fountain'
 		});
@@ -140,6 +142,11 @@ define(function (require) {
 							}
 							file_saved();
 							data.data('gd-pdf-id', file.id);
+							var selected_parents = selected.parents.slice(0, selected.parents.length-2);
+							if (selected.type === 'default') {
+								selected_parents.unshift(selected.id);
+							}
+							data.data('gd-pdf-parents', selected_parents.reverse());
 						},
 						convert: false,
 						parents: selected.data.isRoot ? [] : [selected.data],
@@ -148,9 +155,11 @@ define(function (require) {
 				});
 			},
 			selected: data.data('gd-pdf-id'),
+			selected_parents: data.data('gd-pdf-parents'),
 			list_options: {
 				pdfOnly: true,
-				writeOnly: true
+				writeOnly: true,
+				lazy: data.config.cloud_lazy_loading
 			},
 			default_filename: 'screenplay.pdf'
 		});
@@ -182,10 +191,11 @@ define(function (require) {
 		};
 		options.list_options.after = $.prompt.close;
 		options.client.list(function (root) {
-			root = options.client.convert_to_jstree(root);
+			root = typeof root !== 'function' ? options.client.convert_to_jstree(root) : root;
 			tree.show({
-				data: [root],
+				data: root,
 				selected: options.selected,
+				selected_parents: options.selected_parents,
 				filename: options.default_filename,
 				save: true,
 				info: 'Select a file to override or choose a folder to save as a new file.',
