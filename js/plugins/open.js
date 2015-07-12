@@ -130,6 +130,7 @@ define(function (require) {
 				set_script(content);
 				data.data('gd-link', link);
 				data.data('gd-fileid', fileid);
+				data.data('gd-parents', selected.parents.slice(0, selected.parents.length-2).reverse());
 				finished(data.format);
 			});
 		});
