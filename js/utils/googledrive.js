@@ -208,6 +208,13 @@ define(function (require) {
 
 		options.error = options.error || function() {};
 
+		if (options.lazy) {
+			callback(function(node, callback){
+				lazy_list(options, node, callback);
+			});
+			return;
+		}
+
 		if (options.before) {
 			options.before();
 		}
@@ -217,7 +224,7 @@ define(function (require) {
 			method: 'GET',
 			params: {
 				corpus: "DOMAIN",
-				q: 'trashed=false'
+				q: 'trashed=false' + (options.folder ? "and  '" + options.folder + "' in parents" : '')
 			}
 		});
 
@@ -259,13 +266,12 @@ define(function (require) {
 				return !item.explicitlyTrashed && !item.labels.trashed;
 			});
 			var map_items = {}, root = {
-					title: 'Google Drive (root)',
+					title: 'My Drive',
 					id: 'root',
 					isRoot: true,
 					isFolder: true,
 					children: []
 				};
-
 
 			items = items.filter(function (i) {
 				return !options.pdfOnly || i.mimeType === "application/pdf" || i.mimeType === "application/vnd.google-apps.folder";
@@ -301,12 +307,29 @@ define(function (require) {
 				options.after();
 			}
 			callback(root);
-
 		};
 		
 		fn.conflate(conflate_caller, conflate_tester, conflate_final);
 	};
 	module.list = auth_method(list);
+
+	/**
+	 * Lazy-loading for the list
+	 * @param node - node to load
+	 * @param callback - callback run after children are loaded
+	 */
+	var lazy_list = function(options, node, callback) {
+		var folder = node.id === '#' ? 'root' : node.id;
+		var options ={
+			folder: folder,
+			pdfOnly: options.pdfOnly,
+			writeOnly: options.writeOnly
+		};
+		module.list(function(item){
+			var loaded_node = module.convert_to_jstree(item);
+			callback.call(this, node.id === '#' ? loaded_node : loaded_node.children);
+		}, options);
+	};
 
 	/**
 	 * Convert a file/folder to a jstree node
@@ -316,7 +339,7 @@ define(function (require) {
 		var result = {
 			text: item.title + (item.disabled ? ' (no permissions)' : ''),
 			id: item.id,
-			data: item,			
+			data: item,
 			type: item.isFolder ? 'default' : (item.shared ? 'shared-file' : 'file'),
 			state: {
 				opened: item.isRoot,
@@ -325,6 +348,9 @@ define(function (require) {
 		};
 		if (children.length) {
 			result.children = children;
+		}
+		else {
+			result.children = item.isFolder;
 		}
 		return result;
 	};
