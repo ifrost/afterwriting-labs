@@ -11,6 +11,34 @@ define(function (require) {
 		pdfmaker.get_pdf(callback);
 	};
 
+	var page = 1, numPages = 1, zoom = 1.15;
+
+	plugin.prev = function() {
+		page -= 1;
+		if (page < 1) {
+			page = 0;
+		}
+		plugin.get_pdfjs();
+	};
+
+	plugin.next = function() {
+		page += 1;
+		if (page > numPages) {
+			page = numPages;
+		}
+		plugin.get_pdfjs();
+	};
+
+	plugin.zoomin = function() {
+		zoom *= 1.2;
+		plugin.get_pdfjs();
+	};
+
+	plugin.zoomout = function() {
+		zoom /= 1.2;
+		plugin.get_pdfjs();
+	};
+
 	plugin.get_pdfjs = function() {
 		PDFJS.disableWebGL = false;
 		pdfmaker.get_pdf(function(data){
@@ -24,8 +52,11 @@ define(function (require) {
 
 					PDFJS.getDocument(uint8array).then(function(pdf) {
 						// Using promise to fetch the page
-						pdf.getPage(2).then(function(page) {
-							var scale = 1;
+
+						numPages = pdf.numPages;
+
+						pdf.getPage(page).then(function(page) {
+							var scale = zoom;
 							var viewport = page.getViewport(scale);
 
 							//
@@ -43,6 +74,7 @@ define(function (require) {
 								canvasContext: context,
 								viewport: viewport
 							};
+							context.clearRect(0, 0, canvas.width, canvas.height);
 							page.render(renderContext);
 						});
 					}).catch(function(error){

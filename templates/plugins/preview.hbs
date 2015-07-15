@@ -10,11 +10,26 @@
 	<a class="switch" href="#" plugin="save">here</a>)</p>
 <div id="pdf-preview-iframe-container" class="to-the-bottom" style="display:none"></div>
 <div id="pdf-preview-pdfjs-container" class="to-the-bottom">
-	<canvas id="pdf-canvas" />
+	<div>
+		<button id="prev">prev</button>
+		<button id="next">next</button>
+		<button id="zoomin">+</button>
+		<button id="zoomout">-</button>
+	</div>
+	<div>
+        <canvas id="pdf-canvas" style="border: 1px solid #999999" />
+	</div>
+
 </div>
 <!-- scripts -->
 <script>
 	require(['jquery', 'plugins/preview', 'modules/data'], function($, preview, data) {
+
+		$('#next').click(preview.next);
+		$('#prev').click(preview.prev);
+		$('#zoomin').click(preview.zoomin);
+		$('#zoomout').click(preview.zoomout);
+
 		preview.refresh.add(function() {
 			if (data.config.pdfjs_viewer) {
 				$('#pdf-preview-iframe-container').hide();
@@ -24,7 +39,7 @@
 				$('#pdf-preview-iframe-container').show();
 				$('#pdf-preview-pdfjs-container').hide();
 			}
-			
+
 			$('#pdf-preview-iframe-container').html('<p>Loading preview...</p><embed id="pdf-preview-iframe" style="height: 100%; width: 100%; display:none"  type="application/pdf"></embed>');
 
 			setTimeout(function() {
