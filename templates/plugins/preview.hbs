@@ -25,14 +25,13 @@
 				$('#pdf-preview-pdfjs-container').hide();
 			}
 			
-			$('#pdf-preview-iframe-container').html('<p>Loading preview...</p><iframe id="pdf-preview-iframe" style="height: 100%; width: 100%; display:none"  type="application/pdf"></iframe>');
+			$('#pdf-preview-iframe-container').html('<p>Loading preview...</p><embed id="pdf-preview-iframe" style="height: 100%; width: 100%; display:none"  type="application/pdf"></embed>');
 
 			setTimeout(function() {
 				if (!data.config.pdfjs_viewer) {
 					preview.get_pdf(function (data) {
 						$("#pdf-preview-iframe-container p").remove();
-						//$("#pdf-preview-iframe").attr('src', data.url).css('display', 'block');
-						$("#pdf-preview-iframe").attr('src', 'js/libs/pdfjs/web/viewer.html?file=' + encodeURIComponent(data.url)).css('display', 'block');
+						$("#pdf-preview-iframe").attr('src', data.url).css('display', 'block');
 					});
 				}
 				else {

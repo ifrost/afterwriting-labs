@@ -15,33 +15,42 @@ define(function (require) {
 		PDFJS.disableWebGL = false;
 		pdfmaker.get_pdf(function(data){
 			setTimeout(function(){
-				PDFJS.getDocument(data.url).then(function(pdf) {
-					// Using promise to fetch the page
-					pdf.getPage(2).then(function(page) {
-						var scale = 1;
-						var viewport = page.getViewport(scale);
 
-						//
-						// Prepare canvas using PDF page dimensions
-						//
-						var canvas = document.getElementById('pdf-canvas');
-						var context = canvas.getContext('2d');
-						canvas.height = viewport.height;
-						canvas.width = viewport.width;
+				var arrayBuffer, uint8array;
+				var fileReader = new FileReader();
+				fileReader.onload = function() {
+					arrayBuffer = this.result;
+					uint8array = new Uint8Array(arrayBuffer)
 
-						//
-						// Render PDF page into canvas context
-						//
-						var renderContext = {
-							canvasContext: context,
-							viewport: viewport
-						};
-						page.render(renderContext);
-						callback(data);
+					PDFJS.getDocument(uint8array).then(function(pdf) {
+						// Using promise to fetch the page
+						pdf.getPage(2).then(function(page) {
+							var scale = 1;
+							var viewport = page.getViewport(scale);
+
+							//
+							// Prepare canvas using PDF page dimensions
+							//
+							var canvas = document.getElementById('pdf-canvas');
+							var context = canvas.getContext('2d');
+							canvas.height = viewport.height;
+							canvas.width = viewport.width;
+
+							//
+							// Render PDF page into canvas context
+							//
+							var renderContext = {
+								canvasContext: context,
+								viewport: viewport
+							};
+							page.render(renderContext);
+						});
+					}).catch(function(error){
+						console.log(error)
 					});
-				}).catch(function(error){
-					console.log(error)
-				});
+
+				};
+				fileReader.readAsArrayBuffer(data.blob);
 			}, 100);
 		});
 	}
