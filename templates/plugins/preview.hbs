@@ -23,12 +23,12 @@
 </div>
 <!-- scripts -->
 <script>
-	require(['jquery', 'plugins/preview', 'modules/data'], function($, preview, data) {
+	require(['jquery', 'plugins/preview', 'modules/data', 'utils/pdfjsviewer'], function($, preview, data, pdfjs_viewer) {
 
-		$('#next').click(preview.next);
-		$('#prev').click(preview.prev);
-		$('#zoomin').click(preview.zoomin);
-		$('#zoomout').click(preview.zoomout);
+		$('#next').click(pdfjs_viewer.next);
+		$('#prev').click(pdfjs_viewer.prev);
+		$('#zoomin').click(pdfjs_viewer.zoomin);
+		$('#zoomout').click(pdfjs_viewer.zoomout);
 
 		preview.refresh.add(function() {
 			if (data.config.pdfjs_viewer) {
@@ -43,15 +43,15 @@
 			$('#pdf-preview-iframe-container').html('<p>Loading preview...</p><embed id="pdf-preview-iframe" style="height: 100%; width: 100%; display:none"  type="application/pdf"></embed>');
 
 			setTimeout(function() {
-				if (!data.config.pdfjs_viewer) {
-					preview.get_pdf(function (data) {
-						$("#pdf-preview-iframe-container p").remove();
-						$("#pdf-preview-iframe").attr('src', data.url).css('display', 'block');
-					});
-				}
-				else {
-					preview.get_pdfjs();
-				}
+				preview.get_pdf(function (result) {
+					$("#pdf-preview-iframe-container p").remove();
+					if (data.config.pdfjs_viewer) {
+						pdfjs_viewer.from_blob(result.blob);
+					}
+					else {
+						$("#pdf-preview-iframe").attr('src', result.url).css('display', 'block');
+					}
+				});
 			}, 0);
 
 		});
