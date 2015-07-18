@@ -11,7 +11,7 @@ define(function (require) {
 		pdfmaker.get_pdf(callback);
 	};
 
-	var page = 1, numPages = 1, zoom = 1.15;
+	var page = 1, numPages = 1, zoom = 1.15, pdf;
 
 	plugin.prev = function() {
 		page -= 1;
@@ -39,53 +39,61 @@ define(function (require) {
 		plugin.get_pdfjs();
 	};
 
-	plugin.get_pdfjs = function() {
-		PDFJS.disableWebGL = false;
-		pdfmaker.get_pdf(function(data){
-			setTimeout(function(){
+	function _render(pdf) {
+		numPages = pdf.numPages;
 
-				var arrayBuffer, uint8array;
-				var fileReader = new FileReader();
-				fileReader.onload = function() {
-					arrayBuffer = this.result;
-					uint8array = new Uint8Array(arrayBuffer)
+		pdf.getPage(page).then(function(page) {
+			var scale = zoom;
+			var viewport = page.getViewport(scale);
 
-					PDFJS.getDocument(uint8array).then(function(pdf) {
-						// Using promise to fetch the page
+			//
+			// Prepare canvas using PDF page dimensions
+			//
+			var canvas = document.getElementById('pdf-canvas');
+			var context = canvas.getContext('2d');
+			canvas.height = viewport.height;
+			canvas.width = viewport.width;
 
-						numPages = pdf.numPages;
-
-						pdf.getPage(page).then(function(page) {
-							var scale = zoom;
-							var viewport = page.getViewport(scale);
-
-							//
-							// Prepare canvas using PDF page dimensions
-							//
-							var canvas = document.getElementById('pdf-canvas');
-							var context = canvas.getContext('2d');
-							canvas.height = viewport.height;
-							canvas.width = viewport.width;
-
-							//
-							// Render PDF page into canvas context
-							//
-							var renderContext = {
-								canvasContext: context,
-								viewport: viewport
-							};
-							context.clearRect(0, 0, canvas.width, canvas.height);
-							page.render(renderContext);
-						});
-					}).catch(function(error){
-						console.log(error)
-					});
-
-				};
-				fileReader.readAsArrayBuffer(data.blob);
-			}, 100);
+			//
+			// Render PDF page into canvas context
+			//
+			var renderContext = {
+				canvasContext: context,
+				viewport: viewport
+			};
+			context.clearRect(0, 0, canvas.width, canvas.height);
+			page.render(renderContext);
 		});
-	}
+};
+
+plugin.get_pdfjs = function() {
+		PDFJS.disableWebGL = false;
+
+		if (pdf) {
+			_render(pdf);
+			return;
+		}
+
+		pdfmaker.get_pdf(function(data){
+
+			var arrayBuffer, uint8array;
+			var fileReader = new FileReader();
+			fileReader.onload = function() {
+				arrayBuffer = this.result;
+				uint8array = new Uint8Array(arrayBuffer);
+
+				PDFJS.getDocument(uint8array).then(function(pdfFile) {
+					// Using promise to fetch the page
+					pdf = pdfFile;
+					_render(pdf);
+				}).catch(function(error){
+				console.log(error)
+				});
+			};
+			fileReader.readAsArrayBuffer(data.blob);
+
+		});
+	};
 
 	plugin.refresh = decorator.signal();
 	
