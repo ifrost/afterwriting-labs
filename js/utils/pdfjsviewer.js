@@ -1,6 +1,8 @@
 /* global PDFJS */
 define(function(require){
 
+    var $ = require('jquery');
+
     PDFJS.disableWebGL = false;
 
     var base_zoom = 1.15;
@@ -62,21 +64,35 @@ define(function(require){
     };
 
     viewer.render = function() {
-        viewer.pdf.getPage(viewer.page).then(function(page) {
-            var viewport = page.getViewport(viewer.zoom);
+        $('#pdfjs-viewer').empty();
 
-            var canvas = document.getElementById('pdf-canvas');
-            var context = canvas.getContext('2d');
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
+        for (var i=1; i <= viewer.numPages; i++) {
 
-            var renderContext = {
-                canvasContext: context,
-                viewport: viewport
-            };
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            page.render(renderContext);
-        });
+            viewer.pdf.getPage(i).then(function(page) {
+                var viewport = page.getViewport(viewer.zoom);
+
+                var pdf_viewer = document.getElementById('pdfjs-viewer');
+                var canvas_container = document.createElement('div');
+                canvas_container.style.display = "inline-block";
+                canvas_container.style.padding = "2px";
+                pdf_viewer.appendChild(canvas_container);
+
+                var canvas = document.createElement('canvas');
+                canvas.style.border = "1px solid #777777";
+                canvas_container.appendChild(canvas);
+
+                var context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                var renderContext = {
+                    canvasContext: context,
+                    viewport: viewport
+                };
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                page.render(renderContext);
+            });
+        }
     };
 
     return viewer;

@@ -181,6 +181,12 @@ sub {
 	font-size: smaller;
 }
 
+.pdfjs-viewer {
+	overflow: auto;
+	background-color: #aaaaaa;
+	text-align: center;
+}
+
 /** small screens **/
 @media(max-width: 800px) {
 	h1 {
