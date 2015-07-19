@@ -14,6 +14,10 @@ define(function(require){
         pdf: null
     };
 
+    viewer.set_container = function(container) {
+        viewer.container = container;
+    }
+
     viewer.from_blob = function(blob) {
         var arrayBuffer, uint8array,
             fileReader = new FileReader();
@@ -64,14 +68,14 @@ define(function(require){
     };
 
     viewer.render = function() {
-        $('#pdfjs-viewer').empty();
+        $(viewer.container).empty();
 
         for (var i=1; i <= viewer.numPages; i++) {
 
             viewer.pdf.getPage(i).then(function(page) {
                 var viewport = page.getViewport(viewer.zoom);
 
-                var pdf_viewer = document.getElementById('pdfjs-viewer');
+                var pdf_viewer = viewer.container;
                 var canvas_container = document.createElement('div');
                 canvas_container.style.display = "inline-block";
                 canvas_container.style.padding = "2px";

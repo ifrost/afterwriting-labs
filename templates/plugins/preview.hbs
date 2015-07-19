@@ -24,6 +24,7 @@
 		$('#prev').click(pdfjs_viewer.prev);
 		$('#zoomin').click(pdfjs_viewer.zoomin);
 		$('#zoomout').click(pdfjs_viewer.zoomout);
+		pdfjs_viewer.set_container(document.getElementById('pdfjs-viewer'));
 
 		preview.refresh.add(function() {
 			if (data.config.pdfjs_viewer) {
