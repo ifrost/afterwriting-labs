@@ -33,7 +33,6 @@
 			dropbox: {
 				exports: 'Dropbox'
 			}
-				
 		}
 	});
 

@@ -16,7 +16,7 @@ define(function(require){
 
     viewer.set_container = function(container) {
         viewer.container = container;
-    }
+    };
 
     viewer.from_blob = function(blob) {
         var arrayBuffer, uint8array,

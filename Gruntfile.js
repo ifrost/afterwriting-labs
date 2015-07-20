@@ -94,6 +94,11 @@ module.exports = function (grunt) {
 				flatten: true,
 				src: ['html/index.html', 'html/afterwriting.html'],
 				dest: ''
+			},
+			pdfjs: {
+				expand: true,
+				src: ['js/lib/pdfjs/build/*'],
+				dest: 'bundle/js/pdfjs'
 			}
 		},
 		gitcheckout: {
