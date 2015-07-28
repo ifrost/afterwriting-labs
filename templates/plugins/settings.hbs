@@ -205,6 +205,12 @@
 					<input setting="cloud_lazy_loading" type="checkbox">
 				</td>
 			</tr>
+			<tr>
+				<td>JavaScript PDF viewer:</td>
+				<td>
+					<input setting="pdfjs_viewer" type="checkbox">
+				</td>
+			</tr>
 		</tbody>
 	</table>
 </div>
@@ -232,6 +238,7 @@
 			$('*[setting="scene_continuation_top"]').prop('checked', c.scene_continuation_top);
 			$('*[setting="scene_continuation_bottom"]').prop('checked', c.scene_continuation_bottom);
 			$('*[setting="cloud_lazy_loading"]').prop('checked', c.cloud_lazy_loading);
+			$('*[setting="pdfjs_viewer"]').prop('checked', c.pdfjs_viewer);
 			$('*[setting="print_profile"]').val(c.print_profile);
 			$('*[setting="stats_who_with_who_max"]').val(c.stats_who_with_who_max);
 			$('*[setting="print_header"]').val(c.print_header);
@@ -261,6 +268,7 @@
 			c.scene_continuation_top = $('*[setting="scene_continuation_top"]').is(':checked');
 			c.scene_continuation_bottom = $('*[setting="scene_continuation_bottom"]').is(':checked');
 			c.cloud_lazy_loading = $('*[setting="cloud_lazy_loading"]').is(':checked');
+			c.pdfjs_viewer = $('*[setting="pdfjs_viewer"]').is(':checked');
 			c.stats_who_with_who_max = parseInt($('*[setting="stats_who_with_who_max"]').val());
 			c.print_header = $('*[setting="print_header"]').val();
 			c.print_footer = $('*[setting="print_footer"]').val();

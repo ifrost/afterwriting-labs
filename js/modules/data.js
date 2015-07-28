@@ -209,7 +209,8 @@ define('modules/data', function (require) {
 		use_print_settings_for_stats: true,
 		scene_continuation_bottom: false,
 		scene_continuation_top: false,
-		cloud_lazy_loading: false
+		cloud_lazy_loading: false,
+		pdfjs_viewer: false
 	};
 
 

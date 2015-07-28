@@ -74,6 +74,10 @@ module.exports = function (grunt) {
 			}
 		},
 		clean: {
+			prebuild: {
+				src: ['bundle/*', 'afterwriting/*'],
+				force: true
+			},
 			bootstrap: ['js/afterwriting-bootstrap.js', 'afterwriting.html']
 		},
 		cssmin: {
@@ -94,6 +98,12 @@ module.exports = function (grunt) {
 				flatten: true,
 				src: ['html/index.html', 'html/afterwriting.html'],
 				dest: ''
+			},
+			pdfjs: {
+				expand: true,
+				flatten: true,
+				src: ['js/libs/pdfjs/build/pdf.min.js', 'js/libs/pdfjs/build/pdf.min.worker.js'],
+				dest: 'bundle/js/pdfjs'
 			}
 		},
 		gitcheckout: {
@@ -276,7 +286,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('coverage', ['template:coverage', 'shell:istanbul_instrument', 'mocha:coverage']);
 	grunt.registerTask('doc', ['shell:jsdoc']);
 
-	grunt.registerTask('build', ['test','handlebars:compile', 'replace', 'concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'doc', 'clean']);
+	grunt.registerTask('build', ['test', 'clean:prebuild', 'handlebars:compile', 'replace', 'concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'doc', 'clean:bootstrap']);
 	
 	grunt.registerTask('release', ['gitadd:all', 'gitcommit:version', 'gittag:version', 'gitcheckout:pages', 'gitmerge:master', 'gitpush:pages', 'gitcheckout:develop', 'gitmerge:master']);
 
