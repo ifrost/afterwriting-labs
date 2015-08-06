@@ -2,7 +2,7 @@ define(function () {
 	return {
 		data: {
 			static_path: 'bundle/',
-			footer: 'version: 1.2.10 (2015/07/28)'
+			footer: 'version: 1.2.11 (2015/08/06)'
 		}
 	};
 
