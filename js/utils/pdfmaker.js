@@ -383,10 +383,9 @@ define('utils/pdfmaker', function (require) {
 							var y_right = y;
 							line.right_column.forEach(function (line) {
 								var feed_right = (cfg.print()[line.type] || {}).feed || cfg.print().action.feed;
-								var text_right = line.text.replace(/\*/g, '').replace(/_/g, '');
 								feed_right -= (feed_right - cfg.print().left_margin) / 2;
 								feed_right += (cfg.print().page_width - cfg.print().right_margin - cfg.print().left_margin) / 2;
-								doc.text(text_right, feed_right, cfg.print().top_margin + cfg.print().font_height * y_right++, text_properties);
+								doc.text(line.text, feed_right, cfg.print().top_margin + cfg.print().font_height * y_right++, text_properties);
 							});
 						}
 
