@@ -10,6 +10,7 @@ define(function (require) {
 		$ = require('jquery'),
 		gd = require('utils/googledrive'),
 		db = require('utils/dropbox'),
+		local = require('utils/local'),
 		tree = require('utils/tree'),
 		save = require('plugins/save'),
 		layout = require('utils/layout');
@@ -35,6 +36,7 @@ define(function (require) {
 		data.data('db-pdf-path', '');
 		data.data('fountain-filename', '');
 		data.data('pdf-filename', '');
+		local.local_file(null);
 	};
 
 	plugin.open_last_used = function (startup) {
@@ -50,6 +52,7 @@ define(function (require) {
 		fileReader.onload = function () {
 			var value = this.result;
 			set_script(value);
+			local.local_file(selected_file);
 			finished(data.format);
 		};
 		fileReader.readAsText(selected_file);
