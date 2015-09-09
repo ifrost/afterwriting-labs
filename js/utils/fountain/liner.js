@@ -36,8 +36,8 @@ define('utils/fountain/liner', function (require) {
 	};
 
 	var default_breaker = function (index, lines, cfg) {
-		var CONTD = cfg.text.continued || "(CONT'D)";
-		var MORE = cfg.text.more || "(MORE)";
+		var CONTD = cfg.text_contd || "(CONT'D)";
+		var MORE = cfg.text_more || "(MORE)";
 
 		for (var before = index - 1; before && !(lines[before].text); before--) {}
 		for (var after = index + 1; after < lines.length && !(lines[after].text); after++) {}
