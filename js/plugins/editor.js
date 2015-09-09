@@ -82,6 +82,7 @@ define(function (require) {
 			last_content = content;
 			data.script(content);
 			data.parse();
+			plugin.synced();
 			if (active) {
 				plugin.activate();
 			}
