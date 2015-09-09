@@ -298,7 +298,7 @@ define('utils/pdfmaker', function (require) {
 			if (line.type === "page_break") {
 
 				if (cfg.scene_continuation_bottom && line.scene_split) {
-					var scene_continued_text = '(' + (cfg.text.scene_continued || 'CONTINUED') + ')';
+					var scene_continued_text = '(' + (cfg.text_scene_continued || 'CONTINUED') + ')';
 					var feed = cfg.print().action.feed + cfg.print().action.max * cfg.print().font_width - scene_continued_text.length * cfg.print().font_width;
 					doc.simple_text(scene_continued_text, feed * 72, (cfg.print().top_margin + cfg.print().font_height * (y + 2)) * 72);
 				}
@@ -313,7 +313,7 @@ define('utils/pdfmaker', function (require) {
 					scene_continuations[scene_number] = scene_continuations[scene_number] || 0;
 					scene_continuations[scene_number]++;
 
-					var scene_continued = (cfg.scenes_numbers !== 'none' && scene_number ? scene_number + ' ' : '') + 'CONTINUED:';
+					var scene_continued = (cfg.scenes_numbers !== 'none' && scene_number ? scene_number + ' ' : '') + (cfg.text_scene_continued || 'CONTINUED') + ':';
 					scene_continued += scene_continuations[scene_number] > 1 ? ' (' + scene_continuations[scene_number] + ')' : '';
 
 					scene_continued = scene_continued.replace(/\*/g, '');

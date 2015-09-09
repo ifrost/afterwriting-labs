@@ -166,6 +166,27 @@
 				</td>
 			</tr>
 			<tr>
+				<th colspan="2">Text</th>
+			</tr>
+			<tr>
+				<td>Override <i>(MORE)</i> text to:</td>
+				<td>
+					<input setting="text_more" type="text">
+				</td>
+			</tr>
+			<tr>
+				<td>Override <i>(CONT'D)</i> text to:</td>
+				<td>
+					<input setting="text_contd" type="text">
+				</td>
+			</tr>
+			<tr>
+				<td>Override <i>CONTINUED</i> (scene continuation) text to:</td>
+				<td>
+					<input setting="text_scene_continued" type="text">
+				</td>
+			</tr>
+			<tr>
 				<th colspan="2">Miscellaneous</th>
 			</tr>
 			<tr>
@@ -245,6 +266,9 @@
 			$('*[setting="print_footer"]').val(c.print_footer);
 			$('*[setting="print_watermark"]').val(c.print_watermark);
 			$('*[setting="scenes_numbers"]').val(c.scenes_numbers);
+			$('*[setting="text_more"]').val(c.text_more);
+			$('*[setting="text_contd"]').val(c.text_contd);
+			$('*[setting="text_scene_continued"]').val(c.text_scene_continued);
 		};
 
 		var components_to_data = function() {
@@ -275,6 +299,9 @@
 			c.print_watermark = $('*[setting="print_watermark"]').val();
 			c.print_profile = $('*[setting="print_profile"]').val();
 			c.scenes_numbers = $('*[setting="scenes_numbers"]').val();
+			c.text_more = $('*[setting="text_more"]').val();
+			c.text_contd = $('*[setting="text_contd"]').val();
+			c.text_scene_continued = $('*[setting="text_scene_continued"]').val();
 			settings.save();
 		};
 

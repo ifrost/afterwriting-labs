@@ -5,6 +5,7 @@ define(function (require) {
 		decorator = require('utils/decorator'),
 		gd = require('utils/googledrive'),
 		db = require('utils/dropbox'),
+		local = require('utils/local'),
 		converter = require('utils/converters/scriptconverter'),
 		cm = require('libs/codemirror/lib/codemirror');
 
@@ -62,7 +63,7 @@ define(function (require) {
 	};
 
 	plugin.sync_available = function () {
-		return data.data('gd-fileid') || data.data('db-path');
+		return data.data('gd-fileid') || data.data('db-path') || local.sync_available();
 	};
 
 	plugin.is_sync = function () {
@@ -75,13 +76,12 @@ define(function (require) {
 			plugin.toggle_sync();
 			if (active) {
 				plugin.activate();
-			}			
+			}
 		}
 		else if (last_content !== content) {
 			last_content = content;
 			data.script(content);
 			data.parse();
-			plugin.synced();
 			if (active) {
 				plugin.activate();
 			}
@@ -106,7 +106,7 @@ define(function (require) {
 	};
 
 	plugin.synced = decorator.signal();
-	
+
 	plugin.set_sync = function (value) {
 		plugin.data.is_sync = value;
 		if (editor) {
@@ -119,11 +119,15 @@ define(function (require) {
 			} else if (data.data('db-path')) {
 				db.sync(data.data('db-path'), 3000, handle_sync);
 				plugin.synced('drobox');
+			} else if (local.sync_available()) {
+				local.sync(3000, handle_sync);
+				plugin.synced('local');
 			}
 
 		} else {
 			gd.unsync();
 			db.unsync();
+			local.unsync();
 		}
 	};
 
