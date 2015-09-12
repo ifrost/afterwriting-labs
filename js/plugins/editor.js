@@ -5,6 +5,7 @@ define(function (require) {
 		decorator = require('utils/decorator'),
 		gd = require('utils/googledrive'),
 		db = require('utils/dropbox'),
+		save = require('utils/save'),
 		local = require('utils/local'),
 		converter = require('utils/converters/scriptconverter'),
 		cm = require('libs/codemirror/lib/codemirror');
@@ -17,10 +18,15 @@ define(function (require) {
 
 	var plugin = pm.create_plugin('editor', 'write');
 	var editor, last_content = '',
-		active = false;
+		active = false,
+		auto_save_sync_timer = null;
+
+	plugin.save_in_progress = decorator.property();
+	plugin.pending_changes = decorator.property();
 
 	plugin.data = {
-		is_sync: false
+		is_sync: false,
+		is_auto_save: false
 	};
 
 	plugin.synced = decorator.signal();
@@ -38,6 +44,7 @@ define(function (require) {
 
 		editor.on('change', function () {
 			data.script(editor.getValue());
+			plugin.pending_changes(true);
 		});
 	};
 
@@ -60,6 +67,47 @@ define(function (require) {
 		plugin.data.scroll_info = null;
 
 		pm.switch_to(plugin);
+	};
+
+	plugin.auto_save_available = function() {
+		return data.data('gd-fileid') || data.data('db-path');
+	};
+
+	plugin.is_auto_save = function() {
+		return plugin.data.is_auto_save;
+	};
+
+	plugin.toggle_auto_save = function() {
+		if (!plugin.data.is_auto_save && plugin.data.is_sync) {
+			plugin.toggle_sync();
+		}
+		plugin.set_auto_save(!plugin.data.is_auto_save);
+	};
+
+	plugin.set_auto_save = function(value) {
+		plugin.data.is_auto_save = value;
+		if (plugin.data.is_auto_save && !auto_save_sync_timer) {
+			plugin.pending_changes(true); // trigger first save
+			plugin.save_in_progress(false);
+			auto_save_sync_timer = setInterval(plugin.save_current_script, 3000);
+			plugin.save_current_script();
+		}
+		else {
+			clearInterval(auto_save_sync_timer);
+			auto_save_sync_timer = null;
+			plugin.save_in_progress(false);
+			plugin.pending_changes(false);
+		}
+	};
+
+	plugin.save_current_script = function() {
+		if (!plugin.save_in_progress() && plugin.pending_changes()) {
+			plugin.save_in_progress(true);
+			plugin.pending_changes(false);
+			save.save_current_script(function(){
+				plugin.save_in_progress(false);
+			});
+		}
 	};
 
 	plugin.sync_available = function () {
@@ -114,6 +162,7 @@ define(function (require) {
 			editor.setOption('readOnly', plugin.data.is_sync);
 		}
 		if (plugin.data.is_sync) {
+			plugin.set_auto_save(false);
 			if (data.data('gd-fileid')) {
 				gd.sync(data.data('gd-fileid'), 3000, handle_sync);
 				plugin.synced('google-drive');
@@ -135,7 +184,7 @@ define(function (require) {
 	plugin.activate = function () {
 		active = true;
 		setTimeout(function () {
-			editor.setValue(data.script() || "");
+			if (data.script() !== editor.getValue()) editor.setValue(data.script() || "");
 			editor.focus();
 			editor.refresh();
 

@@ -200,3 +200,26 @@ sub {
 		text-indent: 5px;
 	}
 }
+
+.in-progress {
+	opacity: 0.4;
+}
+
+/** rotate **/
+@-webkit-keyframes rotation1{
+	from{-webkit-transform:rotate(360deg);}
+	to{-webkit-transform:rotate(0deg);}
+}
+@-moz-keyframes rotation1{
+	from{-moz-transform:rotate(360deg);}
+	to{-moz-transform:rotate(0deg);}
+}
+@-o-keyframes rotation1{
+	from{-o-transform:rotate(3600deg);}
+	to{-o-transform:rotate(0deg);}
+}
+@keyframes rotation1{
+	from{transform:rotate(360deg);}
+	to{transform:rotate(0deg);}
+}
+.rotate{-moz-animation:rotation1 2s linear infinite;-o-animation:rotation1 2s linear infinite;-webkit-animation:rotation1 2s linear infinite;animation:rotation1 2s linear infinite}

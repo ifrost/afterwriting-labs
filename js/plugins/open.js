@@ -24,6 +24,7 @@ define(function (require) {
 	var set_script = function (value) {
 		clear_last_opened();
 		editor.set_sync(false);
+		editor.set_auto_save(false);
 		data.script(value);
 		layout.show_main();
 	};
