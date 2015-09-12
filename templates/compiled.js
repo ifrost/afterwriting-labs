@@ -231,7 +231,7 @@ function program1(depth0,data) {
   if (helper = helpers.static_path) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.static_path); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "gfx/icons/other/reuse.svg\" class=\"icon\" />Last opened:&nbsp;\n		<a href=\"#\" open-action=\"last\">"
+    + "gfx/icons/other/reuse.svg\" class=\"icon\" />Last editor's content:&nbsp;\n		<a href=\"#\" open-action=\"last\">"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.last_used)),stack1 == null || stack1 === false ? stack1 : stack1.title)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</a>&nbsp;("
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.last_used)),stack1 == null || stack1 === false ? stack1 : stack1.date)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
