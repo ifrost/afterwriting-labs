@@ -70,7 +70,7 @@ define(function (require) {
 	};
 
 	plugin.auto_save_available = function() {
-		return data.data('gd-fileid') || data.data('db-path');
+		return (data.data('gd-fileid') || data.data('db-path')) && data.format !== 'fdx';
 	};
 
 	plugin.is_auto_save = function() {

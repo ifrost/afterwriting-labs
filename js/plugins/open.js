@@ -30,6 +30,7 @@ define(function (require) {
 	};
 
 	var clear_last_opened = function () {
+		data.format = undefined;
 		data.data('db-path', '');
 		data.data('gd-link', '');
 		data.data('gd-fileid', '');
