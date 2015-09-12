@@ -1,45 +1,53 @@
 <h1 style="float:left">Fountain Editor
 	<span class="info-icon" section="editor-info" />
 </h1>
-<div class="header-menu">		
-		<span><a href="#" action="sync-fountain" title="Load content from cloud"><img class="sync-icon icon small-icon" /></a>&nbsp;|&nbsp;</span>
+<div class="header-menu">
+		<span>auto-save: <a href="#" action="auto-save" title="Auto-save to cloud "><img class="auto-save-icon sync-icon icon small-icon" /></a>&nbsp;|&nbsp;</span>
+		<span>auto-reload: <a href="#" action="sync-fountain" title="Auto-reload from cloud/disk"><img class="auto-reload-icon sync-icon icon small-icon" /></a>&nbsp;|&nbsp;</span>
 		<span>save .fountain: <a href="#" action="save-fountain"><img src="{{static_path}}gfx/icons/other/download.svg" class="icon small-icon" title="Download Fountain file" /></a></span>
 		<span><a href="#" action="save-dropbox-fountain"><img src="{{static_path}}gfx/icons/other/dropbox.svg" class="icon small-icon" title="Upload Fountain file to Dropbox" /></a></span>
 		<span><a href="#" action="save-gd-fountain"><img src="{{static_path}}gfx/icons/other/gd.svg" class="icon small-icon" title="Upload Fountain file to Google Drive" /></a></span>
 	</div><div style="clear:both"/>
-<p class="info-content" section="editor-info" style="clear:both">Just a basic fountain editor. Use Ctrl-Space for auto-complete. Go to <a href="http://fountain.io" target="_blank">fountain.io</a> for more details about Fountain format.</p>
+<p class="info-content" section="editor-info" style="clear:both">
+	Just a basic fountain editor. Use Ctrl-Space for auto-complete. Go to <a href="http://fountain.io" target="_blank">fountain.io</a> for more details about Fountain format.<br/>
+	Use auto-save to automatically save your changes to the cloud every 3 seconds.<br />
+	Use auto-reload to reload the script from the cloud/disk to see PDF, facts & stats changes.
+</p>
 <textarea id="editor-textarea" placeholder="Code goes here..." class="to-the-bottom"></textarea>
 <!-- scripts -->
 <script>
 	require(['jquery', 'plugins/editor', 'utils/layout', 'utils/common'], function($, editor, layout, common) {
-		var cm = editor.create_editor($('#editor-textarea').get(0));
+		editor.create_editor($('#editor-textarea').get(0));
 
 		var editor_content = $('.plugin-content[plugin="editor"]');
 		
 		var sync_on_icon = common.data.static_path + 'gfx/icons/other/sync.svg',
 		    sync_off_icon = common.data.static_path + 'gfx/icons/other/no-sync.svg',
 			update_sync_layout = function() {
-				$('.sync-icon')
+				$('.auto-reload-icon')
 					.attr('src', editor.is_sync() ? sync_on_icon : sync_off_icon)
-					.attr('title', editor.is_sync() ? 'Turn synchroznization off' : 'Turn synchronization on');
-				$('.CodeMirror').css('opacity', editor.is_sync() ? 0.5 : 1);			
+					.attr('title', editor.is_sync() ? 'Turn auto-reload off' : 'Turn auto-reload on');
+				$('.auto-save-icon')
+					.attr('src', editor.is_auto_save() ? sync_on_icon : sync_off_icon)
+					.attr('title', editor.is_auto_save() ? 'Turn auto-save off' : 'Turn auto-save on');
+				$('.CodeMirror').css('opacity', editor.is_sync() ? 0.5 : 1);
 			};
 		
 		$('a[action="sync-fountain"]').click(function(){
 			if (editor.is_sync()) {
 				editor.toggle_sync();
-				$.prompt('Synchornization turned off.', {
+				$.prompt('Synchronization turned off.', {
 					buttons: {'Keep content': true, 'Load version before sync': false},
 					submit: function(e,v) {
 						if (!v) {
-							editor.restore();							
+							editor.restore();
 						}
 					}
 				});
 			}
 			else {
 				editor.store();
-				$.prompt("You can start writing in your editor. Content will be synchronized with ’afterwriting! PDF preview, facts and stats will be automatically upated.", {
+				$.prompt("You can start writing in your editor. Content will be synchronized with ’afterwriting! PDF preview, facts and stats will be automatically updated.", {
 					buttons: {'OK': true, 'Cancel': false},
 					submit: function(e,v) {
 						if (v) {
@@ -48,21 +56,74 @@
 					}
 				});
 			}
-		});		
+		});
+
+		$('a[action="auto-save"]').click(function(){
+			if (editor.is_sync()) {
+				$.prompt('This will turn auto-reload off. Do you wish to continue?', {
+					buttons: {'Yes': true, 'No': 'false'},
+					submit: function(e,v) {
+						if (v) {
+							editor.toggle_auto_save();
+						}
+					}
+				});
+			}
+			else {
+				editor.toggle_auto_save();
+			}
+		});
 		
 		editor.activate.add(function() {
 			if (editor.sync_available()) {
-				$('a[action="sync-fountain"]').parent().show();			
+				$('a[action="sync-fountain"]').parent().show();
 			}
 			else {
-				$('a[action="sync-fountain"]').parent().hide();	
+				$('a[action="sync-fountain"]').parent().hide();
+			}
+
+			if (editor.auto_save_available()) {
+				$('a[action="auto-save"]').parent().show();
+			}
+			else {
+				$('a[action="auto-save"]').parent().hide();
 			}
 			update_sync_layout();
 		});
 		
 		editor.toggle_sync.add(function() {
 			update_sync_layout();
-		});		
+		});
+
+		editor.toggle_auto_save.add(function(){
+			update_sync_layout();
+		});
+
+		function update_auto_save_icon() {
+
+			if (editor.is_auto_save()) {
+				if (editor.pending_changes() || editor.save_in_progress()) {
+					$('.auto-save-icon').addClass('in-progress');
+				}
+				else {
+					$('.auto-save-icon').removeClass('in-progress');
+				}
+
+				if (editor.save_in_progress()) {
+					$('.auto-save-icon').addClass('rotate');
+				}
+				else {
+					$('.auto-save-icon').removeClass('rotate');
+				}
+			}
+			else {
+				$('.auto-save-icon').removeClass('rotate');
+                $('.auto-save-icon').removeClass('in-progress');
+			}
+		}
+
+		editor.save_in_progress.add(update_auto_save_icon);
+		editor.pending_changes.add(update_auto_save_icon);
 
 		var resize = function() {
 
