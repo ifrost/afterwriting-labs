@@ -181,6 +181,8 @@ define('modules/data', function (require) {
 		});
 	}
 
+	plugin.fontFixEnabled = !!url_params.fontFix;
+
 	plugin.default_config = {
 		show_background_image: true,
 		embolden_scene_headers: false,
