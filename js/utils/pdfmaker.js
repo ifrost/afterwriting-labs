@@ -240,7 +240,7 @@ define('utils/pdfmaker', function (require) {
 		if (data.fontFixEnabled) {
 			var unicode_sample = textstats.get_characters(data.script());
 			unicode_sample.forEach(function(character){
-				doc.format_text(character, -0.2 , -0.2, { color: '#ffffff'});
+				doc.format_text(character, 0 , 0, { color: '#ffffff'});
 			})
 		}
 
