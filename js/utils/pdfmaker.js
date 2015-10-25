@@ -3,6 +3,7 @@ define('utils/pdfmaker', function (require) {
 	var PDFDocument = require('pdfkit'),
 		fonts = require('utils/fonts'),
 		data = require('modules/data'),
+		textstats = require('utils/textstats'),
 		helper = require('utils/helper');
 
 	var module = {};
@@ -234,6 +235,13 @@ define('utils/pdfmaker', function (require) {
 
 			// script
 			doc.addPage();
+		}
+
+		if (data.fontFixEnabled) {
+			var unicode_sample = textstats.get_characters(data.script());
+			unicode_sample.forEach(function(character){
+				doc.format_text(character, 0 , 0, { color: '#ffffff'});
+			})
 		}
 
 		var y = 0,
