@@ -175,6 +175,7 @@ define('utils/fountain/liner', function (require) {
 				result++;
 				right_index++;
 			}
+			result++; // collect separator after right dialogue
 			return result;
 		};
 		var fold_dual_dialogue = function (left_index, right_index) {
