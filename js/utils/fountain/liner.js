@@ -74,6 +74,7 @@ define('utils/fountain/liner', function (require) {
 			token_on_break.token.lines.indexOf(token_on_break) === token_on_break.token.lines.length - 2)) {
 			return false;
 		} else if (cfg.split_dialogue && token_on_break.is("dialogue") && token_after && token_after.is("dialogue") && token_before.is("dialogue") && !(token_on_break.dual)) {
+			var new_page_character;
 			for (var character = before; lines[character].type !== "character"; character--) {}
 			lines.splice(index, 0, h.create_line({
 				type: "parenthetical",
@@ -81,13 +82,40 @@ define('utils/fountain/liner', function (require) {
 				start: token_on_break.start,
 				end: token_on_break.end,
 				token: token_on_break.token
-			}), h.create_line({
+			}), new_page_character = h.create_line({
 				type: "character",
 				text: lines[character].text.trim() + " " + (lines[character].text.indexOf(CONTD) !== -1 ? '' : CONTD),
 				start: token_after.start,
 				end: token_after.end,
 				token: token_on_break.token
 			}));
+
+			if (lines[character].right_column) {
+				var dialogue_on_page_length = index - character;
+				var right_lines_on_this_page = lines[character].right_column.slice(0, dialogue_on_page_length).concat([
+						h.create_line({
+							type: "parenthetical",
+							text: MORE,
+							start: token_on_break.start,
+							end: token_on_break.end,
+							token: token_on_break.token
+						})
+					]),
+					right_lines_for_next_page = [h.create_line({
+							type: "character",
+							text: right_lines_on_this_page[0].text.trim() + " " + (right_lines_on_this_page[0].text.indexOf(CONTD) !== -1 ? '' : CONTD),
+							start: token_after.start,
+							end: token_after.end,
+							token: token_on_break.token
+						})
+					].concat(lines[character].right_column.slice(dialogue_on_page_length));
+
+				lines[character].right_column = right_lines_on_this_page;
+				if (right_lines_for_next_page.length > 1) {
+					new_page_character.right_column = right_lines_for_next_page;
+				}
+			}
+
 			return true;
 		} else if (lines[index].is_dialogue() !== -1 && lines[after] && lines[after].is("dialogue", "parenthetical")) {
 			return false; // or break
@@ -175,6 +203,7 @@ define('utils/fountain/liner', function (require) {
 				result++;
 				right_index++;
 			}
+			result++; // collect separator after right dialogue
 			return result;
 		};
 		var fold_dual_dialogue = function (left_index, right_index) {
@@ -223,7 +252,6 @@ define('utils/fountain/liner', function (require) {
 		});
 
 		fold_dual_dialogue(lines);
-
 		lines = break_lines(lines, cfg.print().lines_per_page, cfg.lines_breaker || default_breaker, cfg);
 
 		return lines;
