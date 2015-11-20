@@ -557,7 +557,6 @@ PDFFont = (function() {
       FirstChar: firstChar,
       LastChar: firstChar + charWidths.length - 1,
       Widths: charWidths,
-      Encoding: 'MacRomanEncoding',
       ToUnicode: cmap
     };
     return this.dictionary.end();
