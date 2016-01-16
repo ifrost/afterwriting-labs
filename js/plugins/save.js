@@ -60,7 +60,9 @@ define(function (require) {
 				});
 			},
 			selected: data.data('db-path'),
-			list_options: {},
+			list_options: {
+				lazy: data.config.cloud_lazy_loading
+			},
 			default_filename: 'screenplay.fountain'
 		});
 	};
@@ -86,7 +88,8 @@ define(function (require) {
 			},
 			selected: data.data('db-pdf-path'),
 			list_options: {
-				pdfOnly: true
+				pdfOnly: true,
+				lazy: data.config.cloud_lazy_loading
 			},
 			default_filename: 'screenplay.pdf'
 		});
