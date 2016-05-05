@@ -6,7 +6,7 @@ define('modules/data', function (require) {
 		converter = require('utils/converters/scriptconverter'),
 		preprocessor = require('utils/fountain/preprocessor'),
 		decorator = require('utils/decorator');
-
+		
 	var plugin = {};
 	var _tempStorage = {};
 	var url_params = {};

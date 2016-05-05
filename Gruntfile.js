@@ -7,6 +7,15 @@ module.exports = function (grunt) {
 	var test_specs_list = test_specs.map(function (name) {
 		return "'../test/js/" + name.substr(0, name.length - 3) + "'";
 	}).join(', ');
+	
+	
+	var acceptance_specs = grunt.file.expand({
+		filter: "isFile",
+		cwd: "test/acceptance/spec"
+	}, ["**/*.js"]);
+	var acceptance_specs_list = acceptance_specs.map(function (name) {
+		return "'../acceptance/spec/" + name.substr(0, name.length - 3) + "'";
+	}).join(', ');
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -226,6 +235,16 @@ module.exports = function (grunt) {
 					'test/runner.html': ['test/template/runner.template']
 				}
 			},
+			acceptance: {
+				options: {
+					data: {
+						specs: acceptance_specs_list
+					}
+				},
+				files: {
+					'test/acceptance/tests.js': ['test/template/acceptance.tests.template']
+				}
+			},
 			coverage: {
 				options: {
 					data: {
@@ -261,6 +280,13 @@ module.exports = function (grunt) {
 			},
 			test: {
 				src: ['test/runner.html']
+			},
+			acceptance: {
+				src: ['dev.html'],
+				options: {
+					log: false,
+					logErrors: true
+				}
 			}
 		},
 
@@ -282,7 +308,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-shell');
 	grunt.loadNpmTasks('grunt-template');
 
-	grunt.registerTask('test', ['handlebars:test', 'template:test', 'mocha:test']);
+	grunt.registerTask('test', ['handlebars:test', 'template:test', 'template:acceptance', 'mocha:test', 'mocha:acceptance']);
 	grunt.registerTask('coverage', ['template:coverage', 'shell:istanbul_instrument', 'mocha:coverage']);
 	grunt.registerTask('doc', ['shell:jsdoc']);
 
