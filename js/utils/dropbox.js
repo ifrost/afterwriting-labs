@@ -10,7 +10,7 @@ define(function (require) {
 		redirect_uri = 'http://localhost:8000/local/token.html';
 	}
 
-	var module = {}, client;
+	var module = {}, client, is_lazy = false;
 
 	var client_authenticate = function (callback) {
 		client = new Dropbox.Client({
@@ -68,25 +68,50 @@ define(function (require) {
 
 
 	var item_to_data = function (item) {
-		return {
-			isFolder: item.stat.isFolder,
-			content: [],
-			folder: item.path.substring(0, item.stat.path.length - item.stat.name.length - 1),
-			name: item.stat.name,
-			path: item.path,
-			entry: item
-		};
+		if (is_lazy) {
+			return {
+				isFolder: item.isFolder,
+				content: [],
+				folder: item.path.substring(0, item.path.length - item.name.length - 1),
+				name: item.name,
+				path: item.path,
+				entry: item
+			};
+		}
+		else {
+			return {
+				isFolder: item.stat.isFolder,
+				content: [],
+				folder: item.path.substring(0, item.stat.path.length - item.stat.name.length - 1),
+				name: item.stat.name,
+				path: item.path,
+				entry: item
+			};
+		}
 	};
 
 	var list = function (callback, options) {
 		options = options || {};
+		options.folder = options.folder || '/';
+
+		if (options.lazy) {
+			is_lazy = true;
+			callback(function(node, callback){
+				lazy_list(options, node, callback);
+			});
+			return;
+		}
+		else if (options.hasOwnProperty('lazy')) {
+			is_lazy = false;
+		}
 
 		if (options.before) {
 			options.before();
 		}
 
 		var pull_callback = function (error, result) {
-			var items = result.changes.filter(function (file) {
+			result = is_lazy ? result : result.changes;
+			var items = result.filter(function (file) {
 				return !file.wasRemoved;
 			});
 			var root = {
@@ -103,7 +128,8 @@ define(function (require) {
 			var files = [];
 
 			items = items.filter(function (i) {
-				return !options.pdfOnly || i.stat.isFolder || i.stat.mimeType === "application/pdf";
+				i = is_lazy ? i : i.stat;
+				return !options.pdfOnly || i.isFolder || i.mimeType === "application/pdf";
 			});
 
 			items.forEach(function (item) {
@@ -124,7 +150,12 @@ define(function (require) {
 				}
 			});
 			files.forEach(function (file) {
-				folders[file.folder || '/'].content.push(file);
+				if (is_lazy) {
+					root.content.push(file);
+				}
+				else {
+					folders[file.folder || '/'].content.push(file);
+				}
 			});
 
 			if (options.after) {
@@ -135,7 +166,12 @@ define(function (require) {
 		};
 
 		var conflate_caller = function (conflate_callback, error, result) {
-			client.pullChanges(result ? result.cursorTag : null, conflate_callback);
+			if (is_lazy) {
+				client.metadata(options.folder, {readDir: true}, conflate_callback);
+			}
+			else {
+				client.pullChanges(result ? result.cursorTag : null, conflate_callback);
+			}
 		};
 
 		var conflate_tester = function (error, result) {
@@ -143,19 +179,43 @@ define(function (require) {
 		};
 
 		var conflate_final = function (results) {
-			var last_error = results[results.length - 1][0];
-			var final_result = {
-				changes: []
-			};
-			results.forEach(function (args) {
-				final_result.changes = final_result.changes.concat(args[1].changes);
-			});
+			var last_error = results[results.length - 1][0],
+				final_result;
+
+			if (is_lazy) {
+				final_result = [];
+				results.forEach(function (args) {
+					final_result = final_result.concat(args[2]);
+				});
+			}
+			else {
+				final_result = {
+					changes: []
+				};
+				results.forEach(function (args) {
+					final_result.changes = final_result.changes.concat(args[1].changes);
+				});
+			}
 			pull_callback(last_error, final_result);
 		};
 
 		fn.conflate(conflate_caller, conflate_tester, conflate_final);
 	};
 	module.list = auth_method(list);
+
+	var lazy_list = function(options, node, callback) {
+		var folder = node.id === '#' ? '/' : node.id;
+		var options = {
+			folder: folder,
+			pdfOnly: options.pdfOnly,
+			writeOnly: options.writeOnly
+		};
+
+		module.list(function(item){
+			var loaded_node = module.convert_to_jstree(item);
+			callback.call(this, node.id === '#' ? loaded_node : loaded_node.children);
+		}, options);
+	};
 
 	var load_file = function (path, callback) {
 		client.readFile(path, {
@@ -200,6 +260,9 @@ define(function (require) {
 		};
 		if (children.length) {
 			result.children = children;
+		}
+		else if (is_lazy) {
+			result.children = item.isFolder;
 		}
 		return result;
 	};
