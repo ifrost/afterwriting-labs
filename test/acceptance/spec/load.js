@@ -1,18 +1,18 @@
 define(function (require) {
-	
-	var user = require('../helper/user');
-	
-	describe('App', function () {
+
+    var user = require('../helper/user'),
+        assert = require('../helper/assert');
+
+    describe('App', function () {
 
         it('Selected plugin is active', function() {
-            user.click('.menu-item.info');
+            user.open_plugin('info');
 
-            var active = $('.plugin-content.active').attr('plugin');
-            chai.assert.strictEqual('info', active);
+            assert.active_plugin_is('info');
             
-            user.click('#back');
+            user.back_to_main();
         });
 
-	});
+    });
 
 });

@@ -1,35 +1,22 @@
-(function() {
+define(['../../test/acceptance/tests'], function () {
 
-   var global = this;
+    var module = {};
 
-    mocha.setup({
-        ui: 'bdd',
-        reporter: 'dot'
-    });
+    var enabled = window.location.search.indexOf('ACCEPTANCE') !== -1 || navigator.userAgent.indexOf('PhantomJS') !== -1;
 
-   
-   var enabled = window.location.search.indexOf('ACCEPTANCE') !== -1 || navigator.userAgent.indexOf('PhantomJS') !== -1;
+    module.prepare = function () {
+        if (enabled) {
+            window.clock = sinon.useFakeTimers();
+        }
+    };
 
-    if (enabled) {
-   
-        require(['../test/acceptance/tests'], function() {
-            
-            global.ACCEPTANCE = {
-                before: function() {
-                    window.clock = sinon.useFakeTimers();
-                },
-                run: function() {
-                    window.clock.tick(5000);
-                    mocha.run();
-                }
-            }
-            
-        });
-        
-    }
-    else {
-        global.ACCEPTANCE = false;
-    }
-   
-    
-})()
+    module.windup = function () {
+        if (enabled) {
+            window.clock.tick(5000);
+            mocha.run();
+        }
+    };
+
+    return module;
+
+});

@@ -2,10 +2,10 @@ module.exports = function (grunt) {
 
 	var test_specs = grunt.file.expand({
 		filter: "isFile",
-		cwd: "test/js"
+		cwd: "test/unit"
 	}, ["**/*.js"]);
 	var test_specs_list = test_specs.map(function (name) {
-		return "'../test/js/" + name.substr(0, name.length - 3) + "'";
+		return "'../test/unit/" + name.substr(0, name.length - 3) + "'";
 	}).join(', ');
 	
 	
@@ -284,7 +284,7 @@ module.exports = function (grunt) {
 			acceptance: {
 				src: ['dev.html'],
 				options: {
-					log: false,
+					log: true,
 					logErrors: true
 				}
 			}

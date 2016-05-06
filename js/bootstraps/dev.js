@@ -11,9 +11,8 @@ require(['bootstrap',
 		'plugins/save',
 		'plugins/preview',
 		'plugins/facts',
-		'plugins/stats'
+		'plugins/stats',
+		'../test/acceptance/setup'
 ], function (bootstrap) {
-	ACCEPTANCE && ACCEPTANCE.before();
 	bootstrap.init(arguments);
-	ACCEPTANCE && ACCEPTANCE.run();
 });
