@@ -1,43 +1,25 @@
 define(function(require) {
 
-    var $ = require('jquery');
+    var $ = require('jquery'),
+        Proxy = require('../helper/proxy'),
+        FakeDropBox = require('../helper/server/fake-dropbox');
 
     var env = {};
 
+    var proxy = Proxy.create();
+    proxy.register_server(FakeDropBox.create());
+
     env.setup = function() {
-
-        window.xhr = sinon.useFakeXMLHttpRequest();
+        proxy.setup();
         window.clock = sinon.useFakeTimers();
-
-        Dropbox.Util.Xhr.Request = window.xhr;
-
         sinon.stub(window, 'open', function() {return {close: function() {}}});
-
-        sinon.stub(Dropbox.Util.Oauth, 'randomAuthStateParam', function() {
-            return 'oauth_state';
-        });
-
-        window.xhr.onCreate = function(xhr) {
-            xhr.send = function() {
-                if (/https:\/\/api(\d+).dropbox.com\/1\/delta/.test(xhr.url)) {
-                    xhr.respond(200,  { "Content-Type": "application/json" },JSON.stringify({
-                        has_more: false,
-                        reset: false,
-                        cursor: 'cursor',
-                        entries: []
-                    }));
-                }
-            }
-        };
-
         window.clock.tick(5000);
     };
 
     env.restore = function() {
-        window.xhr.restore();
+        proxy.restore();
         window.clock.restore();
         window.open.restore();
-        Dropbox.Util.Oauth.randomAuthStateParam.restore();
     };
     
     env.auth_dropbox = function() {
