@@ -1,5 +1,5 @@
 define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanager', 'utils/common', 'templates', 'utils/decorator', 'impromptu', 'jstree', 'cookie'], function ($, temlates, data, Handlebars, pm, common, templates, decorator) {
-	
+
 	var module = {
 		only_active_visible: true
 	};
@@ -13,6 +13,10 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 	Handlebars.registerHelper('static_path', function () {
 		return common.data.static_path;
 	});
+    // XXX: if you turn the workers on, the acceptance test will fail because
+    // call executed by workers is asynchronous and the test doest not take this
+    // into account
+    $.jstree.defaults.core.worker = false;
 
 	var calculate_basics = function () {
 		module.small = $('html').width() < 800;

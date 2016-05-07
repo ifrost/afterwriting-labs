@@ -6,6 +6,10 @@ define(function() {
         return $('.plugin-content.active').attr('plugin');
     };
 
+    dom.jstree_visible = function() {
+        return !!$('.jstree-anchor').attr('id');
+    };
+
     return dom;
     
 });
