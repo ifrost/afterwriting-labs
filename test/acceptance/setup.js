@@ -1,4 +1,3 @@
-
 define(['../../test/acceptance/tests'], function () {
 
     var module = {};
