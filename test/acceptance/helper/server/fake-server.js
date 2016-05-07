@@ -21,15 +21,21 @@ define(function(require){
          * @param xhr
          */
         resolve_xhr: function(xhr) {
+            var resolved = false, matches;
             this.each_endpoint(function(opts) {
                 if (opts.url.test(xhr.url) && (opts.method === undefined || opts.method === xhr.method)) {
+                    resolved = true;
+                    matches = xhr.url.match(opts.url).splice(1);
                     try {
-                        xhr.respond(200, { "Content-Type": opts.content_type }, opts.call(xhr));
+                        var result = opts.call.apply(this, [xhr].concat(matches));
                     } catch (e) {
                         xhr.respond(500, { "Content-Type": e.content_type || opts.content_type }, e.message);
+                        return;
                     }
+                    xhr.respond(200, { "Content-Type": opts.content_type }, result);
                 }
             }.bind(this));
+            return resolved;
         },
 
         /**

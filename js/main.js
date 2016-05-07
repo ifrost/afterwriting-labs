@@ -17,7 +17,8 @@
 			cookie: 'libs/jquery.cookie',
 			dropbox: 'libs/dropbox.min',
 			p: '../node_modules/protoplast/dist/protoplast.min',
-			acceptance: '../test/acceptance'
+			acceptance: '../test/acceptance',
+            Blob: 'libs/Blob'
 		},
 		shim: {
 			handlebars: {
@@ -37,7 +38,10 @@
 			},
 			p: {
 				exports: 'Protoplast'
-			}
+			},
+            Blob: {
+                exports: 'Blob'
+            }
 		}
 	});
 

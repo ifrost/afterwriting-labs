@@ -23,7 +23,8 @@ define(function(require) {
             env.user.close_popup();
         });
         
-        it('loads selected file', function() {
+        it('Loads selected file', function(done) {
+            this.timeout(10000);
             env.dropbox.has_file({
                 name: 'file.fountain',
                 content: 'test content'
@@ -32,12 +33,20 @@ define(function(require) {
             env.user.open_plugin('open');
             env.user.open_from_dropbox();
             env.dropbox.auth_dropbox();
-            env.browser.tick(1000);
-            env.user.selects_file('file.fountain');
+            env.browser.tick(3000);
+            env.user.select_file('file.fountain');
             env.user.confirm_popup();
-            
-            env.user.open_plugin('editor');
-            env.assert.editor_content('test content');
+
+            env.browser.read_files(function() {
+                console.log('file read');
+                env.browser.tick(3000);
+
+                env.user.open_plugin('editor');
+                env.browser.tick(3000);
+
+                env.assert.editor_content('test content');
+                done();
+            });
         });
     });
     

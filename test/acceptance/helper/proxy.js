@@ -36,9 +36,12 @@ define(function(require) {
         },
 
         resolve: function(xhr) {
-            this.servers.every(function(server) {
+            var resolved = this.servers.some(function(server) {
                 return server.resolve_xhr(xhr);
             });
+            if (!resolved) {
+                console.warn('Unresolved request: ', xhr.method, xhr.url);
+            }
         }
 
     });

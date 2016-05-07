@@ -1,6 +1,7 @@
 define(function(require) {
 
-    var p = require('p');
+    var p = require('p'),
+        SinonFileReader = require('acceptance/util/sinon-file-reader');
 
     /**
      * Helper for common browser tasks
@@ -8,6 +9,7 @@ define(function(require) {
     var BrowserHelper = p.extend({
 
         setup: function() {
+            SinonFileReader.setup();
             this.clock = sinon.useFakeTimers();
             sinon.stub(window, 'open', function() {return {close: function() {}}});
             
@@ -15,9 +17,15 @@ define(function(require) {
             this.clock.tick(5000);
         },
 
+        read_files: function(done) {
+            SinonFileReader.wait(done);
+        },
+
         restore: function() {
+            this.clear_cookies();
             this.clock.restore();
             window.open.restore();
+            SinonFileReader.restore();
         },
 
         clear_cookies: function() {

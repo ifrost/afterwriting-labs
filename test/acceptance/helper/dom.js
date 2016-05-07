@@ -19,6 +19,10 @@ define(function(require) {
             return '.menu-item.' + name;
         },
 
+        $file_link: function(file) {
+            return $(document.getElementById('/' + file + '_anchor'));
+        },
+
         get_active_plugin: function() {
             return $('.plugin-content.active').attr('plugin');
         },
@@ -29,7 +33,7 @@ define(function(require) {
         
         editor_content: function() {
             return $('.CodeMirror-code pre span').map(function(i, elem){return $(elem).text()}).toArray().join('\n');
-        },
+        }
 
     });
 
