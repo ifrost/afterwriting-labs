@@ -1,40 +1,32 @@
 define(function(require) {
 
-    var $ = require('jquery'),
-        Proxy = require('../helper/proxy'),
-        FakeDropBox = require('../helper/server/fake-dropbox');
+    var p = require('p'),
+        Browser = require('acceptance/helper/browser'),
+        Proxy = require('acceptance/helper/proxy'),
+        FakeDropBox = require('acceptance/helper/server/fake-dropbox');
 
-    var env = {};
+    var Env = p.extend({
 
-    var proxy = Proxy.create();
-    proxy.register_server(FakeDropBox.create());
+        setup: function() {
 
-    env.setup = function() {
-        proxy.setup();
-        window.clock = sinon.useFakeTimers();
-        sinon.stub(window, 'open', function() {return {close: function() {}}});
-        window.clock.tick(5000);
-    };
+            this.proxy = Proxy.create();
+            this.dropbox = FakeDropBox.create();
+            this.proxy.register_server(this.dropbox);
 
-    env.restore = function() {
-        proxy.restore();
-        window.clock.restore();
-        window.open.restore();
-    };
-    
-    env.auth_dropbox = function() {
-        var event = document.createEvent('CustomEvent');
-        event.initEvent('message');
-        event.origin = 'http://localhost:8000';
-        event.data = 'access_token=DROPBOX_TOKEN&uid=1&state=oauth_state';
-        window.dispatchEvent(event);
-        window.clock.tick(1000);
-    };
+            this.browser = Browser.create();
 
-    env.clear_cookies = function() {
-        document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
-    };
+            this.proxy.setup();
+            this.browser.setup();
 
-    return env;
+            this.browser.tick(5000);
+        },
+
+        restore: function() {
+            this.proxy.restore();
+            this.browser.restore();
+        }
+    });
+
+    return Env;
     
 });

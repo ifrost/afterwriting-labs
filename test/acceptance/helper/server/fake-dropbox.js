@@ -31,6 +31,14 @@ define(function(require) {
                     entries: []
                 });
             }
+        },
+
+        auth_dropbox: function() {
+            var event = document.createEvent('CustomEvent');
+            event.initEvent('message');
+            event.origin = 'http://localhost:8000';
+            event.data = 'access_token=DROPBOX_TOKEN&uid=1&state=oauth_state';
+            window.dispatchEvent(event);
         }
 
     });

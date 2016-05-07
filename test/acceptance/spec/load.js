@@ -1,12 +1,15 @@
 define(function (require) {
 
     var user = require('../helper/user'),
-        env = require('../helper/env'),
+        Env = require('../helper/env'),
         assert = require('../helper/assert');
 
     describe('App', function () {
 
+        var env;
+
         beforeEach(function() {
+            env = Env.create();
             env.setup();
         });
 
@@ -21,10 +24,11 @@ define(function (require) {
         });
 
         it('Loads file list from dropbox', function() {
-            env.clear_cookies();
+            env.browser.clear_cookies();
             user.open_plugin('open');
             user.open_from_dropbox();
-            env.auth_dropbox();
+            env.dropbox.auth_dropbox();
+            env.browser.tick(1000);
             assert.file_list_is_visible();
             user.close_popup();
             user.back_to_main();
