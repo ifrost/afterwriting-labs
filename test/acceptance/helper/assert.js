@@ -18,6 +18,10 @@ define(function(require) {
         file_list_is_visible: function() {
             chai.assert.ok(this.dom.jstree_visible(), 'file list is not visible');
         },
+        
+        editor_content: function(content) {
+            chai.assert.equal(this.dom.editor_content(), content, "editor's content does not match expected value");
+        }
     });
 
     

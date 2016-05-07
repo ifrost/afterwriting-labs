@@ -28,9 +28,17 @@ define(function(require) {
         open_from_dropbox: function() {
             this.click(this.dom.$open_dropbox);
         },
+        
+        selects_file: function() {
+            // TODO
+        },
 
         close_popup: function() {
             this.click(this.dom.$close_popup);
+        },
+        
+        confirm_popup: function() {
+            this.click(this.dom.$confirm_popup);
         }
 
     });

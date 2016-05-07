@@ -10,6 +10,8 @@ define(function(require) {
         setup: function() {
             this.clock = sinon.useFakeTimers();
             sinon.stub(window, 'open', function() {return {close: function() {}}});
+            
+            this.clear_cookies();
             this.clock.tick(5000);
         },
 

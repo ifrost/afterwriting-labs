@@ -13,6 +13,8 @@ define(function(require) {
 
         $close_popup: '[name=jqi_state0_buttonCancel]',
 
+        $confirm_popup: '[name=jqi_state0_buttonOpen]',
+
         $plugin: function(name) {
             return '.menu-item.' + name;
         },
@@ -23,7 +25,11 @@ define(function(require) {
 
         jstree_visible: function() {
             return !!$('.jstree-anchor').attr('id');
-        }
+        },
+        
+        editor_content: function() {
+            return $('.CodeMirror-code pre span').map(function(i, elem){return $(elem).text()}).toArray().join('\n');
+        },
 
     });
 

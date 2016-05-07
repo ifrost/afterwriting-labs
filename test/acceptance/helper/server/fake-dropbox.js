@@ -9,6 +9,8 @@ define(function(require) {
     var DropboxApi = FakeServer.extend({
 
         name: 'dropbox',
+        
+        files: null,
 
         setup: function(proxy) {
             this.DropboxRequest = Dropbox.Util.Xhr.Request;
@@ -16,11 +18,16 @@ define(function(require) {
                 return 'oauth_state';
             });
             Dropbox.Util.Xhr.Request = proxy.xhr;
+            this.files = [];
         },
 
         restore: function() {
             Dropbox.Util.Xhr.Request = this.DropboxRequest;
             Dropbox.Util.Oauth.randomAuthStateParam.restore();
+        },
+        
+        has_file: function(file) {
+            this.files.push(file);
         },
 
         delta: {

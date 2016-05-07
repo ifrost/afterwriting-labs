@@ -284,7 +284,8 @@ module.exports = function (grunt) {
 			acceptance: {
 				src: ['dev.html'],
 				options: {
-					log: true,
+					reporter: 'Spec',
+					log: false,
 					logErrors: true
 				}
 			}
