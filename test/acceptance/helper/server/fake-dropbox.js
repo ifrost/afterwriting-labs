@@ -3,6 +3,9 @@ define(function(require) {
     var p = require('p'),
         FakeServer = require('acceptance/helper/server/fake-server');
 
+    /**
+     * Mock the Dropbox API
+     */
     var DropboxApi = FakeServer.extend({
 
         name: 'dropbox',

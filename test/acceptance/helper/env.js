@@ -5,6 +5,9 @@ define(function(require) {
         Proxy = require('acceptance/helper/proxy'),
         FakeDropBox = require('acceptance/helper/server/fake-dropbox');
 
+    /**
+     * Main test environment that aggregates all helpers
+     */
     var Env = p.extend({
 
         setup: function() {

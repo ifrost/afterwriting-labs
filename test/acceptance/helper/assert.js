@@ -1,16 +1,26 @@
 define(function(require) {
 
-    var dom  = require('../helper/dom'),
-        assert = {};
-    
-    assert.active_plugin_is = function(name) {
-        chai.assert.strictEqual(name, dom.get_active_plugin(), 'Expected ' + name + ' plugin to be active, but ' + dom.get_active_plugin() + ' is active');
-    };
+    var p = require('p');
 
-    assert.file_list_is_visible = function() {
-        chai.assert.ok(dom.jstree_visible(), 'file list is not visible');
-    };
+    /**
+     * Performs assertions, all chai/sinon assertions go here
+     */
+    var Assert = p.extend({
+
+        $create: function(dom) {
+            this.dom = dom;
+        },
+
+        active_plugin_is: function(name) {
+            chai.assert.strictEqual(name, this.dom.get_active_plugin(), 'Expected ' + name + ' plugin to be active, but ' + this.dom.get_active_plugin() + ' is active');
+        },
+
+        file_list_is_visible: function() {
+            chai.assert.ok(this.dom.jstree_visible(), 'file list is not visible');
+        },
+    });
+
     
-    return assert;
+    return Assert;
     
 });

@@ -2,16 +2,19 @@ define(function(require) {
 
     var p = require('p');
 
+    /**
+     * Helper for common browser tasks
+     */
     var BrowserHelper = p.extend({
 
         setup: function() {
-            window.clock = sinon.useFakeTimers();
+            this.clock = sinon.useFakeTimers();
             sinon.stub(window, 'open', function() {return {close: function() {}}});
-            window.clock.tick(5000);
+            this.clock.tick(5000);
         },
 
         restore: function() {
-            window.clock.restore();
+            this.clock.restore();
             window.open.restore();
         },
 
@@ -20,7 +23,7 @@ define(function(require) {
         },
 
         tick: function(ms) {
-            window.clock.tick(ms || 25);
+            this.clock.tick(ms || 25);
         }
 
     });

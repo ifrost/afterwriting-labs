@@ -1,16 +1,20 @@
 define(function (require) {
 
-    var user = require('../helper/user'),
+    var User = require('../helper/user'),
         Env = require('../helper/env'),
-        assert = require('../helper/assert');
+        Dom = require('../helper/dom'),
+        Assert = require('../helper/assert');
 
     describe('App', function () {
 
-        var env;
+        var env, user, dom, assert;
 
         beforeEach(function() {
             env = Env.create();
             env.setup();
+            dom = Dom.create();
+            user = User.create(env.browser, dom);
+            assert = Assert.create(dom);
         });
 
         afterEach(function() {

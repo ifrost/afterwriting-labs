@@ -2,6 +2,9 @@ define(function(require) {
 
     var p = require('p');
 
+    /**
+     * Simple proxy that forwards HTTP requests to registered fake servers
+     */
     var Proxy = p.extend({
 
         $create: function() {

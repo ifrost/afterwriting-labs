@@ -1,28 +1,40 @@
-define(function() {
-    
-    var user = {};
-    
-    user.click = function(selector) {
-        $(selector).click();
-        window.clock.tick(20000);
-    };
+define(function(require) {
 
-    user.back_to_main = function() {
-        user.click('#back');
-    };
+    var p = require('p');
 
-    user.open_plugin = function(name) {
-        user.click('.menu-item.' + name);
-    };
+    /**
+     * Performs user actions
+     */
+    var User = p.extend({
 
-    user.open_from_dropbox = function() {
-        user.click('[open-action=dropbox]');
-    };
+        $create: function(browser, dom) {
+            this.browser = browser;
+            this.dom = dom;
+        },
 
-    user.close_popup = function() {
-        user.click('[name=jqi_state0_buttonCancel]');
-    };
+        click: function(selector) {
+            $(selector).click();
+            this.browser.tick(20000);
+        },
 
-    return user;
+        back_to_main: function() {
+            this.click(this.dom.$background);
+        },
+
+        open_plugin: function(name) {
+            this.click(this.dom.$plugin(name));
+        },
+
+        open_from_dropbox: function() {
+            this.click(this.dom.$open_dropbox);
+        },
+
+        close_popup: function() {
+            this.click(this.dom.$close_popup);
+        }
+
+    });
+
+    return User;
     
 });
