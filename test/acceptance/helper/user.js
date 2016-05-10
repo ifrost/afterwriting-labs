@@ -39,6 +39,27 @@ define(function(require) {
 
         select_file: function(file) {
             this.click(this.dom.$file_link(file));
+        },
+
+        click_button: function(label) {
+            this.click(this.dom.$button(label));
+        },
+
+        turn_sync_on: function() {
+            this.click(this.dom.$sync_button);
+            this.click_button('OK');
+        },
+
+        turn_sync_off: function() {
+            this.click(this.dom.$sync_button);
+        },
+
+        sync_keep_content: function() {
+            this.click_button('Keep content');
+        },
+
+        sync_reload_content_before_sync: function() {
+            this.click_button('Load version before sync');
         }
 
     });

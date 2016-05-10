@@ -81,6 +81,15 @@ define(function(require) {
             event.origin = 'http://localhost:8000';
             event.data = 'access_token=DROPBOX_TOKEN&uid=1&state=oauth_state';
             window.dispatchEvent(event);
+        },
+
+        content_change: function(filename, content) {
+            if (this.contents[filename]) {
+                this.contents[filename] = content;
+            }
+            else {
+                throw new Error('File ' + filename + ' does not exist');
+            }
         }
 
     });

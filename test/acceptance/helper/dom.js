@@ -15,6 +15,12 @@ define(function(require) {
 
         $confirm_popup: '[name=jqi_state0_buttonOpen]',
 
+        $sync_button: '.auto-reload-icon',
+
+        $button: function(label) {
+            return $('button:contains("' + label + '")');
+        },
+
         $plugin: function(name) {
             return '.menu-item.' + name;
         },
