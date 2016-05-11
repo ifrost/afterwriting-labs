@@ -85,7 +85,22 @@ define(function(require) {
             method: 'POST',
             value: function() {
                 this.saved_count++;
-                return '{"revision": 25506, "bytes": 2191, "thumb_exists": false, "rev": "63a2023f35f1", "modified": "Tue, 10 May 2016 19:59:27 +0000", "shareable": false, "mime_type": "text/plain", "path": "/wigilia.txt", "is_dir": false, "size": "2.1 KB", "root": "dropbox", "client_mtime": "Tue, 10 May 2016 19:59:27 +0000", "icon": "page_white_text"}';
+                return JSON.stringify({
+                    bytes: 10,
+                    client_mtime: 'Wed, 21 Nov 2012 18:26:43 +0000',
+                    icon: 'page_white_text',
+                    is_dir: false,
+                    mime_type: 'text/plain',
+                    modified: 'Wed, 21 Nov 2012 18:26:43 +0000',
+                    modifier: null,
+                    path: '/file.fountain',
+                    read_only: false,
+                    rev: '1',
+                    revision: 1,
+                    root: 'dropbox',
+                    size: '1 KB',
+                    thumb_exists: false
+                });
             }
         },
 
