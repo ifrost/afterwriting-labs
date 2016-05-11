@@ -1,7 +1,6 @@
 define(function(require) {
 
-    var p = require('p'),
-        FakeServer = require('acceptance/helper/server/fake-server');
+    var FakeServer = require('acceptance/helper/server/fake-server');
 
     /**
      * Mock the Dropbox API
@@ -13,6 +12,12 @@ define(function(require) {
         files: null,
 
         contents: null,
+
+        saved_count: null,
+
+        $create: function() {
+            this.saved_count = 0;
+        },
 
         setup: function(proxy) {
             this.DropboxRequest = Dropbox.Util.Xhr.Request;
@@ -72,6 +77,15 @@ define(function(require) {
             method: 'GET',
             value: function(xhr, filename) {
                 return this.contents[filename];
+            }
+        },
+
+        save_content: {
+            url: /https:\/\/api-content.dropbox.com\/1\/files\/auto\//,
+            method: 'POST',
+            value: function() {
+                this.saved_count++;
+                return '{"revision": 25506, "bytes": 2191, "thumb_exists": false, "rev": "63a2023f35f1", "modified": "Tue, 10 May 2016 19:59:27 +0000", "shareable": false, "mime_type": "text/plain", "path": "/wigilia.txt", "is_dir": false, "size": "2.1 KB", "root": "dropbox", "client_mtime": "Tue, 10 May 2016 19:59:27 +0000", "icon": "page_white_text"}';
             }
         },
 

@@ -1,6 +1,7 @@
 define(function(require) {
 
-    var p = require('p');
+    var $ = require('jquery'),
+        p = require('p');
 
     /**
      * Performs user actions
@@ -54,12 +55,20 @@ define(function(require) {
             this.click(this.dom.$sync_button);
         },
 
+        turn_auto_save_on: function() {
+            this.click(this.dom.$auto_save_button);
+        },
+
         sync_keep_content: function() {
             this.click_button('Keep content');
         },
 
         sync_reload_content_before_sync: function() {
             this.click_button('Load version before sync');
+        },
+
+        set_editor_content: function(content) {
+            $('.CodeMirror').get(0).CodeMirror.setValue(content);
         }
 
     });

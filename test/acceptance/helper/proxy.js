@@ -15,7 +15,9 @@ define(function(require) {
             var self = this;
             this.xhr = sinon.useFakeXMLHttpRequest();
             this.xhr.onCreate = function(xhr) {
-                xhr.send = function() {
+                var xhr_send = xhr.send;
+                xhr.send = function(data) {
+                    xhr_send.call(this, data);
                     self.resolve(xhr);
                 }
             };

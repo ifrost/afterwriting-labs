@@ -7,8 +7,9 @@ define(function(require) {
      */
     var Assert = p.extend({
 
-        $create: function(dom) {
+        $create: function(dom, dropbox) {
             this.dom = dom;
+            this.dropbox = dropbox;
         },
 
         active_plugin_is: function(name) {
@@ -21,7 +22,12 @@ define(function(require) {
         
         editor_content: function(content) {
             chai.assert.equal(this.dom.editor_content(), content, "editor's content does not match expected value");
+        },
+
+        dropbox_saved: function(count) {
+            chai.assert.equal(this.dropbox.saved_count, count, 'content has been saved ' + this.dropbox.saved_count + ', expected: ', count);
         }
+
     });
 
     

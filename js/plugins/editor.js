@@ -43,8 +43,8 @@ define(function (require) {
 		});
 
 		editor.on('change', function () {
-			data.script(editor.getValue());
-			plugin.pending_changes(true);
+            plugin.pending_changes(data.script() !== editor.getValue());
+            data.script(editor.getValue());
 		});
 	};
 

@@ -20,7 +20,7 @@ define(function(require) {
             this.browser = Browser.create();
             this.dom = Dom.create();
             this.user = User.create(this.browser, this.dom);
-            this.assert = Assert.create(this.dom);
+            this.assert = Assert.create(this.dom, this.dropbox);
 
             this.proxy.register_server(this.dropbox);
             this.proxy.setup();

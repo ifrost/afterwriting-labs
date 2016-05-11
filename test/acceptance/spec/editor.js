@@ -38,6 +38,50 @@ define(function(require) {
                 });
             });
 
+            describe('Auto-saves the content', function() {
+
+                beforeEach(function() {
+                    env.assert.dropbox_saved(0);
+                    env.user.turn_auto_save_on();
+                });
+
+                it('Saves the content immediately after turning auto save on', function(done) {
+                    env.browser.tick(3000);
+                    env.browser.tick(3000);
+                    env.browser.tick(3000);
+                    env.assert.dropbox_saved(1);
+
+                    done();
+                });
+
+                it('Saves when the content changes', function(done) {
+                    env.user.set_editor_content('changed content');
+                    env.browser.tick(5000);
+                    env.assert.dropbox_saved(2);
+
+                    done();
+                });
+
+                it('Does not save if the content does not change', function(done) {
+                    env.assert.dropbox_saved(1);
+
+                    env.user.set_editor_content('changed content');
+                    env.browser.tick(5000);
+                    env.assert.dropbox_saved(2);
+
+                    env.user.set_editor_content('changed content');
+                    env.browser.tick(5000);
+                    env.assert.dropbox_saved(2);
+
+                    env.user.set_editor_content('changed content');
+                    env.browser.tick(5000);
+                    env.assert.dropbox_saved(2);
+
+                    done();
+                });
+
+            });
+
             describe('Synchronization', function() {
 
                 beforeEach(function(done) {

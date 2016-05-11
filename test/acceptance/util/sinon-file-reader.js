@@ -88,7 +88,9 @@ define(function() {
                     done();
                 }
             }.bind(this), 10);
-
+        }
+        else {
+            done();
         }
     };
 

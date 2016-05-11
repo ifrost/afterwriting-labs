@@ -17,6 +17,8 @@ define(function(require) {
 
         $sync_button: '.auto-reload-icon',
 
+        $auto_save_button: '.auto-save-icon',
+
         $button: function(label) {
             return $('button:contains("' + label + '")');
         },
@@ -38,7 +40,7 @@ define(function(require) {
         },
         
         editor_content: function() {
-            return $('.CodeMirror-code pre span').map(function(i, elem){return $(elem).text()}).toArray().join('\n');
+            return $('.CodeMirror').get(0).CodeMirror.getValue();
         }
 
     });
