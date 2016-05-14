@@ -7,8 +7,15 @@ module.exports = function (grunt) {
 	var test_specs_list = test_specs.map(function (name) {
 		return "'../test/unit/" + name.substr(0, name.length - 3) + "'";
 	}).join(', ');
-	
-	
+
+    var integration_test_specs = grunt.file.expand({
+        filter: "isFile",
+        cwd: "test/integration"
+    }, ["**/*.js"]);
+    var integration_specs_list = integration_test_specs.map(function (name) {
+        return "'../test/integration/" + name.substr(0, name.length - 3) + "'";
+    }).join(', ');
+
 	var acceptance_specs = grunt.file.expand({
 		filter: "isFile",
 		cwd: "test/acceptance/spec"
@@ -224,18 +231,29 @@ module.exports = function (grunt) {
 		},
 
 		template: {
-			test: {
-				options: {
-					data: {
-						mode: "__TEST",
-						specs: test_specs_list
-					}
-				},
-				files: {
-					'test/runner.html': ['test/template/runner.template']
-				}
-			},
-			acceptance: {
+            test: {
+                options: {
+                    data: {
+                        mode: "__TEST",
+                        specs: test_specs_list
+                    }
+                },
+                files: {
+                    'test/runner.html': ['test/template/runner.template']
+                }
+            },
+            integration: {
+                options: {
+                    data: {
+                        mode: "__TEST",
+                        specs: integration_specs_list
+                    }
+                },
+                files: {
+                    'test/integration-runner.html': ['test/template/integration.test.template']
+                }
+            },
+            acceptance: {
 				options: {
 					data: {
 						specs: acceptance_specs_list
@@ -261,7 +279,7 @@ module.exports = function (grunt) {
 		shell: {
 			istanbul_instrument: {
 				command: 'istanbul instrument --output coverage/js --no-impact js && istanbul instrument --output coverage/templates --no-impact templates'
-				
+
 			},
 			jsdoc: {
 				command: 'jsdoc -c jsdoc.conf.json'
@@ -281,6 +299,9 @@ module.exports = function (grunt) {
 			test: {
 				src: ['test/runner.html']
 			},
+            integration: {
+                src: ['test/integration-runner.html']
+            },
 			acceptance: {
 				src: ['dev.html'],
 				options: {
@@ -309,12 +330,12 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-shell');
 	grunt.loadNpmTasks('grunt-template');
 
-	grunt.registerTask('test', ['handlebars:test', 'template:test', 'template:acceptance', 'mocha:test', 'mocha:acceptance']);
+	grunt.registerTask('test', ['handlebars:test', 'template:test', 'template:integration', 'template:acceptance', 'mocha:test', 'mocha:integration', 'mocha:acceptance']);
 	grunt.registerTask('coverage', ['template:coverage', 'shell:istanbul_instrument', 'mocha:coverage']);
 	grunt.registerTask('doc', ['shell:jsdoc']);
 
 	grunt.registerTask('build', ['test', 'clean:prebuild', 'handlebars:compile', 'replace', 'concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'doc', 'clean:bootstrap']);
-	
+
 	grunt.registerTask('release', ['gitadd:all', 'gitcommit:version', 'gittag:version', 'gitcheckout:pages', 'gitmerge:master', 'gitpush:pages', 'gitcheckout:develop', 'gitmerge:master', 'gitpush:master', 'gitpush:develop']);
 
 };
