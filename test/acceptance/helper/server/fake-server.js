@@ -43,10 +43,10 @@ define(function(require){
          * @param callback
          */
         each_endpoint: function(callback) {
-            for (var func in this.$meta.url) {
-                url = this.$meta.url[func];
-                content_type = this.$meta.content_type ? this.$meta.content_type[func] : "application/json";
-                method = this.$meta.method ? this.$meta.method[func] : undefined;
+            for (var func in this.$meta.properties.url) {
+                url = this.$meta.properties.url[func];
+                content_type = this.$meta.properties.content_type ? this.$meta.properties.content_type[func] : "application/json";
+                method = this.$meta.properties.method ? this.$meta.properties.method[func] : undefined;
                 call = this[func].bind(this);
 
                 callback({

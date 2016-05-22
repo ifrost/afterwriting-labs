@@ -36,9 +36,6 @@
 			dropbox: {
 				exports: 'Dropbox'
 			},
-			p: {
-				exports: 'Protoplast'
-			},
             Blob: {
                 exports: 'Blob'
             }
