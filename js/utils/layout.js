@@ -110,6 +110,16 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 	module.init_layout = function (context) {
 
 		calculate_basics();
+        
+        if (data.config.night_mode) {
+            $('body').addClass('night-mode');
+        }
+        data.save_config.add(function() {
+            $('body').removeClass('night-mode');
+            if (data.config.night_mode) {
+                $('body').addClass('night-mode');
+            }
+        });
 
 		// load background
 		var max_backgrounds = 7;
