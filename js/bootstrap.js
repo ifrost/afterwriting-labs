@@ -1,5 +1,4 @@
-/*global define*/
-define(['templates', 'logger', 'utils/layout', 'utils/decorator', 'd3', 'jquery'], function (templates, logger, layout, decorator, d3, $) {
+define(['dependencies', 'templates', 'logger', 'utils/layout', 'utils/decorator', 'd3', 'jquery'], function (_, templates, logger, layout, decorator, d3, $) {
 
 	var log = logger.get('bootstrap'),
 		module = {};

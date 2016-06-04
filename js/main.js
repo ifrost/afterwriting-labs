@@ -1,4 +1,3 @@
-/*global require*/
 (function () {
 	var config = require.config({
 		baseUrl: 'js',
