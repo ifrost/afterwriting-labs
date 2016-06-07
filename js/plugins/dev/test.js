@@ -5,7 +5,7 @@ define(function (require) {
 		fliner = require('utils/fountain/liner'),
 		data = require('modules/data');
 
-	var plugin = pm.create_plugin('dev/test', 'test');
+	var plugin = pm.create_plugin('dev/test', 'test', template);
 
 	plugin.parse_times = function (times) {
 		var start, end, result = [],
