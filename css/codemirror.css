@@ -397,3 +397,21 @@ div.CodeMirror-cursors {
 .cm-s-default .cm-force-blank-line:before {
 	content: "  non-breaking line";
 }
+
+/* Night mode */
+
+.night-mode .CodeMirror {
+    background-color: black;
+    color: #7f7f7f;
+}
+.night-mode .CodeMirror-selected {
+    background-color: #333333;
+    color: #black;
+}
+.night-mode .CodeMirror-activeline-background {
+    background: #111111;
+}
+/* CURSOR */
+.night-mode .CodeMirror div.CodeMirror-cursor {
+    border-left: 1px solid #333333;
+}

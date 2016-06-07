@@ -114,6 +114,16 @@ define(['jquery', 'modules/data', 'handlebars', 'utils/pluginmanager', 'utils/co
 	module.init_layout = function (context) {
 
 		calculate_basics();
+        
+        if (data.config.night_mode) {
+            $('body').addClass('night-mode');
+        }
+        data.save_config.add(function() {
+            $('body').removeClass('night-mode');
+            if (data.config.night_mode) {
+                $('body').addClass('night-mode');
+            }
+        });
 
 		// load background
 		var max_backgrounds = 7;

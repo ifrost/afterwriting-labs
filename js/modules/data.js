@@ -222,9 +222,9 @@ define('modules/data', function (require) {
 		return print_profiles[plugin.config.print_profile];
 	};
 
-	plugin.save_config = function () {
+	plugin.save_config = decorator(function () {
 		plugin.data('config', JSON.stringify(plugin.config));
-	};
+	});
 
 	plugin.reset_config = function () {
 		plugin.data('config', JSON.stringify({}));
