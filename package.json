@@ -43,7 +43,8 @@
     "jshint-stylish": "^1.0.0",
     "mocha": "^2.2.1",
     "protoplast": "^1.4.0",
-    "sinon": "^1.14.0"
+    "sinon": "^1.14.0",
+    "text": "requirejs/text"
   },
   "engines": {
     "node": ">=0.10.0"

@@ -44,7 +44,10 @@ define(['dependencies', 'templates', 'logger', 'utils/layout', 'utils/decorator'
 
 		plugins.forEach(function (plugin) {
 			var template_name = 'templates/plugins/' + plugin.name + '.hbs';
-			if (templates.hasOwnProperty(template_name)) {
+         if (plugin.template) {
+            plugin.view = plugin.template(plugin.context);
+         }
+			else if (templates.hasOwnProperty(template_name)) {
 				var template = templates[template_name];
 				var html = template(plugin.context);
 				plugin.view = html;

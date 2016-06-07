@@ -3,6 +3,7 @@
 		baseUrl: 'js',
 		paths: {
 			templates: '../templates/compiled',
+			templates_raw: '../templates',
 			test_screenplays: '../templates/test_screenplays',
 			jquery: 'libs/jquery-1.11.1.min',
 			handlebars: 'libs/handlebars',
@@ -17,6 +18,7 @@
 			dropbox: 'libs/dropbox.min',
 			p: '../node_modules/protoplast/dist/protoplast.min',
 			acceptance: '../test/acceptance',
+         text: '../node_modules/text/text',
             Blob: 'libs/Blob'
 		},
 		shim: {

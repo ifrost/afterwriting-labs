@@ -1,12 +1,13 @@
 define(function (require) {
 
-	var pm = require('utils/pluginmanager'),
+	var template = require('text!templates_raw/plugins/stats.hbs'),
+      pm = require('utils/pluginmanager'),
 		editor = require('plugins/editor'),
 		data = require('modules/data'),
 		decorator = require('utils/decorator'),
 		queries = require('modules/queries');
 	
-	var plugin = pm.create_plugin('stats', 'stats');
+	var plugin = pm.create_plugin('stats', 'stats', template);
 
 	plugin.goto = function (line) {
 		editor.goto(line);
