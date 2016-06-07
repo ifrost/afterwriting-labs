@@ -1,4 +1,4 @@
-define(['jquery', 'modules/data', 'handlebars', 'utils/pluginmanager', 'utils/common', 'templates', 'utils/decorator'], function ($, data, Handlebars, pm, common, templates, decorator) {
+define(['jquery', 'modules/data', 'handlebars', 'utils/pluginmanager', 'utils/common', 'templates', 'utils/decorator', 'dependencies'], function ($, data, Handlebars, pm, common, templates, decorator) {
 
 	var module = {
 		only_active_visible: true
