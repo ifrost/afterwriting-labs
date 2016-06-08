@@ -19,7 +19,7 @@
 			p: '../node_modules/protoplast/dist/protoplast.min',
 			acceptance: '../test/acceptance',
          text: '../node_modules/text/text',
-            Blob: 'libs/Blob'
+         Blob: 'libs/Blob'
 		},
 		shim: {
 			handlebars: {
@@ -37,9 +37,9 @@
 			dropbox: {
 				exports: 'Dropbox'
 			},
-            Blob: {
-                exports: 'Blob'
-            }
+         Blob: {
+             exports: 'Blob'
+         }
 		}
 	});
 

@@ -7,7 +7,7 @@ define(function (require) {
 		fquery = require('utils/fountain/query'),
 		helper = require('utils/helper');
 
-	var plugin = pm.create_plugin('dev/fquerysandbox', 'fquery');
+	var plugin = pm.create_plugin('dev/fquerysandbox', 'fquery', template);
 	
 	plugin.activate = function() {
 		window.data = data;

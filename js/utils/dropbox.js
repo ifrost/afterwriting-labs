@@ -12,8 +12,6 @@ define(function (require) {
 
 	var module = {}, client, is_lazy = false;
 
-
-
 	var client_authenticate = function (callback) {
 		client = new Dropbox.Client({
 			key: key,

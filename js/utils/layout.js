@@ -13,10 +13,6 @@ define(['jquery', 'modules/data', 'handlebars', 'utils/pluginmanager', 'utils/co
 	Handlebars.registerHelper('static_path', function () {
 		return common.data.static_path;
 	});
-    // XXX: if you turn the workers on, the acceptance test will fail because
-    // call executed by workers is asynchronous and the test doest not take this
-    // into account
-    $.jstree.defaults.core.worker = false;
 
 	var calculate_basics = function () {
 		module.small = $('html').width() < 800;
@@ -115,15 +111,15 @@ define(['jquery', 'modules/data', 'handlebars', 'utils/pluginmanager', 'utils/co
 
 		calculate_basics();
         
-        if (data.config.night_mode) {
-            $('body').addClass('night-mode');
-        }
-        data.save_config.add(function() {
-            $('body').removeClass('night-mode');
-            if (data.config.night_mode) {
-                $('body').addClass('night-mode');
-            }
-        });
+      if (data.config.night_mode) {
+         $('body').addClass('night-mode');
+      }
+      data.save_config.add(function() {
+         $('body').removeClass('night-mode');
+         if (data.config.night_mode) {
+             $('body').addClass('night-mode');
+         }
+      });
 
 		// load background
 		var max_backgrounds = 7;

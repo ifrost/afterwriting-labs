@@ -223,7 +223,6 @@ sub {
 }
 .rotate{-moz-animation:rotation1 2s linear infinite;-o-animation:rotation1 2s linear infinite;-webkit-animation:rotation1 2s linear infinite;animation:rotation1 2s linear infinite}
 
-
 .night-mode th {
     background-color: #111111;
 }

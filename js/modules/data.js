@@ -194,6 +194,7 @@ define('modules/data', function (require) {
 		text_scene_continued: 'CONTINUED',
 		print_profile: "a4",
 		load_last_opened: false,
+		night_mode: false,
 		double_space_between_scenes: false,
 		print_sections: false,
 		print_synopsis: false,
