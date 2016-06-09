@@ -204,6 +204,11 @@ sub {
 	opacity: 0.4;
 }
 
+.contact-links a {
+    display: block;
+    white-space: nowrap;
+}
+
 /** rotate **/
 @-webkit-keyframes rotation1{
 	from{-webkit-transform:rotate(360deg);}
