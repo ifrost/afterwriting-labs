@@ -19,6 +19,8 @@ define(function(require) {
 
         $auto_save_button: '.auto-save-icon',
 
+        $night_mode: 'input[setting="night_mode"]',
+
         $button: function(label) {
             return $('button:contains("' + label + '")');
         },
@@ -41,6 +43,10 @@ define(function(require) {
         
         editor_content: function() {
             return $('.CodeMirror').get(0).CodeMirror.getValue();
+        },
+
+        is_night_mode: function() {
+           return $('body').hasClass('night-mode');
         }
 
     });

@@ -69,6 +69,10 @@ define(function(require) {
 
         set_editor_content: function(content) {
             $('.CodeMirror').get(0).CodeMirror.setValue(content);
+        },
+
+        select_night_mode: function() {
+           this.click(this.dom.$night_mode);
         }
 
     });
