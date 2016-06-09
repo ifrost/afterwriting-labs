@@ -1,6 +1,7 @@
 define(function (require) {
 
-	var pm = require('utils/pluginmanager'),
+	var template = require('text!templates/plugins/save.hbs'),
+      pm = require('utils/pluginmanager'),
 		saveAs = require('saveAs'),
 		preview = require('plugins/preview'),
 		gd = require('utils/googledrive'),
@@ -11,7 +12,7 @@ define(function (require) {
 		decorator = require('utils/decorator'),
 		data = require('modules/data');
 
-	var plugin = pm.create_plugin('save', 'save');
+	var plugin = pm.create_plugin('save', 'save', template);
 
 	// LOCAL
 

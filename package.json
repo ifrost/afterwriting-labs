@@ -1,6 +1,6 @@
 {
   "name": "afterwriting",
-  "version": "1.2.23",
+  "version": "1.2.24",
   "description": "Screewriting tools",
   "keywords": [
     "screenwriting",
@@ -42,7 +42,9 @@
     "istanbul": "^0.3.7",
     "jshint-stylish": "^1.0.0",
     "mocha": "^2.2.1",
-    "sinon": "^1.14.0"
+    "protoplast": "^1.4.0",
+    "sinon": "^1.14.0",
+    "text": "requirejs/text"
   },
   "engines": {
     "node": ">=0.10.0"

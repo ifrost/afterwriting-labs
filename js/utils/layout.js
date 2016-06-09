@@ -1,5 +1,5 @@
-define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanager', 'utils/common', 'templates', 'utils/decorator', 'impromptu', 'jstree', 'cookie'], function ($, temlates, data, Handlebars, pm, common, templates, decorator) {
-	
+define(['jquery', 'text!templates/layout.hbs', 'modules/data', 'handlebars', 'utils/pluginmanager', 'utils/common', 'utils/decorator', 'dependencies'], function ($, template, data, Handlebars, pm, common, decorator) {
+
 	var module = {
 		only_active_visible: true
 	};
@@ -110,6 +110,16 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 	module.init_layout = function (context) {
 
 		calculate_basics();
+        
+      if (data.config.night_mode) {
+         $('body').addClass('night-mode');
+      }
+      data.save_config.add(function() {
+         $('body').removeClass('night-mode');
+         if (data.config.night_mode) {
+             $('body').addClass('night-mode');
+         }
+      });
 
 		// load background
 		var max_backgrounds = 7;
@@ -117,7 +127,7 @@ define(['jquery', 'templates', 'modules/data', 'handlebars', 'utils/pluginmanage
 			$('html').css('background-image', 'url(' + common.data.static_path + 'gfx/bg' + Math.floor(Math.random() * max_backgrounds) + '.jpg)');
 		}
 
-		var layout = templates['templates/layout.hbs'];
+		var layout = Handlebars.compile(template);
 		var body = layout(context);
 		$('body').append(body);
 

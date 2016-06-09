@@ -66,16 +66,16 @@
 						if (d.location_type === 'mixed') {
 							return '#777777';
 						} else if (d.location_type === 'int') {
-							return '#ffffff';
+							return '#eeeeee';
 						} else if (d.location_type === 'ext') {
-							return '#000000';
+							return '#111111';
 						} else if (d.location_type === 'other') {
 							return '#444444';
 						}
 					}
 
 					if (d.type == 'day') {
-						return '#ffffff';
+						return '#eeeeee';
 					} else if (d.type == 'night') {
 						return '#222222';
 					} else {
@@ -96,7 +96,7 @@
 				value: 'value',
 				color: function(d) {
 					if (d.data.label == 'DAY') {
-						return '#ffffff';
+						return '#eeeeee';
 					} else if (d.data.label == 'NIGHT') {
 						return '#222222';
 					} else if (d.data.label == 'DAWN') {
@@ -125,9 +125,9 @@
 					if (d.data.label == 'mixed') {
 						return '#777777';
 					} else if (d.data.label == 'int') {
-						return '#ffffff';
+						return '#eeeeee';
 					} else if (d.data.label == 'ext') {
-						return '#000000';
+						return '#111111';
 					} else if (d.data.label == 'other') {
 						return '#444444';
 					}

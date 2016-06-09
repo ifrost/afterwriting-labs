@@ -1,6 +1,7 @@
 define(function(require){
 	
-	var logger = require('logger'),
+	var Handlebars = require('handlebars'),
+      logger = require('logger'),
 		data = require('modules/data'),
 		decorator = require('utils/decorator');
 	
@@ -9,7 +10,10 @@ define(function(require){
 	var module = {},
 		current;
 	
-	module.create_plugin = function (name, title) {
+	module.create_plugin = function (name, title, template) {
+      if (template) {
+         template = Handlebars.compile(template);
+      }
 		return {
 			is_plugin: true,
 			activate: function () {},
@@ -20,6 +24,7 @@ define(function(require){
 			name: name,
 			title: title,
 			class: 'inactive',
+         template: template,
 			log: logger.get('name')
 		};
 	};

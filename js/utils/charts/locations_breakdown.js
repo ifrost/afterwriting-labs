@@ -83,7 +83,7 @@ define(function (require) {
 			return 'location location' + aggregated_data[item.location].location_index;
 		})
 			.attr('fill', function (item) {
-			return item.occurrences.length === 1 ? '#ffffff' : color(item.location);
+			return item.occurrences.length === 1 ? '#eeeeee' : color(item.location);
 		})
 			.on("mouseover", function (d) {
 			var occurences = 'occurrences: ' + aggregated_data[d.location].occurrences;
@@ -126,7 +126,7 @@ define(function (require) {
 			return 'location location' + aggregated_data[item.data.location].location_index;
 		})
 			.attr('fill', function (d) {
-			return d.data.occurrences > 1 ? color(d.data.location) : '#ffffff';
+			return d.data.occurrences > 1 ? color(d.data.location) : '#eeeeee';
 		})
 			.attr('d', arc)
 			.on("mouseover", function (d) {

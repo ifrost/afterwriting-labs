@@ -1,5 +1,4 @@
-/*global define*/
-define(['templates', 'logger', 'utils/layout', 'utils/decorator', 'd3', 'jquery'], function (templates, logger, layout, decorator, d3, $) {
+define(['dependencies', 'logger', 'utils/layout', 'utils/decorator', 'd3', 'jquery'], function (_, logger, layout, decorator, d3, $) {
 
 	var log = logger.get('bootstrap'),
 		module = {};
@@ -44,12 +43,7 @@ define(['templates', 'logger', 'utils/layout', 'utils/decorator', 'd3', 'jquery'
 		});
 
 		plugins.forEach(function (plugin) {
-			var template_name = 'templates/plugins/' + plugin.name + '.hbs';
-			if (templates.hasOwnProperty(template_name)) {
-				var template = templates[template_name];
-				var html = template(plugin.context);
-				plugin.view = html;
-			}
+         plugin.view = plugin.template(plugin.context);
 			context.plugins.push(plugin);
 		});
 

@@ -261,3 +261,27 @@ img.plugin-icon {
 		background-color: #ffffff;
 	}
 }
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    background-color: rgba(127,127,127,0.2);
+    border: 0px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #7f7f7f;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: #333333;
+}
+
+/* Night mode */
+
+.night-mode .content {
+    background-color: black;
+}
+
+.night-mode  {
+    color: #7f7f7f;
+}

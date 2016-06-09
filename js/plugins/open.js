@@ -1,8 +1,9 @@
 define(function (require) {
 
-	var pm = require('utils/pluginmanager'),
+	var template = require('text!templates/plugins/open.hbs'),
+      pm = require('utils/pluginmanager'),
 		logger = require('logger'),
-		templates = require('templates'),
+		samples = require('samples'),
 		editor = require('plugins/editor'),
 		data = require('modules/data'),
 		helper = require('utils/helper'),
@@ -16,7 +17,7 @@ define(function (require) {
 		layout = require('utils/layout');
 
 	var log = logger.get('open');
-	var plugin = pm.create_plugin('open', 'open');
+	var plugin = pm.create_plugin('open', 'open', template);
 	plugin.class = "active";
 
 	var last_session_script;
@@ -68,8 +69,8 @@ define(function (require) {
 	};
 
 	plugin.open_sample = function (name) {
-		var template_name = 'templates/samples/' + name + '.fountain';
-		var text = templates[template_name]();
+		var file_name = 'samples/' + name + '.fountain';
+		var text = samples[file_name]();
 		set_script(text);
 	};
 

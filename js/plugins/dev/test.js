@@ -1,10 +1,11 @@
 define(function (require) {
-	var pm = require('utils/pluginmanager'),
+	var template = require('text!templates/plugins/dev/test.hbs'),
+      pm = require('utils/pluginmanager'),
 		fparser = require('utils/fountain/parser'),
 		fliner = require('utils/fountain/liner'),
 		data = require('modules/data');
 
-	var plugin = pm.create_plugin('dev/test', 'test');
+	var plugin = pm.create_plugin('dev/test', 'test', template);
 
 	plugin.parse_times = function (times) {
 		var start, end, result = [],

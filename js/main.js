@@ -1,10 +1,10 @@
-/*global require*/
 (function () {
 	var config = require.config({
 		baseUrl: 'js',
 		paths: {
-			templates: '../templates/compiled',
-			test_screenplays: '../templates/test_screenplays',
+			samples: '../samples/compiled',
+			templates: '../templates',
+			test_screenplays: '../test/data/test_screenplays',
 			jquery: 'libs/jquery-1.11.1.min',
 			handlebars: 'libs/handlebars',
 			logger: 'libs/logger',
@@ -15,7 +15,11 @@
 			impromptu: 'libs/jquery-impromptu.min',
 			jstree: 'libs/jstree.min',
 			cookie: 'libs/jquery.cookie',
-			dropbox: 'libs/dropbox.min'
+			dropbox: 'libs/dropbox.min',
+			p: '../node_modules/protoplast/dist/protoplast.min',
+			acceptance: '../test/acceptance',
+         text: '../node_modules/text/text',
+         Blob: 'libs/Blob'
 		},
 		shim: {
 			handlebars: {
@@ -32,7 +36,10 @@
 			},
 			dropbox: {
 				exports: 'Dropbox'
-			}
+			},
+         Blob: {
+             exports: 'Blob'
+         }
 		}
 	});
 

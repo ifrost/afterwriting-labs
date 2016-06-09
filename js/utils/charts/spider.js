@@ -136,7 +136,7 @@ define(function (require) {
 					.attr('class', 'temp-number')
 					.attr('font-family', 'Courier New')
 					.attr('transform', translate_circle)
-					.attr('fill', '#ffffff')
+					.attr('fill', '#eeeeee')
 					.attr('x', points[to][0] - value.length * 3)
 					.attr('y', points[to][1] + 3);
 			}

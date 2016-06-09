@@ -107,7 +107,6 @@ p.error {
 	font-weight: normal;
 	padding: 0px;
 	margin: 0px;
-	background-color: #ffffff;
 	display: inline-block;
 	color: #aaaaaa;
 }
@@ -223,3 +222,16 @@ sub {
 	to{transform:rotate(0deg);}
 }
 .rotate{-moz-animation:rotation1 2s linear infinite;-o-animation:rotation1 2s linear infinite;-webkit-animation:rotation1 2s linear infinite;animation:rotation1 2s linear infinite}
+
+.night-mode th {
+    background-color: #111111;
+}
+
+.night-mode input, .night-mode select {
+    background-color: #111111;
+    color: #7f7f7f;
+}
+
+.night-mode svg text {
+    fill: #7f7f7f;
+}
