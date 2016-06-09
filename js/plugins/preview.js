@@ -1,6 +1,6 @@
 define(function (require) {
 	
-	var template = require('text!templates_raw/plugins/preview.hbs'),
+	var template = require('text!templates/plugins/preview.hbs'),
       pm = require('utils/pluginmanager'),
 		editor = require('plugins/editor'),
 		decorator = require('utils/decorator'),

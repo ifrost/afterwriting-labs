@@ -41,7 +41,7 @@ module.exports = function (grunt) {
 					amd: true
 				},
 				files: {
-					'templates/compiled.js': ['**/*.hbs', '**/*.fountain']
+					'samples/compiled.js': ['**/*.fountain']
 				}
 			},
 			test: {
@@ -49,7 +49,7 @@ module.exports = function (grunt) {
 					amd: true
 				},
 				files: {
-					'templates/test_screenplays.js': ['test/**/*.fdx', 'test/**/*.fountain']
+					'test/data/test_screenplays.js': ['test/**/*.fdx', 'test/**/*.fountain']
 				}
 			}
 		},

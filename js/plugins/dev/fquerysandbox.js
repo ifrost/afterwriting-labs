@@ -1,5 +1,5 @@
 define(function (require) {
-	var template = require('text!templates_raw/plugins/dev/fquerysandbox.hbs'),
+	var template = require('text!templates/plugins/dev/fquerysandbox.hbs'),
       pm = require('utils/pluginmanager'),
 		fhelpers = require('utils/fountain/helpers'),
 		data = require('modules/data'),

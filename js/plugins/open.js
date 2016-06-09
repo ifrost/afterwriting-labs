@@ -1,9 +1,9 @@
 define(function (require) {
 
-	var template = require('text!templates_raw/plugins/open.hbs'),
+	var template = require('text!templates/plugins/open.hbs'),
       pm = require('utils/pluginmanager'),
 		logger = require('logger'),
-		templates = require('templates'),
+		samples = require('samples'),
 		editor = require('plugins/editor'),
 		data = require('modules/data'),
 		helper = require('utils/helper'),
@@ -69,8 +69,8 @@ define(function (require) {
 	};
 
 	plugin.open_sample = function (name) {
-		var template_name = 'templates/samples/' + name + '.fountain';
-		var text = templates[template_name]();
+		var file_name = 'samples/' + name + '.fountain';
+		var text = samples[file_name]();
 		set_script(text);
 	};
 

@@ -2,9 +2,9 @@
 	var config = require.config({
 		baseUrl: 'js',
 		paths: {
-			templates: '../templates/compiled',
-			templates_raw: '../templates',
-			test_screenplays: '../templates/test_screenplays',
+			samples: '../samples/compiled',
+			templates: '../templates',
+			test_screenplays: '../test/data/test_screenplays',
 			jquery: 'libs/jquery-1.11.1.min',
 			handlebars: 'libs/handlebars',
 			logger: 'libs/logger',

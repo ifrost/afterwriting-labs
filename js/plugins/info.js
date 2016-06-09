@@ -1,5 +1,5 @@
 define(function(require){
-	var template = require('text!templates_raw/plugins/info.hbs'),
+	var template = require('text!templates/plugins/info.hbs'),
       common = require('utils/common'),
       pm = require('utils/pluginmanager'),
 		decorator = require('utils/decorator');

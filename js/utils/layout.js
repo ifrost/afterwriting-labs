@@ -1,4 +1,4 @@
-define(['jquery', 'modules/data', 'handlebars', 'utils/pluginmanager', 'utils/common', 'templates', 'utils/decorator', 'dependencies'], function ($, data, Handlebars, pm, common, templates, decorator) {
+define(['jquery', 'text!templates/layout.hbs', 'modules/data', 'handlebars', 'utils/pluginmanager', 'utils/common', 'utils/decorator', 'dependencies'], function ($, template, data, Handlebars, pm, common, decorator) {
 
 	var module = {
 		only_active_visible: true
@@ -127,7 +127,7 @@ define(['jquery', 'modules/data', 'handlebars', 'utils/pluginmanager', 'utils/co
 			$('html').css('background-image', 'url(' + common.data.static_path + 'gfx/bg' + Math.floor(Math.random() * max_backgrounds) + '.jpg)');
 		}
 
-		var layout = templates['templates/layout.hbs'];
+		var layout = Handlebars.compile(template);
 		var body = layout(context);
 		$('body').append(body);
 

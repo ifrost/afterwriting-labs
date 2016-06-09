@@ -1,5 +1,5 @@
 define(function (require) {
-	var template = require('text!templates_raw/plugins/facts.hbs'),
+	var template = require('text!templates/plugins/facts.hbs'),
       pm = require('utils/pluginmanager'),
 		data = require('modules/data'),
 		queries = require('modules/queries'),
