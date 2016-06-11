@@ -3,7 +3,7 @@ define(function (require) {
 	var template = require('text!templates/plugins/preview.hbs'),
       pm = require('utils/pluginmanager'),
 		editor = require('plugins/editor'),
-		decorator = require('utils/decorator'),
+		off = require('off'),
 		pdfjsviewer = require('utils/pdfjsviewer'),
 		pdfmaker = require('utils/pdfmaker');
 	
@@ -13,7 +13,7 @@ define(function (require) {
 		pdfmaker.get_pdf(callback);
 	};
 
-	plugin.refresh = decorator.signal();
+	plugin.refresh = off.signal();
 	
 	plugin.activate = function() {
 		editor.synced.add(plugin.refresh);

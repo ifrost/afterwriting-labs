@@ -1,12 +1,12 @@
 define(function (require) {
 
-    var decorator = require('utils/decorator');
+    var off = require('off');
 
     var module = {};
 
     var local_sync_timer = null;
 
-    module.local_file = decorator.property();
+    module.local_file = off.property();
 
     module.sync = function (interval, handler) {
         local_sync_timer = setInterval(function(){

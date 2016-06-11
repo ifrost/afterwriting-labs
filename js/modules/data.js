@@ -5,7 +5,7 @@ define('modules/data', function (require) {
 		fliner = require('utils/fountain/liner'),
 		converter = require('utils/converters/scriptconverter'),
 		preprocessor = require('utils/fountain/preprocessor'),
-		decorator = require('utils/decorator');
+		off = require('off');
 
 	var plugin = {};
 	var _tempStorage = {};
@@ -35,14 +35,14 @@ define('modules/data', function (require) {
 
 	plugin.format = '';
 
-	plugin.script = decorator.property(function (value) {
+	plugin.script = off.property(function (value) {
 		var result = converter.to_fountain(value);
 		result.value = preprocessor.process_snippets(result.value, plugin.config.snippets);
 		plugin.format = plugin.format || result.format;
 		return result.value;
 	});
 
-	plugin.parse = decorator(function () {
+	plugin.parse = off(function () {
 		plugin.parsed = fparser.parse(plugin.script(), plugin.config);
 		plugin.parsed.lines = fliner.line(plugin.parsed.tokens, plugin.config);
 
@@ -223,7 +223,7 @@ define('modules/data', function (require) {
 		return print_profiles[plugin.config.print_profile];
 	};
 
-	plugin.save_config = decorator(function () {
+	plugin.save_config = off(function () {
 		plugin.data('config', JSON.stringify(plugin.config));
 	});
 

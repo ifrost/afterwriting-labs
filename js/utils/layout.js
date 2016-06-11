@@ -1,4 +1,4 @@
-define(['jquery', 'text!templates/layout.hbs', 'modules/data', 'handlebars', 'utils/pluginmanager', 'utils/common', 'utils/decorator', 'dependencies'], function ($, template, data, Handlebars, pm, common, decorator) {
+define(['jquery', 'text!templates/layout.hbs', 'modules/data', 'handlebars', 'utils/pluginmanager', 'utils/common', 'off', 'dependencies'], function ($, template, data, Handlebars, pm, common, off) {
 
 	var module = {
 		only_active_visible: true
@@ -66,7 +66,7 @@ define(['jquery', 'text!templates/layout.hbs', 'modules/data', 'handlebars', 'ut
 
 	};
 
-	module.close_content = decorator(function (immediately) {
+	module.close_content = off(function (immediately) {
 		var duration = module.small ? 0 : 500;
 		var action = immediately ? 'offset' : 'animate';
 		var closed_plugin = pm.get_current();
@@ -80,7 +80,7 @@ define(['jquery', 'text!templates/layout.hbs', 'modules/data', 'handlebars', 'ut
 		return closed_plugin;
 	});
 	
-	module.toggle_expand = decorator(function() {		
+	module.toggle_expand = off(function() {		
 		$('.content').toggleClass('expanded');		
 	});
 
@@ -208,7 +208,7 @@ define(['jquery', 'text!templates/layout.hbs', 'modules/data', 'handlebars', 'ut
 		};
 
 		/** info handlers **/
-		module.info_opened = decorator.signal();
+		module.info_opened = off.signal();
 		$('.info-content').hide();
 		$('.info-icon').click(function () {
 			var duration = module.small ? 0 : 200;
@@ -285,12 +285,12 @@ define(['jquery', 'text!templates/layout.hbs', 'modules/data', 'handlebars', 'ut
 
 
 		module.scopes = {
-			toolbar_switch_to: decorator(switch_and_return),
-			main_switch_to: decorator(switch_and_return),
-			switcher_switch_to: decorator(switch_and_return),
+			toolbar_switch_to: off(switch_and_return),
+			main_switch_to: off(switch_and_return),
+			switcher_switch_to: off(switch_and_return),
 
-			toolbar_close_content: decorator(module.close_content),
-			back_close_content: decorator(module.close_content)
+			toolbar_close_content: off(module.close_content),
+			back_close_content: off(module.close_content)
 		};
 
 		var footer = common.data.footer;

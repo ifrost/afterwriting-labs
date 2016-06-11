@@ -7,7 +7,7 @@ define(function (require) {
 		editor = require('plugins/editor'),
 		data = require('modules/data'),
 		helper = require('utils/helper'),
-		decorator = require('utils/decorator'),
+		off = require('off'),
 		$ = require('jquery'),
 		gd = require('utils/googledrive'),
 		db = require('utils/dropbox'),
@@ -50,7 +50,7 @@ define(function (require) {
 	};
 
 	plugin.open_file = function (selected_file) {
-		var finished = decorator.signal();
+		var finished = off.signal();
 		var fileReader = new FileReader();
 		fileReader.onload = function () {
 			var value = this.result;
@@ -62,7 +62,7 @@ define(function (require) {
 		return finished;
 	};
 
-	plugin.open_file_dialog = decorator.signal();
+	plugin.open_file_dialog = off.signal();
 
 	plugin.create_new = function () {
 		set_script('');
@@ -72,6 +72,7 @@ define(function (require) {
 		var file_name = 'samples/' + name + '.fountain';
 		var text = samples[file_name]();
 		set_script(text);
+      return name;
 	};
 
 	plugin.is_dropbox_available = function () {
@@ -118,7 +119,7 @@ define(function (require) {
 	};
 
 	plugin.open_from_dropbox = function () {
-		var finished = decorator.signal();
+		var finished = off.signal();
 		open_from_cloud(db, plugin.open_from_dropbox, function (selected) {
 			db.load_file(selected.data.path, function (content) {
 				set_script(content);
@@ -130,7 +131,7 @@ define(function (require) {
 	};
 
 	plugin.open_from_google_drive = function () {
-		var finished = decorator.signal();
+		var finished = off.signal();
 		open_from_cloud(gd, plugin.open_from_google_drive, function (selected) {
 			gd.load_file(selected.data.id, function (content, link, fileid) {
 				set_script(content);

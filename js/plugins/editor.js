@@ -3,7 +3,7 @@ define(function (require) {
 	var template = require('text!templates/plugins/editor.hbs'),
       pm = require('utils/pluginmanager'),
 		data = require('modules/data'),
-		decorator = require('utils/decorator'),
+		off = require('off'),
 		gd = require('utils/googledrive'),
 		db = require('utils/dropbox'),
 		save = require('utils/save'),
@@ -22,15 +22,15 @@ define(function (require) {
 		active = false,
 		auto_save_sync_timer = null;
 
-	plugin.save_in_progress = decorator.property();
-	plugin.pending_changes = decorator.property();
+	plugin.save_in_progress = off.property();
+	plugin.pending_changes = off.property();
 
 	plugin.data = {
 		is_sync: false,
 		is_auto_save: false
 	};
 
-	plugin.synced = decorator.signal();
+	plugin.synced = off.signal();
 
 	plugin.create_editor = function (textarea) {
 		editor = cm.fromTextArea(textarea, {
@@ -155,7 +155,7 @@ define(function (require) {
 		}
 	};
 
-	plugin.synced = decorator.signal();
+	plugin.synced = off.signal();
 
 	plugin.set_sync = function (value) {
 		plugin.data.is_sync = value;

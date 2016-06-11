@@ -73,8 +73,8 @@ define(function (require) {
 		info.download_clicked.add(track_handler('feature', 'download'));
 
 		// open
-		open.open_sample.add(function (result, args) {
-			track_event('feature', 'open-sample', args[0]);
+		open.open_sample.add(function (result) {
+			track_event('feature', 'open-sample', result);
 		});
 
 		open.create_new.add(track_handler('feature', 'open-new'));

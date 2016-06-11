@@ -18,6 +18,7 @@
 			dropbox: 'libs/dropbox.min',
 			p: '../node_modules/protoplast/dist/protoplast.min',
 			acceptance: '../test/acceptance',
+         off: '../node_modules/off/off',
          text: '../node_modules/text/text',
          Blob: 'libs/Blob'
 		},

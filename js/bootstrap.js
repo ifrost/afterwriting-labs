@@ -1,15 +1,7 @@
-define(['dependencies', 'logger', 'utils/layout', 'utils/decorator', 'd3', 'jquery'], function (_, logger, layout, decorator, d3, $) {
+define(['dependencies', 'logger', 'utils/layout', 'off', 'd3', 'jquery'], function (_, logger, layout, off, d3, $) {
 
 	var log = logger.get('bootstrap'),
 		module = {};
-
-	var decorate_all_properties = function (plugin) {
-		d3.keys(plugin).forEach(function (property) {
-			if (typeof (plugin[property]) === "function" && ! (plugin[property].decorated)) {
-				plugin[property] = decorator(plugin[property]);
-			}
-		});
-	};
 
 	module.init = function (modules) {
 		modules = Array.prototype.splice.call(modules, 0);
@@ -32,7 +24,7 @@ define(['dependencies', 'logger', 'utils/layout', 'utils/decorator', 'd3', 'jque
 		module.plugins = [];
 		plugins.forEach(function (plugin) {
 			module.plugins[plugin.name] = plugin;
-			decorate_all_properties(plugin);
+         off.decorate(plugin);
 		});
 
 		log.info('Bootstrapping: ' + plugins.length + ' plugins found.');
