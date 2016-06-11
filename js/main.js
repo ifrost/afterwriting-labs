@@ -9,7 +9,7 @@
 			handlebars: 'libs/handlebars',
 			logger: 'libs/logger',
 			saveAs: 'libs/FileSaver',
-			d3: 'libs/d3.min',
+			d3: '../node_modules/d3/d3',
 			modernizr: 'libs/modernizr',
 			pdfkit: 'libs/pdfkit',
 			impromptu: 'libs/jquery-impromptu.min',
