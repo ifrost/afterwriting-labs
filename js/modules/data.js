@@ -35,11 +35,18 @@ define('modules/data', function (require) {
 
 	plugin.format = '';
 
-	plugin.script = off.property(function (value) {
-		var result = converter.to_fountain(value);
-		result.value = preprocessor.process_snippets(result.value, plugin.config.snippets);
-		plugin.format = plugin.format || result.format;
-		return result.value;
+   plugin._script = '';
+	plugin.script = off(function (value) {
+      if (arguments.length && this._value !== value) {
+         var result = converter.to_fountain(value);
+         result.value = preprocessor.process_snippets(result.value, plugin.config.snippets);
+         plugin.format = plugin.format || result.format;
+         plugin._script = result.value;
+      }
+      else {
+         plugin.script.lock = true;
+      }
+      return plugin._script;
 	});
 
 	plugin.parse = off(function () {
