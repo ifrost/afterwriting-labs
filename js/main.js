@@ -8,7 +8,7 @@
 			jquery: 'libs/jquery-1.11.1.min',
 			handlebars: 'libs/handlebars',
 			logger: 'libs/logger',
-			saveAs: 'libs/FileSaver',
+			saveAs: '../node_modules/file-saver/FileSaver',
 			d3: '../node_modules/d3/d3',
 			modernizr: 'libs/modernizr',
 			pdfkit: 'libs/pdfkit',
