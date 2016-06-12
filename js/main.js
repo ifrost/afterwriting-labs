@@ -6,7 +6,7 @@
 			templates: '../templates',
 			test_screenplays: '../test/data/test_screenplays',
 			jquery: 'libs/jquery-1.11.1.min',
-			handlebars: 'libs/handlebars',
+			handlebars: '../node_modules/handlebars/dist/handlebars',
 			logger: 'libs/logger',
 			saveAs: '../node_modules/file-saver/FileSaver',
 			d3: '../node_modules/d3/d3',
