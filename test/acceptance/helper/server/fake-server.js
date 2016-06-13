@@ -1,4 +1,4 @@
-define(function(require){
+define(function(require) {
 
     var p = require('p');
 
@@ -29,10 +29,10 @@ define(function(require){
                     try {
                         var result = opts.call.apply(this, [xhr].concat(matches));
                     } catch (e) {
-                        xhr.respond(500, { "Content-Type": e.content_type || opts.content_type }, e.message);
+                        xhr.respond(500, {"Content-Type": e.content_type || opts.content_type}, e.message);
                         return;
                     }
-                    xhr.respond(200, { "Content-Type": opts.content_type }, result);
+                    xhr.respond(200, {"Content-Type": opts.content_type}, result);
                 }
             }.bind(this));
             return resolved;

@@ -1,11 +1,11 @@
-define(['utils/helper'],function (helper) {
-	
-	describe('Time Helper', function () {
+define(['utils/helper'], function(helper) {
 
-		it('formats time', function () {
-			chai.assert.equal(helper.format_time(1.1), '01:06');
-		});
+    describe('Time Helper', function() {
 
-	});
+        it('formats time', function() {
+            chai.assert.equal(helper.format_time(1.1), '01:06');
+        });
+
+    });
 
 });

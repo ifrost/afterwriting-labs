@@ -40,13 +40,13 @@ define(function(require) {
         jstree_visible: function() {
             return !!$('.jstree-anchor').attr('id');
         },
-        
+
         editor_content: function() {
             return $('.CodeMirror').get(0).CodeMirror.getValue();
         },
 
         is_night_mode: function() {
-           return $('body').hasClass('night-mode');
+            return $('body').hasClass('night-mode');
         }
 
     });

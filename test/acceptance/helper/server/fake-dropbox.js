@@ -8,7 +8,7 @@ define(function(require) {
     var DropboxApi = FakeServer.extend({
 
         name: 'dropbox',
-        
+
         files: null,
 
         contents: null,
@@ -35,7 +35,7 @@ define(function(require) {
             Dropbox.Util.Xhr.Request = this.DropboxRequest;
             Dropbox.Util.Oauth.randomAuthStateParam.restore();
         },
-        
+
         has_file: function(file) {
             this.contents[file.name] = file.content;
             this.files.push([

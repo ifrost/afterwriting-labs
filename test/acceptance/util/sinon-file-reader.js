@@ -7,11 +7,11 @@ define(function() {
     /**
      * A mock for a FileReader intended to use with acceptance tests
      * When writing an acceptance test you may face the issue where you have to write a step that
-     * waits for the FileReader before proceeding to the next step. You may use setTimeout with 
-     * delay that is long enough to process the file or use this helper. Run SinonFileReader.setup() 
+     * waits for the FileReader before proceeding to the next step. You may use setTimeout with
+     * delay that is long enough to process the file or use this helper. Run SinonFileReader.setup()
      * before the test and SinonFileReader.restore() after. To implement a step that waits for all
      * the FileReaders to be processed run SinonFileReader.wait(final_callback)
-     * 
+     *
      * @constructor
      */
     var SinonFileReader = function() {

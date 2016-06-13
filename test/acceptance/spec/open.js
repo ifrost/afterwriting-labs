@@ -1,19 +1,19 @@
 define(function(require) {
-    
+
     var Env = require('acceptance/helper/env');
-    
+
     describe('Open', function() {
-        
+
         var env;
-        
+
         beforeEach(function() {
             env = Env.create();
         });
-        
+
         afterEach(function() {
             env.destroy();
         });
-        
+
         it('Loads file list from dropbox', function() {
             env.user.open_plugin('open');
             env.user.open_from_dropbox();
@@ -22,14 +22,14 @@ define(function(require) {
             env.assert.file_list_is_visible();
             env.user.close_popup();
         });
-        
+
         it('Loads selected file', function(done) {
             this.timeout(10000);
             env.dropbox.has_file({
                 name: 'file.fountain',
                 content: 'test content'
             });
-            
+
             env.user.open_plugin('open');
             env.user.open_from_dropbox();
             env.dropbox.auth_dropbox();
@@ -49,5 +49,5 @@ define(function(require) {
             });
         });
     });
-    
+
 });

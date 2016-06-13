@@ -24,7 +24,7 @@ define(function(require) {
 
             this.proxy.register_server(this.dropbox);
             this.proxy.setup();
-            
+
             this.browser.setup();
             this.browser.tick(5000);
         },
@@ -37,5 +37,5 @@ define(function(require) {
     });
 
     return Env;
-    
+
 });

@@ -11,8 +11,13 @@ define(function(require) {
         setup: function() {
             SinonFileReader.setup();
             this.clock = sinon.useFakeTimers();
-            sinon.stub(window, 'open', function() {return {close: function() {}}});
-            
+            sinon.stub(window, 'open', function() {
+                return {
+                    close: function() {
+                    }
+                }
+            });
+
             this.clear_cookies();
             this.clock.tick(5000);
         },
@@ -29,7 +34,9 @@ define(function(require) {
         },
 
         clear_cookies: function() {
-            document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+            document.cookie.split(";").forEach(function(c) {
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+            });
         },
 
         tick: function(ms) {

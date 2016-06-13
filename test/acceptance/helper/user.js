@@ -33,7 +33,7 @@ define(function(require) {
         close_popup: function() {
             this.click(this.dom.$close_popup);
         },
-        
+
         confirm_popup: function() {
             this.click(this.dom.$confirm_popup);
         },
@@ -72,11 +72,11 @@ define(function(require) {
         },
 
         select_night_mode: function() {
-           this.click(this.dom.$night_mode);
+            this.click(this.dom.$night_mode);
         }
 
     });
 
     return User;
-    
+
 });

@@ -1,8 +1,8 @@
-define(function (require) {
+define(function(require) {
 
     var Env = require('acceptance/helper/env');
-    
-    describe('Smoke test', function () {
+
+    describe('Smoke test', function() {
 
         var env;
 
@@ -18,7 +18,7 @@ define(function (require) {
             env.user.open_plugin('info');
             env.assert.active_plugin_is('info');
         });
-        
+
     });
 
 });

@@ -19,7 +19,7 @@ define(function(require) {
         file_list_is_visible: function() {
             chai.assert.ok(this.dom.jstree_visible(), 'file list is not visible');
         },
-        
+
         editor_content: function(content) {
             chai.assert.equal(this.dom.editor_content(), content, "editor's content does not match expected value");
         },
@@ -29,18 +29,18 @@ define(function(require) {
         },
 
         night_mode_is_enabled: function(value) {
-           var night_mode = this.dom.is_night_mode();
-           if (value) {
-              chai.assert.ok(night_mode);
-           }
-           else {
-              chai.assert.notOk(night_mode);
-           }
+            var night_mode = this.dom.is_night_mode();
+            if (value) {
+                chai.assert.ok(night_mode);
+            }
+            else {
+                chai.assert.notOk(night_mode);
+            }
         }
 
     });
 
-    
+
     return Assert;
-    
+
 });
