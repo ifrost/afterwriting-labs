@@ -15,11 +15,7 @@ define(['dependencies', 'logger', 'off', 'd3', 'jquery', 'p'], function(_, logge
         log.info('Modules preparation.');
         $('#loader').remove();
 
-        this.modules.forEach(function(module) {
-            if (module.prepare && typeof (module.prepare) === 'function') {
-                module.prepare();
-            }
-        });
+        context.build();
 
         this.modules.forEach(function(plugin) {
             off.decorate(plugin);

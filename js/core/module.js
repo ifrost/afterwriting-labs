@@ -15,11 +15,13 @@ define(function(require) {
         },
 
         prepare: {
-            inject_init: true
+            inject_init: true,
+            value: function() {}
         },
 
         windup: {
-            inject_post_init: true
+            inject_post_init: true,
+            value: function() {}
         }
 
     });

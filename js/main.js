@@ -16,7 +16,7 @@
             jstree: '../node_modules/jstree/dist/jstree',
             cookie: 'libs/jquery.cookie',
             dropbox: 'libs/dropbox.min',
-            p: '../node_modules/protoplast/dist/protoplast.min',
+            p: '../node_modules/protoplast/dist/protoplast',
             acceptance: '../test/acceptance',
             off: '../node_modules/off/off',
             text: '../node_modules/text/text',
