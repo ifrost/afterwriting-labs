@@ -20,9 +20,9 @@ define(function(require) {
         plugin.refresh();
     };
 
-    plugin.deactivate = function() {
+    plugin.deactivate = off(function() {
         editor.synced.remove(plugin.refresh);
-    };
+    });
 
     return plugin;
 });

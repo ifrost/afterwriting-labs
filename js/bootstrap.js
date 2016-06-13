@@ -1,4 +1,4 @@
-define(['dependencies', 'logger', 'off', 'd3', 'jquery', 'p'], function(_, logger, off, d3, $, p) {
+define(['dependencies', 'logger', 'd3', 'jquery', 'p'], function(_, logger, d3, $, p) {
 
     var log = logger.get('bootstrap'),
         module = {};
@@ -16,10 +16,6 @@ define(['dependencies', 'logger', 'off', 'd3', 'jquery', 'p'], function(_, logge
         $('#loader').remove();
 
         context.build();
-
-        this.modules.forEach(function(plugin) {
-            off.decorate(plugin);
-        });
         
         log.info('Modules windup.');
         this.modules.forEach(function(module) {

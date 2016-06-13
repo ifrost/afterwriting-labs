@@ -9,9 +9,9 @@ define(function(require) {
 
     var plugin = Plugin.create('stats', 'stats', template);
 
-    plugin.goto = function(line) {
+    plugin.goto = off(function(line) {
         editor.goto(line);
-    };
+    });
 
     plugin.refresh = off(function() {
         plugin.is_active = true;

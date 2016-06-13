@@ -42,14 +42,14 @@ define(function(require) {
         local.local_file(null);
     };
 
-    plugin.open_last_used = function(startup) {
+    plugin.open_last_used = off(function(startup) {
         if (last_session_script_loaded) {
             set_script(last_session_script || '');
         }
         return startup;
-    };
+    });
 
-    plugin.open_file = function(selected_file) {
+    plugin.open_file = off(function(selected_file) {
         var finished = off.signal();
         var fileReader = new FileReader();
         fileReader.onload = function() {
@@ -60,20 +60,20 @@ define(function(require) {
         };
         fileReader.readAsText(selected_file);
         return finished;
-    };
+    });
 
     plugin.open_file_dialog = off.signal();
 
-    plugin.create_new = function() {
+    plugin.create_new = off(function() {
         set_script('');
-    };
+    });
 
-    plugin.open_sample = function(name) {
+    plugin.open_sample = off(function(name) {
         var file_name = 'samples/' + name + '.fountain';
         var text = samples[file_name]();
         set_script(text);
         return name;
-    };
+    });
 
     plugin.is_dropbox_available = function() {
         return window.location.protocol !== 'file:';
@@ -118,7 +118,7 @@ define(function(require) {
         });
     };
 
-    plugin.open_from_dropbox = function() {
+    plugin.open_from_dropbox = off(function() {
         var finished = off.signal();
         open_from_cloud(db, plugin.open_from_dropbox, function(selected) {
             db.load_file(selected.data.path, function(content) {
@@ -128,9 +128,9 @@ define(function(require) {
             });
         });
         return finished;
-    };
+    });
 
-    plugin.open_from_google_drive = function() {
+    plugin.open_from_google_drive = off(function() {
         var finished = off.signal();
         open_from_cloud(gd, plugin.open_from_google_drive, function(selected) {
             gd.load_file(selected.data.id, function(content, link, fileid) {
@@ -142,7 +142,7 @@ define(function(require) {
             });
         });
         return finished;
-    };
+    });
 
     plugin.prepare = function() {
         log.info("Init: script handlers");

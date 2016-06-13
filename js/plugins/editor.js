@@ -79,12 +79,12 @@ define(function(require) {
         return plugin.data.is_auto_save;
     };
 
-    plugin.toggle_auto_save = function() {
+    plugin.toggle_auto_save = off(function() {
         if (!plugin.data.is_auto_save && plugin.data.is_sync) {
             plugin.toggle_sync();
         }
         plugin.set_auto_save(!plugin.data.is_auto_save);
-    };
+    });
 
     plugin.set_auto_save = function(value) {
         plugin.data.is_auto_save = value;
@@ -139,10 +139,10 @@ define(function(require) {
         }
     };
 
-    plugin.toggle_sync = function() {
+    plugin.toggle_sync = off(function() {
         last_content = '';
         plugin.set_sync(!plugin.data.is_sync);
-    };
+    });
 
     plugin.store = function() {
         data.data('editor-last-state', data.script());
@@ -183,7 +183,7 @@ define(function(require) {
         }
     };
 
-    plugin.activate = function() {
+    plugin.activate = off(function() {
         active = true;
         setTimeout(function() {
             if (data.script() !== editor.getValue()) editor.setValue(data.script() || "");
@@ -204,7 +204,7 @@ define(function(require) {
             }
 
         }, 300);
-    };
+    });
 
     plugin.deactivate = function() {
         active = false;

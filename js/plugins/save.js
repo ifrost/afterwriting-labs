@@ -16,7 +16,7 @@ define(function(require) {
 
     // LOCAL
 
-    plugin.save_as_fountain = function() {
+    plugin.save_as_fountain = off(function() {
         forms.text('Select file name: ', data.data('fountain-filename') || 'screenplay.fountain', function(result) {
             data.parse();
             var blob = new Blob([data.script()], {
@@ -26,9 +26,9 @@ define(function(require) {
             data.data('pdf-filename', result.text.split('.')[0] + '.pdf');
             saveAs(blob, result.text);
         });
-    };
+    });
 
-    plugin.save_as_pdf = function() {
+    plugin.save_as_pdf = off(function() {
         forms.text('Select file name: ', data.data('pdf-filename') || 'screenplay.pdf', function(result) {
             preview.get_pdf(function(pdf) {
                 data.data('pdf-filename', result.text);
@@ -36,11 +36,11 @@ define(function(require) {
                 saveAs(pdf.blob, result.text);
             });
         });
-    };
+    });
 
     // DROPBOX
 
-    plugin.dropbox_fountain = function() {
+    plugin.dropbox_fountain = off(function() {
         save_to_cloud({
             client: db,
             save_callback: function(selected, filename) {
@@ -66,9 +66,9 @@ define(function(require) {
             },
             default_filename: 'screenplay.fountain'
         });
-    };
+    });
 
-    plugin.dropbox_pdf = function() {
+    plugin.dropbox_pdf = off(function() {
         save_to_cloud({
             client: db,
             save_callback: function(selected, filename) {
@@ -94,11 +94,11 @@ define(function(require) {
             },
             default_filename: 'screenplay.pdf'
         });
-    };
+    });
 
     // GOOGLE DRIVE
 
-    plugin.google_drive_fountain = function() {
+    plugin.google_drive_fountain = off(function() {
         save_to_cloud({
             client: gd,
             save_callback: function(selected, filename) {
@@ -129,9 +129,9 @@ define(function(require) {
             },
             default_filename: 'screenplay.fountain'
         });
-    };
+    });
 
-    plugin.google_drive_pdf = function() {
+    plugin.google_drive_pdf = off(function() {
         save_to_cloud({
             client: gd,
             save_callback: function(selected, filename) {
@@ -167,7 +167,7 @@ define(function(require) {
             },
             default_filename: 'screenplay.pdf'
         });
-    };
+    });
 
     plugin.gd_saved = off.signal();
     plugin.db_saved = off.signal();
