@@ -2,6 +2,7 @@
 define(function(require) {
 
     var logger = require('logger'),
+        Module = require('core/module'),
         info = require('plugins/info'),
         open = require('plugins/open'),
         save = require('plugins/save'),
@@ -9,7 +10,7 @@ define(function(require) {
         stats = require('plugins/stats'),
         layout = require('plugins/layout');
 
-    var module = {};
+    var module = Module.create('monitor');
     var log = logger.get('monitor');
 
     var track_event = function(category, action, label) {

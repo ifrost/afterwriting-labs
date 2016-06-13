@@ -1,17 +1,18 @@
-define(['utils/charts/spider',
+define(['core/module',
+    'utils/charts/spider',
     'utils/charts/bar',
     'utils/charts/pie',
     'utils/charts/page_balance',
     'utils/charts/line',
-    'utils/charts/locations_breakdown'], function(spider_chart,
+    'utils/charts/locations_breakdown'], function(Module,
+                                                  spider_chart,
                                                   bar_chart,
                                                   pie_chart,
                                                   page_balance_chart,
                                                   line_chart,
                                                   locations_breakdown) {
 
-    var module = {};
-
+    var module = Module.create('charts');
 
     module.prepare = function() {
         module.spider_chart = spider_chart;

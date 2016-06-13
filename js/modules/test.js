@@ -1,7 +1,7 @@
-define(['logger', 'utils/common', 'plugins/layout', 'plugins/open'], function(logger, common, layout, open) {
-    var module = {};
-
-
+define(['logger', 'utils/common', 'plugins/layout', 'plugins/open', 'core/module'], function(logger, common, layout, open, Module) {
+    
+    var module = Module.create('test');
+    
     module.prepare = function() {
         // set up logger
         logger.useDefaults();

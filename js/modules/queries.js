@@ -1,12 +1,13 @@
 define(function(require) {
-    var helper = require('utils/helper'),
+    var Module = require('core/module'),
+        helper = require('utils/helper'),
         data = require('modules/data'),
         fquery = require('utils/fountain/query'),
         fhelpers = require('utils/fountain/helpers');
 
     var h = fhelpers.fq;
 
-    var plugin = {};
+    var plugin = Module.create('queries');
 
     var create_days_and_nights = function() {
 

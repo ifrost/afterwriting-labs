@@ -5,9 +5,10 @@ define('modules/data', function(require) {
         fliner = require('utils/fountain/liner'),
         converter = require('utils/converters/scriptconverter'),
         preprocessor = require('utils/fountain/preprocessor'),
+        Module = require('core/module'),
         off = require('off');
 
-    var plugin = {};
+    var plugin = Module.create('data');
     var _tempStorage = {};
     var url_params = {};
 
