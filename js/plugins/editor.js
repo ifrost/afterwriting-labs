@@ -1,8 +1,8 @@
 define(function(require) {
 
-    var template = require('text!templates/plugins/editor.hbs'),
+    var Plugin = require('core/plugin'),
+        template = require('text!templates/plugins/editor.hbs'),
         layout = require('plugins/layout'),
-        pm = require('utils/pluginmanager'),
         data = require('modules/data'),
         off = require('off'),
         gd = require('utils/googledrive'),
@@ -18,7 +18,7 @@ define(function(require) {
     require('libs/codemirror/addon/hint/anyword-hint');
     require('utils/fountain/cmmode');
 
-    var plugin = pm.create_plugin('editor', 'write', template);
+    var plugin = Plugin.create('editor', 'write', template);
     var editor, last_content = '',
         active = false,
         auto_save_sync_timer = null;

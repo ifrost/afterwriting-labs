@@ -1,13 +1,13 @@
 define(function(require) {
 
-    var template = require('text!templates/plugins/preview.hbs'),
-        pm = require('utils/pluginmanager'),
+    var Plugin = require('core/plugin'),
+        template = require('text!templates/plugins/preview.hbs'),
         editor = require('plugins/editor'),
         off = require('off'),
         pdfjsviewer = require('utils/pdfjsviewer'),
         pdfmaker = require('utils/pdfmaker');
 
-    var plugin = pm.create_plugin('preview', 'view', template);
+    var plugin = Plugin.create('preview', 'view', template);
 
     plugin.get_pdf = function(callback) {
         pdfmaker.get_pdf(callback);

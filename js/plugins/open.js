@@ -1,7 +1,7 @@
 define(function(require) {
 
-    var template = require('text!templates/plugins/open.hbs'),
-        pm = require('utils/pluginmanager'),
+    var Plugin = require('core/plugin'),
+        template = require('text!templates/plugins/open.hbs'),
         logger = require('logger'),
         samples = require('samples'),
         editor = require('plugins/editor'),
@@ -17,7 +17,7 @@ define(function(require) {
         layout = require('plugins/layout');
 
     var log = logger.get('open');
-    var plugin = pm.create_plugin('open', 'open', template);
+    var plugin = Plugin.create('open', 'open', template);
     plugin.class = "active";
 
     var last_session_script;

@@ -1,10 +1,11 @@
 define(function(require) {
-    var template = require('text!templates/plugins/info.hbs'),
+    
+    var Plugin = require('core/plugin'),
+        template = require('text!templates/plugins/info.hbs'),
         common = require('utils/common'),
-        pm = require('utils/pluginmanager'),
         off = require('off');
 
-    var plugin = pm.create_plugin('info', 'info', template);
+    var plugin = Plugin.create('info', 'info', template);
     plugin.class = "active";
 
     plugin.download_clicked = off.signal();

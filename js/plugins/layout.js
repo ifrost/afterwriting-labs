@@ -1,20 +1,20 @@
 define(function(require) {
 
-    var $ = require('jquery'),
+    var Plugin = require('core/plugin'),
+        $ = require('jquery'),
         logger = require('logger'),
         template = require('text!templates/layout.hbs'),
         data = require('modules/data'),
         Handlebars = require('handlebars'),
-        pm = require('utils/pluginmanager'),
         common = require('utils/common'),
         off = require('off'),
         core = require('bootstrap');
 
-    var module = {
-            only_active_visible: true
-        },
+    var module = Plugin.create('layout', 'layout'),
         current,
         log = logger.get('layout');
+
+    module.only_active_visible = true;
 
     var switch_and_return = function(plugin) {
         module.switch_to(plugin);
@@ -125,8 +125,8 @@ define(function(require) {
         };
 
         var plugins = core.modules.filter(function(module) {
-            return module && module.is_plugin;
-        });
+            return module && module.is_plugin && module !== this;
+        }, this);
 
         plugins.forEach(function(plugin) {
             plugin.view = plugin.template(plugin.context);

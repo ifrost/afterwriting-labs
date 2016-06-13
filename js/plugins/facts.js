@@ -1,13 +1,14 @@
 define(function(require) {
-    var template = require('text!templates/plugins/facts.hbs'),
-        pm = require('utils/pluginmanager'),
+    
+    var Plugin = require('core/plugin'),
+        template = require('text!templates/plugins/facts.hbs'),
         data = require('modules/data'),
         queries = require('modules/queries'),
         editor = require('plugins/editor'),
         off = require('off'),
         fhelpers = require('utils/fountain/helpers');
 
-    var plugin = pm.create_plugin('facts', 'facts', template);
+    var plugin = Plugin.create('facts', 'facts', template);
 
     var generate_data = function() {
 

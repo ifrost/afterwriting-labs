@@ -1,13 +1,14 @@
 define(function(require) {
-    var template = require('text!templates/plugins/dev/fquerysandbox.hbs'),
-        pm = require('utils/pluginmanager'),
+    
+    var Plugin = require('core/plugin'),
+        template = require('text!templates/plugins/dev/fquerysandbox.hbs'),
         fhelpers = require('utils/fountain/helpers'),
         data = require('modules/data'),
         queries = require('modules/queries'),
         fquery = require('utils/fountain/query'),
         helper = require('utils/helper');
 
-    var plugin = pm.create_plugin('dev/fquerysandbox', 'fquery', template);
+    var plugin = Plugin.create('dev/fquerysandbox', 'fquery', template);
 
     plugin.activate = function() {
         window.data = data;

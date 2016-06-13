@@ -1,11 +1,12 @@
 define(function(require) {
-    var template = require('text!templates/plugins/settings.hbs'),
-        pm = require('utils/pluginmanager'),
+    
+    var Plugin = require('core/plugin'),
+        template = require('text!templates/plugins/settings.hbs'),
         data = require('modules/data'),
         layout = require('plugins/layout'),
         open = require('plugins/open');
 
-    var plugin = pm.create_plugin('settings', 'setup', template);
+    var plugin = Plugin.create('settings', 'setup', template);
 
     plugin.get_config = function() {
         return data.config;
