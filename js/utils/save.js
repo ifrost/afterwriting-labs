@@ -1,4 +1,4 @@
-define(function(require){
+define(function(require) {
 
     var db = require('utils/dropbox'),
         gd = require('utils/googledrive'),
@@ -12,7 +12,7 @@ define(function(require){
                 blob = new Blob([data.script()], {
                     type: "text/plain;charset=utf-8"
                 });
-            db.save(path, blob, function () {
+            db.save(path, blob, function() {
                 callback(true);
             });
         }
@@ -23,7 +23,7 @@ define(function(require){
                 });
             gd.upload({
                 blob: blob,
-                callback: function () {
+                callback: function() {
                     callback(true);
                 },
                 fileid: fileid

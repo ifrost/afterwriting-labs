@@ -1,5 +1,5 @@
 /* global PDFJS */
-define(function(require){
+define(function(require) {
 
     var $ = require('jquery');
 
@@ -28,7 +28,7 @@ define(function(require){
 
             PDFJS.getDocument(uint8array).then(function(pdfFile) {
                 viewer.set_pdf(pdfFile);
-            }).catch(function(error){
+            }).catch(function(error) {
                 console.log(error)
             });
         };
@@ -70,7 +70,7 @@ define(function(require){
     viewer.render = function() {
         $(viewer.container).empty();
 
-        for (var i=1; i <= viewer.numPages; i++) {
+        for (var i = 1; i <= viewer.numPages; i++) {
 
             viewer.pdf.getPage(i).then(function(page) {
                 var viewport = page.getViewport(viewer.zoom);

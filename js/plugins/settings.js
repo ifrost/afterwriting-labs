@@ -1,31 +1,31 @@
-define(function (require) {
-	var template = require('text!templates/plugins/settings.hbs'),
-      pm = require('utils/pluginmanager'),
-		data = require('modules/data'),
-		layout = require('plugins/layout'),
-		open = require('plugins/open');
+define(function(require) {
+    var template = require('text!templates/plugins/settings.hbs'),
+        pm = require('utils/pluginmanager'),
+        data = require('modules/data'),
+        layout = require('plugins/layout'),
+        open = require('plugins/open');
 
-	var plugin = pm.create_plugin('settings', 'setup', template);
+    var plugin = pm.create_plugin('settings', 'setup', template);
 
-	plugin.get_config = function () {
-		return data.config;
-	};
+    plugin.get_config = function() {
+        return data.config;
+    };
 
-	plugin.save = function () {
-		data.save_config();
-		data.script(data.script());
-	};
+    plugin.save = function() {
+        data.save_config();
+        data.script(data.script());
+    };
 
-	plugin.get_default_config = function () {
-		return data.default_config;
-	};
+    plugin.get_default_config = function() {
+        return data.default_config;
+    };
 
-	plugin.windup = function () {
-		if (data.config.load_last_opened) {
-			open.open_last_used(true);
-			layout.show_main();
-		}
-	};
+    plugin.windup = function() {
+        if (data.config.load_last_opened) {
+            open.open_last_used(true);
+            layout.show_main();
+        }
+    };
 
-	return plugin;
+    return plugin;
 });

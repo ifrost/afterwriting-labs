@@ -1,35 +1,35 @@
-define(['logger', 'utils/common', 'utils/pluginmanager', 'plugins/layout', 'plugins/open'], function (logger, common, pm, layout, open) {
-	var module = {};
+define(['logger', 'utils/common', 'utils/pluginmanager', 'plugins/layout', 'plugins/open'], function(logger, common, pm, layout, open) {
+    var module = {};
 
 
-	module.prepare = function () {
-		// set up logger
-		logger.useDefaults();
-		logger.setLevel(logger.DEBUG);
-		logger.filter = null;
+    module.prepare = function() {
+        // set up logger
+        logger.useDefaults();
+        logger.setLevel(logger.DEBUG);
+        logger.filter = null;
 
-		common.data.static_path = '';
-	};
+        common.data.static_path = '';
+    };
 
-	module.windup = function () {
-		var footer = '<span class="version">tester</span>';
-		layout.set_footer(footer);
-		
+    module.windup = function() {
+        var footer = '<span class="version">tester</span>';
+        layout.set_footer(footer);
 
-		var DEV_PLUGIN = require('plugins/dev/fquerysandbox');
 
-		if (DEV_PLUGIN) {
-			open.open_sample('printing_trouble');
+        var DEV_PLUGIN = require('plugins/dev/fquerysandbox');
 
-			pm.switch_to(DEV_PLUGIN);
+        if (DEV_PLUGIN) {
+            open.open_sample('printing_trouble');
 
-			layout.show_main();
-			layout.open_content();
-			layout.switch_to_plugin(DEV_PLUGIN.name);
-		}
-	
-	};
+            pm.switch_to(DEV_PLUGIN);
 
-	return module;
+            layout.show_main();
+            layout.open_content();
+            layout.switch_to_plugin(DEV_PLUGIN.name);
+        }
+
+    };
+
+    return module;
 
 });

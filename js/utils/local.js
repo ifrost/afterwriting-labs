@@ -1,4 +1,4 @@
-define(function (require) {
+define(function(require) {
 
     var off = require('off');
 
@@ -8,17 +8,17 @@ define(function (require) {
 
     module.local_file = off.property();
 
-    module.sync = function (interval, handler) {
-        local_sync_timer = setInterval(function(){
+    module.sync = function(interval, handler) {
+        local_sync_timer = setInterval(function() {
             var fileReader = new FileReader();
-            fileReader.onload = function () {
+            fileReader.onload = function() {
                 handler(this.result);
             };
             fileReader.readAsText(module.local_file());
         }, interval);
     };
 
-    module.unsync = function () {
+    module.unsync = function() {
         clearInterval(local_sync_timer);
         local_sync_timer = null;
     };

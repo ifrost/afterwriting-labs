@@ -13,21 +13,21 @@ define(function(require) {
         only_active_visible: true
     };
 
-    var switch_and_return = function (plugin) {
+    var switch_and_return = function(plugin) {
         pm.switch_to(plugin);
         return plugin;
     };
 
     // set up handlebars
-    Handlebars.registerHelper('static_path', function () {
+    Handlebars.registerHelper('static_path', function() {
         return common.data.static_path;
     });
 
-    var calculate_basics = function () {
+    var calculate_basics = function() {
         module.small = $('html').width() < 800;
     };
 
-    var update_selector = function (no_animation) {
+    var update_selector = function(no_animation) {
         no_animation = no_animation || module.small;
         var active_only = module.only_active_visible;
         var cols = 3;
@@ -38,7 +38,7 @@ define(function(require) {
         var icons_with_padding = cols * (img_size + padding) + padding;
         corner.left = ($('html').width() - icons_with_padding) / 2;
 
-        var get_position = function (index, all, max) {
+        var get_position = function(index, all, max) {
             var item_row = Math.floor(index / cols),
                 rows = Math.floor(all / cols),
                 item_col = index % cols,
@@ -63,7 +63,7 @@ define(function(require) {
             $('.menu-item.inactive').show();
         }
 
-        $('.menu-item' + (active_only ? '.active' : '')).each(function (index) {
+        $('.menu-item' + (active_only ? '.active' : '')).each(function(index) {
             var active_items = $('.menu-item.active').size();
             var all_items = $('.menu-item').size();
             var attrs = get_position(index, active_only ? active_items : all_items, all_items);
@@ -75,7 +75,7 @@ define(function(require) {
 
     };
 
-    module.close_content = off(function (immediately) {
+    module.close_content = off(function(immediately) {
         var duration = module.small ? 0 : 500;
         var action = immediately ? 'offset' : 'animate';
         var closed_plugin = pm.get_current();
@@ -93,26 +93,26 @@ define(function(require) {
         $('.content').toggleClass('expanded');
     });
 
-    module.show_tooltip = function (text) {
+    module.show_tooltip = function(text) {
         $('#tooltip').css("visibility", "visible").html(text);
     };
 
-    module.move_tooltip = function (x, y) {
+    module.move_tooltip = function(x, y) {
         $('#tooltip').css("top", (y - 10) + "px").css("left", (x + 10) + "px");
     };
 
-    module.hide_tooltip = function () {
+    module.hide_tooltip = function() {
         $('#tooltip').css("visibility", "hidden");
     };
 
-    module.show_main = function () {
+    module.show_main = function() {
         module.close_content();
         $('.tool.inactive').fadeIn();
         module.only_active_visible = false;
         update_selector();
     };
 
-    module.set_footer = function (content) {
+    module.set_footer = function(content) {
         $('.footer').html(content);
     };
 
@@ -121,11 +121,11 @@ define(function(require) {
             plugins: []
         };
 
-        var plugins = core.modules.filter(function (module) {
+        var plugins = core.modules.filter(function(module) {
             return module && module.is_plugin;
         });
 
-        plugins.forEach(function (plugin) {
+        plugins.forEach(function(plugin) {
             plugin.view = plugin.template(plugin.context);
             context.plugins.push(plugin);
         });
@@ -133,7 +133,7 @@ define(function(require) {
         this.init_layout(context);
     };
 
-    module.init_layout = function (context) {
+    module.init_layout = function(context) {
 
         calculate_basics();
 
@@ -161,7 +161,7 @@ define(function(require) {
         var inactive_plugins_count = 0,
             all_plugins_count = 0;
 
-        context.plugins.forEach(function (plugin) {
+        context.plugins.forEach(function(plugin) {
             if (plugin.class !== "active") {
                 inactive_plugins_count++;
             }
@@ -169,19 +169,19 @@ define(function(require) {
         });
 
         /** mouse over IE fix **/
-        $('.menu-item').hover(function () {
+        $('.menu-item').hover(function() {
             $(this).addClass('menu-item-hover');
-        }, function () {
+        }, function() {
             $(this).removeClass('menu-item-hover');
         });
-        $('.tool').hover(function () {
+        $('.tool').hover(function() {
             $(this).addClass('tool-hover');
-        }, function () {
+        }, function() {
             $(this).removeClass('tool-hover');
         });
 
 
-        var calculate_content = function () {
+        var calculate_content = function() {
             var left = module.small ? 0 : ($('html').width() - $('.content').outerWidth()) / 2;
             var height = $(document).height();
             $('.content').height(height).offset({
@@ -190,12 +190,12 @@ define(function(require) {
             $('.plugin-content').height(height - $('.top-bar').height() - (module.small ? 10 : 50));
 
             /** to the bottom **/
-            $('.to-the-bottom').height(function () {
+            $('.to-the-bottom').height(function() {
                 return height - $(this).offset().top - 60;
             });
         };
 
-        module.open_content = function () {
+        module.open_content = function() {
             var duration = module.small ? 0 : 200;
             $('.content').removeClass('content-closed').animate({
                 top: 0
@@ -205,7 +205,7 @@ define(function(require) {
         };
 
         /** calc on each reize **/
-        $(window).resize(function () {
+        $(window).resize(function() {
             calculate_basics();
             calculate_content();
             if ($('.content').hasClass('content-closed')) {
@@ -220,10 +220,10 @@ define(function(require) {
         calculate_content();
         module.close_content(true);
 
-        module.switch_to_plugin = function (plugin) {
+        module.switch_to_plugin = function(plugin) {
             var fade_time = module.small ? 0 : 200;
             $('.plugin-content.active').removeClass('active').fadeOut(fade_time);
-            setTimeout(function () {
+            setTimeout(function() {
                 $('.plugin-content[plugin="' + plugin + '"]').fadeIn().addClass('active');
             }, fade_time);
 
@@ -236,7 +236,7 @@ define(function(require) {
         /** info handlers **/
         module.info_opened = off.signal();
         $('.info-content').hide();
-        $('.info-icon').click(function () {
+        $('.info-icon').click(function() {
             var duration = module.small ? 0 : 200;
             var section = $(this).attr('section');
             var section_block = $('.info-content[section="' + section + '"]');
@@ -250,7 +250,7 @@ define(function(require) {
         });
 
         /** content close **/
-        $('.close-content').click(function () {
+        $('.close-content').click(function() {
             module.scopes.toolbar_close_content();
         });
 
@@ -259,14 +259,14 @@ define(function(require) {
             calculate_content();
         });
 
-        $('#back').click(function () {
+        $('#back').click(function() {
             if (!$('.content').hasClass('content-closed')) {
                 module.scopes.back_close_content();
             }
         });
 
-        context.plugins.forEach(function (plugin) {
-            $('.tool[plugin="' + plugin.name + '"]').click(function () {
+        context.plugins.forEach(function(plugin) {
+            $('.tool[plugin="' + plugin.name + '"]').click(function() {
                 if (!$(this).hasClass('active')) {
                     module.switch_to_plugin($(this).attr('plugin'));
                     module.scopes.toolbar_switch_to(plugin);
@@ -274,20 +274,20 @@ define(function(require) {
                 }
             });
 
-            $('.menu-item[plugin="' + plugin.name + '"]').click(function () {
+            $('.menu-item[plugin="' + plugin.name + '"]').click(function() {
                 module.open_content();
                 module.switch_to_plugin($(this).attr('plugin'));
                 module.scopes.main_switch_to(plugin);
             });
 
-            $('a.switch[plugin="' + plugin.name + '"]').click(function () {
+            $('a.switch[plugin="' + plugin.name + '"]').click(function() {
                 module.open_content();
                 module.switch_to_plugin($(this).attr('plugin'));
                 module.scopes.switcher_switch_to(plugin);
             });
         });
 
-        pm.switch_to.add(function (plugin) {
+        pm.switch_to.add(function(plugin) {
             module.switch_to_plugin(plugin.name);
         });
 
