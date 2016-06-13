@@ -1,31 +1,27 @@
-define(['dependencies', 'logger', 'd3', 'jquery', 'p'], function(_, logger, d3, $, p) {
+define(['dependencies', 'p'], function(_, p) {
 
-    var log = logger.get('bootstrap'),
-        module = {};
+    var bootstrap = {};
 
-    module.init = function(modules) {
+    bootstrap.init = function(modules) {
+
         this.modules = Array.prototype.splice.call(modules, 0);
 
         var context = p.Context.create();
+
         context.register('core', this);
+
         this.modules.forEach(function(module) {
             context.register(module.name, module);
         }, this);
 
-        log.info('Modules preparation.');
-        $('#loader').remove();
-
         context.build();
         
-        log.info('Modules windup.');
         this.modules.forEach(function(module) {
             if (module.windup && typeof (module.windup) === 'function') {
                 module.windup();
             }
         });
-
-        log.info('Bootstrapping finished.');
     };
 
-    return module;
+    return bootstrap;
 });

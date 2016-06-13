@@ -133,6 +133,7 @@ define(function(require) {
             context.plugins.push(plugin);
         });
 
+        $('#loader').remove();
         this.init_layout(context);
     };
 
