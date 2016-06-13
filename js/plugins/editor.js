@@ -1,6 +1,7 @@
 define(function(require) {
 
     var template = require('text!templates/plugins/editor.hbs'),
+        layout = require('plugins/layout'),
         pm = require('utils/pluginmanager'),
         data = require('modules/data'),
         off = require('off'),
@@ -67,7 +68,7 @@ define(function(require) {
         };
         plugin.data.scroll_info = null;
 
-        pm.switch_to(plugin);
+        layout.switch_to(plugin);
     };
 
     plugin.auto_save_available = function() {

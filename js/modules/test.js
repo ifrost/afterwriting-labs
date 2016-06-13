@@ -21,7 +21,7 @@ define(['logger', 'utils/common', 'utils/pluginmanager', 'plugins/layout', 'plug
         if (DEV_PLUGIN) {
             open.open_sample('printing_trouble');
 
-            pm.switch_to(DEV_PLUGIN);
+            layout.switch_to(DEV_PLUGIN);
 
             layout.show_main();
             layout.open_content();

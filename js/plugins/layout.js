@@ -1,6 +1,7 @@
 define(function(require) {
 
     var $ = require('jquery'),
+        logger = require('logger'),
         template = require('text!templates/layout.hbs'),
         data = require('modules/data'),
         Handlebars = require('handlebars'),
@@ -10,11 +11,13 @@ define(function(require) {
         core = require('bootstrap');
 
     var module = {
-        only_active_visible: true
-    };
+            only_active_visible: true
+        },
+        current,
+        log = logger.get('layout');
 
     var switch_and_return = function(plugin) {
-        pm.switch_to(plugin);
+        module.switch_to(plugin);
         return plugin;
     };
 
@@ -78,7 +81,7 @@ define(function(require) {
     module.close_content = off(function(immediately) {
         var duration = module.small ? 0 : 500;
         var action = immediately ? 'offset' : 'animate';
-        var closed_plugin = pm.get_current();
+        var closed_plugin = module.get_current();
 
         $('.content')[action]({
             top: -$('.content').height()
@@ -131,6 +134,32 @@ define(function(require) {
         });
 
         this.init_layout(context);
+    };
+
+    module.switch_to = off(function(plugin) {
+        if (plugin === current) {
+            module.switch_to.lock = true;
+            return;
+        }
+
+        log.info('Switching to: ' + plugin.name);
+
+        if (current) {
+            current.deactivate();
+        }
+        current = plugin;
+
+        data.parse();
+
+        current.activate();
+
+        module.switch_to_plugin(plugin.name);
+
+        return current;
+    });
+
+    module.get_current = function() {
+        return current;
     };
 
     module.init_layout = function(context) {
@@ -286,11 +315,6 @@ define(function(require) {
                 module.scopes.switcher_switch_to(plugin);
             });
         });
-
-        pm.switch_to.add(function(plugin) {
-            module.switch_to_plugin(plugin.name);
-        });
-
 
         /** hide all plugins **/
         $('.plugin-contents > div').hide();
