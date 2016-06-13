@@ -144,7 +144,7 @@ define(function(require) {
         return finished;
     };
 
-    plugin.init = function() {
+    plugin.prepare = function() {
         log.info("Init: script handlers");
         data.script.add(function() {
             var title = '';

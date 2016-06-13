@@ -1,9 +1,9 @@
 define(function(require) {
 
-    var Handlebars = require('handlebars'),
-        logger = require('logger'),
+    var logger = require('logger'),
         data = require('modules/data'),
-        off = require('off');
+        off = require('off'),
+        Plugin = require('core/plugin');
 
     var log = logger.get('pluginmanager');
 
@@ -11,25 +11,7 @@ define(function(require) {
         current;
 
     module.create_plugin = function(name, title, template) {
-        if (template) {
-            template = Handlebars.compile(template);
-        }
-        return {
-            is_plugin: true,
-            activate: function() {
-            },
-            deactivate: function() {
-            },
-            context: {},
-            init: function() {
-            },
-            data: {},
-            name: name,
-            title: title,
-            class: 'inactive',
-            template: template,
-            log: logger.get('name')
-        };
+        return Plugin.create(name, title, template);
     };
 
     module.switch_to = off(function(plugin) {

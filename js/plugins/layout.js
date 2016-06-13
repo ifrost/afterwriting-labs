@@ -116,7 +116,7 @@ define(function(require) {
         $('.footer').html(content);
     };
 
-    module.init = function() {
+    module.prepare = function() {
         var context = {
             plugins: []
         };

@@ -1,4 +1,4 @@
-define(['dependencies', 'logger', 'off', 'd3', 'jquery'], function(_, logger, off, d3, $) {
+define(['dependencies', 'logger', 'off', 'd3', 'jquery', 'p'], function(_, logger, off, d3, $, p) {
 
     var log = logger.get('bootstrap'),
         module = {};
@@ -6,7 +6,15 @@ define(['dependencies', 'logger', 'off', 'd3', 'jquery'], function(_, logger, of
     module.init = function(modules) {
         this.modules = Array.prototype.splice.call(modules, 0);
 
+        var context = p.Context.create();
+        context.register('core', this);
+        this.modules.forEach(function(module) {
+            context.register(module.name, module);
+        }, this);
+
         log.info('Modules preparation.');
+        $('#loader').remove();
+
         this.modules.forEach(function(module) {
             if (module.prepare && typeof (module.prepare) === 'function') {
                 module.prepare();
@@ -16,17 +24,7 @@ define(['dependencies', 'logger', 'off', 'd3', 'jquery'], function(_, logger, of
         this.modules.forEach(function(plugin) {
             off.decorate(plugin);
         });
-
-        log.info('Bootstrapping: ' + modules.length + ' modules found.');
-
-        log.info('Initializing modules');
-        $('#loader').remove();
-        this.modules.forEach(function(module) {
-            if (module.init && typeof (module.init) === 'function') {
-                module.init();
-            }
-        });
-
+        
         log.info('Modules windup.');
         this.modules.forEach(function(module) {
             if (module.windup && typeof (module.windup) === 'function') {
