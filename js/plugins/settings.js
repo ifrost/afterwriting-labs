@@ -2,7 +2,7 @@ define(function (require) {
 	var template = require('text!templates/plugins/settings.hbs'),
       pm = require('utils/pluginmanager'),
 		data = require('modules/data'),
-		layout = require('utils/layout'),
+		layout = require('plugins/layout'),
 		open = require('plugins/open');
 
 	var plugin = pm.create_plugin('settings', 'setup', template);

@@ -7,7 +7,7 @@ define(function (require) {
 		save = require('plugins/save'),
 		editor = require('plugins/editor'),
 		stats = require('plugins/stats'),
-		layout = require('utils/layout');
+		layout = require('plugins/layout');
 
 	var module = {};
 	var log = logger.get('monitor');

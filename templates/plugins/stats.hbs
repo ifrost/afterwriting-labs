@@ -49,7 +49,7 @@
 <div id="stats-int-ext" style="text-align: center"></div>
 <!--- scripts -->
 <script>
-	require(['jquery', 'd3', 'plugins/stats', 'utils/layout', 'utils/helper', 'modules/charts', ], function($, d3, stats, layout, helper, charts) {
+	require(['jquery', 'd3', 'plugins/stats', 'plugins/layout', 'utils/helper', 'modules/charts', ], function($, d3, stats, layout, helper, charts) {
 
 		var render = function() {
 			charts.spider_chart.render('#who-with-who', stats.data.who_with_who.characters, stats.data.who_with_who.links, {

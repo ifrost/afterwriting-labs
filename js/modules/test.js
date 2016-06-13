@@ -1,4 +1,4 @@
-define(['logger', 'utils/common', 'utils/pluginmanager', 'utils/layout', 'plugins/open'], function (logger, common, pm, layout, open) {
+define(['logger', 'utils/common', 'utils/pluginmanager', 'plugins/layout', 'plugins/open'], function (logger, common, pm, layout, open) {
 	var module = {};
 
 

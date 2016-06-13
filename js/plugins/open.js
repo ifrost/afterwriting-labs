@@ -14,7 +14,7 @@ define(function (require) {
 		local = require('utils/local'),
 		tree = require('utils/tree'),
 		save = require('plugins/save'),
-		layout = require('utils/layout');
+		layout = require('plugins/layout');
 
 	var log = logger.get('open');
 	var plugin = pm.create_plugin('open', 'open', template);

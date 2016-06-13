@@ -2,7 +2,7 @@ define(function (require) {
 	var d3 = require('d3'),
 		$ = require('jquery'),
 		helper = require('utils/helper'),
-		layout = require('utils/layout');
+		layout = require('plugins/layout');
 
 	var plugin = {};
 

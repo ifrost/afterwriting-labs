@@ -16,7 +16,7 @@
 <textarea id="editor-textarea" placeholder="Code goes here..." class="to-the-bottom"></textarea>
 <!-- scripts -->
 <script>
-	require(['jquery', 'plugins/editor', 'utils/layout', 'utils/common'], function($, editor, layout, common) {
+	require(['jquery', 'plugins/editor', 'plugins/layout', 'utils/common'], function($, editor, layout, common) {
 		editor.create_editor($('#editor-textarea').get(0));
 
 		var editor_content = $('.plugin-content[plugin="editor"]');

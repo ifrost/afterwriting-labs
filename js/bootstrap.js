@@ -1,50 +1,34 @@
-define(['dependencies', 'logger', 'utils/layout', 'off', 'd3', 'jquery'], function (_, logger, layout, off, d3, $) {
+define(['dependencies', 'logger', 'off', 'd3', 'jquery'], function (_, logger, off, d3, $) {
 
 	var log = logger.get('bootstrap'),
 		module = {};
 
 	module.init = function (modules) {
-		modules = Array.prototype.splice.call(modules, 0);
+		this.modules = Array.prototype.splice.call(modules, 0);
 
 		log.info('Modules preparation.');
-		modules.forEach(function (module) {
+		this.modules.forEach(function (module) {
 			if (module.prepare && typeof (module.prepare) === 'function') {
 				module.prepare();
 			}
 		});
-
-		var context = {
-			plugins: []
-		};
-
-		var plugins = modules.filter(function (module) {
-			return module && module.is_plugin;
+        
+		this.modules.forEach(function (plugin) {
+			off.decorate(plugin);
 		});
 
-		module.plugins = [];
-		plugins.forEach(function (plugin) {
-			module.plugins[plugin.name] = plugin;
-         off.decorate(plugin);
-		});
-
-		log.info('Bootstrapping: ' + plugins.length + ' plugins found.');
-
-		plugins.forEach(function (plugin) {
-			log.info('Initializing plugin: ' + plugin.name);
-			plugin.init();
-		});
-
-		plugins.forEach(function (plugin) {
-         plugin.view = plugin.template(plugin.context);
-			context.plugins.push(plugin);
-		});
-
-		log.info('Initializing layout');
-		$('#loader').remove();
-		layout.init_layout(context);
+		log.info('Bootstrapping: ' + modules.length + ' modules found.');
+        
+		log.info('Initializing modules');
+        $('#loader').remove();
+        this.modules.forEach(function (module) {
+            if (module.init && typeof (module.init) === 'function') {
+                module.init();
+            }
+        });
 
 		log.info('Modules windup.');
-		modules.forEach(function (module) {
+		this.modules.forEach(function (module) {
 			if (module.windup && typeof (module.windup) === 'function') {
 				module.windup();
 			}
