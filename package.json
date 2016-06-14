@@ -58,7 +58,7 @@
     "file-saver": "^1.3.1",
     "grunt": "~0.4.0",
     "handlebars": "^1.3.0",
-    "jquery": "^2.2.4",
+    "jquery": "^1.11.1",
     "jstree": "^3.3.1",
     "off": "0.0.10",
     "stdio": "^0.2.7"
