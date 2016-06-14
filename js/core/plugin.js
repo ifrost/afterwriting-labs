@@ -16,9 +16,9 @@ define(function(require) {
         context: null,
 
         $create: function(name, title, template) {
-            this.title = title;
-            if (template) {
-                this.template = Handlebars.compile(template);
+            this.title = this.title || title;
+            if (this.template || template) {
+                this.template = Handlebars.compile(this.template || template);
             }
             this.class = 'inactive';
             this.data = {};

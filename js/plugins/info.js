@@ -5,10 +5,20 @@ define(function(require) {
         common = require('utils/common'),
         off = require('off');
 
-    var plugin = Plugin.create('info', 'info', template);
-    plugin.class = "active";
+    var Info = Plugin.extend({
 
-    plugin.download_clicked = off.signal();
+        name: 'info',
 
-    return plugin;
+        title: 'info',
+
+        template: template,
+
+        class: "active",
+
+        $create: function() {
+            this.download_clicked = off.signal();
+        }
+    });
+
+    return Info.create();
 });
