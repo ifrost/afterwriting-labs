@@ -20,7 +20,7 @@ define(function(require) {
             if (this.template || template) {
                 this.template = Handlebars.compile(this.template || template);
             }
-            this.class = 'inactive';
+            this.class = this.class || 'inactive';
             this.data = {};
             this.context = {};
         },
