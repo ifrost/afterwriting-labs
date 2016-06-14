@@ -61,7 +61,6 @@
     "jquery": "^1.11.1",
     "jstree": "^3.3.1",
     "off": "0.0.10",
-    "polyfill-function-prototype-bind": "0.0.1",
     "stdio": "^0.2.7"
   }
 }
