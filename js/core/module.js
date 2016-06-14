@@ -6,6 +6,10 @@ define(function(require) {
 
     var Module = p.extend({
 
+        $meta: {
+            constructors: [p.constructors.autobind]
+        },
+
         name: '',
 
         logger: null,
