@@ -2,12 +2,10 @@ define(['core/module', '../../test/acceptance/tests'], function(Module) {
 
     var module = Module.create('acceptance_test_setup');
 
-    module.prepare = function() {
-        if (window.ACCEPTANCE) {
-            // XXX: fake timer created to skip the animation at the beginning
-            window.clock = sinon.useFakeTimers();
-        }
-    };
+    if (window.ACCEPTANCE) {
+        // XXX: fake timer created to skip the animation at the beginning
+        window.clock = sinon.useFakeTimers();
+    }
 
     module.windup = function() {
         if (window.ACCEPTANCE) {
