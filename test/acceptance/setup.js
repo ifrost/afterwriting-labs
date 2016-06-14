@@ -1,6 +1,6 @@
-define(['../../test/acceptance/tests'], function() {
+define(['core/module', '../../test/acceptance/tests'], function(Module) {
 
-    var module = {};
+    var module = Module.create('acceptance_test_setup');
 
     module.prepare = function() {
         if (window.ACCEPTANCE) {
