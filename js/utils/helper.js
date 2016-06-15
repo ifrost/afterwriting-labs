@@ -119,6 +119,26 @@ define('utils/helper', function (require) {
 		return result;
 	};
 
+	/**
+	 * Return a "space" only string of the length of provided text
+	 * E.g. "123" -> "   "
+	 * @param text
+	 * @returns {String}
+	 */
+	module.blank_text = function(text) {
+		return (text || '').replace(/./g, ' ');
+	};
+
+	/**
+	 * Return string indentation, e.g. "   123" -> "   "
+	 * @param {String} text
+	 * @returns {String}
+	 */
+	module.get_indentation = function(text) {
+		var match = (text || '').match(/^(\s+)/);
+		return match ? match[0] : '';
+	};
+
 	return module;
 
 });
