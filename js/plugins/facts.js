@@ -5,7 +5,7 @@ define(function(require) {
         off = require('off'),
         fhelpers = require('utils/fountain/helpers');
 
-    var Editor = Plugin.extend({
+    var Facts = Plugin.extend({
 
         name: 'facts',
 
@@ -62,5 +62,5 @@ define(function(require) {
 
     });
 
-    return Editor.create();
+    return Facts.create();
 });
