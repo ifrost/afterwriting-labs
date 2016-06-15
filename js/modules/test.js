@@ -1,35 +1,41 @@
-define(['logger', 'utils/common', 'plugins/layout', 'plugins/open', 'core/module'], function(logger, common, layout, open, Module) {
+define(['logger', 'utils/common', 'plugins/open', 'core/module'], function(logger, common, open, Module) {
     
-    var module = Module.create('test');
-    
-    module.prepare = function() {
-        // set up logger
-        logger.useDefaults();
-        logger.setLevel(logger.DEBUG);
-        logger.filter = null;
+    var Test = Module.extend({
 
-        common.data.static_path = '';
-    };
+        name: 'test',
 
-    module.windup = function() {
-        var footer = '<span class="version">tester</span>';
-        layout.set_footer(footer);
+        layout: {
+            inject: 'layout',
+        },
 
+        prepare: function() {
+            // set up logger
+            logger.useDefaults();
+            logger.setLevel(logger.DEBUG);
+            logger.filter = null;
 
-        var DEV_PLUGIN = require('plugins/dev/fquerysandbox');
+            common.data.static_path = '';
+        },
 
-        if (DEV_PLUGIN) {
-            open.open_sample('printing_trouble');
+        windup: function() {
+            var footer = '<span class="version">tester</span>';
+            this.layout.set_footer(footer);
 
-            layout.switch_to(DEV_PLUGIN);
+            var DEV_PLUGIN = require('plugins/dev/fquerysandbox');
 
-            layout.show_main();
-            layout.open_content();
-            layout.switch_to_plugin(DEV_PLUGIN.name);
+            if (DEV_PLUGIN) {
+                open.open_sample('printing_trouble');
+
+                this.layout.switch_to(DEV_PLUGIN);
+
+                this.layout.show_main();
+                this.layout.open_content();
+                this.layout.switch_to_plugin(DEV_PLUGIN.name);
+            }
+
         }
+    });
 
-    };
-
-    return module;
+    return Test.create();
 
 });
