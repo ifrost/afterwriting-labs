@@ -1,36 +1,43 @@
-define(['logger', 'utils/common', 'plugins/layout', 'plugins/open', 'core/module'], function(logger, common, layout, open, Module) {
-
-    var module = Module.create('dev');
+define(['logger', 'utils/common', 'plugins/open', 'core/module'], function(logger, common, open, Module) {
 
     var DEV_PLUGIN;
 
-    module.prepare = function() {
-        // set up logger
-        logger.useDefaults();
-        logger.setLevel(logger.DEBUG);
-        logger.filter = null;
+    var Dev = Module.extend({
 
-        common.data.static_path = '';
-    };
+        name: 'dev',
 
-    module.windup = function() {
-        var footer = common.data.footer;
-        footer += '<br /><span class="version">development version</span>';
-        layout.set_footer(footer);
+        layout: {
+            inject: 'layout'
+        },
 
-        //DEV_PLUGIN = require('plugins/editor');
+        prepare: function() {
+            // set up logger
+            logger.useDefaults();
+            logger.setLevel(logger.DEBUG);
+            logger.filter = null;
 
-        if (DEV_PLUGIN) {
-            open.open_sample('big_fish');
+            common.data.static_path = '';
+        },
 
-            layout.switch_to(DEV_PLUGIN);
+        windup: function() {
+            var footer = common.data.footer;
+            footer += '<br /><span class="version">development version</span>';
+            this.layout.set_footer(footer);
 
-            layout.show_main();
-            layout.open_content();
-            layout.switch_to_plugin(DEV_PLUGIN.name);
+            //DEV_PLUGIN = require('plugins/editor');
+
+            if (DEV_PLUGIN) {
+                open.open_sample('big_fish');
+
+                this.layout.switch_to(DEV_PLUGIN);
+
+                this.layout.show_main();
+                this.layout.open_content();
+                this.layout.switch_to_plugin(DEV_PLUGIN.name);
+            }
         }
-    };
+    });
 
-    return module;
+    return Dev.create();
 
 });
