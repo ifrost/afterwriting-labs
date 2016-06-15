@@ -3,37 +3,52 @@ define(function(require) {
     var Plugin = require('core/plugin'),
         template = require('text!templates/plugins/stats.hbs'),
         editor = require('plugins/editor'),
-        data = require('modules/data'),
-        off = require('off'),
-        queries = require('modules/queries');
+        off = require('off');
+    
+    var Stats = Plugin.extend({
 
-    var plugin = Plugin.create('stats', 'stats', template);
+        name: 'stats',
 
-    plugin.goto = off(function(line) {
-        editor.goto(line);
+        title: 'stats',
+
+        template: template,
+
+        data: null,
+        
+        data_model: {
+            inject: 'data'
+        },
+        
+        queries: {
+            inject: 'queries'
+        },
+
+        goto: function(line) {
+            editor.goto(line);
+        },
+
+        refresh: function() {
+            this.is_active = true;
+            this.data.days_and_nights = this.queries.days_and_nights.run(this.data_model.parsed_stats.tokens);
+            this.data.int_and_ext = this.queries.int_and_ext.run(this.data_model.parsed_stats.tokens);
+            this.data.scenes = this.queries.scene_length.run(this.data_model.parsed_stats.tokens);
+            var basics = this.queries.basics.run(this.data_model.parsed_stats.lines);
+            this.data.who_with_who = this.queries.dialogue_breakdown.run(this.data_model.parsed_stats.tokens, basics, this.data_model.config.stats_who_with_who_max);
+            this.data.page_balance = this.queries.page_balance.run(this.data_model.parsed_stats.lines);
+            this.data.tempo = this.queries.tempo.run(this.data_model.parsed_stats.tokens);
+            this.data.locations_breakdown = this.queries.locations_breakdown.run(this.data_model.parsed_stats.tokens);
+        },
+
+        activate: function() {
+            editor.synced.add(this.refresh);
+            this.refresh();
+        },
+
+        deactivate: function() {
+            this.is_active = false;
+            editor.synced.remove(this.refresh);
+        }
     });
 
-    plugin.refresh = off(function() {
-        plugin.is_active = true;
-        plugin.data.days_and_nights = queries.days_and_nights.run(data.parsed_stats.tokens);
-        plugin.data.int_and_ext = queries.int_and_ext.run(data.parsed_stats.tokens);
-        plugin.data.scenes = queries.scene_length.run(data.parsed_stats.tokens);
-        var basics = queries.basics.run(data.parsed_stats.lines);
-        plugin.data.who_with_who = queries.dialogue_breakdown.run(data.parsed_stats.tokens, basics, data.config.stats_who_with_who_max);
-        plugin.data.page_balance = queries.page_balance.run(data.parsed_stats.lines);
-        plugin.data.tempo = queries.tempo.run(data.parsed_stats.tokens);
-        plugin.data.locations_breakdown = queries.locations_breakdown.run(data.parsed_stats.tokens);
-    });
-
-    plugin.activate = function() {
-        editor.synced.add(plugin.refresh);
-        plugin.refresh();
-    };
-
-    plugin.deactivate = function() {
-        plugin.is_active = false;
-        editor.synced.remove(plugin.refresh);
-    };
-
-    return plugin;
+    return Stats.create();
 });
