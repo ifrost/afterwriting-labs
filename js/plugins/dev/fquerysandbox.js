@@ -1,5 +1,5 @@
 define(function(require) {
-    
+
     var Plugin = require('core/plugin'),
         template = require('text!templates/plugins/dev/fquerysandbox.hbs'),
         fhelpers = require('utils/fountain/helpers'),
@@ -8,15 +8,23 @@ define(function(require) {
         fquery = require('utils/fountain/query'),
         helper = require('utils/helper');
 
-    var plugin = Plugin.create('dev/fquerysandbox', 'fquery', template);
+    var FQuerySandbox = Plugin.extend({
 
-    plugin.activate = function() {
-        window.data = data;
-        window.fquery = fquery;
-        window.fhelpers = fhelpers;
-        window.helper = helper;
-        window.queries = queries;
-    };
+        name: 'dev/fquerysandbox',
 
-    return plugin;
+        title: 'fquery',
+
+        template: template,
+
+        activate: function() {
+            window.data = data;
+            window.fquery = fquery;
+            window.fhelpers = fhelpers;
+            window.helper = helper;
+            window.queries = queries;
+        }
+    });
+
+
+    return FQuerySandbox.create();
 });
