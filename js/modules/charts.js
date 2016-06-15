@@ -12,17 +12,20 @@ define(['core/module',
                                                   line_chart,
                                                   locations_breakdown) {
 
-    var module = Module.create('charts');
+    var Charts = Module.extend({
 
-    module.prepare = function() {
-        module.spider_chart = spider_chart;
-        module.bar_chart = bar_chart;
-        module.pie_chart = pie_chart;
-        module.page_balance_chart = page_balance_chart;
-        module.line_chart = line_chart;
-        module.locations_breakdown = locations_breakdown;
-    };
+        name: 'charts',
 
-    return module;
+        prepare: function() {
+            this.spider_chart = spider_chart;
+            this.bar_chart = bar_chart;
+            this.pie_chart = pie_chart;
+            this.page_balance_chart = page_balance_chart;
+            this.line_chart = line_chart;
+            this.locations_breakdown = locations_breakdown;
+        }
 
+    });
+
+    return Charts.create('charts');
 });
