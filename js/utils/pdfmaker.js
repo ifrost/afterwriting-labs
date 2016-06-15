@@ -249,6 +249,7 @@ define('utils/pdfmaker', function(require) {
         var y = 0,
             page = 1,
             scene_number,
+            prev_scene_continuation_header = '',
             scene_continuations = {},
             current_section_level = 0,
             current_section_number,
@@ -257,9 +258,19 @@ define('utils/pdfmaker', function(require) {
             text,
             after_section = false; // helpful to determine synopsis indentation
 
-        var print_header_and_footer = function() {
+        var print_header_and_footer = function(continuation_header) {
             if (cfg.print_header) {
-                doc.format_text(cfg.print_header, 1.5, cfg.print().page_number_top_margin, {
+
+                continuation_header = continuation_header || '';
+                var offset = helper.blank_text(continuation_header);
+                if (helper.get_indentation(cfg.print_header).length >= continuation_header.length) {
+                    offset = '';
+                }
+                if (offset) {
+                    offset += ' ';
+                }
+
+                doc.format_text(offset + cfg.print_header, 1.5, cfg.print().page_number_top_margin, {
                     color: '#777777'
                 });
             }
@@ -328,6 +339,7 @@ define('utils/pdfmaker', function(require) {
 
                     scene_continued = scene_continued.replace(/\*/g, '');
                     doc.simple_text(scene_continued, cfg.print().action.feed * 72, number_y * 72);
+                    prev_scene_continuation_header = scene_continued;
                 }
 
                 if (cfg.show_page_numbers) {
@@ -336,7 +348,8 @@ define('utils/pdfmaker', function(require) {
                     doc.simple_text(page_num, number_x * 72, number_y * 72);
                 }
                 print_watermark();
-                print_header_and_footer();
+                print_header_and_footer(prev_scene_continuation_header);
+                prev_scene_continuation_header = '';
 
             } else if (line.type === "separator") {
                 y++;
