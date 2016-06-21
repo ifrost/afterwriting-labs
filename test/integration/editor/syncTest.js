@@ -14,6 +14,7 @@ define(function(require) {
 
         beforeEach(function() {
             clock = sinon.useFakeTimers();
+            editor.data_model = data;
 
             cm_editor = {
                 on: function(event, callback) {
