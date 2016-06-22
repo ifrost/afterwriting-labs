@@ -2,27 +2,39 @@ define(function(require) {
 
     var Plugin = require('core/plugin'),
         template = require('text!templates/plugins/preview.hbs'),
-        editor = require('plugins/editor'),
         off = require('off'),
         pdfjsviewer = require('utils/pdfjsviewer'),
         pdfmaker = require('utils/pdfmaker');
 
-    var plugin = Plugin.create('preview', 'view', template);
+    var Preview = Plugin.extend({
 
-    plugin.get_pdf = function(callback) {
-        pdfmaker.get_pdf(callback);
-    };
+        name: 'preview',
 
-    plugin.refresh = off.signal();
+        title: 'view',
 
-    plugin.activate = function() {
-        editor.synced.add(plugin.refresh);
-        plugin.refresh();
-    };
+        template: template,
 
-    plugin.deactivate = off(function() {
-        editor.synced.remove(plugin.refresh);
+        editor: {
+            inject: 'editor'
+        },
+
+        $create: function() {
+            this.refresh = off.signal();
+        },
+
+        get_pdf: function(callback) {
+            pdfmaker.get_pdf(callback);
+        },
+
+        activate: function() {
+            this.editor.synced.add(this.refresh);
+            this.refresh();
+        },
+
+        deactivate: function() {
+            this.editor.synced.remove(this.refresh);
+        }
     });
 
-    return plugin;
+    return Preview.create();
 });
