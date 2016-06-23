@@ -2,16 +2,11 @@ define(function(require) {
 
     var Module = require('core/module'),
         $ = require('jquery'),
-        logger = require('logger'),
         template = require('text!templates/layout.hbs'),
-        data = require('modules/data'),
         Handlebars = require('handlebars'),
         common = require('utils/common'),
         off = require('off'),
         core = require('bootstrap');
-
-    var current,
-        log = logger.get('layout');
 
     var Layout = Module.extend({
 
@@ -21,6 +16,10 @@ define(function(require) {
          * True if on a small layout (based on screen dimensions)
          */
         small: false,
+
+        data: {
+            inject: 'data'
+        },
 
         $create: function() {
             // set up handlebars
@@ -147,25 +146,26 @@ define(function(require) {
         },
 
         switch_to: function(plugin) {
-            if (plugin === current) {
+
+            if (plugin === this.current) {
                 this.switch_to.lock = true;
                 return;
             }
 
-            log.info('Switching to: ' + plugin.name);
+            this.logger.info('Switching to: ' + plugin.name);
 
-            if (current) {
-                current.deactivate();
+            if (this.current) {
+                this.current.deactivate();
             }
-            current = plugin;
+            this.current = plugin;
 
-            data.parse();
+            this.data.parse();
 
-            current.activate();
+            this.current.activate();
 
             this.switch_to_plugin(plugin.name);
 
-            return current;
+            return this.current;
         },
 
         calculate_content: function() {
@@ -192,26 +192,26 @@ define(function(require) {
         },
 
         get_current: function() {
-            return current;
+            return this.current;
         },
 
         init_layout: function(context) {
 
             this.calculate_basics();
 
-            if (data.config.night_mode) {
+            if (this.data.config.night_mode) {
                 $('body').addClass('night-mode');
             }
-            data.save_config.add(function() {
+            this.data.save_config.add(function() {
                 $('body').removeClass('night-mode');
-                if (data.config.night_mode) {
+                if (this.data.config.night_mode) {
                     $('body').addClass('night-mode');
                 }
-            });
+            }.bind(this));
 
             // load background
             var max_backgrounds = 7;
-            if (!this.small && data.config.show_background_image) {
+            if (!this.small && this.data.config.show_background_image) {
                 $('html').css('background-image', 'url(' + common.data.static_path + 'gfx/bg' + Math.floor(Math.random() * max_backgrounds) + '.jpg)');
             }
 
@@ -273,18 +273,20 @@ define(function(require) {
             /** info handlers **/
             this.info_opened = off.signal();
             $('.info-content').hide();
+
+            var self = this;
             $('.info-icon').click(function() {
-                var duration = this.small ? 0 : 200;
+                var duration = self.small ? 0 : 200;
                 var section = $(this).attr('section');
                 var section_block = $('.info-content[section="' + section + '"]');
                 if (section_block.css('display') === 'none') {
-                    this.info_opened(section);
+                    self.info_opened(section);
                 }
                 section_block.toggle({
                     duration: duration,
                     easing: 'linear'
                 });
-            }.bind(this));
+            });
 
             /** content close **/
             $('.close-content').click(function() {
@@ -303,25 +305,28 @@ define(function(require) {
             }.bind(this));
 
             context.plugins.forEach(function(plugin) {
+
+                var self = this;
+
                 $('.tool[plugin="' + plugin.name + '"]').click(function() {
                     if (!$(this).hasClass('active')) {
-                        this.switch_to_plugin($(this).attr('plugin'));
-                        this.scopes.toolbar_switch_to(plugin);
+                        self.switch_to_plugin($(this).attr('plugin'));
+                        self.scopes.toolbar_switch_to(plugin);
 
                     }
-                }.bind(this));
+                });
 
                 $('.menu-item[plugin="' + plugin.name + '"]').click(function() {
-                    this.open_content();
-                    this.switch_to_plugin($(this).attr('plugin'));
-                    this.scopes.main_switch_to(plugin);
-                }.bind(this));
+                    self.open_content();
+                    self.switch_to_plugin($(this).attr('plugin'));
+                    self.scopes.main_switch_to(plugin);
+                });
 
                 $('a.switch[plugin="' + plugin.name + '"]').click(function() {
-                    this.open_content();
-                    this.switch_to_plugin($(this).attr('plugin'));
-                    this.scopes.switcher_switch_to(plugin);
-                }.bind(this));
+                    self.open_content();
+                    self.switch_to_plugin($(this).attr('plugin'));
+                    self.scopes.switcher_switch_to(plugin);
+                });
             }, this);
 
             /** hide all plugins **/
@@ -355,8 +360,6 @@ define(function(require) {
         }
     });
 
-    var module = Layout.create();
-
-    return module;
+    return Layout.create();
 
 });
