@@ -1,6 +1,7 @@
 define(function(require) {
 
-    var Plugin = require('core/plugin'),
+    var dependencies = require('dependencies'),
+        Plugin = require('core/plugin'),
         template = require('text!templates/plugins/open.hbs'),
         samples = require('samples'),
         helper = require('utils/helper'),

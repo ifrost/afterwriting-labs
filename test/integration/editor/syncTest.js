@@ -3,6 +3,7 @@ define(function(require) {
     var open = require('plugins/open'),
         data = require('modules/data'),
         editor = require('plugins/editor'),
+        layout = require('plugins/layout'),
         db = require('utils/dropbox'),
         cm = require('libs/codemirror/lib/codemirror'),
         tree = require('utils/tree'),
@@ -15,6 +16,10 @@ define(function(require) {
         beforeEach(function() {
             clock = sinon.useFakeTimers();
             editor.data_model = data;
+            save.data = data;
+            open.data = data;
+            open.editor = editor;
+            open.layout = layout;
 
             cm_editor = {
                 on: function(event, callback) {
