@@ -70,7 +70,6 @@ define(function(require) {
             });
 
             this.editor.on('change', function() {
-                console.log(this);
                 this.pending_changes(this.data_model.script() !== this.editor.getValue());
                 this.data_model.script(this.editor.getValue());
             }.bind(this));
