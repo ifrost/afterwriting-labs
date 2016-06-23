@@ -2,7 +2,6 @@ define(function(require) {
 
     var Plugin = require('core/plugin'),
         template = require('text!templates/plugins/stats.hbs'),
-        editor = require('plugins/editor'),
         off = require('off');
     
     var Stats = Plugin.extend({
@@ -22,9 +21,13 @@ define(function(require) {
         queries: {
             inject: 'queries'
         },
+        
+        editor: {
+            inject: 'editor'
+        },
 
         goto: function(line) {
-            editor.goto(line);
+            this.editor.goto(line);
         },
 
         refresh: function() {
@@ -40,13 +43,13 @@ define(function(require) {
         },
 
         activate: function() {
-            editor.synced.add(this.refresh);
+            this.editor.synced.add(this.refresh);
             this.refresh();
         },
 
         deactivate: function() {
             this.is_active = false;
-            editor.synced.remove(this.refresh);
+            this.editor.synced.remove(this.refresh);
         }
     });
 

@@ -1,8 +1,7 @@
 define(function(require) {
 
     var Plugin = require('core/plugin'),
-        template = require('text!templates/plugins/settings.hbs'),
-        open = require('plugins/open');
+        template = require('text!templates/plugins/settings.hbs');
 
     var Settings = Plugin.extend({
 
@@ -15,6 +14,10 @@ define(function(require) {
         data: {
             inject: 'data'
         },
+
+        open: {
+            inject: 'open'
+        }                 ,
 
         layout: {
             inject: 'layout'
@@ -35,7 +38,7 @@ define(function(require) {
 
         windup: function() {
             if (this.data.config.load_last_opened) {
-                open.open_last_used(true);
+                this.open.open_last_used(true);
                 this.layout.show_main();
             }
         }
