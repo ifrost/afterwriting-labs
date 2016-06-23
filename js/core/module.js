@@ -4,6 +4,9 @@ define(function(require) {
         off = require('off'),
         logger = require('logger');
 
+    /**
+     * @alias Module
+     */
     var Module = p.extend({
 
         $meta: {

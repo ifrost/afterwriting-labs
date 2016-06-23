@@ -2,7 +2,11 @@ define(function(require) {
     
     var Module = require('core/module'),
         Handlebars = require('handlebars');
-    
+
+    /**
+     * @alias Plugin
+     * @extends Module
+     */
     var Plugin = Module.extend({
         
         is_plugin: true,
