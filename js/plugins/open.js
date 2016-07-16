@@ -81,12 +81,14 @@ define(function(require) {
         open_file: function(selected_file) {
             var finished = off.signal();
             var fileReader = new FileReader();
+            var self = this;
             fileReader.onload = function() {
                 var value = this.result;
-                this.set_script(value);
+                self.set_script(value);
                 local.local_file(selected_file);
                 finished(this.data.format);
             };
+
             fileReader.readAsText(selected_file);
             return finished;
         },
