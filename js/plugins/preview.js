@@ -18,12 +18,16 @@ define(function(require) {
             inject: 'editor'
         },
 
+        data: {
+            inject: 'data'
+        },
+
         $create: function() {
             this.refresh = off.signal();
         },
 
         get_pdf: function(callback) {
-            pdfmaker.get_pdf(callback);
+            pdfmaker.get_pdf(this.data, callback);
         },
 
         activate: function() {

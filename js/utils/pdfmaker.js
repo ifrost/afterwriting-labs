@@ -2,11 +2,10 @@ define(function(require) {
 
     var PDFDocument = require('pdfkit'),
         fonts = require('utils/fonts'),
-        data = require('modules/data'),
         textstats = require('utils/textstats'),
         helper = require('utils/helper');
 
-    var module = {};
+    var module = {}, data = null;
 
     var create_simplestream = function(filepath) {
         var simplestream = {
@@ -453,7 +452,8 @@ define(function(require) {
 
     }
 
-    module.get_pdf = function(callback, filepath) {
+    module.get_pdf = function(data_module, callback, filepath) {
+        data = data_module;
         var doc = initDoc();
         generate(doc);
         finishDoc(doc, callback, filepath);

@@ -30,6 +30,10 @@ define(function(require) {
             this.editor.goto(line);
         },
 
+        lines_per_page: function() {
+            return this.data_model.config.print().lines_per_page;
+        },
+
         refresh: function() {
             this.is_active = true;
             this.data.days_and_nights = this.queries.days_and_nights.run(this.data_model.parsed_stats.tokens);

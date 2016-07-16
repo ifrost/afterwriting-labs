@@ -115,7 +115,7 @@ function main() {
                 if (ops.pdf) {
                     validate_pdf(function() {
                         console.log('Generating PDF', ops.pdf);
-                        pdfmaker.get_pdf(function() {
+                        pdfmaker.get_pdf(data, function() {
                             console.log('Done!');
                             process.exit(0);
                         }, ops.pdf);
