@@ -1,7 +1,7 @@
 define(function(require) {
 
     var $ = require('jquery'),
-        p = require('p');
+        p = require('protoplast');
 
     /**
      * Performs user actions

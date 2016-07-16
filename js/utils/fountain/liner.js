@@ -1,4 +1,4 @@
-define('utils/fountain/liner', function(require) {
+define(function(require) {
 
     var h = require('utils/fountain/helpers');
 

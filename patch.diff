@@ -1,0 +1,253 @@
+From f1743af621f33ca4326fa398117464a1fc26fd7e Mon Sep 17 00:00:00 2001
+From: Piotr Jamroz <pm.jamroz@gmail.com>
+Date: Wed, 13 Jul 2016 23:49:01 +0100
+Subject: [PATCH] fix passing name to define to make awc.js work
+
+---
+ js/client/awrequire.js                 | 6 +++++-
+ js/core/module.js                      | 2 +-
+ js/model/script.js                     | 2 +-
+ js/modules/data.js                     | 2 +-
+ js/utils/browser.js                    | 2 +-
+ js/utils/converters/finaldraft.js      | 2 +-
+ js/utils/converters/scriptconverter.js | 2 +-
+ js/utils/fonts.js                      | 2 +-
+ js/utils/fountain/helpers.js           | 2 +-
+ js/utils/fountain/liner.js             | 2 +-
+ js/utils/fountain/parser.js            | 2 +-
+ js/utils/fountain/preprocessor.js      | 2 +-
+ js/utils/helper.js                     | 2 +-
+ js/utils/lazy-object/cache.js          | 2 +-
+ js/utils/lazy-object/lazy-object.js    | 2 +-
+ js/utils/lazy-object/trait-utils.js    | 2 +-
+ js/utils/lazy-object/trait.js          | 2 +-
+ js/utils/pdfmaker.js                   | 2 +-
+ js/utils/print-profiles.js             | 2 +-
+ js/utils/textstats.js                  | 2 +-
+ 20 files changed, 24 insertions(+), 20 deletions(-)
+
+diff --git a/js/client/awrequire.js b/js/client/awrequire.js
+index e416ceb..586d5dd 100644
+--- a/js/client/awrequire.js
++++ b/js/client/awrequire.js
+@@ -5,6 +5,8 @@ var _require = require;
+ 
+ var config = {};
+ 
++var __CURRENT = '';
++
+ /**
+  * Resolve require.js module name to node.js name
+  */
+@@ -33,6 +35,7 @@ require = function() {
+     }
+ 
+     var module_path = resolve_module_name(name);
++    __CURRENT = name;
+     var result = _require.call(this, module_path);
+     return result;
+ }.bind(this);
+@@ -50,7 +53,8 @@ require.config = function(value) {
+ /**
+  * modified define
+  */
+-global.define = function(name, definition) {
++global.define = function(definition) {
++    var name = __CURRENT;
+     var exp = definition(require);
+     Module._cache[resolve_module_name(name)].exports = exp;
+ };
+diff --git a/js/core/module.js b/js/core/module.js
+index ac04a68..f4110c8 100644
+--- a/js/core/module.js
++++ b/js/core/module.js
+@@ -1,4 +1,4 @@
+-define('core/module', function(require) {
++define(function(require) {
+ 
+     var p = require('protoplast'),
+         off = require('off'),
+diff --git a/js/model/script.js b/js/model/script.js
+index 1050775..b2ad678 100644
+--- a/js/model/script.js
++++ b/js/model/script.js
+@@ -1,4 +1,4 @@
+-define('model/script', function(require) {
++define(function(require) {
+ 
+     var LazyObject = require('utils/lazy-object/lazy-object'),
+         Trait = require('utils/lazy-object/trait'),
+diff --git a/js/modules/data.js b/js/modules/data.js
+index b3c0019..387c51d 100644
+--- a/js/modules/data.js
++++ b/js/modules/data.js
+@@ -1,4 +1,4 @@
+-define('modules/data', function(require) {
++define(function(require) {
+ 
+     var Modernizr = require('modernizr'),
+         fparser = require('utils/fountain/parser'),
+diff --git a/js/utils/browser.js b/js/utils/browser.js
+index b3ee80a..a7559f7 100644
+--- a/js/utils/browser.js
++++ b/js/utils/browser.js
+@@ -1,4 +1,4 @@
+-define('utils/browser', function(require) {
++define(function(require) {
+ 
+     /**
+      * Browser helpers
+diff --git a/js/utils/converters/finaldraft.js b/js/utils/converters/finaldraft.js
+index dff77a0..66c2ffe 100644
+--- a/js/utils/converters/finaldraft.js
++++ b/js/utils/converters/finaldraft.js
+@@ -1,4 +1,4 @@
+-define('utils/converters/finaldraft', function(require) {
++define(function(require) {
+ 
+     var $ = require('jquery');
+ 
+diff --git a/js/utils/converters/scriptconverter.js b/js/utils/converters/scriptconverter.js
+index b5d4fcc..5f206f6 100644
+--- a/js/utils/converters/scriptconverter.js
++++ b/js/utils/converters/scriptconverter.js
+@@ -1,4 +1,4 @@
+-define('utils/converters/scriptconverter', function(require) {
++define(function(require) {
+ 
+     var finaldraft_converter = require('utils/converters/finaldraft');
+ 
+diff --git a/js/utils/fonts.js b/js/utils/fonts.js
+index b7b834f..05b4589 100644
+--- a/js/utils/fonts.js
++++ b/js/utils/fonts.js
+@@ -1,4 +1,4 @@
+-define('utils/fonts', function() {
++define(function() {
+ 
+     var fonts = {};
+ 
+diff --git a/js/utils/fountain/helpers.js b/js/utils/fountain/helpers.js
+index d8b7eb1..43e9761 100644
+--- a/js/utils/fountain/helpers.js
++++ b/js/utils/fountain/helpers.js
+@@ -1,4 +1,4 @@
+-define('utils/fountain/helpers', function() {
++define(function() {
+ 
+     var operators = {};
+ 
+diff --git a/js/utils/fountain/liner.js b/js/utils/fountain/liner.js
+index e3ea27b..8a163f6 100644
+--- a/js/utils/fountain/liner.js
++++ b/js/utils/fountain/liner.js
+@@ -1,4 +1,4 @@
+-define('utils/fountain/liner', function(require) {
++define(function(require) {
+ 
+     var h = require('utils/fountain/helpers');
+ 
+diff --git a/js/utils/fountain/parser.js b/js/utils/fountain/parser.js
+index 7d61fc1..f39de29 100644
+--- a/js/utils/fountain/parser.js
++++ b/js/utils/fountain/parser.js
+@@ -1,5 +1,5 @@
+ /*jshint -W084 */
+-define('utils/fountain/parser', function(require) {
++define(function(require) {
+ 
+     var h = require('utils/fountain/helpers');
+ 
+diff --git a/js/utils/fountain/preprocessor.js b/js/utils/fountain/preprocessor.js
+index 60d20e3..2099290 100644
+--- a/js/utils/fountain/preprocessor.js
++++ b/js/utils/fountain/preprocessor.js
+@@ -1,4 +1,4 @@
+-define('utils/fountain/preprocessor', function(require) {
++define(function(require) {
+ 
+     var module = {};
+ 
+diff --git a/js/utils/helper.js b/js/utils/helper.js
+index 203dbe2..03cf164 100644
+--- a/js/utils/helper.js
++++ b/js/utils/helper.js
+@@ -1,4 +1,4 @@
+-define('utils/helper', function(require) {
++define(function(require) {
+ 
+     var data = require('modules/data'),
+         d3 = require('d3');
+diff --git a/js/utils/lazy-object/cache.js b/js/utils/lazy-object/cache.js
+index db73611..6269a76 100644
+--- a/js/utils/lazy-object/cache.js
++++ b/js/utils/lazy-object/cache.js
+@@ -1,4 +1,4 @@
+-define('utils/lazy-object/cache', function(require) {
++define(function(require) {
+    
+     var Protoplast = require('protoplast');
+     
+diff --git a/js/utils/lazy-object/lazy-object.js b/js/utils/lazy-object/lazy-object.js
+index d71c147..d080cd3 100644
+--- a/js/utils/lazy-object/lazy-object.js
++++ b/js/utils/lazy-object/lazy-object.js
+@@ -1,4 +1,4 @@
+-define('utils/lazy-object/lazy-object', function(require) {
++define(function(require) {
+ 
+     var Protoplast = require('protoplast'),
+         TraitUtils = require('utils/lazy-object/trait-utils'),
+diff --git a/js/utils/lazy-object/trait-utils.js b/js/utils/lazy-object/trait-utils.js
+index 80ab1d0..7bf2122 100644
+--- a/js/utils/lazy-object/trait-utils.js
++++ b/js/utils/lazy-object/trait-utils.js
+@@ -1,4 +1,4 @@
+-define('utils/lazy-object/trait-utils', function(require) {
++define(function(require) {
+ 
+     var Protoplast = require('protoplast');
+ 
+diff --git a/js/utils/lazy-object/trait.js b/js/utils/lazy-object/trait.js
+index 6d5dd35..107a521 100644
+--- a/js/utils/lazy-object/trait.js
++++ b/js/utils/lazy-object/trait.js
+@@ -1,4 +1,4 @@
+-define('utils/lazy-object/trait', function(require) {
++define(function(require) {
+ 
+     var Protoplast = require('protoplast');
+ 
+diff --git a/js/utils/pdfmaker.js b/js/utils/pdfmaker.js
+index f90b903..ca1bb23 100644
+--- a/js/utils/pdfmaker.js
++++ b/js/utils/pdfmaker.js
+@@ -1,4 +1,4 @@
+-define('utils/pdfmaker', function(require) {
++define(function(require) {
+ 
+     var PDFDocument = require('pdfkit'),
+         fonts = require('utils/fonts'),
+diff --git a/js/utils/print-profiles.js b/js/utils/print-profiles.js
+index 51ae0e7..c609eaa 100644
+--- a/js/utils/print-profiles.js
++++ b/js/utils/print-profiles.js
+@@ -1,4 +1,4 @@
+-define('utils/print-profiles', function(require) {
++define(function(require) {
+ 
+     var browser = require('utils/browser');
+ 
+diff --git a/js/utils/textstats.js b/js/utils/textstats.js
+index ce17d9c..552897a 100644
+--- a/js/utils/textstats.js
++++ b/js/utils/textstats.js
+@@ -1,4 +1,4 @@
+-define('utils/textstats', function(require) {
++define(function(require) {
+ 
+     var module = {};
+ 
+-- 
+1.9.2.msysgit.0
+

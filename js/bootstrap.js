@@ -1,4 +1,4 @@
-define(['dependencies', 'p'], function(_, p) {
+define(['dependencies', 'protoplast'], function(_, p) {
 
     var Bootstrap = p.extend({
         

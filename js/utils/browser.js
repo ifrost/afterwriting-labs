@@ -1,4 +1,4 @@
-define('utils/browser', function(require) {
+define(function(require) {
 
     /**
      * Browser helpers

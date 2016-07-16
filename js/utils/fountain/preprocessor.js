@@ -1,4 +1,4 @@
-define('utils/fountain/preprocessor', function(require) {
+define(function(require) {
 
     var module = {};
 

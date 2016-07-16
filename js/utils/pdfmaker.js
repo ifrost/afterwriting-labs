@@ -1,4 +1,4 @@
-define('utils/pdfmaker', function(require) {
+define(function(require) {
 
     var PDFDocument = require('pdfkit'),
         fonts = require('utils/fonts'),

@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var p = require('p'),
+    var p = require('protoplast'),
         SinonFileReader = require('acceptance/util/sinon-file-reader');
 
     /**

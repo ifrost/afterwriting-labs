@@ -5,6 +5,8 @@ var _require = require;
 
 var config = {};
 
+var __CURRENT = '';
+
 /**
  * Resolve require.js module name to node.js name
  */
@@ -33,6 +35,7 @@ require = function() {
     }
 
     var module_path = resolve_module_name(name);
+    __CURRENT = name;
     var result = _require.call(this, module_path);
     return result;
 }.bind(this);
@@ -50,7 +53,8 @@ require.config = function(value) {
 /**
  * modified define
  */
-global.define = function(name, definition) {
+global.define = function(definition) {
+    var name = __CURRENT;
     var exp = definition(require);
     Module._cache[resolve_module_name(name)].exports = exp;
 };

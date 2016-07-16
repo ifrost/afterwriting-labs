@@ -1,5 +1,5 @@
 /*jshint -W084 */
-define('utils/fountain/parser', function(require) {
+define(function(require) {
 
     var h = require('utils/fountain/helpers');
 

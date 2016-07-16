@@ -1,4 +1,4 @@
-define('utils/fountain/helpers', function() {
+define(function() {
 
     var operators = {};
 

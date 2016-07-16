@@ -1,4 +1,4 @@
-define('utils/converters/finaldraft', function(require) {
+define(function(require) {
 
     var $ = require('jquery');
 

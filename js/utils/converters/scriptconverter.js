@@ -1,4 +1,4 @@
-define('utils/converters/scriptconverter', function(require) {
+define(function(require) {
 
     var finaldraft_converter = require('utils/converters/finaldraft');
 

@@ -1,4 +1,4 @@
-define('utils/print-profiles', function(require) {
+define(function(require) {
 
     var browser = require('utils/browser');
 

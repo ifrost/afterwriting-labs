@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var p = require('p');
+    var p = require('protoplast');
 
     /**
      * Simple proxy that forwards HTTP requests to registered fake servers

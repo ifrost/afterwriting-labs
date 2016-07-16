@@ -1,4 +1,4 @@
-define('modules/data', function(require) {
+define(function(require) {
 
     var Modernizr = require('modernizr'),
         fparser = require('utils/fountain/parser'),

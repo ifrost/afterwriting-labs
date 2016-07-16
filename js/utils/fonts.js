@@ -1,4 +1,4 @@
-define('utils/fonts', function() {
+define(function() {
 
     var fonts = {};
 

@@ -1,4 +1,4 @@
-define('utils/textstats', function(require) {
+define(function(require) {
 
     var module = {};
 
