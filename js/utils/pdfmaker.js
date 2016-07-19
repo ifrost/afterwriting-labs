@@ -128,8 +128,8 @@ define('utils/pdfmaker', function (require) {
 						elem = elem.substr(1, 1);
 					}
 					inner_text.call(doc, elem, x * 72, y * 72, {
-						underline: doc.format_state.underline,
-						lineBreak: options.line_break
+						underline: !!doc.format_state.underline,
+						lineBreak: !!options.line_break
 					});
 					x += font_width * elem.length;
 				}
