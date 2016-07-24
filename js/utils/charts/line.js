@@ -1,7 +1,6 @@
 define(function(require) {
     var d3 = require('d3'),
-        $ = require('jquery'),
-        layout = require('plugins/layout');
+        $ = require('jquery');
 
     var plugin = {};
     plugin.render = function(id, data, config) {
@@ -24,7 +23,7 @@ define(function(require) {
             }
         });
 
-        var width = $('.content').width() - (layout.small ? 30 : 100);
+        var width = $('.content').width() - 100;
         var height = 100;
         var padding = 5;
 
@@ -87,20 +86,20 @@ define(function(require) {
                 var txt = config.tooltip(d, i);
                 if (txt) {
                     show_tip(d, i);
-                    layout.show_tooltip(txt);
+                    $('#tooltip').tooltip().show(txt);
                 }
             })
             .on("mousemove", function(d, i) {
                 hide_tip();
                 var txt = config.tooltip(d, i);
                 if (txt) {
-                    layout.move_tooltip(d3.event.pageX, d3.event.pageY);
+                    $('#tooltip').tooltip().move(d3.event.pageX, d3.event.pageY);
                     show_tip(d, i);
                 }
             })
             .on("mouseout", function() {
                 hide_tip();
-                layout.hide_tooltip();
+                $('#tooltip').tooltip().hide();
             });
 
     };

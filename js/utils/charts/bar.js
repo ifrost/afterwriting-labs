@@ -1,8 +1,7 @@
 define(function(require) {
     var d3 = require('d3'),
-        $ = require('jquery'),
-        layout = require('plugins/layout');
-
+        $ = require('jquery');
+    
     var plugin = {};
 
     plugin.render = function(id, data, config) {
@@ -23,7 +22,7 @@ define(function(require) {
             item.value = item.length / (max * 1.1);
         });
 
-        var graph_width = ($('.content').width() - (layout.small ? 30 : 100));
+        var graph_width = ($('.content').width() - 100);
         var bar_width = graph_width / data.length;
 
         var vis = d3.select(id)
@@ -57,13 +56,13 @@ define(function(require) {
                 }
             })
             .on("mouseover", function(d) {
-                layout.show_tooltip(config.tooltip(d));
+                $('#tooltip').tooltip().show(config.tooltip(d));
             })
             .on("mousemove", function() {
-                layout.move_tooltip(d3.event.pageX, d3.event.pageY);
+                $('#tooltip').tooltip().move(d3.event.pageX, d3.event.pageY);
             })
             .on("mouseout", function() {
-                layout.hide_tooltip();
+                $('#tooltip').tooltip().hide();
             });
 
         vis.append('svg:path')

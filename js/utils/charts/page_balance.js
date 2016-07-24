@@ -1,7 +1,6 @@
 define(function(require) {
     var d3 = require('d3'),
-        $ = require('jquery'),
-        layout = require('plugins/layout');
+        $ = require('jquery');
 
     var plugin = {};
 
@@ -30,14 +29,14 @@ define(function(require) {
                 var dialogue = Math.round(d.dialogue_percentage * 100) + '%';
                 var action_legend = ' (<div style="width:10px;height:8px;background-color:#eeeeee;display:inline-block"></div>)';
                 var dialogue_legend = ' (<div style="width:10px;height:8px;background-color:#777777;display:inline-block"></div>)';
-                layout.show_tooltip("Page #" + d.page_number + "<br />Action: " + action + action_legend + '<br />Dialogue: ' + dialogue + dialogue_legend);
+                $('#tooltip').tooltip().show("Page #" + d.page_number + "<br />Action: " + action + action_legend + '<br />Dialogue: ' + dialogue + dialogue_legend);
             })
             .style('cursor', 'pointer')
             .on("mousemove", function() {
-                layout.move_tooltip(d3.event.pageX, d3.event.pageY);
+                $('#tooltip').tooltip().move(d3.event.pageX, d3.event.pageY);
             })
             .on("mouseout", function() {
-                layout.hide_tooltip();
+                $('#tooltip').tooltip().hide();
             })
             .on('click', function(d) {
                 if (config.page_click) {

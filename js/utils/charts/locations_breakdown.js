@@ -1,8 +1,7 @@
 define(function(require) {
     var d3 = require('d3'),
         $ = require('jquery'),
-        helper = require('utils/helper'),
-        layout = require('plugins/layout');
+        helper = require('utils/helper');
 
     var plugin = {};
 
@@ -87,15 +86,15 @@ define(function(require) {
             })
             .on("mouseover", function(d) {
                 var occurences = 'occurrences: ' + aggregated_data[d.location].occurrences;
-                layout.show_tooltip(d.location + ' (' + helper.format_time(d.pages) + ' / ' + helper.format_time(aggregated_data[d.location].pages) + ')<br />' + occurences);
+                $('#tooltip').tooltip().show(d.location + ' (' + helper.format_time(d.pages) + ' / ' + helper.format_time(aggregated_data[d.location].pages) + ')<br />' + occurences);
                 d3.selectAll('.location').style('opacity', 0.2);
                 d3.selectAll('.location' + aggregated_data[d.location].location_index).style('opacity', 1);
             })
             .on("mousemove", function() {
-                layout.move_tooltip(d3.event.pageX, d3.event.pageY);
+                $('#tooltip').tooltip().move(d3.event.pageX, d3.event.pageY);
             })
             .on("mouseout", function() {
-                layout.hide_tooltip();
+                $('#tooltip').tooltip().hide();
                 d3.selectAll('.location').style('opacity', 1);
             });
 
@@ -131,15 +130,15 @@ define(function(require) {
             .attr('d', arc)
             .on("mouseover", function(d) {
                 var occurences = 'occurrences: ' + aggregated_data[d.data.location].occurrences;
-                layout.show_tooltip(d.data.location + ' (' + helper.format_time(d.data.pages) + ')<br />' + occurences);
+                $('#tooltip').tooltip().show(d.data.location + ' (' + helper.format_time(d.data.pages) + ')<br />' + occurences);
                 d3.selectAll('.location').style('opacity', 0.2);
                 d3.selectAll('.location' + aggregated_data[d.data.location].location_index).style('opacity', 1);
             })
             .on("mousemove", function() {
-                layout.move_tooltip(d3.event.pageX, d3.event.pageY);
+                $('#tooltip').tooltip().move(d3.event.pageX, d3.event.pageY);
             })
             .on("mouseout", function() {
-                layout.hide_tooltip();
+                $('#tooltip').tooltip().hide();
                 d3.selectAll('.location').style('opacity', 1);
             });
 

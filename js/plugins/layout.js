@@ -103,19 +103,7 @@ define(function(require) {
         toggle_expand: function() {
             $('.content').toggleClass('expanded');
         },
-
-        show_tooltip: function(text) {
-            $('#tooltip').css("visibility", "visible").html(text);
-        },
-
-        move_tooltip: function(x, y) {
-            $('#tooltip').css("top", (y - 10) + "px").css("left", (x + 10) + "px");
-        },
-
-        hide_tooltip: function() {
-            $('#tooltip').css("visibility", "hidden");
-        },
-
+        
         show_main: function() {
             this.close_content();
             $('.tool.inactive').fadeIn();

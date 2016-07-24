@@ -20,7 +20,8 @@
             acceptance: '../test/acceptance',
             off: '../node_modules/off/off',
             text: '../node_modules/text/text',
-            Blob: 'libs/Blob'
+            Blob: 'libs/Blob',
+            'es6-promise': '../node_modules/es6-promise/dist/es6-promise.min'
         },
         shim: {
             handlebars: {
