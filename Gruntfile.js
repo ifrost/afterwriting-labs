@@ -330,6 +330,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-template');
 
+    grunt.registerTask('utest', ['handlebars:test', 'template:test', 'mocha:test']);
+    grunt.registerTask('itest', ['handlebars:test', 'template:integration', 'mocha:integration']);
+    grunt.registerTask('atest', ['handlebars:test', 'template:acceptance', 'mocha:acceptance']);
     grunt.registerTask('test', ['handlebars:test', 'template:test', 'template:integration', 'template:acceptance', 'mocha:test', 'mocha:integration', 'mocha:acceptance']);
     grunt.registerTask('coverage', ['template:coverage', 'shell:istanbul_instrument', 'mocha:coverage']);
     grunt.registerTask('doc', ['shell:jsdoc']);

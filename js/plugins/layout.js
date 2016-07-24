@@ -137,7 +137,7 @@ define(function(require) {
             }, this);
 
             plugins.forEach(function(plugin) {
-                plugin.view = plugin.template(plugin.context);
+                plugin.view = plugin.template();
                 context.plugins.push(plugin);
             });
 

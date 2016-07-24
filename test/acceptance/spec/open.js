@@ -38,7 +38,6 @@ define(function(require) {
             env.user.confirm_popup();
 
             env.browser.read_files(function() {
-                console.log('file read');
                 env.browser.tick(3000);
 
                 env.user.open_plugin('editor');

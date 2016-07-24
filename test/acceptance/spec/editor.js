@@ -38,7 +38,7 @@ define(function(require) {
                 });
             });
 
-            describe('Auto-saves the content', function() {
+            describe('Auto-saving the content', function() {
 
                 beforeEach(function() {
                     env.assert.dropbox_saved(0);
@@ -82,7 +82,7 @@ define(function(require) {
 
             });
 
-            describe('Synchronization', function() {
+            describe('Auto-loading the content', function() {
 
                 beforeEach(function(done) {
                     env.user.turn_sync_on();
