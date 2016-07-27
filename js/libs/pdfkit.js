@@ -3114,11 +3114,11 @@ LineWrapper = (function(_super) {
     var bk, breaker, fbk, l, last, lbk, shouldContinue, w, word, wordWidths;
     breaker = new LineBreaker(text);
     last = null;
-    wordWidths = {};
+    wordWidths = Object.create(null);
     while (bk = breaker.nextBreak()) {
       word = text.slice((last != null ? last.position : void 0) || 0, bk.position);
       w = wordWidths[word] != null ? wordWidths[word] : wordWidths[word] = this.wordWidth(word);
-      if (w > this.lineWidth) {
+      if (w > this.lineWidth + this.continuedX) {
         lbk = last;
         fbk = {};
         while (word.length) {
