@@ -1,0 +1,172 @@
+<html>
+
+<head>
+    <style>
+        #editor {
+            width: 30%;
+            float: left;
+        }
+
+        #pdf {
+            width: 35%;
+            float: left;
+        }
+
+        #pdfviewer {
+            width: 35%;
+            float: left;
+        }
+
+        #editor textarea {
+            width: 100%;
+            height: 80%;
+        }
+
+        #pdf-preview-pdfjs-container {
+            width: 100%;
+            height: 80%;
+            overflow: auto;
+        }
+
+        #pdf-preview-iframe {
+            width: 100%;
+            height: 80%;
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+<div id="editor">
+    <textarea id="textarea">
+Title:
+	_**BRICK & STEEL**_
+	_**FULL RETIRED**_
+Credit: Written by
+Author: Stu Maschwitz
+Source: Story by KTM
+Draft date: 1/27/2012
+Contact:
+	Next Level Productions
+	1588 Mission Dr.
+	Solvang, CA 93463
+
+EXT. BRICK'S PATIO - DAY
+
+A gorgeous day.  The sun is shining.  But BRICK BRADDOCK, retired police detective, is sitting quietly, contemplating -- something.
+
+The SCREEN DOOR slides open and DICK STEEL, his former partner and fellow retiree, emerges with two cold beers.
+
+STEEL
+Beer's ready!
+
+BRICK
+Are they cold?
+
+STEEL
+Does a bear crap in the woods?
+
+Steel sits.  They laugh at the dumb joke.
+
+STEEL
+(beer raised)
+To retirement.
+
+BRICK
+To retirement.
+
+They drink long and well from the beers.
+
+And then there's a long beat.
+Longer than is funny.
+Long enough to be depressing.
+
+The men look at each other.
+
+STEEL
+Screw retirement.
+
+BRICK ^
+Screw retirement.
+    </textarea>
+    <p>
+        <button id="convert">Fountain to PDF</button>
+        <button id="save">Save as PDF</button>
+    </p>
+
+</div>
+
+<div id="pdf">
+    <div id="pdf-iframe-container">
+        <embed id="pdf-preview-iframe" type="application/pdf"></embed>
+    </div>
+</div>
+
+<div id="pdfviewer">
+    <div id="pdf-preview-pdfjs-container">
+        <div id="pdfjs-viewer"></div>
+    </div>
+</div>
+
+
+<script src="pdf.min.js"></script>
+
+<script type="application/javascript" src="aw-pdf.js"></script>
+<script>
+
+    function init() {
+        setupConfig();
+        initConvertButton();
+        initSaveButton();
+    }
+
+    function setupConfig() {
+        AWPDF.data.config.print_title_page = false;
+
+        AWPDF.pdfjsviewer.set_container(document.getElementById('pdfjs-viewer'));
+        AWPDF.pdfjsviewer.zoom = 0.7;
+    }
+
+    function getScriptText() {
+        return document.getElementById('textarea').value;
+    }
+
+    function initConvertButton() {
+        document.getElementById('convert').onclick = function() {
+            AWPDF.setScript(getScriptText());
+            AWPDF.getPdf(function(result) {
+                updatePdfJsViewer(result.blob);
+                updatePdfIframe(result.url);
+            });
+        };
+    }
+
+    function updatePdfJsViewer(blob) {
+        document.getElementById('pdfjs-viewer').innerHTML = '';
+        AWPDF.pdfjsviewer.from_blob(blob);
+    }
+
+    function updatePdfIframe(url) {
+        document.getElementById('pdf-preview-iframe').setAttribute('src', url);
+    }
+
+    function initSaveButton() {
+        document.getElementById('save').onclick = function() {
+            AWPDF.setScript(getScriptText());
+            AWPDF.getPdf(function(result) {
+                saveAs(result.blob, 'screenplay.pdf');
+            });
+        }
+    }
+
+    window.onload = function() {
+        AWPDF.ready(init);
+    };
+
+</script>
+
+</body>
+
+</html>

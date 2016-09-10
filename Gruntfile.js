@@ -70,6 +70,23 @@ module.exports = function(grunt) {
                         return contents;
                     },
                 }
+            },
+            awpdf: {
+                options: {
+                    optimize: "uglify",
+                    baseUrl: "js",
+                    mainConfigFile: 'js/aw-pdf.js',
+                    include: ["libs/require", "aw-pdf"],
+                    out: "aw-pdf/aw-pdf.js",
+                    onBuildWrite: function(moduleName, path, contents) {
+                        if (moduleName === 'logger') {
+                            contents = contents.replace(/\/\/invoke[\s\S]*\/\/\/invoke/g, '');
+                        } else if (moduleName === 'libs/codemirror/lib/codemirror' || moduleName === 'pdfkit') {
+                            contents = '';
+                        }
+                        return contents;
+                    }
+                }
             }
         },
         concat: {
@@ -87,6 +104,13 @@ module.exports = function(grunt) {
                 },
                 src: ['bundle/js/afterwriting.js', 'js/libs/codemirror/lib/codemirror.js', 'js/libs/pdfkit.js'],
                 dest: 'bundle/js/afterwriting.js'
+            },
+            awpdf: {
+                options: {
+                    separator: ';'
+                },
+                src: ['aw-pdf/aw-pdf.js','js/libs/pdfkit.js'],
+                dest: 'aw-pdf/aw-pdf.js'
             }
         },
         clean: {
@@ -336,7 +360,9 @@ module.exports = function(grunt) {
     grunt.registerTask('test', ['handlebars:test', 'template:test', 'template:integration', 'template:acceptance', 'mocha:test', 'mocha:integration', 'mocha:acceptance']);
     grunt.registerTask('coverage', ['template:coverage', 'shell:istanbul_instrument', 'mocha:coverage']);
     grunt.registerTask('doc', ['shell:jsdoc']);
+    grunt.registerTask('build', ['test', 'clean:prebuild', 'handlebars:compile', 'replace', 'concat:bootstrap', 'requirejs:compile', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'doc', 'clean:bootstrap']);
 
+    grunt.registerTask('build-aw-pdf', ['requirejs:awpdf', 'concat:awpdf']);
     grunt.registerTask('build', ['test', 'clean:prebuild', 'handlebars:compile', 'replace', 'concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'doc', 'clean:bootstrap']);
 
     grunt.registerTask('release', ['gitadd:all', 'gitcommit:version', 'gittag:version', 'gitcheckout:pages', 'gitmerge:master', 'gitpush:pages', 'gitcheckout:develop', 'gitmerge:master', 'gitpush:master', 'gitpush:develop']);
