@@ -1,13 +1,8 @@
-<h1 style="float:left">Preview
-	<span class="info-icon" section="preview-info" />
-</h1>
 <div class="header-menu">
 	<span>save .pdf: <a href="#" action="save-pdf"><img src="{{static_path}}gfx/icons/other/download.svg" class="icon small-icon" title="Download PDF" /></a></span>
 	<span><a href="#" action="save-dropbox-pdf"><img src="{{static_path}}gfx/icons/other/dropbox.svg" class="icon small-icon" title="Upload PDF to Dropbox" /></a></span>
 	<span><a href="#" action="save-gd-pdf"><img src="{{static_path}}gfx/icons/other/gd.svg" class="icon small-icon" title="Upload PDF to Google Drive" /></a></span>
 </div><div style="clear:both"/>
-<p class="info-content" section="preview-info">Can't see anything? You need a PDF plugin in your browser. (You can download pdf from
-	<a class="switch" href="#" plugin="save">here</a>)</p>
 <div id="pdf-preview-iframe-container" class="to-the-bottom" style="display:none"></div>
 <div id="pdf-preview-pdfjs-container" class="to-the-bottom" style="overflow: auto">
 	<div>
@@ -16,43 +11,3 @@
 	</div>
 	<div id="pdfjs-viewer" class="pdfjs-viewer to-the-bottom"></div>
 </div>
-<!-- scripts -->
-<script>
-	require(['jquery', 'plugins/preview', 'modules/data', 'utils/pdfjsviewer'], function($, preview, data, pdfjs_viewer) {
-
-		$('#next').click(pdfjs_viewer.next);
-		$('#prev').click(pdfjs_viewer.prev);
-		$('#zoomin').click(pdfjs_viewer.zoomin);
-		$('#zoomout').click(pdfjs_viewer.zoomout);
-		pdfjs_viewer.set_container(document.getElementById('pdfjs-viewer'));
-
-		preview.refresh.add(function() {
-			if (data.config.pdfjs_viewer) {
-				$('#pdf-preview-iframe-container').hide();
-				$('#pdf-preview-pdfjs-container').show();
-			}
-			else {
-				$('#pdf-preview-iframe-container').show();
-				$('#pdf-preview-pdfjs-container').hide();
-			}
-
-			$('#pdf-preview-iframe-container').html('<p>Loading preview...</p><embed id="pdf-preview-iframe" style="height: 100%; width: 100%; display:none"  type="application/pdf"></embed>');
-
-			setTimeout(function() {
-				preview.get_pdf(function (result) {
-					$("#pdf-preview-iframe-container p").remove();
-					if (data.config.pdfjs_viewer) {
-						pdfjs_viewer.from_blob(result.blob);
-					}
-					else {
-						$("#pdf-preview-iframe").attr('src', result.url).css('display', 'block');
-					}
-				});
-			}, 0);
-
-		});
-		preview.deactivate.add(function() {
-			$("#pdf-preview-iframe").remove();
-		});
-	});
-</script>

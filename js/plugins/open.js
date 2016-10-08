@@ -1,7 +1,8 @@
 define(function (require) {
 
-	var template = require('text!templates/plugins/open.hbs'),
-      pm = require('utils/pluginmanager'),
+	var pm = require('utils/pluginmanager'),
+        Section = require('aw-bubble/model/section'),
+        OpenView = require('templates/plugins/open-view'),
 		logger = require('logger'),
 		samples = require('samples'),
 		editor = require('plugins/editor'),
@@ -16,8 +17,16 @@ define(function (require) {
 		save = require('plugins/save'),
 		layout = require('utils/layout');
 
+
+    var section = Section.create('open');
+    section.title = 'Open';
+    section.shortTitle = 'open';
+    section.description = 'You can open a .fountain or .fdx file (it will be converted to Fountain), or use one of the samples below.';
+    section.smallIcon = 'gfx/icons/open.svg';
+    section.mainContent = OpenView.create();
+    
 	var log = logger.get('open');
-	var plugin = pm.create_plugin('open', 'open', template);
+	var plugin = pm.create_plugin(null, null, null, section);
 	plugin.class = "active";
 
 	var last_session_script;

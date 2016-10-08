@@ -1,13 +1,20 @@
 define(function (require) {
-	var template = require('text!templates/plugins/facts.hbs'),
-      pm = require('utils/pluginmanager'),
+	var Section = require('aw-bubble/model/section'),
+        FactsView = require('templates/plugins/facts-view'),
+        pm = require('utils/pluginmanager'),
 		data = require('modules/data'),
 		queries = require('modules/queries'),
 		editor = require('plugins/editor'),
 		decorator = require('utils/decorator'),
 		fhelpers = require('utils/fountain/helpers');
 
-	var plugin = pm.create_plugin('facts', 'facts', template);
+    var section = Section.create('facts');
+    section.title = 'Facts';
+    section.shortTitle = 'facts';
+    section.smallIcon = 'gfx/icons/facts.svg';
+    section.mainContent = FactsView.create();
+
+    var plugin = pm.create_plugin(null, null, null, section);
 
 	var generate_data = function () {
 		

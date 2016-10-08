@@ -1,7 +1,8 @@
 define(function (require) {
 
-	var template = require('text!templates/plugins/editor.hbs'),
-      pm = require('utils/pluginmanager'),
+	var EditorView = require('templates/plugins/editor-view'),
+        Section = require('aw-bubble/model/section'),
+        pm = require('utils/pluginmanager'),
 		data = require('modules/data'),
 		decorator = require('utils/decorator'),
 		gd = require('utils/googledrive'),
@@ -17,7 +18,14 @@ define(function (require) {
 	require('libs/codemirror/addon/hint/anyword-hint');
 	require('utils/fountain/cmmode');
 
-	var plugin = pm.create_plugin('editor', 'write', template);
+    var section = Section.create('editor');
+    section.title = 'Fountain Editor';
+    section.shortTitle = 'write';
+    section.description = 'Just a basic fountain editor. Use Ctrl-Space for auto-complete. Go to <a href="http://fountain.io" target="_blank">fountain.io</a> for more details about Fountain format.<br/> Use auto-save to automatically save your changes to the cloud every 3 seconds.<br />Use auto-reload to reload the script from the cloud/disk to see PDF, facts & stats changes';
+    section.smallIcon = 'gfx/icons/editor.svg';
+    section.mainContent = EditorView.create();
+    
+    var plugin = pm.create_plugin(null, null, null, section);
 	var editor, last_content = '',
 		active = false,
 		auto_save_sync_timer = null;

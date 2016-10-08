@@ -1,5 +1,3 @@
-<h1>Start&nbsp;<div class="info-icon" section="open-start" /></h1>
-<p class="info-content" section="open-start">You can open a .fountain or .fdx file (it will be converted to Fountain), or use one of the samples below.</p>
 <ul class="no-bullets">
 	<li>
 		<img src="{{static_path}}gfx/icons/other/new.svg" class="icon" />
@@ -36,52 +34,3 @@
 		</a>&nbsp;by Dan Rahmel</li>
 </ul>
 <div id="open-file-wrapper"></div>
-<!-- interactions -->
-<script>
-	require(['jquery', 'plugins/open'], function($, open) {
-		var reset_file_input = function() {
-			$('#open-file-wrapper').empty();
-			$('#open-file-wrapper').html('<input id="open-file" type="file" style="display:none" />');
-			$("#open-file").change(function() {
-				var selected_file = $('#open-file').get(0).files[0];
-				open.open_file(selected_file);
-				reset_file_input();
-			});
-		}
-
-		$('a[open-action="open"]').click(function() {
-			open.open_file_dialog()
-		});
-
-		$('a[open-action="new"]').click(open.create_new);
-		$('a[open-action="sample"]').click(function() {
-			var name = $(this).attr('value');
-			open.open_sample(name);
-		});
-		$('a[open-action="last"]').click(open.open_last_used);
-		
-		open.open_file_dialog.add(function() {
-			$("#open-file").click();
-		});
-		
-		$('a[open-action="googledrive"]').click(open.open_from_google_drive);
-		$('a[open-action="dropbox"]').click(open.open_from_dropbox);
-		
-		open.activate.add(function(){			
-			if (open.is_dropbox_available()) {
-				$('a[open-action="dropbox"]').parent().show();
-			} else {
-				$('a[open-action="dropbox"]').parent().hide();
-			}
-
-			if (open.is_google_drive_available()) {
-				$('a[open-action="googledrive"]').parent().show();
-			} else {
-				$('a[open-action="googledrive"]').parent().hide();
-			}
-		});
-
-		reset_file_input();
-
-	});
-</script>

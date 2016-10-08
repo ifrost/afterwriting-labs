@@ -1,11 +1,19 @@
 define(function (require) {
-	var template = require('text!templates/plugins/settings.hbs'),
-      pm = require('utils/pluginmanager'),
+	var Section = require('aw-bubble/model/section'),
+        SettingsView = require('templates/plugins/settings-view'), 
+        pm = require('utils/pluginmanager'),
 		data = require('modules/data'),
 		layout = require('utils/layout'),
 		open = require('plugins/open');
 
-	var plugin = pm.create_plugin('settings', 'setup', template);
+    var section = Section.create('settings');
+    section.title = 'Settings';
+    section.shortTitle = 'setup';
+    section.description = 'You can change configuration here. Some settings (e.g. page size, double space between scenes) may affect statistics which are based on assumption that 1 page = 1 minute of a movie.';
+    section.smallIcon = 'gfx/icons/settings.svg';
+    section.mainContent = SettingsView.create();
+
+    var plugin = pm.create_plugin(null, null, null, section);
 
 	plugin.get_config = function () {
 		return data.config;

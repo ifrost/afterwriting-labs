@@ -1,4 +1,3 @@
-<h1>Save</h1>
 <ul>
 	<li>as .fountain:
 		<a href="#" action="save-fountain">download</a>
@@ -27,32 +26,3 @@
 		</span>
 	</li>
 </ul>
-<!--- script -->
-<script>
-	require(['jquery', 'plugins/save'], function($, save) {
-		$(document).ready(function() {
-			$('a[action="save-fountain"]').click(save.save_as_fountain);
-			$('a[action="save-dropbox-fountain"]').click(save.dropbox_fountain);
-			$('a[action="save-gd-fountain"]').click(save.google_drive_fountain);
-
-			$('a[action="save-pdf"]').click(save.save_as_pdf);
-			$('a[action="save-dropbox-pdf"]').click(save.dropbox_pdf);				
-			$('a[action="save-gd-pdf"]').click(save.google_drive_pdf);
-
-			save.activate.add(function() {
-				if (!save.is_dropbox_available()) {
-					$('a[action="save-dropbox-pdf"], a[action="save-dropbox-fountain"]').parent().hide();
-				} else {
-					$('a[action="save-dropbox-pdf"], a[action="save-dropbox-fountain"]').parent().show();
-				}
-				if (!save.is_google_drive_available()) {
-					$('a[action="save-gd-pdf"], a[action="save-gd-fountain"]').parent().hide();
-				} else {
-					$('a[action="save-gd-pdf"], a[action="save-gd-fountain"]').parent().show();
-				}
-			});
-			
-
-		});
-	});
-</script>

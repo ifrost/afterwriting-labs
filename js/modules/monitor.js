@@ -49,25 +49,25 @@ define(function (require) {
 
 	module.windup = function () {
 		// layout stats
-		layout.scopes.toolbar_switch_to.add(function (plugin) {
-			track_event('navigation', plugin.name, 'toolbar');
-		});
-		layout.scopes.main_switch_to.add(function (plugin) {
-			track_event('navigation', plugin.name, 'main');
-		});
-		layout.scopes.switcher_switch_to.add(function (plugin) {
-			track_event('navigation', plugin.name, 'switcher');
-		});
-		layout.scopes.toolbar_close_content.add(function (plugin) {
-			track_event('navigation', 'toolbar-close', plugin.name);
-		});
-		layout.scopes.back_close_content.add(function (plugin) {
-			track_event('navigation', 'back-close', plugin.name);
-		});
-		layout.info_opened.add(function (section) {
-			track_event('feature', 'help', section);
-		});
-		layout.toggle_expand.add(track_handler('feature', 'expand'));
+		// layout.scopes.toolbar_switch_to.add(function (plugin) {
+		// 	track_event('navigation', plugin.name, 'toolbar');
+		// });
+		// layout.scopes.main_switch_to.add(function (plugin) {
+		// 	track_event('navigation', plugin.name, 'main');
+		// });
+		// layout.scopes.switcher_switch_to.add(function (plugin) {
+		// 	track_event('navigation', plugin.name, 'switcher');
+		// });
+		// layout.scopes.toolbar_close_content.add(function (plugin) {
+		// 	track_event('navigation', 'toolbar-close', plugin.name);
+		// });
+		// layout.scopes.back_close_content.add(function (plugin) {
+		// 	track_event('navigation', 'back-close', plugin.name);
+		// });
+		// layout.info_opened.add(function (section) {
+		// 	track_event('feature', 'help', section);
+		// });
+		// layout.toggle_expand.add(track_handler('feature', 'expand'));
 
 		// info
 		info.download_clicked.add(track_handler('feature', 'download'));

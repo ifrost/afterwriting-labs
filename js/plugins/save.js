@@ -1,7 +1,8 @@
 define(function (require) {
 
-	var template = require('text!templates/plugins/save.hbs'),
-      pm = require('utils/pluginmanager'),
+	var Section = require('aw-bubble/model/section'),
+        SaveView = require('templates/plugins/save-view'),
+        pm = require('utils/pluginmanager'),
 		saveAs = require('saveAs'),
 		preview = require('plugins/preview'),
 		gd = require('utils/googledrive'),
@@ -12,7 +13,13 @@ define(function (require) {
 		decorator = require('utils/decorator'),
 		data = require('modules/data');
 
-	var plugin = pm.create_plugin('save', 'save', template);
+    var section = Section.create('save');
+    section.title = 'Save';
+    section.shortTitle = 'save';
+    section.smallIcon = 'gfx/icons/save.svg';
+    section.mainContent = SaveView.create();
+
+    var plugin = pm.create_plugin(null, null, null, section);
 
 	// LOCAL
 

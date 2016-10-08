@@ -1,13 +1,20 @@
 define(function (require) {
 	
-	var template = require('text!templates/plugins/preview.hbs'),
+	var Section = require('aw-bubble/model/section'),
+        PreviewView = require('templates/plugins/preview-view'),
       pm = require('utils/pluginmanager'),
 		editor = require('plugins/editor'),
 		decorator = require('utils/decorator'),
-		pdfjsviewer = require('utils/pdfjsviewer'),
 		pdfmaker = require('utils/pdfmaker');
-	
-	var plugin = pm.create_plugin('preview', 'view', template);
+
+    var section = Section.create('preview');
+    section.title = 'Preview';
+    section.shortTitle = 'view';
+    section.description = 'Can\'t see anything? You need a PDF plugin in your browser. (You can download pdf from <a class="switch" href="#" plugin="save">here</a>)';
+    section.smallIcon = 'gfx/icons/preview.svg';
+    section.mainContent = PreviewView.create();
+
+    var plugin = pm.create_plugin(null, null, null, section);
 	
 	plugin.get_pdf = function(callback) {
 		pdfmaker.get_pdf(callback);

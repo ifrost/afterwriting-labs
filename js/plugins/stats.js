@@ -1,13 +1,20 @@
 define(function (require) {
 
-	var template = require('text!templates/plugins/stats.hbs'),
+	var Section = require('aw-bubble/model/section'),
+        StatsView = require('templates/plugins/stats-view'),
       pm = require('utils/pluginmanager'),
 		editor = require('plugins/editor'),
 		data = require('modules/data'),
 		decorator = require('utils/decorator'),
 		queries = require('modules/queries');
-	
-	var plugin = pm.create_plugin('stats', 'stats', template);
+
+    var section = Section.create('stats');
+    section.title = 'Useless Stats';
+    section.shortTitle = 'stats';
+    section.smallIcon = 'gfx/icons/stats.svg';
+    section.mainContent = StatsView.create();
+
+    var plugin = pm.create_plugin(null, null, null, section);
 
 	plugin.goto = function (line) {
 		editor.goto(line);

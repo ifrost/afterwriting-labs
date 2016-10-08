@@ -17,6 +17,7 @@
 			cookie: 'libs/jquery.cookie',
 			dropbox: 'libs/dropbox.min',
 			p: '../node_modules/protoplast/dist/protoplast.min',
+            'aw-bubble': 'utils/aw-bubble',
 			acceptance: '../test/acceptance',
          text: '../node_modules/text/text',
          Blob: 'libs/Blob'
