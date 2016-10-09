@@ -20,6 +20,7 @@ define(function(require) {
             '<div class="menu"><div data-comp="mainMenu"></div></div>' +
             '<div data-comp="footer"></div>' +
             '<div data-comp="content"></div>' +
+            '<div id="tooltip"></div>' +
             '</div>',
 
         logo: {
