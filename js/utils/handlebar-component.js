@@ -9,6 +9,7 @@ define(function(require) {
         
         $create: function() {
             this.root.innerHTML = Handlebars.compile(this.hbs)();
+            this.processRoot();
         },
 
         start: {

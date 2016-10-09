@@ -391,6 +391,29 @@ Component.Root = function(element, context) {
     return component;
 };
 
+Component.Mount = function(tag, Component, context) {
+    var elements, element, component;
+
+    elements = document.getElementsByTagName(tag);
+
+    if (!context) {
+        context = Context.create();
+        context.build();
+    }
+
+    for (var i=0; i < elements.length; i++) {
+        element = elements[i];
+        component = Component.create();
+
+        element.parentNode.insertBefore(component.root, element);
+        element.parentNode.removeChild(element);
+
+        context.register(component);
+    }
+
+    return component;
+};
+
 module.exports = Component;
 
 

@@ -1,0 +1,18 @@
+? ? remove references to layout
+2 M - stats - headers
+2 S background picture
+2 S - editor - resizing?
+2 S - preview - resizing?
+
+1+L fix current tests
+2+L copy tests from develop
+2+M limit active items if script is not loaded: create Section.isVisible property, make list of sections a CollectionView that is filtered by this flag and triggered when .isVisible changes; bind isVisible with data.script() (off binding as the model is not ready yet)
+3 M - all: floating (clear:both in .hbs?), add toolsParent section to SectionContainer and create separate tools component for additional tools, move js to presenter... plugin will create it so can pass the reference to the tools (later on it will be injected with DI)
+3 M build, static path: don't copy gfx folder to bundle/*, just use it straight away, make sure it's zipped (font should still be copied to bundled as it's referenced in css; graphics in CSS should be embedded in future)
+3 S footer
+3 S remove jquery/protoplast from vendors and use provided jquery and protoplast from the main.js
+3 S [test] closing and opening the same plugins?
+3 S [test] switching stats to editor
+3 S simplify references to layout (remove unused methods, keep tooltip for timebeing)
+
+1 M [BLOCKED by layout references] tooltip: part of the theme, theme.showTooltip(x,y,text) api
