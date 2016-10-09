@@ -2,7 +2,6 @@ define(function(require) {
 
     var Protoplast = require('aw-bubble/vendor/protoplast'),
         Main = require('aw-bubble/view/main'),
-        Section = require('aw-bubble/model/section'),
         ThemeModel = require('aw-bubble/model/theme-model'),
         ThemeController = require('aw-bubble/controller/theme-controller');
 
