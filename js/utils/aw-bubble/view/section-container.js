@@ -7,12 +7,17 @@ define(function(require) {
 
         html: '<div style="overflow: auto">' +
         '<h1 style="float: left"><span data-prop="title"></span>&nbsp;<span data-prop="infoIcon" class="info-icon"/></h1>' +
+        '<div data-comp="toolsParent"></div>' +
         '<p data-prop="description" class="info-content" style="display: none; clear: both"></p>' +
         '<div data-comp="contentParent"></div>' +
         '</div>',
 
         contentParent: {
-            component: Protoplast.Component.extend({html:'<div style="width:95%;"></div>'})
+            component: Protoplast.Component.extend({html:'<div style="width:95%; clear: both"></div>'})
+        },
+
+        toolsParent: {
+            component: Protoplast.Component.extend({html:'<div style="float: right"><span></span></div>'})
         },
 
         themeModel: {
