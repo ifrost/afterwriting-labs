@@ -38,10 +38,6 @@ define(function(require) {
             return this.themeController.getOrCreateSection(name);
         },
         
-        createSection: function(name) {
-            return Section.create(name);
-        },
-        
         addSection: function(section) {
             this.themeController.addSection(section);
         },
@@ -50,6 +46,11 @@ define(function(require) {
             this.themeModel.footer = content;
         },
 
+        selectSectionByName: function(name) {
+            var section = this.getOrCreateSection(name);
+            this.themeController.selectSection(section);
+        },
+        
         start: function() {
             this.root.add(this.main);
             this.context._objects.pub('bubble-theme/init');

@@ -46,6 +46,7 @@ define(['dependencies', 'logger', 'aw-bubble/bubble-theme', 'utils/decorator', '
 
         plugins.forEach(function(plugin) {
             plugin.view = plugin.template ? plugin.template(plugin.context) : '';
+            plugin.theme = theme;
             context.plugins.push(plugin);
             theme.addSection(plugin.section);
         });

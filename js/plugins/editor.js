@@ -75,7 +75,7 @@ define(function (require) {
 		};
 		plugin.data.scroll_info = null;
 
-		pm.switch_to(plugin);
+        this.theme.selectSectionByName('editor');
 	};
 
 	plugin.auto_save_available = function() {
