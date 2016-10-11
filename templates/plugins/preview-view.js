@@ -13,6 +13,8 @@ define(function(require) {
         plugin: null,
 
         addInteractions: function() {
+            this.root.style.height = '100%';
+
             var preview = this.plugin;
 
             $('#next').click(pdfjs_viewer.next);

@@ -28,8 +28,6 @@ define(function(require) {
         shortTitle: null,
         
         description: null,
-
-        fitToBottom: false,
         
         isActive: false,
         

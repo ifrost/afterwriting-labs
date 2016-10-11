@@ -5,15 +5,15 @@ define(function(require) {
 
     var SectionContainer = Protoplast.Component.extend({
 
-        html: '<div style="overflow: auto">' +
-        '<h1 style="float: left"><span data-prop="title"></span>&nbsp;<span data-prop="infoIcon" class="info-icon"/></h1>' +
+        html: '<div style="overflow: hidden; position: relative">' +
+        '<h1 style="float: left; border-bottom: 1px dashed lightgray"><span data-prop="title"></span>&nbsp;<span data-prop="infoIcon" class="info-icon"/></h1>' +
         '<div data-comp="toolsParent"></div>' +
         '<p data-prop="description" class="info-content" style="display: none; clear: both"></p>' +
         '<div data-comp="contentParent"></div>' +
         '</div>',
 
         contentParent: {
-            component: Protoplast.Component.extend({html:'<div style="width:95%; clear: both"></div>'})
+            component: Protoplast.Component.extend({html:'<div style="width:95%; clear: both; overflow: auto"></div>'})
         },
 
         toolsParent: {
@@ -60,16 +60,14 @@ define(function(require) {
             Protoplast.utils.bind(this, 'section.title', this.updateTitle.bind(this));
             Protoplast.utils.bind(this, 'section.description', this.updateDescription.bind(this));
             Protoplast.utils.bind(this, 'descriptionVisible', this.toggleDescription.bind(this));
-            Protoplast.utils.bind(this, 'section.fitToBottom', this.updateHeight.bind(this));
             Protoplast.utils.bind(this, 'themeModel.height', this.updateHeight.bind(this));
             Protoplast.utils.bind(this, 'bottomPadding', this.updateHeight.bind(this));
+            Protoplast.utils.bind(this, 'section.isFullyVisible', this.updateHeight.bind(this));
         },
 
         updateHeight: function() {
             this.$root.height((this.themeModel.height - this.bottomPadding) + 'px');
-            if (this.section.fitToBottom) {
-                this.contentParent.root.style.height = (this.themeModel.height - 121) + 'px';
-            }
+            this.contentParent.root.style.height = ($(this.root).height() - $(this.contentParent.root).position().top) + 'px';
         },
         
         fadeIn: function(callback) {
