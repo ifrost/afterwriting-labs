@@ -163,10 +163,6 @@ define(['jquery', 'text!templates/layout.hbs', 'modules/data', 'handlebars', 'ut
 			});
 			$('.plugin-content').height(height - $('.top-bar').height() - (module.small ? 10 : 50));
 
-			/** to the bottom **/
-			$('.to-the-bottom').height(function () {
-				return height - $(this).offset().top - 60;
-			});
 		};
 
 		module.open_content = function () {

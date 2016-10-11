@@ -21,6 +21,8 @@ define(function(require) {
          */
         mainContent: null,
         
+        tools: null,
+        
         name: null,
         
         title: null,

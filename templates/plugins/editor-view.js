@@ -1,14 +1,13 @@
 define(function(require) {
 
-    var template = require('text!templates/plugins/editor.hbs'),
-        $ = require('jquery'),
+    var $ = require('jquery'),
         common = require('utils/common'),
         layout = require('utils/layout'),
         HandlebarComponent = require('utils/handlebar-component');
 
     return HandlebarComponent.extend({
 
-        hbs: template,
+        hbs: '<textarea id="editor-textarea" placeholder=""></textarea>',
 
         plugin: null,
 
@@ -125,12 +124,8 @@ define(function(require) {
 
             var resize = function() {
 
-                if (layout.small) {
-                    editor.set_size("auto", editor_content.height() - 70);
-                } else {
-                    editor.set_size("auto", editor_content.height() - 100);
-                }
-            };
+                editor.set_size("auto", $(this.root.parentNode).height() - 70);
+            }.bind(this);
 
             resize();
             $(window).resize(resize);

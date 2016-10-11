@@ -1,6 +1,7 @@
 define(function (require) {
 
 	var EditorView = require('templates/plugins/editor-view'),
+        EditorMenuView = require('templates/plugins/editor-view-menu'),
         Section = require('aw-bubble/model/section'),
         pm = require('utils/pluginmanager'),
 		data = require('modules/data'),
@@ -24,6 +25,7 @@ define(function (require) {
     section.description = 'Just a basic fountain editor. Use Ctrl-Space for auto-complete. Go to <a href="http://fountain.io" target="_blank">fountain.io</a> for more details about Fountain format.<br/> Use auto-save to automatically save your changes to the cloud every 3 seconds.<br />Use auto-reload to reload the script from the cloud/disk to see PDF, facts & stats changes';
     section.smallIcon = 'gfx/icons/editor.svg';
     section.mainContent = EditorView.create();
+    section.tools = EditorMenuView.create();
     
     var plugin = pm.create_plugin(null, null, null, section);
 	var editor, last_content = '',

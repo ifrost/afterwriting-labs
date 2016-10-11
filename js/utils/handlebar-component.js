@@ -17,7 +17,9 @@ define(function(require) {
             value: function() {
                 this.addInteractions();
             }
-        }
+        },
+
+        addInteractions: function() {}
         
     });
 
