@@ -22,6 +22,15 @@ define(function(require) {
 
         expanded: false,
         
+        showBackgroundImage: true,
+        
+        backgroundImageVisible: {
+            computed: ['showBackgroundImage', 'small'],
+            value: function() {
+                return this.showBackgroundImage && !this.small
+            }
+        },
+        
         small: {
             computed: ['width'],
             value: function() {
