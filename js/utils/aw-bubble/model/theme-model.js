@@ -22,6 +22,8 @@ define(function(require) {
 
         expanded: false,
         
+        nightMode: false,
+        
         showBackgroundImage: true,
         
         backgroundImageVisible: {

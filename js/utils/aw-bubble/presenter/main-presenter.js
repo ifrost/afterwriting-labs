@@ -12,6 +12,7 @@ define(function(require) {
         init: function() {
 
             Protoplast.utils.bind(this, 'themeModel.backgroundImageVisible', this._updateBackgroundImage);
+            Protoplast.utils.bind(this, 'themeModel.nightMode', this._updateNightMode);
 
             this.themeModel.width = $('html').width();
             this.themeModel.height =  $(document).height();
@@ -28,6 +29,15 @@ define(function(require) {
             }
             else {
                 $('html').css('background-image', '');
+            }
+        },
+
+        _updateNightMode: function() {
+            if (this.themeModel.nightMode) {
+                $('body').addClass('night-mode');
+            }
+            else {
+                $('body').removeClass('night-mode');
             }
         }
 

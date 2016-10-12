@@ -22,6 +22,7 @@ define(function (require) {
 
     var updateConfig = function() {
         plugin.theme.showBackgroundImage(data.config.show_background_image);
+        plugin.theme.nightMode(data.config.night_mode);
     };
 
     data.save_config.add(updateConfig);

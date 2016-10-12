@@ -54,6 +54,10 @@ define(function(require) {
             this.themeModel.showBackgroundImage = value;
         },
         
+        nightMode: function(value) {
+            this.themeModel.nightMode = value;
+        },
+        
         start: function() {
             this.root.add(this.main);
             this.context._objects.pub('bubble-theme/init');
