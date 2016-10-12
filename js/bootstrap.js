@@ -1,4 +1,4 @@
-define(['dependencies', 'logger', 'aw-bubble/bubble-theme', 'utils/decorator', 'd3', 'jquery'], function(_, logger, BubbleTheme, decorator, d3, $) {
+define(['dependencies', 'logger', 'aw-bubble/bubble-theme', 'utils/common', 'utils/decorator', 'd3', 'jquery'], function(_, logger, BubbleTheme, common, decorator, d3, $) {
 
     var log = logger.get('bootstrap'),
         module = {};
@@ -43,6 +43,12 @@ define(['dependencies', 'logger', 'aw-bubble/bubble-theme', 'utils/decorator', '
         });
 
         var theme = BubbleTheme.create();
+
+        var footer = common.data.footer;
+        if (window.hasOwnProperty('ENVIRONMENT') && window.ENVIRONMENT == 'dev') {
+            footer += '<br /><span class="version">development version</span>';
+        }
+        theme.setFooter(footer);
 
         plugins.forEach(function(plugin) {
             plugin.view = plugin.template ? plugin.template(plugin.context) : '';
