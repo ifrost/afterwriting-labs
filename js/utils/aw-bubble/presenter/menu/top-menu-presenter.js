@@ -23,7 +23,7 @@ define(function(require) {
         init: {
             injectInit: true,
             value: function() {
-                Protoplast.utils.bind(this, 'themeModel.sections', this.updateSections.bind(this));
+                Protoplast.utils.bind(this, 'themeModel.sectionsMenu', this.updateSections.bind(this));
                 Protoplast.utils.bind(this, 'themeModel.sections.selected', this.updateSelectedSection.bind(this));
 
                 this.view.on('close', this.closeCurrentContent.bind(this));
@@ -33,7 +33,7 @@ define(function(require) {
 
         updateSections: function() {
             if (this.themeModel.sections.length) {
-                this.view.sections = this.themeModel.sections;
+                this.view.sections = this.themeModel.sectionsMenu;
             }
         },
         
