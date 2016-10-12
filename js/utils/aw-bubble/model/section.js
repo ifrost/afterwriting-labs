@@ -31,6 +31,8 @@ define(function(require) {
         
         description: null,
         
+        isVisibleInMenu: true,
+        
         isActive: false,
         
         isFullyVisible: false,

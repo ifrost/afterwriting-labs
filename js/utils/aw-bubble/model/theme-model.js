@@ -5,6 +5,8 @@ define(function(require) {
     var ThemeModel = Protoplast.Model.extend({
         
         sections: null,
+        
+        sectionsMenu: null,
 
         _allSections: null,
 
@@ -30,6 +32,13 @@ define(function(require) {
         $create: function() {
             this._allSections = Protoplast.Collection.create();
             this.sections = Protoplast.CollectionView.create(this._allSections);
+            this.sectionsMenu = Protoplast.CollectionView.create(this._allSections);
+            this.sectionsMenu.addFilter({
+                properties: ['isVisibleInMenu'],
+                fn: function(section) {
+                    return section.isVisibleInMenu;
+                }
+            });
             this.sectionsMap = {};
         },
         

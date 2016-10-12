@@ -19,35 +19,25 @@ define(function(require) {
         init: {
             injectInit: true,
             value: function() {
-                Protoplast.utils.bind(this, 'themeModel.sections', this.updateSections.bind(this));
+                Protoplast.utils.bind(this, 'themeModel.sectionsMenu', this.updateSections.bind(this));
                 Protoplast.utils.bind(this, 'themeModel.width', this.updatePositions.bind(this, 0));
+                this.view.on('menuItemAdded',  this.updatePositions.bind(this, this.themeModel.initAnimationDelay))
             }
         },
 
         updateSections: function() {
-            if (this.themeModel.sections.length) {
-                this.view.sections = this.themeModel.sections;
-            }
-        },
-
-        initTheme: {
-            sub: 'bubble-theme/init',
-            value: function() {
-                this.updatePositions(this.themeModel.initAnimationDelay);
+            if (this.themeModel.sectionsMenu.length) {
+                this.view.sections = this.themeModel.sectionsMenu;
             }
         },
 
         updatePositions: function(delay) {
-            this.themeModel.sections.forEach(function(section, index) {
+            this.themeModel.sectionsMenu.forEach(function(section, index) {
                 var attrs = this.getExplodeAttrs(index, this.view.children.length, this.view.children.length);
                 this.view.animateItem(section, attrs, delay);
             }, this);
         },
 
-        $create: function() {
-            this.sections = Protoplast.Collection.create();
-        },
-        
         getPosition: function(index, all, max) {
 
             var cols = 3;

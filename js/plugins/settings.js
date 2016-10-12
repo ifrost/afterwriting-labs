@@ -9,9 +9,14 @@ define(function (require) {
     var section = Section.create('settings');
     section.title = 'Settings';
     section.shortTitle = 'setup';
+    section.isVisibleInMenu = false;
     section.description = 'You can change configuration here. Some settings (e.g. page size, double space between scenes) may affect statistics which are based on assumption that 1 page = 1 minute of a movie.';
     section.smallIcon = 'gfx/icons/settings.svg';
     section.mainContent = SettingsView.create();
+
+    data.script.add(function(){
+        section.isVisibleInMenu = true;
+    });
 
     var plugin = pm.create_plugin(null, null, null, section);
 

@@ -60,6 +60,10 @@ define(function(require) {
         
         animate: function(attrs, delay) {
             this.$root.animate(attrs, delay);
+        },
+
+        stopAnimation: function() {
+            this.$root.stop();
         }
         
     });

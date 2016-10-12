@@ -11,8 +11,13 @@ define(function (require) {
     var section = Section.create('facts');
     section.title = 'Facts';
     section.shortTitle = 'facts';
+    section.isVisibleInMenu = false;
     section.smallIcon = 'gfx/icons/facts.svg';
     section.mainContent = FactsView.create();
+
+    data.script.add(function(){
+        section.isVisibleInMenu = true;
+    });
 
     var plugin = pm.create_plugin(null, null, null, section);
 

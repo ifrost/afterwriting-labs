@@ -11,9 +11,14 @@ define(function (require) {
     var section = Section.create('stats');
     section.title = 'Useless Stats';
     section.shortTitle = 'stats';
+    section.isVisibleInMenu = false;
     section.smallIcon = 'gfx/icons/stats.svg';
     section.mainContent = StatsView.create();
 
+    data.script.add(function(){
+        section.isVisibleInMenu = true;
+    });
+    
     var plugin = pm.create_plugin(null, null, null, section);
 
 	plugin.goto = function (line) {

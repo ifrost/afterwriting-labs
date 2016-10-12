@@ -16,8 +16,13 @@ define(function (require) {
     var section = Section.create('save');
     section.title = 'Save';
     section.shortTitle = 'save';
+    section.isVisibleInMenu = false;
     section.smallIcon = 'gfx/icons/save.svg';
     section.mainContent = SaveView.create();
+
+    data.script.add(function(){
+        section.isVisibleInMenu = true;
+    });
 
     var plugin = pm.create_plugin(null, null, null, section);
 
