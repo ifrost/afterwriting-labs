@@ -232,7 +232,7 @@ define('modules/data', function (require) {
 		plugin.load_config();
 	};
 
-	plugin.load_config = function (overrides) {
+	plugin.load_config = decorator(function (overrides) {
 		plugin.config = Object.create(plugin.default_config);
 		if (!overrides) {
 			try {
@@ -244,7 +244,7 @@ define('modules/data', function (require) {
 		for (var attrname in overrides) {
 			plugin.config[attrname] = overrides[attrname];
 		}
-	};
+	});
 
 	plugin.prepare = function () {
 		plugin.load_config();

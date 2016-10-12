@@ -20,6 +20,12 @@ define(function (require) {
 
     var plugin = pm.create_plugin(null, null, null, section);
 
+    var updateConfig = function() {
+        plugin.theme.showBackgroundImage(data.config.show_background_image);
+    };
+
+    data.save_config.add(updateConfig);
+
 	plugin.get_config = function () {
 		return data.config;
 	};
@@ -38,6 +44,7 @@ define(function (require) {
 			open.open_last_used(true);
 			layout.show_main();
 		}
+        updateConfig();
 	};
 
 	return plugin;

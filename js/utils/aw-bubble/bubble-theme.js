@@ -49,6 +49,10 @@ define(function(require) {
             var section = this.getOrCreateSection(name);
             this.themeController.selectSection(section);
         },
+
+        showBackgroundImage: function(value) {
+            this.themeModel.showBackgroundImage = value;
+        },
         
         start: function() {
             this.root.add(this.main);
