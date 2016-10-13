@@ -60,6 +60,7 @@ define(function(require) {
             Protoplast.utils.bind(this, 'section.title', this.updateTitle.bind(this));
             Protoplast.utils.bind(this, 'section.tools', this.updateTools.bind(this));
             Protoplast.utils.bind(this, 'section.description', this.updateDescription.bind(this));
+            Protoplast.utils.bind(this, 'section.isActive', this.updateIsActive.bind(this));
             Protoplast.utils.bind(this, 'descriptionVisible', this.toggleDescription.bind(this));
             Protoplast.utils.bind(this, 'themeModel.height', this.updateHeight.bind(this));
             Protoplast.utils.bind(this, 'bottomPadding', this.updateHeight.bind(this));
@@ -125,6 +126,15 @@ define(function(require) {
             }
 
             this.description.innerHTML = this.section.description;
+        },
+
+        updateIsActive: function() {
+            if (this.section.isActive){
+                this.$root.addClass('active');
+            }
+            else {
+                this.$root.removeClass('active');
+            }
         }
 
     });

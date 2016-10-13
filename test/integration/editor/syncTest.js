@@ -13,6 +13,11 @@ define(function(require) {
         var clock, cm_editor;
 
         beforeEach(function() {
+            var fakeTheme = {
+                clearSelectedSection: sinon.stub()
+            };
+            open.theme = fakeTheme;
+
             clock = sinon.useFakeTimers();
 
             cm_editor = {
