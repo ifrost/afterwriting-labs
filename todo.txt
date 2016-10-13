@@ -4,7 +4,6 @@
 3 S (A) [LAYOUT] remove references to layout: remove from components, use in plugins and views directly (plugin.theme, view.plugin.theme?);
 
 3 S remove jquery/protoplast from vendors and use provided jquery and protoplast from the main.js
-3 S [test] closing and opening the same plugins?
 3 S [test] switching stats to editor
 3 S simplify references to layout (remove unused methods, keep tooltip for timebeing)
 

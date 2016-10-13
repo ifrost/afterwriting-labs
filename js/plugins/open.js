@@ -14,8 +14,7 @@ define(function (require) {
 		db = require('utils/dropbox'),
 		local = require('utils/local'),
 		tree = require('utils/tree'),
-		save = require('plugins/save'),
-		layout = require('utils/layout');
+		save = require('plugins/save');
 
 
     var section = Section.create('open');
@@ -36,7 +35,7 @@ define(function (require) {
 		editor.set_sync(false);
 		editor.set_auto_save(false);
 		data.script(value);
-		layout.show_main();
+        plugin.theme.clearSelectedSection();
 	};
 
 	var clear_last_opened = function () {

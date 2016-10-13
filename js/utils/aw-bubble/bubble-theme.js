@@ -41,6 +41,10 @@ define(function(require) {
             this.themeController.addSection(section);
         },
 
+        clearSelectedSection: function() {
+            this.themeController.clearSelectedSection();
+        },
+
         setFooter: function(content) {
             this.themeModel.footer = content;
         },
