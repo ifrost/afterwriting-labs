@@ -14,6 +14,8 @@ define(function(require) {
         
         initAnimationDelay: 800,
         
+        contentSlideAnimation: 500,
+        
         width: null,
         
         height: null,

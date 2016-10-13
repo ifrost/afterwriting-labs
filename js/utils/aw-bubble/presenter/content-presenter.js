@@ -21,10 +21,10 @@ define(function(require) {
 
         updateContentVisibility: function() {
             if (this.themeModel.sections.selected) {
-                this.view.show(500);
+                this.view.show(this.themeModel.contentSlideAnimation);
             }
             else {
-                this.view.hide(500);
+                this.view.hide(this.themeModel.contentSlideAnimation);
             }
         },
 
