@@ -37,12 +37,12 @@ require.config({
 		'modernizr': {},
 		'pdfkit': 'libs/pdfkit'
 	},
-	use_node_require: ['jquery', 'fs', 'd3']
+	use_node_require: ['jquery', 'fs', 'd3', 'aw-parser']
 });
 
 var parser, data, liner, pdfmaker, help;
 
-parser = require('utils/fountain/parser');
+parser = require('aw-parser').parser;
 data = require('modules/data');
 liner = require('utils/fountain/liner');
 pdfmaker = require('utils/pdfmaker');

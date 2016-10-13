@@ -18,6 +18,7 @@
 			dropbox: 'libs/dropbox.min',
 			p: '../node_modules/protoplast/dist/protoplast.min',
 			acceptance: '../test/acceptance',
+            'aw-parser': '../node_modules/aw-parser/dist/aw-parser.amd',
          text: '../node_modules/text/text',
          Blob: 'libs/Blob'
 		},

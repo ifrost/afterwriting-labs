@@ -1,7 +1,7 @@
 define(function (require) {
 	var template = require('text!templates/plugins/dev/test.hbs'),
       pm = require('utils/pluginmanager'),
-		fparser = require('utils/fountain/parser'),
+		fparser = require('aw-parser').parser,
 		fliner = require('utils/fountain/liner'),
 		data = require('modules/data');
 

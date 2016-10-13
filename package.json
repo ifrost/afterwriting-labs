@@ -53,9 +53,10 @@
     "type": "MIT"
   },
   "dependencies": {
-    "grunt": "~0.4.0",
+    "aw-parser": "0.0.2",
     "d3": "^3.5.5",
-    "stdio": "^0.2.7",
-    "jquery": "^2.1.4"
+    "grunt": "~0.4.0",
+    "jquery": "^2.1.4",
+    "stdio": "^0.2.7"
   }
 }
