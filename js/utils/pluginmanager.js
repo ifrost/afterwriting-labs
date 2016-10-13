@@ -1,7 +1,7 @@
 define(function(require) {
 
     var Handlebars = require('handlebars'),
-        Protoplast = require('aw-bubble/vendor/protoplast'),
+        Protoplast = require('p'),
         Section = require('aw-bubble/model/section'),
         logger = require('logger'),
         data = require('modules/data'),

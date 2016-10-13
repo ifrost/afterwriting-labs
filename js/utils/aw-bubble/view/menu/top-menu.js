@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('aw-bubble/vendor/protoplast'),
+    var Protoplast = require('p'),
         TopMenuPresenter = require('aw-bubble/presenter/menu/top-menu-presenter'),
         TopMenuItem = require('aw-bubble/view/menu/top-menu-item');
 

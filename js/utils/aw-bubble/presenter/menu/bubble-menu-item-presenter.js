@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('aw-bubble/vendor/protoplast');
+    var Protoplast = require('p');
 
     var BubbleMenuItemPresenter = Protoplast.Object.extend({
 
