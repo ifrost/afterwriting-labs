@@ -19,6 +19,7 @@
 			p: '../node_modules/protoplast/dist/protoplast',
             'aw-bubble': 'utils/aw-bubble',
 			acceptance: '../test/acceptance',
+            'aw-parser': '../node_modules/aw-parser/dist/aw-parser.amd',
          text: '../node_modules/text/text',
          Blob: 'libs/Blob'
 		},

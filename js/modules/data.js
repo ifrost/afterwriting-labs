@@ -1,7 +1,7 @@
 define('modules/data', function (require) {
 
 	var Modernizr = require('modernizr'),
-		fparser = require('utils/fountain/parser'),
+		fparser = require('aw-parser').parser,
 		fliner = require('utils/fountain/liner'),
 		converter = require('utils/converters/scriptconverter'),
 		preprocessor = require('utils/fountain/preprocessor'),
