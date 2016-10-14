@@ -18,8 +18,8 @@ define(function(require) {
 
             var editor_content = $('.plugin-content[plugin="editor"]');
 
-            var sync_on_icon = common.data.static_path + 'gfx/icons/other/sync.svg',
-                sync_off_icon = common.data.static_path + 'gfx/icons/other/no-sync.svg',
+            var sync_on_icon = 'gfx/icons/other/sync.svg',
+                sync_off_icon = 'gfx/icons/other/no-sync.svg',
                 update_sync_layout = function() {
                     $('.auto-reload-icon')
                         .attr('src', editor.is_sync() ? sync_on_icon : sync_off_icon)

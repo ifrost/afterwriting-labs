@@ -1,5 +1,3 @@
-1+L fix current tests
-2+L copy tests from develop
 3 M build, static path: don't copy gfx folder to bundle/*, just use it straight away, make sure it's zipped (font should still be copied to bundled as it's referenced in css; graphics in CSS should be embedded in future)
 3 S (A) [LAYOUT] remove references to layout: remove from components, use in plugins and views directly (plugin.theme, view.plugin.theme?);
 

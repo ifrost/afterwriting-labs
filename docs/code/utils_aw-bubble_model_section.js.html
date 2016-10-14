@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: utils/aw-bubble/model/section.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,64 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: utils/aw-bubble/model/section.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>define(function(require) {
 
+    var Protoplast = require('p');
 
-    <h3> </h3>
+    /**
+     * Represens a section/page on the site
+     */
+    var Section = Protoplast.Model.extend({
+        
+        bigIcon: null,
+        
+        smallIcon: null,
 
+        /**
+         * If true, will be active only if the script is loaded
+         */
+        needsScript: false,
 
+        /**
+         * Main content plugin
+         */
+        mainContent: null,
+        
+        tools: null,
+        
+        name: null,
+        
+        title: null,
+        
+        shortTitle: null,
+        
+        description: null,
+        
+        isVisibleInMenu: true,
+        
+        isActive: false,
+        
+        isFullyVisible: false,
+        
+        $create: function(name) {
+            this.name = name;
+        }
+        
+    });
 
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    return Section;
+});</code></pre>
+        </article>
+    </section>
 
 
 

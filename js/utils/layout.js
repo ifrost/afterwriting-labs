@@ -9,11 +9,6 @@ define(['jquery', 'text!templates/layout.hbs', 'modules/data', 'handlebars', 'ut
 		return plugin;
 	};
 
-	// set up handlebars
-	Handlebars.registerHelper('static_path', function () {
-		return common.data.static_path;
-	});
-
 	var calculate_basics = function () {
 		module.small = $('html').width() < 800;
 	};
@@ -124,7 +119,7 @@ define(['jquery', 'text!templates/layout.hbs', 'modules/data', 'handlebars', 'ut
 		// load background
 		var max_backgrounds = 7;
 		if (!module.small && data.config.show_background_image) {
-			$('html').css('background-image', 'url(' + common.data.static_path + 'gfx/bg' + Math.floor(Math.random() * max_backgrounds) + '.jpg)');
+			$('html').css('background-image', 'url(' + 'gfx/bg' + Math.floor(Math.random() * max_backgrounds) + '.jpg)');
 		}
 
 		var layout = Handlebars.compile(template);

@@ -106,7 +106,7 @@ module.exports = function (grunt) {
 		copy: {
 			gfx: {
 				expand: true,
-				src: ['gfx/**', 'fonts/**'],
+				src: ['fonts/**'],
 				dest: 'bundle'
 			},
 			html: {
@@ -192,6 +192,9 @@ module.exports = function (grunt) {
 				files: [
 					{
 						src: 'bundle/**'
+					},
+					{
+						src: 'gfx/**'
 					},
 					{
 						src: 'afterwriting.html'

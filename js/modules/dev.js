@@ -8,9 +8,7 @@ define(['logger', 'utils/common', 'utils/pluginmanager', 'utils/layout', 'plugin
 		logger.useDefaults();
 		logger.setLevel(logger.DEBUG);
 		logger.filter = null;
-
-		common.data.static_path = '';
-	};
+    };
 
 	module.windup = function () {
 		var footer = common.data.footer;
