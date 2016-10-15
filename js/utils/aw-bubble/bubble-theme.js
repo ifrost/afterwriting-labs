@@ -65,8 +65,17 @@ define(function(require) {
         start: function() {
             this.root.add(this.main);
             this.context._objects.pub('bubble-theme/init');
-        }
+        },
         
+        setTooltip: function(text) {
+            this.themeModel.tooltip.text = text;
+        },
+        
+        moveTooltip: function(x, y) {
+            this.themeModel.tooltip.x = x;
+            this.themeModel.tooltip.y = y;
+        }
+
     });
 
     return BubbleTheme;

@@ -13,6 +13,8 @@ define(function(require) {
         $meta: {
             presenter: MainPresenter
         },
+        
+        tooltip: null,
 
         html: '<div>' +
             '<div data-comp="logo"></div>' +
@@ -41,7 +43,24 @@ define(function(require) {
 
         content: {
             component: Content
+        },
+        
+        init: function() {
+            Protoplast.utils.bind(this, 'tooltip', this._updateTooltip);
+            Protoplast.utils.bind(this, 'tooltip.text', this._updateTooltip);
+            Protoplast.utils.bind(this, 'tooltip.x', this._updateTooltipPosition);
+            Protoplast.utils.bind(this, 'tooltip.y', this._updateTooltipPosition);
+        },
+        
+        _updateTooltip: function() {
+            var text = this.tooltip.text;
+            $('#tooltip').css("visibility", !!text ? "visible" : "hidden").html(text);
+        },
+        
+        _updateTooltipPosition: function() {
+            $('#tooltip').css("top", (this.tooltip.y - 10) + "px").css("left", (this.tooltip.x + 10) + "px");
         }
+
     });
 
     return Main;

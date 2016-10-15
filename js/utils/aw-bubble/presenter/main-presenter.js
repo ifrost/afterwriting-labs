@@ -13,6 +13,7 @@ define(function(require) {
 
             Protoplast.utils.bind(this, 'themeModel.backgroundImageVisible', this._updateBackgroundImage);
             Protoplast.utils.bind(this, 'themeModel.nightMode', this._updateNightMode);
+            Protoplast.utils.bindProperty(this, 'themeModel.tooltip', this.view, 'tooltip');
 
             this.themeModel.width = $('html').width();
             this.themeModel.height =  $(document).height();

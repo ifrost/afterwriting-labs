@@ -1,6 +1,7 @@
 define(function(require) {
 
-    var Protoplast = require('p');
+    var Protoplast = require('p'),
+        TooltipModel = require('utils/aw-bubble/model/tooltip');
 
     var ThemeModel = Protoplast.Model.extend({
         
@@ -28,6 +29,8 @@ define(function(require) {
         
         showBackgroundImage: true,
         
+        tooltip: null,
+        
         backgroundImageVisible: {
             computed: ['showBackgroundImage', 'small'],
             value: function() {
@@ -53,6 +56,7 @@ define(function(require) {
                 }
             });
             this.sectionsMap = {};
+            this.tooltip = TooltipModel.create();
         },
         
         addSection: function(name, section) {
