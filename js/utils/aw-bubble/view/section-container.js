@@ -13,7 +13,7 @@ define(function(require) {
         '</div>',
 
         contentParent: {
-            component: Protoplast.Component.extend({html:'<div style="width:95%; clear: both; overflow: auto"></div>'})
+            component: Protoplast.Component.extend({html:'<div style="width:100%; clear: both; overflow: auto"></div>'})
         },
 
         toolsParent: {
