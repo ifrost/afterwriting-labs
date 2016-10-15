@@ -14,7 +14,7 @@ define(function(require) {
         },
 
         click: function(selector) {
-            $(selector).click();
+            this.browser.click($(selector).get(0));
             this.browser.tick(20000);
         },
 
@@ -73,6 +73,21 @@ define(function(require) {
 
         select_night_mode: function() {
            this.click(this.dom.$night_mode);
+        },
+
+        create_new: function() {
+            this.click(this.dom.$create_new);
+        },
+
+        create_new_script: function(text) {
+            this.open_plugin('open');
+            this.create_new();
+            this.open_plugin('editor');
+            this.set_editor_content(text);
+        },
+
+        click_on_page_stats: function() {
+            this.click(this.dom.$stats.$page_balance.$page);
         }
 
     });

@@ -9,6 +9,8 @@ define(function(require) {
 
         $background: '#back',
 
+        $create_new: '[open-action=new]',
+
         $open_dropbox: '[open-action=dropbox]',
 
         $close_popup: '[name=jqi_state0_buttonCancel]',
@@ -20,6 +22,14 @@ define(function(require) {
         $auto_save_button: '.auto-save-icon',
 
         $night_mode: 'input[setting="night_mode"]',
+
+        $stats: {
+            value: {
+                $page_balance: {
+                    $page: '#stats-page-balance svg'
+                }
+            }
+        },
 
         $button: function(label) {
             return $('button:contains("' + label + '")');
