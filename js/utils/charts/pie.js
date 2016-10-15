@@ -1,8 +1,6 @@
 define(function (require) {
 	var d3 = require('d3'),
-		$ = require('jquery'),
-		layout = require('utils/layout');
-
+		$ = require('jquery');
 	var plugin = {};
 
 	plugin.render = function (id, data, config) {
@@ -39,13 +37,13 @@ define(function (require) {
 			return config.color(d);
 		}).attr('d', arc)
 			.on("mouseover", function (d) {
-			layout.show_tooltip(config.tooltip(d));
+			config.show_tooltip(config.tooltip(d));
 		})
 			.on("mousemove", function () {
-			layout.move_tooltip(d3.event.pageX, d3.event.pageY);
+			config.move_tooltip(d3.event.pageX, d3.event.pageY);
 		})
 			.on("mouseout", function () {
-			layout.hide_tooltip();
+			config.hide_tooltip();
 		});
 
 		vis.append('svg:circle')

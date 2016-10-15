@@ -78,6 +78,10 @@ define(function(require) {
                         return d.header + ' (time: ' + helper.format_time(helper.lines_to_minutes(d.length)) + ')'
                     },
                     value: 'length',
+                    small: layout.small,
+                    show_tooltip: layout.show_tooltip.bind(layout),
+                    hide_tooltip: layout.hide_tooltip.bind(layout),
+                    move_tooltip: layout.move_tooltip.bind(layout),
                     color: function(d) {
                         if ($('#stats-scene-length-type').val() === "int_ext") {
                             if (d.location_type === 'mixed') {
@@ -111,6 +115,10 @@ define(function(require) {
                         return d.data.label + ': ' + d.data.value + (d.data.value == 1 ? ' scene' : ' scenes')
                     },
                     value: 'value',
+                    small: layout.small,
+                    show_tooltip: layout.show_tooltip.bind(layout),
+                    hide_tooltip: layout.hide_tooltip.bind(layout),
+                    move_tooltip: layout.move_tooltip.bind(layout),
                     color: function(d) {
                         if (d.data.label == 'DAY') {
                             return '#eeeeee';
@@ -138,6 +146,10 @@ define(function(require) {
                         return int_ext_labels[d.data.label] + ': ' + d.data.value + (d.data.value == 1 ? ' scene' : ' scenes')
                     },
                     value: 'value',
+                    small: layout.small,
+                    show_tooltip: layout.show_tooltip.bind(layout),
+                    hide_tooltip: layout.hide_tooltip.bind(layout),
+                    move_tooltip: layout.move_tooltip.bind(layout),
                     color: function(d) {
                         if (d.data.label == 'mixed') {
                             return '#777777';
@@ -156,11 +168,19 @@ define(function(require) {
                         if (!layout.small) {
                             stats.goto(d.first_line.token.line);
                         }
-                    }
+                    },
+                    small: layout.small,
+                    show_tooltip: layout.show_tooltip.bind(layout),
+                    hide_tooltip: layout.hide_tooltip.bind(layout),
+                    move_tooltip: layout.move_tooltip.bind(layout)
                 });
 
                 charts.line_chart.render('#stats-tempo', stats.data.tempo, {
                     value: 'tempo',
+                    small: layout.small,
+                    show_tooltip: layout.show_tooltip.bind(layout),
+                    hide_tooltip: layout.hide_tooltip.bind(layout),
+                    move_tooltip: layout.move_tooltip.bind(layout),
                     tooltip: function(d, i) {
                         if (i === stats.data.tempo.length - 1) {
                             return '';
@@ -174,7 +194,12 @@ define(function(require) {
                     }
                 });
 
-                charts.locations_breakdown.render('#locations-breakdown', stats.data.locations_breakdown);
+                charts.locations_breakdown.render('#locations-breakdown', stats.data.locations_breakdown, {
+                    small: layout.small,
+                    show_tooltip: layout.show_tooltip.bind(layout),
+                    hide_tooltip: layout.hide_tooltip.bind(layout),
+                    move_tooltip: layout.move_tooltip.bind(layout)
+                });
 
             };
 
