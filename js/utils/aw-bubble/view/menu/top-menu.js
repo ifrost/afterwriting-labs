@@ -13,20 +13,17 @@ define(function(require) {
         html: '<div class="top-bar">' +
         '<div><img data-prop="closeIcon" class="close-content panel-icon" src="gfx/icons/close.svg" /><img data-prop="expandIcon" class="expand panel-icon" src="gfx/icons/expand.svg" /></div>' +
         '</div>',
-        
-        sections: null,
 
-        $create: function() {
-            this.sections = Protoplast.Collection.create();
-            this.closeIcon.onclick = this.dispatch.bind(this, 'close');
-            this.expandIcon.onclick = this.dispatch.bind(this, 'expand');
+        sections: {
+            renderWith: {
+                property: 'section',
+                renderer: TopMenuItem
+            }
         },
 
-        init: function() {
-            Protoplast.utils.renderList(this, 'sections', {
-                rendererDataProperty: 'section',
-                renderer: TopMenuItem
-            })
+        $create: function() {
+            this.closeIcon.onclick = this.dispatch.bind(this, 'close');
+            this.expandIcon.onclick = this.dispatch.bind(this, 'expand');
         },
 
         setSelected: function(section) {

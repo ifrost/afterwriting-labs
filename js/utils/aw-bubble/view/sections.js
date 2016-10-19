@@ -21,7 +21,7 @@ define(function(require) {
         init: function() {
             Protoplast.utils.renderList(this, 'sections', {
                 renderer: SectionContainer,
-                rendererDataProperty: 'section',
+                property: 'section',
                 create: function(parent, data, renderer, propertyName) {
                     var child = renderer.create();
                     child[propertyName] = data;

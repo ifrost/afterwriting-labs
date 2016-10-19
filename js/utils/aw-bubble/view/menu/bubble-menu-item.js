@@ -40,22 +40,25 @@ define(function(require) {
             this.root.onclick = this.dispatch.bind(this, 'clicked');
         },
         
-        init: function() {
-            Protoplast.utils.bind(this, 'section.name', this.render.bind(this));
-            Protoplast.utils.bind(this, 'section.smallIcon', this.renderIcon.bind(this));
-            Protoplast.utils.bind(this, 'section.shortTitle', this.renderTitle.bind(this));
-        },
-        
-        render: function() {
-            this.root.className = 'menu-item ' + this.section.name;
+        render: {
+            bindWith: 'section.name',
+            value: function() {
+                this.root.className = 'menu-item ' + this.section.name;
+            }
         },
 
-        renderIcon: function() {
-            this.$icon.setAttribute('src', this.section.smallIcon);
+        renderIcon: {
+            bindWith: 'section.smallIcon',
+            value: function() {
+                this.$icon.setAttribute('src', this.section.smallIcon);
+            }
         },
 
-        renderTitle: function() {
-            this.$title.innerHTML = this.section.shortTitle;
+        renderTitle: {
+            bindWith: 'section.shortTitle',
+            value: function() {
+                this.$title.innerHTML = this.section.shortTitle;
+            }
         },
         
         animate: function(attrs, delay) {

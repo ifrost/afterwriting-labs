@@ -43,12 +43,11 @@ define(function(require) {
             this.root.onclick = this.dispatch.bind(this, 'clicked');
         },
 
-        init: function() {
-            Protoplast.utils.bind(this, 'section.smallIcon', this.renderIcon.bind(this));
-        },
-
-        renderIcon: function() {
-            this.root.setAttribute('src', this.section.smallIcon);
+        renderIcon: {
+            bindWith: 'section.smallIcon',
+            value: function() {
+                this.root.setAttribute('src', this.section.smallIcon);
+            }
         }
 
     });

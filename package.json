@@ -43,7 +43,7 @@
     "istanbul": "^0.3.7",
     "jshint-stylish": "^1.0.0",
     "mocha": "^2.2.1",
-    "protoplast": "^2.0.0-alpha.11",
+    "protoplast": "^2.0.0-alpha.12",
     "sinon": "^1.14.0",
     "text": "requirejs/text"
   },

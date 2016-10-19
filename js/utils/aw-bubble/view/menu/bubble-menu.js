@@ -22,7 +22,7 @@ define(function(require) {
             this.root.className = 'selector';
             var view = this;
             Protoplast.utils.renderList(this, 'sections', {
-                rendererDataProperty: 'section',
+                property: 'section',
                 renderer: BubbleMenuItem,
                 create: function(parent, data, renderer, propertyName) {
                     var child = renderer.create();
