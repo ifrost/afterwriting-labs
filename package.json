@@ -18,6 +18,9 @@
     "type": "git",
     "url": "git://github.com/ifrost/afterwriting-labs.git"
   },
+  "scripts": {
+    "test": "grunt test"
+  },
   "devDependencies": {
     "chai": "^2.1.1",
     "express": "^4.14.0",
