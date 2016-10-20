@@ -48,13 +48,13 @@ define(['dependencies', 'logger', 'aw-bubble/bubble-theme', 'utils/common', 'uti
         if (window.hasOwnProperty('ENVIRONMENT') && window.ENVIRONMENT == 'dev') {
             footer += '<br /><span class="version">development version</span>';
         }
-        theme.setFooter(footer);
+        theme.themeController.setFooter(footer);
 
         plugins.forEach(function(plugin) {
             plugin.view = plugin.template ? plugin.template(plugin.context) : '';
             plugin.theme = theme;
             context.plugins.push(plugin);
-            theme.addSection(plugin.section);
+            theme.themeController.addSection(plugin.section);
         });
 
         log.info('Initializing layout');

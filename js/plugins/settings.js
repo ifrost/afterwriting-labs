@@ -21,8 +21,8 @@ define(function (require) {
     var plugin = pm.create_plugin(null, null, null, section);
 
     var updateConfig = function() {
-        plugin.theme.showBackgroundImage(data.config.show_background_image);
-        plugin.theme.nightMode(data.config.night_mode);
+        plugin.theme.themeController.showBackgroundImage(data.config.show_background_image);
+        plugin.theme.themeController.nightMode(data.config.night_mode);
     };
 
     data.save_config.add(updateConfig);

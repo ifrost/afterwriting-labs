@@ -32,48 +32,10 @@ define(function(require) {
 
             this.root = Protoplast.Component.Root(this.rootElement);
         },
-        
-        getOrCreateSection: function(name) {
-            return this.themeController.getOrCreateSection(name);
-        },
-        
-        addSection: function(section) {
-            this.themeController.addSection(section);
-        },
 
-        clearSelectedSection: function() {
-            this.themeController.clearSelectedSection();
-        },
-
-        setFooter: function(content) {
-            this.themeModel.footer = content;
-        },
-
-        selectSectionByName: function(name) {
-            var section = this.getOrCreateSection(name);
-            this.themeController.selectSection(section);
-        },
-
-        showBackgroundImage: function(value) {
-            this.themeModel.showBackgroundImage = value;
-        },
-        
-        nightMode: function(value) {
-            this.themeModel.nightMode = value;
-        },
-        
         start: function() {
             this.root.add(this.main);
             this.context._objects.pub('bubble-theme/init');
-        },
-        
-        setTooltip: function(text) {
-            this.themeModel.tooltip.text = text;
-        },
-        
-        moveTooltip: function(x, y) {
-            this.themeModel.tooltip.x = x;
-            this.themeModel.tooltip.y = y;
         }
 
     });

@@ -1,24 +1,11 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
-        Section = require('aw-bubble/model/section');
-
+    var Protoplast = require('p');
+    
     var ThemeController = Protoplast.extend({
         
         themeModel: {
             inject: 'theme-model'
-        },
-        
-        getOrCreateSection: function(name) {
-            var section;
-            
-            if (section = this.themeModel.getSection(name)) {
-                return section;
-            }
-            
-            section = Section.create(name);
-            this.addSection(section);
-            return section;
         },
         
         addSection: function(section) {
@@ -48,8 +35,29 @@ define(function(require) {
         
         selectedSectionFullyVisible: function() {
             this.themeModel.sections.selected.isFullyVisible = true;
-        }
+        },
         
+        setFooter: function(content) {
+            this.themeModel.footer = content;
+        },
+
+        showBackgroundImage: function(value) {
+            this.themeModel.showBackgroundImage = value;
+        },
+
+        nightMode: function(value) {
+            this.themeModel.nightMode = value;
+        },
+
+        setTooltip: function(text) {
+            this.themeModel.tooltip.text = text;
+        },
+
+        moveTooltip: function(x, y) {
+            this.themeModel.tooltip.x = x;
+            this.themeModel.tooltip.y = y;
+        }
+
     });
 
     return ThemeController;

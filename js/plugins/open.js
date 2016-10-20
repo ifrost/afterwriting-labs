@@ -35,7 +35,7 @@ define(function (require) {
 		editor.set_sync(false);
 		editor.set_auto_save(false);
 		data.script(value);
-        plugin.theme.clearSelectedSection();
+        plugin.theme.themeController.clearSelectedSection();
 	};
 
 	var clear_last_opened = function () {
