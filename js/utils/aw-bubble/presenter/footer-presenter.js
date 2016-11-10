@@ -1,11 +1,12 @@
 define(function(require) {
 
-    var Protoplast = require('p');
+    var Protoplast = require('p'),
+        ThemeModel = require('aw-bubble/model/theme-model');
 
     var FooterPresenter = Protoplast.Object.extend({
         
         themeModel: {
-            inject: 'theme-model'
+            inject: ThemeModel
         },
         
         init: function() {

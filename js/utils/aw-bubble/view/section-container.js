@@ -1,7 +1,8 @@
 define(function(require) {
 
     var $ = require('jquery'),
-        Protoplast = require('p');
+        Protoplast = require('p'),
+        ThemeModel = require('aw-bubble/model/theme-model');
 
     var SectionContainer = Protoplast.Component.extend({
 
@@ -21,7 +22,7 @@ define(function(require) {
         },
 
         themeModel: {
-            inject: 'theme-model'
+            inject: ThemeModel
         },
 
         title: null,

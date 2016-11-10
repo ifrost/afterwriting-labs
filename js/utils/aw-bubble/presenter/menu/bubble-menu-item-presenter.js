@@ -1,11 +1,12 @@
 define(function(require) {
 
-    var Protoplast = require('p');
+    var Protoplast = require('p'),
+        ThemeController = require('aw-bubble/controller/theme-controller');
 
     var BubbleMenuItemPresenter = Protoplast.Object.extend({
 
         themeController: {
-            inject: 'theme-controller'
+            inject: ThemeController
         },
 
         init: function() {

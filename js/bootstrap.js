@@ -1,4 +1,4 @@
-define(['dependencies', 'logger', 'aw-bubble/bubble-theme', 'utils/common', 'utils/decorator', 'd3', 'jquery'], function(_, logger, BubbleTheme, common, decorator, d3, $) {
+define(['dependencies', 'logger', 'utils/common', 'utils/decorator', 'd3', 'jquery', 'p', 'view/app-view', 'aw-bubble/model/theme-model', 'aw-bubble/controller/theme-controller', 'controller/app-controller'], function(_, logger, common, decorator, d3, $, Protoplast, AppView, ThemeModel, ThemeController, AppController) {
 
     var log = logger.get('bootstrap'),
         module = {};
@@ -42,20 +42,24 @@ define(['dependencies', 'logger', 'aw-bubble/bubble-theme', 'utils/common', 'uti
             plugin.init();
         });
 
-        var theme = BubbleTheme.create();
+        var di = Protoplast.Context.create();
 
-        var footer = common.data.footer;
-        if (window.hasOwnProperty('ENVIRONMENT') && window.ENVIRONMENT == 'dev') {
-            footer += '<br /><span class="version">development version</span>';
-        }
-        theme.themeController.setFooter(footer);
+        var themeModel, themeController;
+        di.register(themeModel = ThemeModel.create());
+        di.register(themeController = ThemeController.create());
+        di.register(AppController.create());
+        di.build();
+
+        var root = Protoplast.Component.Root(document.body, di);
 
         plugins.forEach(function(plugin) {
             plugin.view = plugin.template ? plugin.template(plugin.context) : '';
-            plugin.theme = theme;
+            plugin.theme = {themeModel: themeModel, themeController: themeController};
             context.plugins.push(plugin);
-            theme.themeController.addSection(plugin.section);
+            themeController.addSection(plugin.section);
         });
+
+        root.add(AppView.create());
 
         log.info('Initializing layout');
         $('#loader').remove();
@@ -69,9 +73,9 @@ define(['dependencies', 'logger', 'aw-bubble/bubble-theme', 'utils/common', 'uti
 
         log.info('Bootstrapping finished.');
 
-        theme.start();
-
+        di._objects.pub('app/init');
     };
+
 
     return module;
 });
