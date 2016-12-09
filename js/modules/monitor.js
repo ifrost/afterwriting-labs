@@ -6,8 +6,7 @@ define(function (require) {
 		open = require('plugins/open'),
 		save = require('plugins/save'),
 		editor = require('plugins/editor'),
-		stats = require('plugins/stats'),
-		layout = require('utils/layout');
+		stats = require('plugins/stats');
 
 	var module = {};
 	var log = logger.get('monitor');

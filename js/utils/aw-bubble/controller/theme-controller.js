@@ -50,8 +50,12 @@ define(function(require) {
             this.themeModel.nightMode = value;
         },
 
-        setTooltip: function(text) {
+        showTooltip: function(text) {
             this.themeModel.tooltip.text = text;
+        },
+
+        hideTooltip: function() {
+            this.themeModel.tooltip.text = '';
         },
 
         moveTooltip: function(x, y) {

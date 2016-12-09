@@ -2,7 +2,6 @@ define(function(require) {
 
     var $ = require('jquery'),
         common = require('utils/common'),
-        layout = require('utils/layout'),
         HandlebarComponent = require('utils/handlebar-component');
 
     return HandlebarComponent.extend({

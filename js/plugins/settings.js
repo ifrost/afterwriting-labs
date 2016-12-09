@@ -3,7 +3,6 @@ define(function (require) {
         SettingsView = require('templates/plugins/settings-view'), 
         pm = require('utils/pluginmanager'),
 		data = require('modules/data'),
-		layout = require('utils/layout'),
 		open = require('plugins/open');
 
     var section = Section.create('settings');
@@ -43,7 +42,6 @@ define(function (require) {
 	plugin.windup = function () {
 		if (data.config.load_last_opened) {
 			open.open_last_used(true);
-			layout.show_main();
 		}
         updateConfig();
 	};

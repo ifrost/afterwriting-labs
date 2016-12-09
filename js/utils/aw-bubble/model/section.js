@@ -3,7 +3,7 @@ define(function(require) {
     var Protoplast = require('p');
 
     /**
-     * Represens a section/page on the site
+     * Represents a section/page on the site
      */
     var Section = Protoplast.Model.extend({
         
