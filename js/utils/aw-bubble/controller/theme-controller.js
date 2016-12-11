@@ -20,6 +20,11 @@ define(function(require) {
             });
         },
 
+        selectSectionByName: function(name) {
+            var section = this.themeModel.getSection(name);
+            this.selectSection(section);
+        },
+
         clearSelectedSection: function() {
             this.themeModel.sections.selected = null;
         },

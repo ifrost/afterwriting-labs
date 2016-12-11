@@ -82,7 +82,7 @@ define(function (require) {
 		};
 		plugin.data.scroll_info = null;
 
-        this.theme.selectSectionByName('editor');
+        this.theme.themeController.selectSectionByName('editor');
 	};
 
 	plugin.auto_save_available = function() {
