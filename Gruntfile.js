@@ -310,7 +310,13 @@ module.exports = function (grunt) {
 				options: {
 					reporter: 'Spec',
 					log: false,
-					logErrors: true
+					logErrors: true,
+                    page: {
+                        viewportSize: {
+                            width: 1200,
+                            height: 800
+                        }
+                    }
 				}
 			}
 		},

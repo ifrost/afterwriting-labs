@@ -14,7 +14,7 @@ define(function(require) {
         },
 
         active_plugin_is: function(name) {
-            chai.assert.strictEqual(name, this.dom.get_active_plugin(), 'Expected ' + name + ' plugin to be active, but ' + this.dom.get_active_plugin() + ' is active');
+            chai.assert.strictEqual(this.dom.get_active_plugin(), name, 'Expected ' + name + ' plugin to be active, but ' + this.dom.get_active_plugin() + ' is active');
         },
 
         file_list_is_visible: function() {
