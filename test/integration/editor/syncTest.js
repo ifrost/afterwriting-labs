@@ -14,7 +14,9 @@ define(function(require) {
 
         beforeEach(function() {
             var fakeTheme = {
-                clearSelectedSection: sinon.stub()
+                themeController: {
+                    clearSelectedSection: sinon.stub()
+                }
             };
             open.theme = fakeTheme;
 

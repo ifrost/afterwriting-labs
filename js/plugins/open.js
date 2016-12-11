@@ -1,6 +1,9 @@
 define(function (require) {
 
-	var pm = require('utils/pluginmanager'),
+    // DEBT: remove impromptu import (+)
+    // impromptu loaded only for integration test, should work as a part of bootstrap
+	var impromptu = require('impromptu'),
+        pm = require('utils/pluginmanager'),
         Section = require('aw-bubble/model/section'),
         OpenView = require('templates/plugins/open-view'),
 		logger = require('logger'),

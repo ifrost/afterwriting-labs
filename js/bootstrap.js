@@ -54,6 +54,9 @@ define(['dependencies', 'logger', 'utils/common', 'utils/decorator', 'd3', 'jque
 
         plugins.forEach(function(plugin) {
             plugin.view = plugin.template ? plugin.template(plugin.context) : '';
+            // DEBT: inject themeController, themeModel (+)
+            // theme is not a module, it's created artificially here;
+            // plugin should inject themeController, themeModel directly
             plugin.theme = {themeModel: themeModel, themeController: themeController};
             context.plugins.push(plugin);
             themeController.addSection(plugin.section);
