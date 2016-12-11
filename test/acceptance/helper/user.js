@@ -88,6 +88,11 @@ define(function(require) {
 
         click_on_page_stats: function() {
             this.click(this.dom.$stats.$page_balance.$page);
+        },
+        
+        download_offline_app: function() {
+            this.dom.clean_href(this.dom.$info.$download_link);
+            this.click(this.dom.$info.$download_link);
         }
 
     });

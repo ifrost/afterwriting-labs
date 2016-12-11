@@ -30,6 +30,12 @@ define(function(require) {
                 }
             }
         },
+        
+        $info: {
+            value: {
+                $download_link: '#download-link'
+            }
+        },
 
         $button: function(label) {
             return $('button:contains("' + label + '")');
@@ -57,6 +63,10 @@ define(function(require) {
 
         is_night_mode: function() {
            return $('body').hasClass('night-mode');
+        },
+        
+        clean_href: function(selector) {
+            $(selector).attr('href', 'javascript:void(0)');
         }
 
     });

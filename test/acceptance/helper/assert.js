@@ -7,9 +7,10 @@ define(function(require) {
      */
     var Assert = p.extend({
 
-        $create: function(dom, dropbox) {
+        $create: function(dom, dropbox, ga) {
             this.dom = dom;
             this.dropbox = dropbox;
+            this.ga = ga;
         },
 
         active_plugin_is: function(name) {
@@ -36,6 +37,11 @@ define(function(require) {
            else {
               chai.assert.notOk(night_mode);
            }
+        },
+        
+        event_tracked: function(category, action, label) {
+            var eventName = [category, action, label].filter(function(value){return value;}).join('/');
+            chai.assert.ok(this.ga.hasEvent(category, action, label), 'Event: ' + eventName + ' not found');
         }
 
     });
