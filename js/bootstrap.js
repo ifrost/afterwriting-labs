@@ -1,4 +1,4 @@
-define(['dependencies', 'logger', 'utils/common', 'utils/decorator', 'd3', 'jquery', 'p', 'view/app-view', 'aw-bubble/model/theme-model', 'aw-bubble/controller/theme-controller', 'controller/app-controller'], function(_, logger, common, decorator, d3, $, Protoplast, AppView, ThemeModel, ThemeController, AppController) {
+define(['dependencies', 'logger', 'utils/common', 'utils/decorator', 'd3', 'jquery', 'p', 'view/app-view', 'aw-bubble/model/theme-model', 'aw-bubble/controller/theme-controller', 'controller/app-controller', 'plugin/info/info-plugin', 'plugin/preview/preview-plugin'], function(_, logger, common, decorator, d3, $, Protoplast, AppView, ThemeModel, ThemeController, AppController, InfoPlugin, PreviewPlugin) {
 
     var log = logger.get('bootstrap'),
         module = {};
@@ -48,9 +48,13 @@ define(['dependencies', 'logger', 'utils/common', 'utils/decorator', 'd3', 'jque
         di.register(themeModel = ThemeModel.create());
         di.register(themeController = ThemeController.create());
         di.register(AppController.create());
+        di.register(InfoPlugin.create(di));
+        di.register(PreviewPlugin.create(di));
         di.build();
-
         var root = Protoplast.Component.Root(document.body, di);
+
+
+
 
         plugins.forEach(function(plugin) {
             plugin.view = plugin.template ? plugin.template(plugin.context) : '';

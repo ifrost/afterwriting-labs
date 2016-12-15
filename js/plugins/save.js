@@ -4,7 +4,7 @@ define(function (require) {
         SaveView = require('templates/plugins/save-view'),
         pm = require('utils/pluginmanager'),
 		saveAs = require('saveAs'),
-		preview = require('plugins/preview'),
+		pdfmaker = require('utils/pdfmaker'),
 		gd = require('utils/googledrive'),
 		db = require('utils/dropbox'),
 		$ = require('jquery'),
@@ -42,7 +42,7 @@ define(function (require) {
 
 	plugin.save_as_pdf = function () {
 		forms.text('Select file name: ', data.data('pdf-filename') || 'screenplay.pdf', function (result) {
-			preview.get_pdf(function (pdf) {
+			pdfmaker.get_pdf(function (pdf) {
 				data.data('pdf-filename', result.text);
 				data.data('fountain-filename', result.text.split('.')[0] + '.fountain');
 				saveAs(pdf.blob, result.text);
@@ -89,7 +89,7 @@ define(function (require) {
 					path += (path[path.length - 1] !== '/' ? '/' : '') + filename;
 				}
 				data.parse();
-				preview.get_pdf(function (result) {
+				pdfmaker.get_pdf(function (result) {
 					db.save(path, result.blob, function () {
 						if (filename) {
 							data.data('pdf-filename', filename);
@@ -148,7 +148,7 @@ define(function (require) {
 			client: gd,
 			save_callback: function (selected, filename) {
 				data.parse();
-				preview.get_pdf(function (pdf) {
+				pdfmaker.get_pdf(function (pdf) {
 					gd.upload({
 						blob: pdf.blob,
 						filename: filename,

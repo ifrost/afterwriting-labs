@@ -104,6 +104,7 @@ define(function(require) {
 
         recreateContent: function() {
             if (this.section.mainContent) {
+                this.section.mainContent.section = this.section;
                 this.$root.attr('plugin', this.section.name);
                 this.$root.addClass('plugin-content', this.section.name);
                 this.contentParent.add(this.section.mainContent);

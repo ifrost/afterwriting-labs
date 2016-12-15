@@ -55,7 +55,7 @@ define(function(require) {
         };
 
         var pm = this;
-        section.mainContent.plugin = plugin;
+        section.mainContent ? section.mainContent.plugin = plugin : '';
         Protoplast.utils.bind(section, 'isActive', function(section) {
             if (!this.isActive && section.isActive) {
                 pm.switch_to(this);

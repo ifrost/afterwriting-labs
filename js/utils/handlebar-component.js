@@ -12,6 +12,7 @@ define(function(require) {
             this.processRoot();
         },
 
+        // DEBT: HandleBar Component should not know about bubble theme (+)
         start: {
             sub: 'bubble-theme/init',
             value: function() {

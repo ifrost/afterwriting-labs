@@ -8,6 +8,13 @@ define(function(require) {
         themeModel: {
             inject: ThemeModel
         },
+
+        init: {
+            injectInit: true,
+            value: function() {
+                console.log('x');
+            }
+        },
         
         addSection: function(section) {
             this.themeModel.addSection(section.name, section);
