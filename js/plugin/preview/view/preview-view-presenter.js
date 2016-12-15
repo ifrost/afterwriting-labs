@@ -9,6 +9,7 @@ define(function(require) {
         activate: function() {
             BaseSectionViewPresenter.activate.call(this);
             editor.synced.add(this.refresh);
+            this.refresh();
         },
 
         deactivate: function() {
