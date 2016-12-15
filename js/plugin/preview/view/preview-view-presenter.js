@@ -8,6 +8,11 @@ define(function(require) {
 
         activate: function() {
             BaseSectionViewPresenter.activate.call(this);
+            // DEBT: preview should be refreshed when script in model changes (and viewer is active) (+)
+            // Could be in BaseScriptObserverPresenter/Mixin
+            // $create: this.bindings = Protoplast.utils.bind(this, 'script.content', this.refresh);
+            // on activate: this.bindings.start()
+            // on deactivate: this.bindings.stop()
             editor.synced.add(this.refresh);
             this.refresh();
         },

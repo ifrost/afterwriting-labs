@@ -24,15 +24,17 @@ define(function(require) {
         },
         
         _renderPdf: function(result) {
-            if (!result) {return;}
-
-            $("#pdf-preview-iframe-container p").remove();
-            if (data.config.pdfjs_viewer) {
-                pdfjs_viewer.from_blob(result.blob);
+            if (result) {
+                $("#pdf-preview-iframe-container p").remove();
+                if (data.config.pdfjs_viewer) {
+                    pdfjs_viewer.from_blob(result.blob);
+                }
+                else {
+                    $("#pdf-preview-iframe").attr('src', result.url).css('display', 'block');
+                }
+            } else {
+                $("#pdf-preview-iframe").remove();
             }
-            else {
-                $("#pdf-preview-iframe").attr('src', result.url).css('display', 'block');
-            } 
         },
         
         show: function() {
@@ -49,7 +51,7 @@ define(function(require) {
         },
         
         hide: function() {
-            $("#pdf-preview-iframe").remove();
+            this.pdf = null;
         },
         
         addInteractions: function() {
