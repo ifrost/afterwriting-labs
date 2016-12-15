@@ -1,4 +1,19 @@
-define(['dependencies', 'logger', 'utils/common', 'utils/decorator', 'd3', 'jquery', 'p', 'view/app-view', 'aw-bubble/model/theme-model', 'aw-bubble/controller/theme-controller', 'controller/app-controller', 'core/controller/google-analytics-monitor', 'plugin/info/info-plugin', 'plugin/preview/preview-plugin'], function(_, logger, common, decorator, d3, $, Protoplast, AppView, ThemeModel, ThemeController, AppController, GoogleAnalyticsMonitor, InfoPlugin, PreviewPlugin) {
+define(function(require) {
+
+    var _ = require('dependencies'),
+        logger = require('logger'),
+        common = require('utils/common'),
+        decorator = require('utils/decorator'),
+        d3 = require('d3'),
+        $ = require('jquery'),
+        Protoplast = require('p'),
+        AppView = require('view/app-view'),
+        ThemeModel = require('aw-bubble/model/theme-model'),
+        ThemeController = require('aw-bubble/controller/theme-controller'),
+        AppController = require('controller/app-controller'),
+        GoogleAnalyticsMonitor = require('core/controller/google-analytics-monitor'),
+        InfoPlugin = require('plugin/info/info-plugin'),
+        PreviewPlugin = require('plugin/preview/preview-plugin');
 
     var log = logger.get('bootstrap'),
         module = {};
