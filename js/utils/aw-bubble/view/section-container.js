@@ -57,9 +57,9 @@ define(function(require) {
         },
 
         init: function() {
-            Protoplast.utils.bind(this, 'section.mainContent', this.recreateContent.bind(this));
             Protoplast.utils.bind(this, 'section.title', this.updateTitle.bind(this));
             Protoplast.utils.bind(this, 'section.tools', this.updateTools.bind(this));
+            Protoplast.utils.bind(this, 'section.mainContent', this.recreateContent.bind(this));
             Protoplast.utils.bind(this, 'section.description', this.updateDescription.bind(this));
             Protoplast.utils.bind(this, 'section.isActive', this.updateIsActive.bind(this));
             Protoplast.utils.bind(this, 'descriptionVisible', this.toggleDescription.bind(this));

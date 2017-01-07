@@ -1,6 +1,6 @@
 define(function(require) {
 
-        var BaseSectionViewPresenter = require('aw-bubble/presenter/base-section-view-presenter'),
+    var BaseSectionViewPresenter = require('aw-bubble/presenter/base-section-view-presenter'),
         editor = require('plugins/editor'),
         pdfmaker = require('utils/pdfmaker');
 
@@ -10,7 +10,7 @@ define(function(require) {
             BaseSectionViewPresenter.activate.call(this);
             // DEBT: preview should be refreshed when script in model changes (and viewer is active) (+)
             // Could be in BaseScriptObserverPresenter/Mixin
-            // $create: this.bindings = Protoplast.utils.bind(this, 'script.content', this.refresh);
+            // $create: this.bin dings = Protoplast.utils.bind(this, 'script.content', this.refresh);
             // on activate: this.bindings.start()
             // on deactivate: this.bindings.stop()
             editor.synced.add(this.refresh);

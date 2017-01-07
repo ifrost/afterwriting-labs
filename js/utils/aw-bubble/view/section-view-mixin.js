@@ -12,6 +12,14 @@ define(function(require) {
         
         deactivate: function() {
             
+        },
+
+        show: function() {
+
+        },
+
+        hide: function() {
+            
         }
         
     });

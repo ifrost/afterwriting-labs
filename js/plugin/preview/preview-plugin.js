@@ -24,8 +24,6 @@ define(function(require) {
             data.script.add(function(){
                 previewSection.isVisibleInMenu = true;
             });
-
-            this.section = previewSection;
         }
 
     });
