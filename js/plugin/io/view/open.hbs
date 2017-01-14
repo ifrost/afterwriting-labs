@@ -14,10 +14,10 @@
 	<li>
 		<img src="gfx/icons/other/gd.svg" class="icon" />
 		<a href="#" open-action="googledrive">Open from Google Drive</a>
-	</li>{{#if last_used.date}}
-	<li>
+	</li>
+	<li data-prop="$lastUsed">
 		<img src="gfx/icons/other/reuse.svg" class="icon" />Last editor's content:&nbsp;
-		<a href="#" open-action="last">{{last_used.title}}</a>&nbsp;({{last_used.date}})</li>{{/if}}</ul>
+		<a href="#" open-action="last" data-prop="$lastUsedTitle"></a>&nbsp;<span data-prop="$lastUsedDate"></span></li></ul>
 <h1>Samples</h1>
 <ul>
 	<li>

@@ -2,8 +2,8 @@ define(function (require) {
 	var Section = require('aw-bubble/model/section'),
         SettingsView = require('templates/plugins/settings-view'), 
         pm = require('utils/pluginmanager'),
-		data = require('modules/data'),
-		open = require('plugins/open');
+		data = require('modules/data');
+		// open = require('plugins/open');
 
     var section = Section.create('settings');
     section.title = 'Settings';
@@ -41,7 +41,8 @@ define(function (require) {
 
 	plugin.windup = function () {
 		if (data.config.load_last_opened) {
-			open.open_last_used(true);
+			// TODO: remove dependency
+            //open.open_last_used(true);
 		}
         updateConfig();
 	};

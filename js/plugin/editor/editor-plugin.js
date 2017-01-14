@@ -22,7 +22,7 @@ define(function(require) {
             var editorSection = EditorSection.create('editor');
             this.themeController.addSection(editorSection);
 
-            data.script.add(function(){
+            data.bindScript(function(){
                 editorSection.isVisibleInMenu = true;
             });
         }

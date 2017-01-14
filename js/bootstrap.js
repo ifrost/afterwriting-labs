@@ -13,6 +13,7 @@ define(function(require) {
         AppController = require('controller/app-controller'),
         GoogleAnalyticsMonitor = require('core/controller/google-analytics-monitor'),
         InfoPlugin = require('plugin/info/info-plugin'),
+        IoPlugin = require('plugin/io/io-plugin'),
         EditorPlugin = require('plugin/editor/editor-plugin'),
         PreviewPlugin = require('plugin/preview/preview-plugin');
 
@@ -66,13 +67,12 @@ define(function(require) {
         di.register('monitor', GoogleAnalyticsMonitor.create());
         di.register(AppController.create());
         di.register(InfoPlugin.create(di));
+        di.register(IoPlugin.create(di));
         di.register(EditorPlugin.create(di));
         di.register(PreviewPlugin.create(di));
         di.build();
         var root = Protoplast.Component.Root(document.body, di);
-
-
-
+        
 
         plugins.forEach(function(plugin) {
             plugin.view = plugin.template ? plugin.template(plugin.context) : '';

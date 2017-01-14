@@ -21,7 +21,7 @@ define(function(require) {
             var previewSection = PreviewSection.create('preview');
             this.themeController.addSection(previewSection);
 
-            data.script.add(function(){
+            data.bindScript(function(){
                 previewSection.isVisibleInMenu = true;
             });
         }

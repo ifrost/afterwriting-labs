@@ -250,6 +250,19 @@ define('modules/data', function (require) {
 		plugin.load_config();
 	};
 
+    /**
+     * TODO: replace with Protoplast bindings after converting to a model
+     * @param callback
+     */
+    plugin.bindScript = function(callback) {
+        plugin.script.add(function(){
+            callback();
+        });
+        if (plugin.script()) {
+            callback();
+        }
+    };
+
 	return plugin;
 
 });

@@ -1,17 +1,15 @@
 define(function(require) {
 
-    var template = require('text!templates/plugins/save.hbs'),
+    var template = require('text!plugin/io/view/save.hbs'),
         $ = require('jquery'),
         HandlebarComponent = require('utils/handlebar-component');
     
     return HandlebarComponent.extend({
 
         hbs: template,
-
-        plugin: null,
-
+        
         addInteractions: function() {
-            var save = this.plugin;
+        /*    var save = this.plugin;
             
             $(document).ready(function() {
                 $('a[action="save-fountain"]').click(save.save_as_fountain);
@@ -37,7 +35,7 @@ define(function(require) {
 
 
             });
-
+*/
         }
 
     });

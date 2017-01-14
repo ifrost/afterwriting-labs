@@ -75,15 +75,15 @@ define(function (require) {
 
 	plugin.open_file_dialog = decorator.signal();
 
-	plugin.create_new = function () {
-		set_script('');
-	};
-
-	plugin.open_sample = function (name) {
-		var file_name = 'samples/' + name + '.fountain';
-		var text = samples[file_name]();
-		set_script(text);
-	};
+	// plugin.create_new = function () {
+	// 	set_script('');
+	// };
+    //
+	// plugin.open_sample = function (name) {
+	// 	var file_name = 'samples/' + name + '.fountain';
+	// 	var text = samples[file_name]();
+	// 	set_script(text);
+	// };
 
 	plugin.is_dropbox_available = function () {
 		return window.location.protocol !== 'file:';
@@ -156,28 +156,28 @@ define(function (require) {
 
 	plugin.init = function () {
 		log.info("Init: script handlers");
-		data.script.add(function () {
-			var title = '';
-			data.data('last-used-script', data.script());
-			data.data('last-used-date', helper.format_date(new Date()));
-			if (data.script()) {
-				var title_match;
-				var wait_for_non_empty = false;
-				data.script().split('\n').some(function (line) {
-					title_match = line.match(/title\:(.*)/i);
-					if (wait_for_non_empty) {
-						title = line.trim().replace(/\*/g, '').replace(/_/g, '');
-						wait_for_non_empty = !title;
-					}
-					if (title_match) {
-						title = title_match[1].trim();
-						wait_for_non_empty = !title;
-					}
-					return title && !wait_for_non_empty;
-				});
-			}
-			data.data('last-used-title', title || 'No title');
-		});
+		// data.script.add(function () {
+		// 	var title = '';
+		// 	data.data('last-used-script', data.script());
+		// 	data.data('last-used-date', helper.format_date(new Date()));
+		// 	if (data.script()) {
+		// 		var title_match;
+		// 		var wait_for_non_empty = false;
+		// 		data.script().split('\n').some(function (line) {
+		// 			title_match = line.match(/title\:(.*)/i);
+		// 			if (wait_for_non_empty) {
+		// 				title = line.trim().replace(/\*/g, '').replace(/_/g, '');
+		// 				wait_for_non_empty = !title;
+		// 			}
+		// 			if (title_match) {
+		// 				title = title_match[1].trim();
+		// 				wait_for_non_empty = !title;
+		// 			}
+		// 			return title && !wait_for_non_empty;
+		// 		});
+		// 	}
+		// 	data.data('last-used-title', title || 'No title');
+		// });
 		save.gd_saved.add(function (item) {
 			clear_last_opened();
 			data.data('gd-link', item.alternateLink);
@@ -201,16 +201,16 @@ define(function (require) {
 		last_used: {}
 	};
 
-	var last_session_script_loaded = false;
-	if (data.data('last-used-date')) {
-		data.data('filename', '');
-		log.info('Last used exists. Loading: ', data.data('last-used-title'), data.data('last-used-date'));
-		plugin.context.last_used.script = data.data('last-used-script');
-		plugin.context.last_used.date = data.data('last-used-date');
-		plugin.context.last_used.title = data.data('last-used-title');
-		last_session_script = data.data('last-used-script');
-		last_session_script_loaded = true;
-	}
+	// var last_session_script_loaded = false;
+	// if (data.data('last-used-date')) {
+	// 	data.data('filename', '');
+	// 	log.info('Last used exists. Loading: ', data.data('last-used-title'), data.data('last-used-date'));
+	// 	plugin.context.last_used.script = data.data('last-used-script');
+	// 	plugin.context.last_used.date = data.data('last-used-date');
+	// 	plugin.context.last_used.title = data.data('last-used-title');
+	// 	last_session_script = data.data('last-used-script');
+	// 	last_session_script_loaded = true;
+	// }
 
 	return plugin;
 });

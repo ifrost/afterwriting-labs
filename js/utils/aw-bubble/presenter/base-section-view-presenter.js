@@ -4,6 +4,9 @@ define(function(require) {
         // DEBT: data should be parsed when needed, by using computed properties and bindings (+)
         data = require('modules/data');
 
+    /**
+     * @alias BaseSectionPresenter
+     */
     var BaseSectionPresenter = Protoplast.Object.extend({
 
         /**
