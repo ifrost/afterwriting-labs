@@ -24,6 +24,7 @@ define(function(require) {
             this.view.on('open-sample', this._openSample);
             this.view.on('create-new', this._createNew);
             this.view.on('open-last-used', this._openLastUsed);
+            this.view.on('open-from-dropbox', this._openFromDropbox);
         },
         
         _createNew: function() {
@@ -39,6 +40,10 @@ define(function(require) {
         _openLastUsed: function() {
             this.openController.openLastUsed();
             // track
+        },
+        
+        _openFromDropbox: function() {
+            this.openController.openFromDropbox();
         },
         
         _downloadClicked: function() {

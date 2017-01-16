@@ -33,13 +33,13 @@ define(function (require) {
 
 	var last_session_script;
 
-	var set_script = function (value) {
-		clear_last_opened();
-		editor.set_sync(false);
-		editor.set_auto_save(false);
-		data.script(value);
-        plugin.theme.themeController.clearSelectedSection();
-	};
+	// var set_script = function (value) {
+	// 	clear_last_opened();
+	// 	editor.set_sync(false);
+	// 	editor.set_auto_save(false);
+	// 	data.script(value);
+     //    plugin.theme.themeController.clearSelectedSection();
+	// };
 
 	var clear_last_opened = function () {
 		data.format = undefined;
@@ -93,52 +93,52 @@ define(function (require) {
 		return window.gapi && window.location.protocol !== 'file:';
 	};
 
-	var open_from_cloud = function (client, back_callback, load_callback) {
-		client.list(function (root) {
-			root = typeof root !== 'function' ? client.convert_to_jstree(root) : root;
-			tree.show({
-				info: 'Please select file to open.',
-				data: root,
-				label: 'Open',
-				search: !data.config.cloud_lazy_loading,
-				callback: function (selected) {
-					if (selected.data.isFolder) {
-						$.prompt('Please select a file, not folder.', {
-							buttons: {
-								'Back': true,
-								'Cancel': false
-							},
-							submit: function (v) {
-								if (v) {
-									back_callback();
-								}
-							}
-						});
-					} else {
-						load_callback(selected);
-					}
-				}
-			});
-		}, {
-			before: function () {
-				$.prompt('Please wait...');
-			},
-			after: $.prompt.close,
-			lazy: data.config.cloud_lazy_loading
-		});
-	};
+	// var open_from_cloud = function (client, back_callback, load_callback) {
+	// 	client.list(function (root) {
+	// 		root = typeof root !== 'function' ? client.convert_to_jstree(root) : root;
+	// 		tree.show({
+	// 			info: 'Please select file to open.',
+	// 			data: root,
+	// 			label: 'Open',
+	// 			search: !data.config.cloud_lazy_loading,
+	// 			callback: function (selected) {
+	// 				if (selected.data.isFolder) {
+	// 					$.prompt('Please select a file, not folder.', {
+	// 						buttons: {
+	// 							'Back': true,
+	// 							'Cancel': false
+	// 						},
+	// 						submit: function (v) {
+	// 							if (v) {
+	// 								back_callback();
+	// 							}
+	// 						}
+	// 					});
+	// 				} else {
+	// 					load_callback(selected);
+	// 				}
+	// 			}
+	// 		});
+	// 	}, {
+	// 		before: function () {
+	// 			$.prompt('Please wait...');
+	// 		},
+	// 		after: $.prompt.close,
+	// 		lazy: data.config.cloud_lazy_loading
+	// 	});
+	// };
 
-	plugin.open_from_dropbox = function () {
-		var finished = decorator.signal();
-		open_from_cloud(db, plugin.open_from_dropbox, function (selected) {
-			db.load_file(selected.data.path, function (content) {
-				set_script(content);
-				data.data('db-path', selected.data.path);
-				finished(data.format);
-			});
-		});
-		return finished;
-	};
+	// plugin.open_from_dropbox = function () {
+	// 	var finished = decorator.signal();
+	// 	open_from_cloud(db, plugin.open_from_dropbox, function (selected) {
+	// 		db.load_file(selected.data.path, function (content) {
+	// 			set_script(content);
+	// 			data.data('db-path', selected.data.path);
+	// 			finished(data.format);
+	// 		});
+	// 	});
+	// 	return finished;
+	// };
 
 	plugin.open_from_google_drive = function () {
 		var finished = decorator.signal();
