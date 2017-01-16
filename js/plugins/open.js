@@ -60,20 +60,20 @@ define(function (require) {
 		return startup;
 	};
 
-	plugin.open_file = function (selected_file) {
-		var finished = decorator.signal();
-		var fileReader = new FileReader();
-		fileReader.onload = function () {
-			var value = this.result;
-			set_script(value);
-			local.local_file(selected_file);
-			finished(data.format);
-		};
-		fileReader.readAsText(selected_file);
-		return finished;
-	};
+	// plugin.open_file = function (selected_file) {
+	// 	var finished = decorator.signal();
+	// 	var fileReader = new FileReader();
+	// 	fileReader.onload = function () {
+	// 		var value = this.result;
+	// 		set_script(value);
+	// 		local.local_file(selected_file);
+	// 		finished(data.format);
+	// 	};
+	// 	fileReader.readAsText(selected_file);
+	// 	return finished;
+	// };
 
-	plugin.open_file_dialog = decorator.signal();
+	// plugin.open_file_dialog = decorator.signal();
 
 	// plugin.create_new = function () {
 	// 	set_script('');

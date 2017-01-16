@@ -15,7 +15,7 @@ define(function(require) {
         hbs: template,
         
         lastUsedInfo: null,
-        
+
         init: function() {
             HandlebarComponent.init.call(this);
             Protoplast.utils.bind(this, 'lastUsedInfo', this._updateLastUsedInfo);
@@ -35,43 +35,36 @@ define(function(require) {
             $('a[open-action="last"]').click(self.dispatch.bind(this, 'open-last-used'));
             $('a[open-action="dropbox"]').click(self.dispatch.bind(this, 'open-from-dropbox'));
             $('a[open-action="googledrive"]').click(self.dispatch.bind(this, 'open-from-google-drive'));
+            
+            this._resetFileInput();
 
-/*
-            var reset_file_input = function() {
-                $('#open-file-wrapper').empty();
-                $('#open-file-wrapper').html('<input id="open-file" type="file" style="display:none" />');
-                $("#open-file").change(function() {
-                    var selected_file = $('#open-file').get(0).files[0];
-                    open.open_file(selected_file);
-                    reset_file_input();
-                });
-            };
+            $("#open-file").change(function() {
+                var selected_file = $('#open-file').get(0).files[0];
+                this.dispatch('open-file', selected_file);
+                this._resetFileInput();
+            }.bind(this));
 
             $('a[open-action="open"]').click(function() {
-                open.open_file_dialog()
-            });
-       
-
-            open.open_file_dialog.add(function() {
                 $("#open-file").click();
-            });
+            }.bind(this));
 
-            open.activate.add(function() {
-                if (open.is_dropbox_available()) {
-                    $('a[open-action="dropbox"]').parent().show();
-                } else {
-                    $('a[open-action="dropbox"]').parent().hide();
-                }
+            /*
+                        open.activate.add(function() {
+                            if (open.is_dropbox_available()) {
+                                $('a[open-action="dropbox"]').parent().show();
+                            } else {
+                                $('a[open-action="dropbox"]').parent().hide();
+                            }
 
-                if (open.is_google_drive_available()) {
-                    $('a[open-action="googledrive"]').parent().show();
-                } else {
-                    $('a[open-action="googledrive"]').parent().hide();
-                }
-            });
+                            if (open.is_google_drive_available()) {
+                                $('a[open-action="googledrive"]').parent().show();
+                            } else {
+                                $('a[open-action="googledrive"]').parent().hide();
+                            }
+                        });
 
-            reset_file_input();
-*/
+                        reset_file_input();
+            */
         },
 
         $lastUsed: null,
@@ -79,6 +72,11 @@ define(function(require) {
         $lastUsedTitle: null,
 
         $lastUsedDate: null,
+
+        _resetFileInput: function() {
+            $('#open-file-wrapper').empty()
+                .html('<input id="open-file" type="file" style="display:none" />');
+        },
 
         _updateLastUsedInfo: function() {
             if (this.lastUsedInfo) {

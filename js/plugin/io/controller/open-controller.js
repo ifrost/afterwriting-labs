@@ -4,6 +4,7 @@ define(function(require) {
         db = require('utils/dropbox'),
         data = require('modules/data'),
         gd = require('utils/googledrive'),
+        local = require('utils/local'),
         tree = require('utils/tree'),
         helper = require('utils/helper'),
         LastUsedInfo = require('plugin/io/model/last-used-info'),
@@ -73,6 +74,17 @@ define(function(require) {
             if (this.ioModel.lastUsedInfo) {
                 this._setScript(this.ioModel.lastUsedInfo.script);
             }
+        },
+
+        openFile: function(selectedFile) {
+            var fileReader = new FileReader();
+            var self = this;
+            fileReader.onload = function () {
+                var value = this.result;
+                self._setScript(value);
+                local.local_file(selectedFile);
+            };
+            fileReader.readAsText(selectedFile);
         },
 
         openFromDropbox: function() {
