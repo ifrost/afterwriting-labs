@@ -3,6 +3,7 @@ define(function(require) {
     var Protoplast = require('p'),
         db = require('utils/dropbox'),
         data = require('modules/data'),
+        gd = require('utils/googledrive'),
         tree = require('utils/tree'),
         helper = require('utils/helper'),
         LastUsedInfo = require('plugin/io/model/last-used-info'),
@@ -79,6 +80,19 @@ define(function(require) {
                 db.load_file(selected.data.path, function (content) {
                     this._setScript(content);
                     data.data('db-path', selected.data.path);
+                    // this.dispatch('opened-from-dropbox', data.format);
+                }.bind(this));
+            }.bind(this));
+        },
+
+        openFromGoogleDrive: function () {
+            this._openFromCloud(gd, this.openFromGoogleDrive, function (selected) {
+                gd.load_file(selected.data.id, function (content, link, fileid) {
+                    this._setScript(content);
+                    data.data('gd-link', link);
+                    data.data('gd-fileid', fileid);
+                    data.data('gd-parents', selected.parents.slice(0, selected.parents.length-2).reverse());
+                    // this.dispatch('opened-from-google-drive', data.format);
                 }.bind(this));
             }.bind(this));
         },

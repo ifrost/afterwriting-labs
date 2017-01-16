@@ -34,6 +34,8 @@ define(function(require) {
 
             $('a[open-action="last"]').click(self.dispatch.bind(this, 'open-last-used'));
             $('a[open-action="dropbox"]').click(self.dispatch.bind(this, 'open-from-dropbox'));
+            $('a[open-action="googledrive"]').click(self.dispatch.bind(this, 'open-from-google-drive'));
+
 /*
             var reset_file_input = function() {
                 $('#open-file-wrapper').empty();
@@ -53,8 +55,6 @@ define(function(require) {
             open.open_file_dialog.add(function() {
                 $("#open-file").click();
             });
-
-            $('a[open-action="googledrive"]').click(open.open_from_google_drive);
 
             open.activate.add(function() {
                 if (open.is_dropbox_available()) {

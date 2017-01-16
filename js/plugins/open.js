@@ -140,19 +140,19 @@ define(function (require) {
 	// 	return finished;
 	// };
 
-	plugin.open_from_google_drive = function () {
-		var finished = decorator.signal();
-		open_from_cloud(gd, plugin.open_from_google_drive, function (selected) {
-			gd.load_file(selected.data.id, function (content, link, fileid) {
-				set_script(content);
-				data.data('gd-link', link);
-				data.data('gd-fileid', fileid);
-				data.data('gd-parents', selected.parents.slice(0, selected.parents.length-2).reverse());
-				finished(data.format);
-			});
-		});
-		return finished;
-	};
+	// plugin.open_from_google_drive = function () {
+	// 	var finished = decorator.signal();
+	// 	open_from_cloud(gd, plugin.open_from_google_drive, function (selected) {
+	// 		gd.load_file(selected.data.id, function (content, link, fileid) {
+	// 			set_script(content);
+	// 			data.data('gd-link', link);
+	// 			data.data('gd-fileid', fileid);
+	// 			data.data('gd-parents', selected.parents.slice(0, selected.parents.length-2).reverse());
+	// 			finished(data.format);
+	// 		});
+	// 	});
+	// 	return finished;
+	// };
 
 	plugin.init = function () {
 		log.info("Init: script handlers");
