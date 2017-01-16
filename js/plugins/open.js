@@ -41,24 +41,24 @@ define(function (require) {
      //    plugin.theme.themeController.clearSelectedSection();
 	// };
 
-	var clear_last_opened = function () {
-		data.format = undefined;
-		data.data('db-path', '');
-		data.data('gd-link', '');
-		data.data('gd-fileid', '');
-		data.data('gd-pdf-id', '');
-		data.data('db-pdf-path', '');
-		data.data('fountain-filename', '');
-		data.data('pdf-filename', '');
-		local.local_file(null);
-	};
+	// var clear_last_opened = function () {
+	// 	data.format = undefined;
+	// 	data.data('db-path', '');
+	// 	data.data('gd-link', '');
+	// 	data.data('gd-fileid', '');
+	// 	data.data('gd-pdf-id', '');
+	// 	data.data('db-pdf-path', '');
+	// 	data.data('fountain-filename', '');
+	// 	data.data('pdf-filename', '');
+	// 	local.local_file(null);
+	// };
 
-	plugin.open_last_used = function (startup) {
-		if (last_session_script_loaded) {
-			set_script(last_session_script || '');
-		}
-		return startup;
-	};
+	// plugin.open_last_used = function (startup) {
+	// 	if (last_session_script_loaded) {
+	// 		set_script(last_session_script || '');
+	// 	}
+	// 	return startup;
+	// };
 
 	// plugin.open_file = function (selected_file) {
 	// 	var finished = decorator.signal();

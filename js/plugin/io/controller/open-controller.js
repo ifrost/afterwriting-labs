@@ -21,8 +21,17 @@ define(function(require) {
         ioModel: {
             inject: IoModel
         },
+
+        saveController: {
+            inject: 'saveController'
+        },
         
         init: function() {
+
+            // TODO
+            // this.saveController.on('saved-to-google-drive', this._savedToGoogleDrive);
+            // this.saveController.on('saved-to-dropbox', this._savedToDropbox);
+
             data.script.add(function () {
                 var title = '';
                 data.data('last-used-script', data.script());
@@ -121,6 +130,25 @@ define(function(require) {
             }.bind(this));
         },
 
+        _savedToGoogleDrive: function() {
+            this._clearLastOpened();
+            data.data('gd-link', item.alternateLink);
+            data.data('gd-fileid', item.id);
+            data.data('filename', '');
+            // if (editor.is_active) {
+            //     editor.activate(); // refresj
+            // }
+        },
+
+        _savedToDropbox: function() {
+            this._clearLastOpened();
+            data.data('db-path', path);
+            data.data('filename', '');
+            // if (editor.is_active) {
+            //     editor.activate(); // refresh
+            // }
+        },
+
         _openFromCloud: function (client, back_callback, load_callback) {
             client.list(function (root) {
                 root = typeof root !== 'function' ? client.convert_to_jstree(root) : root;
@@ -165,7 +193,15 @@ define(function(require) {
         },
 
         _clearLastOpened: function() {
-            // TODO
+            data.format = undefined;
+            data.data('db-path', '');
+            data.data('gd-link', '');
+            data.data('gd-fileid', '');
+            data.data('gd-pdf-id', '');
+            data.data('db-pdf-path', '');
+            data.data('fountain-filename', '');
+            data.data('pdf-filename', '');
+            local.local_file(null);
         }
         
     });
