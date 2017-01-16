@@ -20,6 +20,8 @@ define(function(require) {
 
         init: function() {
             Protoplast.utils.bindProperty(this.ioModel, 'lastUsedInfo', this.view, 'lastUsedInfo');
+            Protoplast.utils.bindProperty(this.openController, 'isDropboxAvailable', this.view, 'displayOpenFromDropbox');
+            Protoplast.utils.bindProperty(this.openController, 'isGoogleDriveAvailable', this.view, 'displayOpenFromGoogleDrive');
 
             this.view.on('open-sample', this._openSample);
             this.view.on('create-new', this._createNew);

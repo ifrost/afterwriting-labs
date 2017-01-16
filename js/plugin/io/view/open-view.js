@@ -16,9 +16,17 @@ define(function(require) {
         
         lastUsedInfo: null,
 
+        displayOpenFromDropbox: false,
+
+        displayOpenFromGoogleDrive: false,
+
         init: function() {
             HandlebarComponent.init.call(this);
-            Protoplast.utils.bind(this, 'lastUsedInfo', this._updateLastUsedInfo);
+            Protoplast.utils.bind(this, {
+                lastUsed: this._updateLastUsedInfo,
+                displayOpenFromDropbox: this._updateOpenFromDropboxVisibility,
+                displayOpenFromGoogleDrive: this._updateOpenFromGoogleDriveVisibility
+            })
         },
         
         addInteractions: function() {
@@ -35,7 +43,7 @@ define(function(require) {
             $('a[open-action="last"]').click(self.dispatch.bind(this, 'open-last-used'));
             $('a[open-action="dropbox"]').click(self.dispatch.bind(this, 'open-from-dropbox'));
             $('a[open-action="googledrive"]').click(self.dispatch.bind(this, 'open-from-google-drive'));
-            
+
             this._resetFileInput();
 
             $("#open-file").change(function() {
@@ -47,24 +55,6 @@ define(function(require) {
             $('a[open-action="open"]').click(function() {
                 $("#open-file").click();
             }.bind(this));
-
-            /*
-                        open.activate.add(function() {
-                            if (open.is_dropbox_available()) {
-                                $('a[open-action="dropbox"]').parent().show();
-                            } else {
-                                $('a[open-action="dropbox"]').parent().hide();
-                            }
-
-                            if (open.is_google_drive_available()) {
-                                $('a[open-action="googledrive"]').parent().show();
-                            } else {
-                                $('a[open-action="googledrive"]').parent().hide();
-                            }
-                        });
-
-                        reset_file_input();
-            */
         },
 
         $lastUsed: null,
@@ -76,6 +66,22 @@ define(function(require) {
         _resetFileInput: function() {
             $('#open-file-wrapper').empty()
                 .html('<input id="open-file" type="file" style="display:none" />');
+        },
+
+        _updateOpenFromDropboxVisibility: function() {
+            if (this.displayOpenFromDropbox) {
+                $('a[open-action="dropbox"]').parent().show();
+            } else {
+                $('a[open-action="dropbox"]').parent().hide();
+            }
+        },
+
+        _updateOpenFromGoogleDriveVisibility: function() {
+            if (this.displayOpenFromGoogleDrive) {
+                $('a[open-action="googledrive"]').parent().show();
+            } else {
+                $('a[open-action="googledrive"]').parent().hide();
+            }
         },
 
         _updateLastUsedInfo: function() {

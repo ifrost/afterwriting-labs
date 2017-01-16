@@ -85,13 +85,13 @@ define(function (require) {
 	// 	set_script(text);
 	// };
 
-	plugin.is_dropbox_available = function () {
-		return window.location.protocol !== 'file:';
-	};
-
-	plugin.is_google_drive_available = function () {
-		return window.gapi && window.location.protocol !== 'file:';
-	};
+	// plugin.is_dropbox_available = function () {
+	// 	return window.location.protocol !== 'file:';
+	// };
+    //
+	// plugin.is_google_drive_available = function () {
+	// 	return window.gapi && window.location.protocol !== 'file:';
+	// };
 
 	// var open_from_cloud = function (client, back_callback, load_callback) {
 	// 	client.list(function (root) {
