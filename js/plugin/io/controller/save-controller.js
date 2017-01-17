@@ -42,6 +42,7 @@ define(function(require) {
                             data.data('fountain-filename', filename);
                         }
                         this._fileSaved();
+                        this.dispatch('fountain-saved-to-dropbox', path);
                     }.bind(this));
                 }.bind(this),
                 selected: data.data('db-path'),
@@ -69,6 +70,7 @@ define(function(require) {
                                 data.data('fountain-filename', filename);
                             }
                             this._fileSaved();
+                            this.dispatch('fountain-saved-to-google-drive', file);
                         }.bind(this),
                         parents: selected.data.isRoot ? [] : [selected.data],
                         fileid: selected.data.isFolder ? null : selected.data.id

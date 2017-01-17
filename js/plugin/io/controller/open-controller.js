@@ -9,6 +9,7 @@ define(function(require) {
         helper = require('utils/helper'),
         LastUsedInfo = require('plugin/io/model/last-used-info'),
         IoModel = require('plugin/io/model/io-model'),
+        SaveController = require('plugin/io/controller/save-controller'),
         ThemeController = require('aw-bubble/controller/theme-controller'),
         samples = require('samples');
     
@@ -23,14 +24,13 @@ define(function(require) {
         },
 
         saveController: {
-            inject: 'saveController'
+            inject: SaveController
         },
         
         init: function() {
 
-            // TODO
-            // this.saveController.on('saved-to-google-drive', this._savedToGoogleDrive);
-            // this.saveController.on('saved-to-dropbox', this._savedToDropbox);
+            this.saveController.on('fountain-saved-to-google-drive', this._savedToGoogleDrive);
+            this.saveController.on('fountain-saved-to-dropbox', this._savedToDropbox);
 
             data.script.add(function () {
                 var title = '';
@@ -118,7 +118,7 @@ define(function(require) {
             }.bind(this));
         },
 
-        _savedToGoogleDrive: function() {
+        _savedToGoogleDrive: function(item) {
             this._clearLastOpened();
             data.data('gd-link', item.alternateLink);
             data.data('gd-fileid', item.id);
@@ -128,7 +128,7 @@ define(function(require) {
             // }
         },
 
-        _savedToDropbox: function() {
+        _savedToDropbox: function(path) {
             this._clearLastOpened();
             data.data('db-path', path);
             data.data('filename', '');

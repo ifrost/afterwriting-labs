@@ -10,6 +10,8 @@ define(function(require) {
         shortTitle: 'open',
 
         smallIcon: 'gfx/icons/open.svg',
+        
+        description: 'You can open a .fountain or .fdx file (it will be converted to Fountain), or use one of the samples below.',
 
         mainContent: {
             value: OpenView.create()
