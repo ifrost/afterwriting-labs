@@ -85,18 +85,6 @@ define(function(require) {
             }
         },
 
-        isDropboxAvailable: {
-            get: function () {
-                return window.location.protocol !== 'file:';
-            }
-        },
-
-        isGoogleDriveAvailable: {
-            get: function () {
-                return window.gapi && window.location.protocol !== 'file:';
-            }
-        },
-
         openFile: function(selectedFile) {
             var fileReader = new FileReader();
             var self = this;

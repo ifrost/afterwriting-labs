@@ -26,7 +26,7 @@ define(function(require) {
                 lastUsed: this._updateLastUsedInfo,
                 displayOpenFromDropbox: this._updateOpenFromDropboxVisibility,
                 displayOpenFromGoogleDrive: this._updateOpenFromGoogleDriveVisibility
-            })
+            });
         },
         
         addInteractions: function() {

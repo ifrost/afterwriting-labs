@@ -1,41 +1,57 @@
 define(function(require) {
 
-    var template = require('text!plugin/io/view/save.hbs'),
+    var Protoplast = require('p'),
+        template = require('text!plugin/io/view/save.hbs'),
         $ = require('jquery'),
-        HandlebarComponent = require('utils/handlebar-component');
+        HandlebarComponent = require('utils/handlebar-component'),
+        SaveViewPresenter = require('plugin/io/view/save-view-presenter');
     
     return HandlebarComponent.extend({
 
-        hbs: template,
+        $meta: {
+            presenter: SaveViewPresenter
+        },
         
-        addInteractions: function() {
-        /*    var save = this.plugin;
-            
-            $(document).ready(function() {
-                $('a[action="save-fountain"]').click(save.save_as_fountain);
-                $('a[action="save-dropbox-fountain"]').click(save.dropbox_fountain);
-                $('a[action="save-gd-fountain"]').click(save.google_drive_fountain);
+        hbs: template,
 
-                $('a[action="save-pdf"]').click(save.save_as_pdf);
-                $('a[action="save-dropbox-pdf"]').click(save.dropbox_pdf);
-                $('a[action="save-gd-pdf"]').click(save.google_drive_pdf);
+        displayOpenFromDropbox: false,
 
-                save.activate.add(function() {
-                    if (!save.is_dropbox_available()) {
-                        $('a[action="save-dropbox-pdf"], a[action="save-dropbox-fountain"]').parent().hide();
-                    } else {
-                        $('a[action="save-dropbox-pdf"], a[action="save-dropbox-fountain"]').parent().show();
-                    }
-                    if (!save.is_google_drive_available()) {
-                        $('a[action="save-gd-pdf"], a[action="save-gd-fountain"]').parent().hide();
-                    } else {
-                        $('a[action="save-gd-pdf"], a[action="save-gd-fountain"]').parent().show();
-                    }
-                });
+        displayOpenFromGoogleDrive: false,
 
-
+        init: function() {
+            HandlebarComponent.init.call(this);
+            Protoplast.utils.bind(this, {
+                displayOpenFromDropbox: this._updateOpenFromDropboxVisibility,
+                displayOpenFromGoogleDrive: this._updateOpenFromGoogleDriveVisibility
             });
-*/
+        },
+
+        addInteractions: function() {
+
+            $('a[action="save-fountain"]').click(this.dispatch.bind(this, 'save-as-fountain'));
+            $('a[action="save-dropbox-fountain"]').click(this.dispatch.bind(this, 'dropbox-fountain'));
+            $('a[action="save-gd-fountain"]').click(this.dispatch.bind(this, 'google-drive-fountain'));
+
+            $('a[action="save-pdf"]').click(this.dispatch.bind(this, 'save-as-pdf'));
+            $('a[action="save-dropbox-pdf"]').click(this.dispatch.bind(this, 'dropbox-pdf'));
+            $('a[action="save-gd-pdf"]').click(this.dispatch.bind(this, 'google-drive-pdf'));
+        },
+
+        _updateOpenFromDropboxVisibility: function() {
+            if (this.displayOpenFromDropbox) {
+                // DEBT: All the queries should be local, not global (+)
+                $('a[action="save-dropbox-pdf"], a[action="save-dropbox-fountain"]').parent().show();
+            } else {
+                $('a[action="save-dropbox-pdf"], a[action="save-dropbox-fountain"]').parent().hide();
+            }
+        },
+
+        _updateOpenFromGoogleDriveVisibility: function() {
+            if (this.displayOpenFromGoogleDrive) {
+                $('a[action="save-gd-pdf"], a[action="save-gd-fountain"]').parent().show();
+            } else {
+                $('a[action="save-gd-pdf"], a[action="save-gd-fountain"]').parent().hide();
+            }
         }
 
     });

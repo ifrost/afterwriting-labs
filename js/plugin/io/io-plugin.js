@@ -4,6 +4,7 @@ define(function(require) {
         data = require('modules/data'),
         IoModel = require('plugin/io/model/io-model'),
         OpenController = require('plugin/io/controller/open-controller'),
+        SaveController = require('plugin/io/controller/save-controller'),
         OpenSection = require('plugin/io/model/open-section'),
         SaveSection = require('plugin/io/model/save-section'),
         ThemeController = require('aw-bubble/controller/theme-controller');
@@ -16,6 +17,7 @@ define(function(require) {
         
         $create: function(context) {
             context.register(OpenController.create());
+            context.register(SaveController.create());
             context.register(IoModel.create());
         },
         

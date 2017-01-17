@@ -23,8 +23,19 @@ define(function(require) {
         /**
          * @type {Boolean}
          */
-        lastUsedInfoLoaded: false
-        
+        lastUsedInfoLoaded: false,
+
+        isDropboxAvailable: {
+            get: function () {
+                return window.location.protocol !== 'file:';
+            }
+        },
+
+        isGoogleDriveAvailable: {
+            get: function () {
+                return window.gapi && window.location.protocol !== 'file:';
+            }
+        }
     });
 
     return IoModel;
