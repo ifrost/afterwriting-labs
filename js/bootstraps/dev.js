@@ -3,7 +3,6 @@ require(['bootstrap',
 		'modules/queries',
         'modules/charts',
 		'modules/dev',
-		'plugins/settings',
 		'plugins/facts',
 		'plugins/stats',
 		'../test/acceptance/setup'

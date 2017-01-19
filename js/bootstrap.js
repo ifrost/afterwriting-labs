@@ -12,9 +12,11 @@ define(function(require) {
         ThemeController = require('aw-bubble/controller/theme-controller'),
         AppController = require('controller/app-controller'),
         GoogleAnalyticsMonitor = require('core/controller/google-analytics-monitor'),
+        Storage = require('core/model/storage'),
         InfoPlugin = require('plugin/info/info-plugin'),
         IoPlugin = require('plugin/io/io-plugin'),
         EditorPlugin = require('plugin/editor/editor-plugin'),
+        SettingsPlugin = require('plugin/settings/settings-plugin'),
         PreviewPlugin = require('plugin/preview/preview-plugin');
 
     var log = logger.get('bootstrap'),
@@ -65,10 +67,12 @@ define(function(require) {
         di.register(themeModel = ThemeModel.create());
         di.register(themeController = ThemeController.create());
         di.register('monitor', GoogleAnalyticsMonitor.create());
+        di.register('storage', Storage.create());
         di.register(AppController.create());
         di.register(InfoPlugin.create(di));
         di.register(IoPlugin.create(di));
         di.register(EditorPlugin.create(di));
+        di.register(SettingsPlugin.create(di));
         di.register(PreviewPlugin.create(di));
         di.build();
         var root = Protoplast.Component.Root(document.body, di);

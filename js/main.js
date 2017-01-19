@@ -8,6 +8,7 @@
 			jquery: 'libs/jquery-1.11.1.min',
 			handlebars: 'libs/handlebars',
 			logger: 'libs/logger',
+            lodash: '../node_modules/lodash/lodash',
 			saveAs: 'libs/FileSaver',
 			d3: 'libs/d3.min',
 			modernizr: 'libs/modernizr',

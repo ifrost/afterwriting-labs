@@ -45,6 +45,7 @@
     "grunt-text-replace": "^0.3.12",
     "istanbul": "^0.3.7",
     "jshint-stylish": "^1.0.0",
+    "lodash": "^4.17.4",
     "mocha": "^2.2.1",
     "protoplast": "^2.0.0-alpha.15",
     "sinon": "^1.14.0",

@@ -7,7 +7,7 @@ define(function(require) {
         EditorModel = require('plugin/editor/model/editor-model'),
         ThemeController = require('aw-bubble/controller/theme-controller');
 
-    var InfoPlugin = Plugin.extend({
+    var EditorPlugin = Plugin.extend({
 
         themeController: {
             inject: ThemeController
@@ -29,5 +29,5 @@ define(function(require) {
 
     });
 
-    return InfoPlugin;
+    return EditorPlugin;
 });
