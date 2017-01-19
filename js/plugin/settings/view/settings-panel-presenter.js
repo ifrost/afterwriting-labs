@@ -1,13 +1,12 @@
 define(function(require) {
 
     var Protoplast = require('p'),
-        SettingsController = require('plugin/settings/controller/settings-controller'),
-        SettingsModel = require('plugin/settings/model/settings-model');
-
+        SettingsController = require('plugin/settings/controller/settings-controller');
+    
     var SettingsPanelPresenter = Protoplast.Object.extend({
 
         settings: {
-            inject: SettingsModel
+            inject: 'settings'
         },
 
         controller: {
@@ -17,7 +16,7 @@ define(function(require) {
         init: function() {
             Protoplast.utils.bind(this, 'settings.groups', this._updateConfig);
 
-            this.settings.on('valuesChanged', function(event) {
+            this.settings.values.on('changed', function(event) {
                 var entry = this.settings.getSettingEntry(event.key);
                 if (entry) {
                     entry.control.value = event.value;

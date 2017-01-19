@@ -26,7 +26,11 @@ define(function(require) {
         saveController: {
             inject: SaveController
         },
-        
+
+        settingsModel: {
+            inject: 'settings'
+        },
+
         init: function() {
 
             this.saveController.on('fountain-saved-to-google-drive', this._savedToGoogleDrive);
@@ -64,9 +68,7 @@ define(function(require) {
                 this.ioModel.lastUsedInfo.title = data.data('last-used-title');
             }
 
-            if (data.config.load_last_opened) {
-                this.openLastUsed();
-            }
+            Protoplast.utils.bind(this, 'settingsModel.values.userSettingsLoaded', this._openLastUsedOnStartup);
         },
 
         createNew: function() {
@@ -116,6 +118,12 @@ define(function(require) {
                     // this.dispatch('opened-from-google-drive', data.format);
                 }.bind(this));
             }.bind(this));
+        },
+
+        _openLastUsedOnStartup: function() {
+            if (data.config && data.config.load_last_opened) {
+                this.openLastUsed();
+            }
         },
 
         _savedToGoogleDrive: function(item) {

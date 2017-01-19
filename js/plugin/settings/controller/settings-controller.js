@@ -1,16 +1,15 @@
 define(function(require) {
 
     var _ = require('lodash'),
+        data = require('modules/data'),
         Protoplast = require('p'),
-        DefaultSettingsProvider = require('plugin/settings/model/default-settings-provider'),
         SettingsConfigProvider = require('plugin/settings/model/settings-config-provider'),
-        ThemeController = require('aw-bubble/controller/theme-controller'),
-        SettingsModel = require('plugin/settings/model/settings-model');
-
+        ThemeController = require('aw-bubble/controller/theme-controller');
+    
     var SettingsController = Protoplast.Object.extend({
 
         settingsModel: {
-            inject: SettingsModel
+            inject: 'settings'
         },
 
         storage: {
@@ -40,25 +39,23 @@ define(function(require) {
         },
 
         _loadSettings: function() {
-            var defaultSettings = DefaultSettingsProvider.getConfig(),
-                settings = {};
-
             this.storage.load('settings', function(userSettings) {
-                _.assign(settings, defaultSettings, userSettings);
-                this.setValues(settings);
-                this.settingsModel.on('valuesChanged', this._saveCurrentSettings, this);
-                this._updateThemeSettings();
+                this.settingsModel.values.fromJSON(userSettings);
+                data.config = this.settingsModel.values;
+                this.settingsModel.values.userSettingsLoaded = true;
+                this.settingsModel.values.on('changed', this._saveCurrentSettings, this);
             }.bind(this));
+
+            Protoplast.utils.bind(this, {
+                'settingsModel.values.night_mode': this.themeController.nightMode,
+                'settingsModel.values.show_background_image': this.themeController.showBackgroundImage
+            })
         },
 
         _saveCurrentSettings: function() {
-            this._updateThemeSettings();
-            this.storage.save('settings', this.settingsModel.values);
-        },
-
-        _updateThemeSettings: function() {
-            this.themeController.nightMode(this.settingsModel.values['night_mode']);
-            this.themeController.showBackgroundImage(this.settingsModel.values['show_background_image']);
+            data.config = this.settingsModel.values;
+            data.script(data.script()); // parse again (e.g. to add/hide tokens)
+            this.storage.save('settings', this.settingsModel.values.toJSON());
         }
 
     });

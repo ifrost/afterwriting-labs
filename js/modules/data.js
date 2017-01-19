@@ -223,33 +223,6 @@ define('modules/data', function (require) {
 		return print_profiles[plugin.config.print_profile];
 	};
 
-	plugin.save_config = decorator(function () {
-		plugin.data('config', JSON.stringify(plugin.config));
-	});
-
-	plugin.reset_config = function () {
-		plugin.data('config', JSON.stringify({}));
-		plugin.load_config();
-	};
-
-	plugin.load_config = decorator(function (overrides) {
-		plugin.config = Object.create(plugin.default_config);
-		if (!overrides) {
-			try {
-				overrides = JSON.parse(plugin.data('config'));
-			} catch (error) {
-				overrides = {};
-			}
-		}
-		for (var attrname in overrides) {
-			plugin.config[attrname] = overrides[attrname];
-		}
-	});
-
-	plugin.prepare = function () {
-		plugin.load_config();
-	};
-
     /**
      * TODO: replace with Protoplast bindings after converting to a model
      * @param callback

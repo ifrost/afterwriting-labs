@@ -14,7 +14,7 @@ define(function(require) {
         },
 
         $create: function(context) {
-            context.register(SettingsModel.create());
+            context.register('settings', SettingsModel.create());
             context.register(SettingsController.create());
         },
 

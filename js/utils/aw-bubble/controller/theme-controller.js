@@ -3,17 +3,10 @@ define(function(require) {
     var Protoplast = require('p'),
         ThemeModel = require('aw-bubble/model/theme-model');
     
-    var ThemeController = Protoplast.extend({
+    var ThemeController = Protoplast.Object.extend({
         
         themeModel: {
             inject: ThemeModel
-        },
-
-        init: {
-            injectInit: true,
-            value: function() {
-                console.log('x');
-            }
         },
         
         addSection: function(section) {
