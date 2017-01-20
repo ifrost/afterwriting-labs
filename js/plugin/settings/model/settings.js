@@ -172,7 +172,7 @@ define(function(require) {
             var savedProperties = this.$meta.properties.name;
             for (var property in savedProperties) {
                 if (savedProperties.hasOwnProperty(property)) {
-                    this.on(property + '_changed', this._triggerChanged.bind(this));
+                    this.on(property + '_changed', this._triggerChanged.bind(this, property, savedProperties[property]));
                 }
             }
         },
@@ -204,8 +204,8 @@ define(function(require) {
             return print_profiles[this.print_profile];
         },
 
-        _triggerChanged: function() {
-            this.dispatch('changed');
+        _triggerChanged: function(property, key) {
+            this.dispatch('changed', {key: key, value: this[property]});
         }
     });
 

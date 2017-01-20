@@ -2,12 +2,17 @@ define(function(require) {
 
     var Protoplast = require('p'),
         save = require('utils/save'),
+        ThemeController = require('aw-bubble/controller/theme-controller'),
         EditorModel = require('plugin/editor/model/editor-model');
 
     var EditorController = Protoplast.Object.extend({
         
         editorModel: {
             inject: EditorModel
+        },
+
+        themeController: {
+            inject: ThemeController
         },
         
         autoSaveSyncTimer: null,
@@ -43,6 +48,17 @@ define(function(require) {
                     this.editorModel.saveInProgress = false;
                 }.bind(this));
             }
+        },
+        
+        goto: function(line) {
+            this.editorModel.cursorPosition = {
+                ch: 0,
+                line: line,
+                xRel: 0
+            };
+            this.editorModel.scrollInfo = null;
+
+            this.themeController.selectSectionByName('editor');
         }
         
     });

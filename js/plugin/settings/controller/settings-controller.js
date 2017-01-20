@@ -40,7 +40,7 @@ define(function(require) {
 
         _loadSettings: function() {
             this.storage.load('settings', function(userSettings) {
-                this.settingsModel.values.fromJSON(userSettings);
+                this.settingsModel.values.fromJSON(userSettings || {});
                 data.config = this.settingsModel.values;
                 this.settingsModel.values.userSettingsLoaded = true;
                 this.settingsModel.values.on('changed', this._saveCurrentSettings, this);

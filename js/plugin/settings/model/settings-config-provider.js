@@ -97,6 +97,7 @@ define(function(require) {
 
         createCheckbox: function(key, label) {
             var checkbox = Checkbox.create();
+            checkbox.id = key;
             return SettingsEntry.create(key, label, checkbox);
         },
 

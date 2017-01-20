@@ -1,10 +1,16 @@
 define(function(require) {
 
     var BaseSectionViewPresenter = require('aw-bubble/presenter/base-section-view-presenter'),
+        // DEBT: decouple modules (+)
+        EditorController = require('plugin/editor/controller/editor-controller'),
         data = require('modules/data'),
         queries = require('modules/queries');
 
     var StatsViewPresenter = BaseSectionViewPresenter.extend({
+
+        editorController: {
+            inject: EditorController
+        },
 
         init: function() {
             BaseSectionViewPresenter.init.call(this);
@@ -33,8 +39,8 @@ define(function(require) {
             //editor.synced.remove(plugin.refresh);
         },
 
-        _goto: function(position) {
-            console.log(position);
+        _goto: function(line) {
+            this.editorController.goto(line);
         }
 
     });
