@@ -5,13 +5,15 @@ define(function(require) {
     var SectionViewMixin = Protoplast.extend({
         
         section: null,
+
+        active: false,
         
         activate: function() {
-            
+            this.active = true;
         },
         
         deactivate: function() {
-            
+            this.active = false;
         },
 
         show: function() {

@@ -17,6 +17,7 @@ define(function(require) {
         IoPlugin = require('plugin/io/io-plugin'),
         EditorPlugin = require('plugin/editor/editor-plugin'),
         FactsPlugin = require('plugin/facts/facts-plugin'),
+        StatsPlugin = require('plugin/stats/stats-plugin'),
         SettingsPlugin = require('plugin/settings/settings-plugin'),
         PreviewPlugin = require('plugin/preview/preview-plugin');
 
@@ -74,6 +75,7 @@ define(function(require) {
         di.register(IoPlugin.create(di));
         di.register(EditorPlugin.create(di));
         di.register(FactsPlugin.create(di));
+        di.register(StatsPlugin.create(di));
         di.register(SettingsPlugin.create(di));
         di.register(PreviewPlugin.create(di));
         di.build();
