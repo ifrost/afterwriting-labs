@@ -445,7 +445,7 @@ define(function (require) {
 		plugin.basics = create_basics();
 		plugin.page_balance = create_page_balance();
 		plugin.tempo = create_tempo();
-		plugin.locations_breakdown = create_locations_breakdown();
+		plugin.locationsBreakdown = create_locations_breakdown();
 	};
 
 	return plugin;

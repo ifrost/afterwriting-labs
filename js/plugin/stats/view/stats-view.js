@@ -3,9 +3,14 @@ define(function(require) {
     var template = require('text!plugin/stats/view/stats.hbs'),
         $ = require('jquery'),
         helper = require('utils/helper'),
-        charts = require('modules/charts'),
         Header = require('aw-bubble/view/header'),
         Protoplast = require('p'),
+        SpiderChart = require('utils/charts/spider'),
+        BarChart = require('utils/charts/bar'),
+        PieChart = require('utils/charts/pie'),
+        PageBalanceChart = require('utils/charts/page_balance'),
+        LineChart = require('utils/charts/line'),
+        LocationsBreakdown = require('utils/charts/locations_breakdown'),
         SectionViewMixin = require('aw-bubble/view/section-view-mixin'),
         StatsViewPresenter = require('plugin/stats/view/stats-view-presenter'),
         ThemeModel = require('aw-bubble/model/theme-model'),
@@ -58,8 +63,27 @@ define(function(require) {
 
         data: null,
 
+        spiderChart: null,
+
+        barChart: null,
+
+        pieChart: null,
+
+        pageBalanceChart: null,
+
+        lineChart: null,
+
+        locationsBreakdown: null,
+
         init: function() {
             Protoplast.utils.bind(this, 'data', this._render);
+
+            this.spiderChart = SpiderChart;
+            this.barChart = BarChart;
+            this.pieChart = PieChart;
+            this.pageBalanceChart = PageBalanceChart;
+            this.lineChart = LineChart;
+            this.locationsBreakdown = LocationsBreakdown;
             
             this.whoWithWhoHeader.title = "Who talks with who (by number of scenes)";
             this.whoWithWhoHeader.description = "Each character is represented by a circle (max. 10 characters). If characters are connected with a line that means they are talking in the same scene. Thicker the line - more scenes together. Hover the mouse cursor over a character circle to see how many dialogues scenes that character have with other characters.";
@@ -104,11 +128,11 @@ define(function(require) {
                 return;
             }
             
-            charts.spider_chart.render('#who-with-who', this.data.who_with_who.characters, this.data.who_with_who.links, {
+            this.spiderChart.render('#who-with-who', this.data.who_with_who.characters, this.data.who_with_who.links, {
                 label: 'name'
             });
 
-            charts.bar_chart.render('#stats-scene-length', this.data.scenes, {
+            this.barChart.render('#stats-scene-length', this.data.scenes, {
                 tooltip: function(d) {
                     return d.header + ' (time: ' + helper.format_time(helper.lines_to_minutes(d.length)) + ')'
                 },
@@ -145,7 +169,7 @@ define(function(require) {
                 }.bind(this)
             });
 
-            charts.pie_chart.render('#stats-days-and-nights', this.data.days_and_nights, {
+            this.pieChart.render('#stats-days-and-nights', this.data.days_and_nights, {
                 tooltip: function(d) {
                     return d.data.label + ': ' + d.data.value + (d.data.value == 1 ? ' scene' : ' scenes')
                 },
@@ -176,7 +200,7 @@ define(function(require) {
                 other: 'OTHER'
             };
 
-            charts.pie_chart.render('#stats-int-ext', this.data.int_and_ext, {
+            this.pieChart.render('#stats-int-ext', this.data.int_and_ext, {
                 tooltip: function(d) {
                     return int_ext_labels[d.data.label] + ': ' + d.data.value + (d.data.value == 1 ? ' scene' : ' scenes')
                 },
@@ -198,7 +222,7 @@ define(function(require) {
                 }
             });
 
-            charts.page_balance_chart.render('#stats-page-balance', this.data.page_balance, {
+            this.pageBalanceChart.render('#stats-page-balance', this.data.page_balance, {
                 page_click: function(d) {
                     if (!themeModel.small) {
                         this._goto(d.first_line.token.line);
@@ -210,7 +234,7 @@ define(function(require) {
                 move_tooltip: themeController.moveTooltip.bind(themeController)
             });
 
-            charts.line_chart.render('#stats-tempo', this.data.tempo, {
+            this.lineChart.render('#stats-tempo', this.data.tempo, {
                 value: 'tempo',
                 small: themeModel.small,
                 show_tooltip: themeController.showTooltip.bind(themeController),
@@ -229,7 +253,7 @@ define(function(require) {
                 }.bind(this)
             });
 
-            charts.locations_breakdown.render('#locations-breakdown', this.data.locations_breakdown, {
+            this.locationsBreakdown.render('#locations-breakdown', this.data.locationsBreakdown, {
                 small: themeModel.small,
                 show_tooltip: themeController.showTooltip.bind(themeController),
                 hide_tooltip: themeController.hideTooltip.bind(themeController),

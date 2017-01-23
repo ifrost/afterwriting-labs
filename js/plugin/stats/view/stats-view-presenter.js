@@ -29,7 +29,7 @@ define(function(require) {
             statsData.who_with_who = queries.dialogue_breakdown.run(data.parsed_stats.tokens, basics, data.config.stats_who_with_who_max);
             statsData.page_balance = queries.page_balance.run(data.parsed_stats.lines);
             statsData.tempo = queries.tempo.run(data.parsed_stats.tokens);
-            statsData.locations_breakdown = queries.locations_breakdown.run(data.parsed_stats.tokens);
+            statsData.locationsBreakdown = queries.locationsBreakdown.run(data.parsed_stats.tokens);
 
             this.view.data = statsData;
         },

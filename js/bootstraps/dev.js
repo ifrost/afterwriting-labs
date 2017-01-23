@@ -1,7 +1,6 @@
 require(['bootstrap',
 		'modules/data',
 		'modules/queries',
-        'modules/charts',
 		'../test/acceptance/setup'
 ], function (bootstrap) {
     try {
