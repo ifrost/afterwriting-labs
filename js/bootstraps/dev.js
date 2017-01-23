@@ -5,5 +5,12 @@ require(['bootstrap',
 		'modules/dev',
 		'../test/acceptance/setup'
 ], function (bootstrap) {
-	bootstrap.init(arguments);
+    try {
+        bootstrap.init(arguments);
+    }
+    catch (e) {
+        // workaround for missing stack traces in PhantomJS
+        console.error('Bootstrap error: ', e.message, e.stack);
+        throw e;
+    }
 });
