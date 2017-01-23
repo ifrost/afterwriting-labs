@@ -30,12 +30,16 @@ define(function(require) {
             Protoplast.utils.bindProperty(this.editorModel, 'isAutoSaveEnabled' , this.view, 'isAutoSaveEnabled');
             Protoplast.utils.bindProperty(this.editorModel, 'saveInProgress' , this.view, 'saveInProgress');
             Protoplast.utils.bindProperty(this.editorModel, 'pendingChange' , this.view, 'pendingChanges');
+
+            data.script.add(function() {
+                this.view.content = data.script();
+            }.bind(this));
         },
 
         activate: function() {
             BaseSectionViewPresenter.activate.call(this);
-            this.view.isAutoSaveAvailable = (data.data('gd-fileid') || data.data('db-path')) && data.format !== 'fdx';
-            this.view.isSyncAvailable = data.data('gd-fileid') || data.data('db-path') || local.sync_available();
+            this.view.autoSaveAvailable = !!((data.data('gd-fileid') || data.data('db-path')) && data.format !== 'fdx');
+            this.view.syncAvailable = !!(data.data('gd-fileid') || data.data('db-path') || local.sync_available());
 
             setTimeout(function () {
                 this.view.content = data.script();
@@ -97,14 +101,14 @@ define(function(require) {
                 buttons: {'OK': true, 'Cancel': false},
                 submit: function(e, v) {
                     if (v) {
-                        self.toggleSync();
+                        self.editorController.toggleSync();
                     }
                 }
             });
         },
         
         _disableSync: function() {
-            this.editorModel.toggleSync();
+            this.editorController.toggleSync();
             
             var self = this;
             $.prompt('Synchronization turned off.', {

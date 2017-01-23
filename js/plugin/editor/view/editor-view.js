@@ -47,7 +47,7 @@ define(function(require) {
                 autoSaveAvailable: [this._updateAutoSaveAvailability, this._updateAutoSave],
                 saveInProgress: this._updateAnimation,
                 pendingChanges: this._updateAnimation,
-                content: this._updateContent,
+                content: this._updateContent
             });
 
         },
@@ -90,6 +90,7 @@ define(function(require) {
         _updateContent: function() {
             if (this.editor && this.content !== this.getEditorContent()) {
                 this.editor.setValue(this.content);
+                this.refresh();
             }
         },
 
@@ -151,7 +152,6 @@ define(function(require) {
 
         addInteractions: function() {
             this.editor = this.createEditor();
-            this.editor.setValue(this.content);
 
             this.editor.on('change', function () {
                 this.dispatch('editorContentChanged');
@@ -159,16 +159,16 @@ define(function(require) {
             
             $('a[action="sync-fountain"]').click(function() {
                 if (this.isSyncEnabled) {
-                    this.fire('disableSync');
+                    this.dispatch('disableSync');
                 }
                 else {
-                    this.fire('enableSync');
+                    this.dispatch('enableSync');
                 }
-            });
+            }.bind(this));
 
             $('a[action="auto-save"]').click(function() {
-                this.fire('toggleAutoSave');
-            });
+                this.dispatch('toggleAutoSave');
+            }.bind(this));
             
             var resize = function() {
                 this.editor.setSize("auto", $(this.root.parentNode).height() - 70);

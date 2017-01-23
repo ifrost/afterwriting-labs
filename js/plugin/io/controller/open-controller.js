@@ -7,6 +7,7 @@ define(function(require) {
         local = require('utils/local'),
         tree = require('utils/tree'),
         helper = require('utils/helper'),
+        EditorController = require('plugin/editor/controller/editor-controller'),
         LastUsedInfo = require('plugin/io/model/last-used-info'),
         IoModel = require('plugin/io/model/io-model'),
         SaveController = require('plugin/io/controller/save-controller'),
@@ -25,6 +26,10 @@ define(function(require) {
 
         saveController: {
             inject: SaveController
+        },
+        
+        editorController:{
+            inject: EditorController
         },
 
         settingsModel: {
@@ -131,6 +136,7 @@ define(function(require) {
             data.data('gd-link', item.alternateLink);
             data.data('gd-fileid', item.id);
             data.data('filename', '');
+            // TODO: needed?
             // if (editor.is_active) {
             //     editor.activate(); // refresj
             // }
@@ -140,6 +146,7 @@ define(function(require) {
             this._clearLastOpened();
             data.data('db-path', path);
             data.data('filename', '');
+            // TODO: needed?
             // if (editor.is_active) {
             //     editor.activate(); // refresh
             // }
@@ -182,8 +189,8 @@ define(function(require) {
 
         _setScript: function(value) {
             this._clearLastOpened();
-            // editor.set_sync(false);
-            // editor.set_auto_save(false);
+            // DEBT: remove dependency to editor (+)
+            this.editorController.cleanUp();
             data.script(value);
             this.themeController.clearSelectedSection();
         },

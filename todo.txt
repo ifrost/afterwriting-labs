@@ -1,8 +1,7 @@
-3 S (A) [LAYOUT] remove references to layout: remove from components, use in plugins and views directly (plugin.theme, view.plugin.theme?);
-
-3 S simplify references to layout (remove unused methods, keep tooltip for timebeing)
-
-2 S (B) [LAYOUT] [BLOCKED by (A)] remove unused methods move used methods to theme (layout.js included only in theme.js)
-2 M [LAYOUT] [BLOCKED by (B)] re-write layout.js methods to theme.js methods
-
-1 M [BLOCKED by layout references] tooltip: part of the theme, theme.showTooltip(x,y,text) api
+Same functionality in theme-update as in master
+- sync
+- auto reload
+Rebase develop
+Refactor models and stuff in modules
+Rename plugins to modules?
+Add test coverage

@@ -104,6 +104,8 @@ define(function(require) {
                     env.dropbox.content_change('file.fountain', 'override after sync');
                     env.browser.tick(10000);
                     env.assert.editor_content('changed content');
+
+                    env.user.sync_keep_content();
                     done();
                 });
 

@@ -1,7 +1,12 @@
 define(function(require) {
 
     var Protoplast = require('p'),
+        converter = require('utils/converters/scriptconverter'),
+        data = require('modules/data'),
+        gd = require('utils/googledrive'),
+        db = require('utils/dropbox'),
         save = require('utils/save'),
+        local = require('utils/local'),
         ThemeController = require('aw-bubble/controller/theme-controller'),
         EditorModel = require('plugin/editor/model/editor-model');
 
@@ -16,12 +21,62 @@ define(function(require) {
         },
         
         autoSaveSyncTimer: null,
-        
+
+        cleanUp: function() {
+            if (this.editorModel.isAutoSaveEnabled) {
+                this.toggleAutoSave();
+            }
+            if (this.editorModel.isSyncEnabled) {
+                this.toggleSync();
+            }
+        },
+
         toggleAutoSave: function() {
             if (!this.editorModel.isAutoSaveEnabled && this.editorModel.isSyncEnabled) {
                 this.editorModel.toggleSync();
             }
             this.setAutoSave(!this.editorModel.isAutoSaveEnabled);
+        },
+
+        toggleSync: function() {
+            this.editorModel.toggleSync();
+            if (this.editorModel.isSyncEnabled) {
+                this.setAutoSave(false);
+                if (data.data('gd-fileid')) {
+                    gd.sync(data.data('gd-fileid'), 3000, this._handleSync);
+                    // plugin.syced('google-drive');
+                } else if (data.data('db-path')) {
+                    db.sync(data.data('db-path'), 3000, this._handleSync);
+                    // plugin.synced('drobox');
+                } else if (local.sync_available()) {
+                    local.sync(3000, this._handleSync);
+                    // plugin.synced('local');
+                }
+            }
+            else {
+                gd.unsync();
+                db.unsync();
+                local.unsync();
+            }
+        },
+
+        _handleSync: function(content) {
+            content = converter.to_fountain(content).value;
+            if (content === undefined) {
+                this.toggleSync();
+                // if (active) {
+                //     plugin.activate();
+                // }
+            }
+            else if (this.editorModel.lastContent !== content) {
+                this.editorModel.lastContent = content;
+                data.script(content);
+                data.parse();
+                //plugin.synced();
+                // if (active) {
+                //     plugin.activate();
+                // }
+            }
         },
         
         setAutoSave: function(value) {
