@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var template = require('text!templates/plugins/stats.hbs'),
+    var template = require('text!plugin/stats/view/stats.hbs'),
         $ = require('jquery'),
         helper = require('utils/helper'),
         charts = require('modules/charts'),

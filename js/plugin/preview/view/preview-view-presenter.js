@@ -1,7 +1,6 @@
 define(function(require) {
 
     var BaseSectionViewPresenter = require('aw-bubble/presenter/base-section-view-presenter'),
-        editor = require('plugins/editor'),
         pdfmaker = require('utils/pdfmaker');
 
     var PreviewViewPresenter = BaseSectionViewPresenter.extend({
@@ -13,13 +12,13 @@ define(function(require) {
             // $create: this.bin dings = Protoplast.utils.bind(this, 'script.content', this.refresh);
             // on activate: this.bindings.start()
             // on deactivate: this.bindings.stop()
-            editor.synced.add(this.refresh);
+            // TODO: refresh on sync editor.synced.add(this.refresh);
             this.refresh();
         },
 
         deactivate: function() {
             BaseSectionViewPresenter.deactivate.call(this);
-            editor.synced.remove(this.refresh);
+            // TODO: stop refreshing when not visible editor.synced.remove(this.refresh);
         },
 
         refresh: function() {

@@ -3,7 +3,6 @@ define(function(require) {
     var BaseSectionViewPresenter = require('aw-bubble/presenter/base-section-view-presenter'),
         data = require('modules/data'),
         queries = require('modules/queries'),
-        editor = require('plugins/editor'),
         decorator = require('utils/decorator'),
         fhelpers = require('utils/fountain/helpers');
 
