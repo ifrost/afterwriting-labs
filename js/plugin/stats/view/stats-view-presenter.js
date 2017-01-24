@@ -2,10 +2,10 @@ define(function(require) {
 
     var BaseSectionViewPresenter = require('aw-bubble/presenter/base-section-view-presenter'),
         ScriptModel = require('core/model/script-model'),
-        // DEBT: decouple modules (+)
+        // DEBT: decouple modules (++)
         EditorController = require('plugin/editor/controller/editor-controller'),
         data = require('modules/data'),
-        queries = require('modules/queries');
+        queries = require('plugin/stats/model/queries');
 
     var StatsViewPresenter = BaseSectionViewPresenter.extend({
 
