@@ -41,7 +41,7 @@ define(function(require) {
             this.saveController.on('fountain-saved-to-google-drive', this._savedToGoogleDrive);
             this.saveController.on('fountain-saved-to-dropbox', this._savedToDropbox);
 
-            data.script.add(function () {
+            data.bindScript(function () {
                 var title = '';
                 data.data('last-used-script', data.script());
                 data.data('last-used-date', helper.format_date(new Date()));

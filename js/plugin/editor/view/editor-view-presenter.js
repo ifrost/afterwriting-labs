@@ -31,7 +31,7 @@ define(function(require) {
             Protoplast.utils.bindProperty(this.editorModel, 'saveInProgress' , this.view, 'saveInProgress');
             Protoplast.utils.bindProperty(this.editorModel, 'pendingChange' , this.view, 'pendingChanges');
 
-            data.script.add(function() {
+            data.bindScript(function() {
                 this.view.content = data.script();
             }.bind(this));
         },
