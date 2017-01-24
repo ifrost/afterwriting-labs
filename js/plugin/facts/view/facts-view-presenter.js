@@ -1,6 +1,7 @@
 define(function(require) {
 
     var BaseSectionViewPresenter = require('aw-bubble/presenter/base-section-view-presenter'),
+        ScriptModel = require('core/model/script-model'),
         data = require('modules/data'),
         queries = require('modules/queries'),
         decorator = require('utils/decorator'),
@@ -8,6 +9,10 @@ define(function(require) {
 
     var FactsViewPresenter = BaseSectionViewPresenter.extend({
 
+        scriptModel: {
+            inject: ScriptModel
+        },
+        
         activate: function() {
             BaseSectionViewPresenter.activate.call(this);
             //editor.synced.add(plugin.refresh);
@@ -29,7 +34,7 @@ define(function(require) {
         
         _generateData: function () {
 
-            var basics = queries.basics.run(data.parsed_stats.lines);
+            var basics = this.scriptModel.getBasicStats();
             this._facts = basics;
             var facts = this._facts;
 

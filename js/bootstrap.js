@@ -13,6 +13,7 @@ define(function(require) {
         AppController = require('controller/app-controller'),
         GoogleAnalyticsMonitor = require('core/controller/google-analytics-monitor'),
         Storage = require('core/model/storage'),
+        ScriptModel = require('core/model/script-model'),
         InfoPlugin = require('plugin/info/info-plugin'),
         IoPlugin = require('plugin/io/io-plugin'),
         EditorPlugin = require('plugin/editor/editor-plugin'),
@@ -70,6 +71,7 @@ define(function(require) {
         di.register(themeController = ThemeController.create());
         di.register('monitor', GoogleAnalyticsMonitor.create());
         di.register('storage', Storage.create());
+        di.register(ScriptModel.create());
         di.register(AppController.create());
         di.register(InfoPlugin.create(di));
         di.register(IoPlugin.create(di));
