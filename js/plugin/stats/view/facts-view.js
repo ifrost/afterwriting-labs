@@ -1,11 +1,11 @@
 define(function(require) {
 
     var Protoplast = require('p'),
-        template = require('text!plugin/facts/view/facts.hbs'),
+        template = require('text!plugin/stats/view/facts.hbs'),
         $ = require('jquery'),
         helper = require('utils/helper'),
         HandlebarComponent = require('utils/handlebar-component'),
-        FactsViewPresenter = require('plugin/facts/view/facts-view-presenter'),
+        FactsViewPresenter = require('plugin/stats/view/facts-view-presenter'),
         SectionViewMixin = require('aw-bubble/view/section-view-mixin');
 
     return HandlebarComponent.extend([SectionViewMixin], {

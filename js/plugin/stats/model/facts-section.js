@@ -1,7 +1,7 @@
 define(function(require) {
 
     var Section = require('aw-bubble/model/section'),
-        FactsView = require('plugin/facts/view/facts-view');
+        FactsView = require('plugin/stats/view/facts-view');
     
     var FactsSection = Section.extend({
         
