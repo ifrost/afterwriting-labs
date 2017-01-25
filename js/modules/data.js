@@ -61,18 +61,6 @@ define('modules/data', function (require) {
 		}
 	});
 
-	plugin.get_title_page_token = function (type) {
-		var result = null;
-		if (plugin.parsed && plugin.parsed.title_page) {
-			plugin.parsed.title_page.forEach(function (token) {
-				if (token.is(type)) {
-					result = token;
-				}
-			});
-		}
-		return result;
-	};
-
 	plugin.fontFixEnabled = !!url_params.fontFix;
 
     /**

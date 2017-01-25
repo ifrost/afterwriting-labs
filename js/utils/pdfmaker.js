@@ -147,15 +147,28 @@ define('utils/pdfmaker', function (require) {
 		stream.on('finish', callback);
 	}
 
+
+    var get_title_page_token = function (parsed, type) {
+        var result = null;
+        if (parsed && parsed.title_page) {
+            parsed.title_page.forEach(function (token) {
+                if (token.is(type)) {
+                    result = token;
+                }
+            });
+        }
+        return result;
+    };
+
 	function generate(doc) {
 		var parsed = data.parsed,
 			cfg = data.config,
 			lines = parsed.lines;
 
-		var title_token = data.get_title_page_token('title');
-		var author_token = data.get_title_page_token('author');
+		var title_token = get_title_page_token('title', parsed);
+		var author_token = get_title_page_token('author', parsed);
 		if (!author_token) {
-			author_token = data.get_title_page_token('authors');
+			author_token = get_title_page_token('authors', parsed);
 		}
 
 		doc.info.Title = title_token ? title_token.text : '';
@@ -175,13 +188,13 @@ define('utils/pdfmaker', function (require) {
 			title_y += cfg.print().line_spacing * cfg.print().font_height;
 		};
 
-		var title_page_main = function (type, options) {
+		var title_page_main = function (parsed, type, options) {
 			options = options || {};
-			if (type === undefined) {
+			if (arguments.length === 0) {
 				title_page_next_line();
 				return;
 			}
-			var token = data.get_title_page_token(type);
+			var token = get_title_page_token(parsed, type);
 			if (token) {
 				token.text.split('\n').forEach(function (line) {
 					if (options.capitalize) {
@@ -196,30 +209,30 @@ define('utils/pdfmaker', function (require) {
 		if (cfg.print_title_page) {
 
 			// title page
-			title_page_main('title', {
+			title_page_main(parsed, 'title', {
 				capitalize: true
 			});
 			title_page_main();
 			title_page_main();
-			title_page_main('credit');
+			title_page_main(parsed, 'credit');
 			title_page_main();
-			title_page_main('author');
-			title_page_main();
-			title_page_main();
+			title_page_main(parsed, 'author');
 			title_page_main();
 			title_page_main();
-			title_page_main('source');
+			title_page_main();
+			title_page_main();
+			title_page_main(parsed, 'source');
 
-			var concat_types = function (prev, type) {
-				var token = data.get_title_page_token(type);
+			var concat_types = function (parsed, prev, type) {
+				var token = get_title_page_token(parsed, type);
 				if (token) {
 					prev = prev.concat(token.text.split('\n'));
 				}
 				return prev;
 			};
 
-			var left_side = cfg.print().title_page.left_side.reduce(concat_types, []),
-				right_side = cfg.print().title_page.right_side.reduce(concat_types, []),
+			var left_side = cfg.print().title_page.left_side.reduce(concat_types.bind(null, parsed), []),
+				right_side = cfg.print().title_page.right_side.reduce(concat_types.bind(null, parsed), []),
 				title_page_extra = function (x) {
 					return function (line) {
 						doc.text(line.trim(), x, title_y);

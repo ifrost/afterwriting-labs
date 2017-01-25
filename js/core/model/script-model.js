@@ -86,10 +86,6 @@ define(function(require) {
             return data.parse();
         },
         
-        getTitlePageToken: function(type) {
-            return data.get_title_page_token(type);
-        },
-        
         getBasicStats: function() {
             return this._basicStats.run(data.parsed_stats.lines);
         },
