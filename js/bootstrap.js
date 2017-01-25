@@ -70,7 +70,7 @@ define(function(require) {
         di.register(themeController = ThemeController.create());
         di.register('monitor', GoogleAnalyticsMonitor.create());
         di.register('storage', Storage.create());
-        di.register(ScriptModel.create());
+        di.register('script', ScriptModel.create());
         di.register(AppController.create());
         di.register(InfoPlugin.create(di));
         di.register(IoPlugin.create(di));

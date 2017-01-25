@@ -2,7 +2,6 @@ define(function(require) {
 
     var Protoplast = require('p'),
         db = require('utils/dropbox'),
-        data = require('modules/data'),
         gd = require('utils/googledrive'),
         local = require('utils/local'),
         tree = require('utils/tree'),
@@ -15,6 +14,10 @@ define(function(require) {
         samples = require('samples');
     
     var OpenController = Protoplast.Object.extend({
+        
+        scriptModel: {
+            inject: 'script'
+        },
         
         themeController: {
             inject: ThemeController
@@ -41,14 +44,14 @@ define(function(require) {
             this.saveController.on('fountain-saved-to-google-drive', this._savedToGoogleDrive);
             this.saveController.on('fountain-saved-to-dropbox', this._savedToDropbox);
 
-            data.bindScript(function () {
+            this.scriptModel.bindScript(function () {
                 var title = '';
-                data.data('last-used-script', data.script());
-                data.data('last-used-date', helper.format_date(new Date()));
-                if (data.script()) {
+                this.scriptModel.data('last-used-script', this.scriptModel.script());
+                this.scriptModel.data('last-used-date', helper.format_date(new Date()));
+                if (this.scriptModel.script()) {
                     var title_match;
                     var wait_for_non_empty = false;
-                    data.script().split('\n').some(function (line) {
+                    this.scriptModel.script().split('\n').some(function (line) {
                         title_match = line.match(/title\:(.*)/i);
                         if (wait_for_non_empty) {
                             title = line.trim().replace(/\*/g, '').replace(/_/g, '');
@@ -61,16 +64,16 @@ define(function(require) {
                         return title && !wait_for_non_empty;
                     });
                 }
-                data.data('last-used-title', title || 'No title');
-            });
+                this.scriptModel.data('last-used-title', title || 'No title');
+            }.bind(this));
 
-            if (data.data('last-used-date')) {
-                data.data('filename', '');
+            if (this.scriptModel.data('last-used-date')) {
+                this.scriptModel.data('filename', '');
                 // log.info('Last used exists. Loading: ', data.data('last-used-title'), data.data('last-used-date'));
                 this.ioModel.lastUsedInfo = LastUsedInfo.create();
-                this.ioModel.lastUsedInfo.script = data.data('last-used-script');
-                this.ioModel.lastUsedInfo.date = data.data('last-used-date');
-                this.ioModel.lastUsedInfo.title = data.data('last-used-title');
+                this.ioModel.lastUsedInfo.script = this.scriptModel.data('last-used-script');
+                this.ioModel.lastUsedInfo.date = this.scriptModel.data('last-used-date');
+                this.ioModel.lastUsedInfo.title = this.scriptModel.data('last-used-title');
             }
 
             Protoplast.utils.bind(this, 'settingsModel.values.userSettingsLoaded', this._openLastUsedOnStartup);
@@ -107,7 +110,7 @@ define(function(require) {
             this._openFromCloud(db, this._openFromDropbox, function (selected) {
                 db.load_file(selected.data.path, function (content) {
                     this._setScript(content);
-                    data.data('db-path', selected.data.path);
+                    this.scriptModel.data('db-path', selected.data.path);
                     // this.dispatch('opened-from-dropbox', data.format);
                 }.bind(this));
             }.bind(this));
@@ -117,25 +120,25 @@ define(function(require) {
             this._openFromCloud(gd, this.openFromGoogleDrive, function (selected) {
                 gd.load_file(selected.data.id, function (content, link, fileid) {
                     this._setScript(content);
-                    data.data('gd-link', link);
-                    data.data('gd-fileid', fileid);
-                    data.data('gd-parents', selected.parents.slice(0, selected.parents.length-2).reverse());
+                    this.scriptModel.data('gd-link', link);
+                    this.scriptModel.data('gd-fileid', fileid);
+                    this.scriptModel.data('gd-parents', selected.parents.slice(0, selected.parents.length-2).reverse());
                     // this.dispatch('opened-from-google-drive', data.format);
                 }.bind(this));
             }.bind(this));
         },
 
         _openLastUsedOnStartup: function() {
-            if (data.config && data.config.load_last_opened) {
+            if (this.scriptModel.config && this.scriptModel.config.load_last_opened) {
                 this.openLastUsed();
             }
         },
 
         _savedToGoogleDrive: function(item) {
             this._clearLastOpened();
-            data.data('gd-link', item.alternateLink);
-            data.data('gd-fileid', item.id);
-            data.data('filename', '');
+            this.scriptModel.data('gd-link', item.alternateLink);
+            this.scriptModel.data('gd-fileid', item.id);
+            this.scriptModel.data('filename', '');
             // TODO: needed?
             // if (editor.is_active) {
             //     editor.activate(); // refresj
@@ -144,8 +147,8 @@ define(function(require) {
 
         _savedToDropbox: function(path) {
             this._clearLastOpened();
-            data.data('db-path', path);
-            data.data('filename', '');
+            this.scriptModel.data('db-path', path);
+            this.scriptModel.data('filename', '');
             // TODO: needed?
             // if (editor.is_active) {
             //     editor.activate(); // refresh
@@ -159,7 +162,7 @@ define(function(require) {
                     info: 'Please select file to open.',
                     data: root,
                     label: 'Open',
-                    search: !data.config.cloud_lazy_loading,
+                    search: !this.scriptModel.config.cloud_lazy_loading,
                     callback: function (selected) {
                         if (selected.data.isFolder) {
                             $.prompt('Please select a file, not folder.', {
@@ -178,32 +181,32 @@ define(function(require) {
                         }
                     }
                 });
-            }, {
+            }.bind(this), {
                 before: function () {
                     $.prompt('Please wait...');
                 },
                 after: $.prompt.close,
-                lazy: data.config.cloud_lazy_loading
+                lazy: this.scriptModel.config.cloud_lazy_loading
             });
         },
 
         _setScript: function(value) {
             this._clearLastOpened();
-            // DEBT: remove dependency to editor (+)
+            // DEBT: remove dependency to editor (++)
             this.editorController.cleanUp();
-            data.script(value);
+            this.scriptModel.script(value);
             this.themeController.clearSelectedSection();
         },
 
         _clearLastOpened: function() {
-            data.format = undefined;
-            data.data('db-path', '');
-            data.data('gd-link', '');
-            data.data('gd-fileid', '');
-            data.data('gd-pdf-id', '');
-            data.data('db-pdf-path', '');
-            data.data('fountain-filename', '');
-            data.data('pdf-filename', '');
+            this.scriptModel.format = undefined;
+            this.scriptModel.data('db-path', '');
+            this.scriptModel.data('gd-link', '');
+            this.scriptModel.data('gd-fileid', '');
+            this.scriptModel.data('gd-pdf-id', '');
+            this.scriptModel.data('db-pdf-path', '');
+            this.scriptModel.data('fountain-filename', '');
+            this.scriptModel.data('pdf-filename', '');
             local.local_file(null);
         }
         

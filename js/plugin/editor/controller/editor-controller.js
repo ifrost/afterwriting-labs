@@ -2,7 +2,6 @@ define(function(require) {
 
     var Protoplast = require('p'),
         converter = require('utils/converters/scriptconverter'),
-        data = require('modules/data'),
         gd = require('utils/googledrive'),
         db = require('utils/dropbox'),
         save = require('utils/save'),
@@ -11,6 +10,10 @@ define(function(require) {
         EditorModel = require('plugin/editor/model/editor-model');
 
     var EditorController = Protoplast.Object.extend({
+        
+        scriptModel: {
+            inject: 'script'
+        },
         
         editorModel: {
             inject: EditorModel
@@ -42,11 +45,11 @@ define(function(require) {
             this.editorModel.toggleSync();
             if (this.editorModel.isSyncEnabled) {
                 this.setAutoSave(false);
-                if (data.data('gd-fileid')) {
-                    gd.sync(data.data('gd-fileid'), 3000, this._handleSync);
+                if (this.scriptModel.data('gd-fileid')) {
+                    gd.sync(this.scriptModel.data('gd-fileid'), 3000, this._handleSync);
                     // plugin.syced('google-drive');
-                } else if (data.data('db-path')) {
-                    db.sync(data.data('db-path'), 3000, this._handleSync);
+                } else if (this.scriptModel.data('db-path')) {
+                    db.sync(this.scriptModel.data('db-path'), 3000, this._handleSync);
                     // plugin.synced('drobox');
                 } else if (local.sync_available()) {
                     local.sync(3000, this._handleSync);
@@ -70,8 +73,8 @@ define(function(require) {
             }
             else if (this.editorModel.lastContent !== content) {
                 this.editorModel.lastContent = content;
-                data.script(content);
-                data.parse();
+                this.scriptModel.script(content);
+                this.scriptModel.parse();
                 //plugin.synced();
                 // if (active) {
                 //     plugin.activate();

@@ -1,14 +1,17 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
-        // DEBT: data should be parsed when needed, by using computed properties and bindings (+)
-        data = require('modules/data');
-
+    var Protoplast = require('p');
+    
     /**
      * @alias BaseSectionPresenter
      */
     var BaseSectionPresenter = Protoplast.Object.extend({
 
+        // DEBT: data should be parsed when needed, by using computed properties and bindings (++)
+        scriptModel: {
+            inject: 'script'
+        },
+        
         /**
          * @type {SectionViewMixin}
          */
@@ -25,7 +28,7 @@ define(function(require) {
             // DEBT: binding should allow ignoring undefined values? (+)
             if (this._bindingsInitialised) {
                 if (value) {
-                    data.parse();
+                    this.scriptModel.parse();
                     this.activate();
                 }
                 else {

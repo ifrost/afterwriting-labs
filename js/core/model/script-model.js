@@ -14,8 +14,80 @@ define(function(require) {
          */
         _basicStats: null,
         
+        config: {
+            set: function(value) {
+                data.config = value
+            },
+            get: function() {
+                return data.config
+            }
+        },
+        
+        format: {
+            set: function(value) {
+                data.format = value
+            },
+            get: function() {
+                return data.format
+            }
+        },
+
+        fontFixEnabled: {
+            get: function() {
+                return data.fontFixEnabled;
+            }
+        },
+
+        parsed: {
+            set: function(value) {
+                data.parsed = value;
+            },
+            get: function() {
+                return data.parsed;
+            }
+        },
+        
+        parsed_stats: {
+            set: function(value) {
+                data.parsed_stats = value;
+            },
+            get: function() {
+                return data.parsed_stats;
+            }
+        },
+
         $create: function() {
             this._createStatsQuery();
+        },
+        
+        bindScript: function(callback) {
+            return data.bindScript(callback);
+        },
+        
+        data: function(key, value) {
+            if (arguments.length === 1) {
+                return data.data(key);
+            }
+            else {
+                return data.data(key, value);
+            }
+        },
+        
+        script: function(value) {
+            if (arguments.length) {
+                return data.script(value);
+            }
+            else {
+                return data.script();
+            }
+        },
+        
+        parse: function() {
+            return data.parse();
+        },
+        
+        getTitlePageToken: function(type) {
+            return data.get_title_page_token(type);
         },
         
         getBasicStats: function() {

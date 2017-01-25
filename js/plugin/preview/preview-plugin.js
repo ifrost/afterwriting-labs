@@ -1,12 +1,15 @@
 define(function(require) {
 
-    var data = require('modules/data'),
-        Plugin = require('core/plugin'),
+    var Plugin = require('core/plugin'),
         PreviewSection = require('plugin/preview/model/preview-section'),
         ThemeController = require('aw-bubble/controller/theme-controller');
 
     var PreviewPlugin = Plugin.extend({
 
+        scriptModel: {
+            inject: 'script'
+        },
+        
         themeController: {
             inject: ThemeController
         },
@@ -21,7 +24,7 @@ define(function(require) {
             var previewSection = PreviewSection.create('preview');
             this.themeController.addSection(previewSection);
 
-            data.bindScript(function(){
+            this.scriptModel.bindScript(function(){
                 previewSection.isVisibleInMenu = true;
             });
         }

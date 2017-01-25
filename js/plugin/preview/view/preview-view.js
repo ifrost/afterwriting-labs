@@ -4,7 +4,6 @@ define(function(require) {
         $ = require('jquery'),
         Protoplast = require('p'),
         HandlebarComponent = require('utils/handlebar-component'),
-        data = require('modules/data'),
         SectionViewMixin = require('aw-bubble/view/section-view-mixin'),
         PreviewViewPresenter = require('plugin/preview/view/preview-view-presenter'),
         pdfjs_viewer = require('utils/pdfjsviewer');
@@ -12,6 +11,11 @@ define(function(require) {
     return HandlebarComponent.extend([SectionViewMixin], {
 
         hbs: template,
+        
+        // DEBT: remove direct references in views? (+)
+        scriptModel: {
+            inject: 'script'
+        },
 
         $meta: {
             presenter: PreviewViewPresenter
@@ -26,7 +30,7 @@ define(function(require) {
         _renderPdf: function(result) {
             if (result) {
                 $("#pdf-preview-iframe-container p").remove();
-                if (data.config.pdfjs_viewer) {
+                if (this.scriptModel.config.pdfjs_viewer) {
                     pdfjs_viewer.from_blob(result.blob);
                 }
                 else {
@@ -38,7 +42,7 @@ define(function(require) {
         },
         
         show: function() {
-            if (data.config.pdfjs_viewer) {
+            if (this.scriptModel.config.pdfjs_viewer) {
                 $('#pdf-preview-iframe-container').hide();
                 $('#pdf-preview-pdfjs-container').show();
             }

@@ -3,13 +3,16 @@ define(function(require) {
     var $ = require('jquery'),
         Protoplast = require('p'),
         BaseSectionViewPresenter = require('aw-bubble/presenter/base-section-view-presenter'),
-        data = require('modules/data'),
         local = require('utils/local'),
         EditorController = require('plugin/editor/controller/editor-controller'),
         EditorModel = require('plugin/editor/model/editor-model');
 
     var EditorViewPresenter = BaseSectionViewPresenter.extend({
-        
+
+        scriptModel: {
+            inject: 'script'
+        },
+
         editorModel: {
             inject: EditorModel
         },
@@ -31,18 +34,18 @@ define(function(require) {
             Protoplast.utils.bindProperty(this.editorModel, 'saveInProgress' , this.view, 'saveInProgress');
             Protoplast.utils.bindProperty(this.editorModel, 'pendingChange' , this.view, 'pendingChanges');
 
-            data.bindScript(function() {
-                this.view.content = data.script();
+            this.scriptModel.bindScript(function() {
+                this.view.content = this.scriptModel.script();
             }.bind(this));
         },
 
         activate: function() {
             BaseSectionViewPresenter.activate.call(this);
-            this.view.autoSaveAvailable = !!((data.data('gd-fileid') || data.data('db-path')) && data.format !== 'fdx');
-            this.view.syncAvailable = !!(data.data('gd-fileid') || data.data('db-path') || local.sync_available());
+            this.view.autoSaveAvailable = !!((this.scriptModel.data('gd-fileid') || this.scriptModel.data('db-path')) && this.scriptModel.format !== 'fdx');
+            this.view.syncAvailable = !!(this.scriptModel.data('gd-fileid') || this.scriptModel.data('db-path') || local.sync_available());
 
             setTimeout(function () {
-                this.view.content = data.script();
+                this.view.content = this.scriptModel.script();
                 this.view.refresh();
 
                 if (this.editorModel.cursorPosition) {
@@ -63,8 +66,8 @@ define(function(require) {
         },
 
         _restore: function() {
-            data.script(data.data('editor-last-state'));
-            data.parse();
+            this.scriptModel.script(this.scriptModel.data('editor-last-state'));
+            this.scriptModel.parse();
             // TODO: needed?
             // if (active) {
             //     plugin.activate();
@@ -89,12 +92,12 @@ define(function(require) {
         },
         
         _editorContentChanged: function() {
-            this.editorModel.pendingChanges = data.script() !== this.view.getEditorContent();
-            data.script(this.view.getEditorContent());
+            this.editorModel.pendingChanges = this.scriptModel.script() !== this.view.getEditorContent();
+            this.scriptModel.script(this.view.getEditorContent());
         },
         
         _enableSync: function() {
-            data.data('editor-last-state', data.script());
+            this.scriptModel.data('editor-last-state', this.scriptModel.script());
             
             var self = this;
             $.prompt("You can start writing in your editor. Content will be synchronized with ’afterwriting! PDF preview, facts and stats will be automatically updated.", {

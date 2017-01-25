@@ -1,13 +1,15 @@
 define(function(require) {
 
-    var _ = require('lodash'),
-        data = require('modules/data'),
-        Protoplast = require('p'),
+    var Protoplast = require('p'),
         SettingsConfigProvider = require('plugin/settings/model/settings-config-provider'),
         ThemeController = require('aw-bubble/controller/theme-controller');
     
     var SettingsController = Protoplast.Object.extend({
-
+        
+        scriptModel: {
+            inject: 'script'
+        },
+        
         settingsModel: {
             inject: 'settings'
         },
@@ -30,6 +32,7 @@ define(function(require) {
             this.settingsModel.update(key, value);
         },
 
+        // TODO: unused?
         setValues: function(map) {
             for (var key in map) {
                 if (map.hasOwnProperty(key)) {
@@ -41,7 +44,7 @@ define(function(require) {
         _loadSettings: function() {
             this.storage.load('settings', function(userSettings) {
                 this.settingsModel.values.fromJSON(userSettings || {});
-                data.config = this.settingsModel.values;
+                this.scriptModel.config = this.settingsModel.values;
                 this.settingsModel.values.userSettingsLoaded = true;
                 this.settingsModel.values.on('changed', this._saveCurrentSettings, this);
             }.bind(this));
@@ -53,8 +56,8 @@ define(function(require) {
         },
 
         _saveCurrentSettings: function() {
-            data.config = this.settingsModel.values;
-            data.script(data.script()); // parse again (e.g. to add/hide tokens)
+            this.scriptModel.config = this.settingsModel.values;
+            this.scriptModel.script(this.scriptModel.script()); // parse again (e.g. to add/hide tokens)
             this.storage.save('settings', this.settingsModel.values.toJSON());
         }
 

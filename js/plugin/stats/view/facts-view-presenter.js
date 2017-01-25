@@ -1,8 +1,6 @@
 define(function(require) {
 
     var BaseSectionViewPresenter = require('aw-bubble/presenter/base-section-view-presenter'),
-        ScriptModel = require('core/model/script-model'),
-        data = require('modules/data'),
         queries = require('plugin/stats/model/queries'),
         decorator = require('utils/decorator'),
         fhelpers = require('utils/fountain/helpers');
@@ -10,7 +8,7 @@ define(function(require) {
     var FactsViewPresenter = BaseSectionViewPresenter.extend({
 
         scriptModel: {
-            inject: ScriptModel
+            inject: 'script'
         },
         
         activate: function() {
@@ -27,7 +25,7 @@ define(function(require) {
         
         refresh: function() {
             this.view.facts = this._generateData();
-            this.view.eachSceneOnNewPage = data.config.each_scene_on_new_page;
+            this.view.eachSceneOnNewPage = this.scriptModel.config.each_scene_on_new_page;
             this.view.primaryCharacters = this._getCharactersByLevel(1);
             this.view.secondaryCharacters = this._getCharactersByLevel(2);
         },
@@ -38,10 +36,10 @@ define(function(require) {
             this._facts = basics;
             var facts = this._facts;
 
-            facts.title = fhelpers.first_text('title', data.parsed.title_page, '');
+            facts.title = fhelpers.first_text('title', this.scriptModel.parsed.title_page, '');
 
-            facts.characters = queries.characters.run(data.parsed_stats.tokens, basics, {sort_by: 'lines'});
-            facts.locations = queries.locations.run(data.parsed_stats.tokens);
+            facts.characters = queries.characters.run(this.scriptModel.parsed_stats.tokens, basics, {sort_by: 'lines'});
+            facts.locations = queries.locations.run(this.scriptModel.parsed_stats.tokens);
             
             return facts;
         },

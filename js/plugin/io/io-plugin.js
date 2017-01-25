@@ -1,7 +1,6 @@
 define(function(require) {
 
     var Plugin = require('core/plugin'),
-        data = require('modules/data'),
         IoModel = require('plugin/io/model/io-model'),
         OpenController = require('plugin/io/controller/open-controller'),
         SaveController = require('plugin/io/controller/save-controller'),
@@ -11,6 +10,10 @@ define(function(require) {
     
     var IoPlugin = Plugin.extend({
         
+        scriptModel: {
+            inject: 'script'
+        },
+
         themeController: {
             inject: ThemeController
         },
@@ -28,7 +31,7 @@ define(function(require) {
             var saveSection = SaveSection.create('save');
             this.themeController.addSection(saveSection);
             
-            data.bindScript(function(){
+            this.scriptModel.bindScript(function(){
                 saveSection.isVisibleInMenu = true;
             });
         }
