@@ -15,6 +15,10 @@ define(function(require) {
             inject: 'script'
         },
         
+        settings: {
+            inject: 'settings'
+        },
+        
         pdfController: {
             inject: 'pdf'
         },
@@ -53,7 +57,7 @@ define(function(require) {
                 }.bind(this),
                 selected: this.scriptModel.data('db-path'),
                 list_options: {
-                    lazy: this.scriptModel.config.cloud_lazy_loading
+                    lazy: this.settings.cloud_lazy_loading
                 },
                 default_filename: 'screenplay.fountain'
             });
@@ -86,7 +90,7 @@ define(function(require) {
                 selected_parents: this.scriptModel.data('gd-parents'),
                 list_options: {
                     writeOnly: true,
-                    lazy: this.scriptModel.config.cloud_lazy_loading
+                    lazy: this.settings.cloud_lazy_loading
                 },
                 default_filename: 'screenplay.fountain'
             });
@@ -123,7 +127,7 @@ define(function(require) {
                 selected: this.scriptModel.data('db-pdf-path'),
                 list_options: {
                     pdfOnly: true,
-                    lazy: this.scriptModel.config.cloud_lazy_loading
+                    lazy: this.settings.cloud_lazy_loading
                 },
                 default_filename: 'screenplay.pdf'
             });
@@ -161,7 +165,7 @@ define(function(require) {
                 list_options: {
                     pdfOnly: true,
                     writeOnly: true,
-                    lazy: this.scriptModel.config.cloud_lazy_loading
+                    lazy: this.settings.cloud_lazy_loading
                 },
                 default_filename: 'screenplay.pdf'
             });

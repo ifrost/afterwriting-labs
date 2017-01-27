@@ -7,6 +7,10 @@ define(function(require) {
 
     var FactsViewPresenter = BaseSectionViewPresenter.extend({
 
+        settings: {
+            inject: 'settings'
+        },
+        
         scriptModel: {
             inject: 'script'
         },
@@ -25,7 +29,7 @@ define(function(require) {
         
         refresh: function() {
             this.view.facts = this._generateData();
-            this.view.eachSceneOnNewPage = this.scriptModel.config.each_scene_on_new_page;
+            this.view.eachSceneOnNewPage = this.settings.each_scene_on_new_page;
             this.view.primaryCharacters = this._getCharactersByLevel(1);
             this.view.secondaryCharacters = this._getCharactersByLevel(2);
         },

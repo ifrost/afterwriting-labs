@@ -9,6 +9,10 @@ define(function(require) {
 
     var ScriptModel = Protoplast.Model.extend({
 
+        settings: {
+            inject: 'settings'
+        },
+        
         /**
          * Basic stats query
          */
@@ -19,7 +23,7 @@ define(function(require) {
                 data.config = value
             },
             get: function() {
-                return data.config
+                throw new Error('data.config is deprecated, use Settings instead')
             }
         },
         
@@ -56,10 +60,6 @@ define(function(require) {
             }
         },
 
-        $create: function() {
-            this._createStatsQuery();
-        },
-        
         bindScript: function(callback) {
             return data.bindScript(callback);
         },
@@ -87,10 +87,12 @@ define(function(require) {
         },
         
         getBasicStats: function() {
+            this._createStatsQuery(); // to refresh config-related properties
             return this._basicStats.run(data.parsed_stats.lines);
         },
         
         _createStatsQuery: function() {
+            var print = this.settings.print();
             var basic = fquery(null, {
                 last_page_lines: 0,
                 scenes: 0,
@@ -128,7 +130,7 @@ define(function(require) {
             basic.enter(true, function (item, fq) {
                 var selector = fq.select();
                 if (item.is('page_break')) {
-                    selector.filled_pages += (selector.last_page_lines + 1) / data.config.print().lines_per_page;
+                    selector.filled_pages += (selector.last_page_lines + 1) / print.lines_per_page;
                     selector.last_page_lines = 0;
                 } else {
                     selector.last_page_lines++;
@@ -143,8 +145,8 @@ define(function(require) {
                 }
 
                 var all = item.action_lines + item.dialogue_lines;
-                item.pages = item.pages + item.last_page_lines / data.config.print().lines_per_page;
-                item.filled_pages += item.last_page_lines / data.config.print().lines_per_page;
+                item.pages = item.pages + item.last_page_lines / print.lines_per_page;
+                item.filled_pages += item.last_page_lines / print.lines_per_page;
                 item.action_time = (item.action_lines / all) * item.filled_pages;
                 item.dialogue_time = (item.dialogue_lines / all) * item.filled_pages;
             });

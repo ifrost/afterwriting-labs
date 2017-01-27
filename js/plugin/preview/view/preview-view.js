@@ -12,6 +12,10 @@ define(function(require) {
 
         hbs: template,
         
+        settings: {
+            inject: 'settings'
+        },
+        
         // DEBT: remove direct references in views? (+)
         scriptModel: {
             inject: 'script'
@@ -30,7 +34,7 @@ define(function(require) {
         _renderPdf: function(result) {
             if (result) {
                 $("#pdf-preview-iframe-container p").remove();
-                if (this.scriptModel.config.pdfjs_viewer) {
+                if (this.settings.pdfjs_viewer) {
                     pdfjs_viewer.from_blob(result.blob);
                 }
                 else {
@@ -42,7 +46,7 @@ define(function(require) {
         },
         
         show: function() {
-            if (this.scriptModel.config.pdfjs_viewer) {
+            if (this.settings.pdfjs_viewer) {
                 $('#pdf-preview-iframe-container').hide();
                 $('#pdf-preview-pdfjs-container').show();
             }

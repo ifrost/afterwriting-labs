@@ -3,6 +3,7 @@ define(function(require) {
     var Protoplast = require('p'),
         print_profiles = require('utils/print-profiles');
 
+    // DEBT: Decouple plugin-specific settings (+)
     var Settings = Protoplast.Model.extend({
 
         // DEBT: Rename Settings properties to CamelCase (+)

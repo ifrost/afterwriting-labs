@@ -19,6 +19,10 @@ define(function(require) {
             inject: 'script'
         },
         
+        settings: {
+            inject: 'settings'
+        },
+        
         themeController: {
             inject: ThemeController
         },
@@ -129,7 +133,7 @@ define(function(require) {
         },
 
         _openLastUsedOnStartup: function() {
-            if (this.scriptModel.config && this.scriptModel.config.load_last_opened) {
+            if (this.settings.load_last_opened) {
                 this.openLastUsed();
             }
         },
@@ -162,7 +166,7 @@ define(function(require) {
                     info: 'Please select file to open.',
                     data: root,
                     label: 'Open',
-                    search: !this.scriptModel.config.cloud_lazy_loading,
+                    search: !this.settings.cloud_lazy_loading,
                     callback: function (selected) {
                         if (selected.data.isFolder) {
                             $.prompt('Please select a file, not folder.', {
@@ -186,7 +190,7 @@ define(function(require) {
                     $.prompt('Please wait...');
                 },
                 after: $.prompt.close,
-                lazy: this.scriptModel.config.cloud_lazy_loading
+                lazy: this.settings.cloud_lazy_loading
             });
         },
 
