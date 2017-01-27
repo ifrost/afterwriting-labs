@@ -60,9 +60,7 @@ define('modules/data', function (require) {
 			plugin.parsed_stats.lines = fliner.line(plugin.parsed_stats.tokens, stats_config);
 		}
 	});
-
-	plugin.fontFixEnabled = !!url_params.fontFix;
-
+    
     /**
      * TODO: replace with Protoplast bindings after converting to a model
      * @param callback

@@ -36,12 +36,6 @@ define(function(require) {
             }
         },
 
-        fontFixEnabled: {
-            get: function() {
-                return data.fontFixEnabled;
-            }
-        },
-
         parsed: {
             set: function(value) {
                 data.parsed = value;
