@@ -152,34 +152,38 @@ define(function(require) {
     };
 
     var create_locations_breakdown = function() {
-        var query = fquery('token', {
-            scenes: 0,
-            lines: 0,
-            scenes_lines: null
-        });
-        query.prepare(function(fq) {
-            fq.current = null;
-        });
-        query.enter(h.is('scene_heading'), function(item, fq) {
-            var same_scene = fq.current && fq.current.token.location() === item.location();
-            fq.current = fq.select(same_scene ? fq.current.token : item);
-            if (!same_scene) {
-                fq.current.location = item.location();
-                fq.current.scenes_lines = [];
-            }
+        var runner = {};
+        runner.run = function(tokens,lines_per_page) {
+            var query = fquery('token', {
+                scenes: 0,
+                lines: 0,
+                scenes_lines: null
+            });
+            query.prepare(function(fq) {
+                fq.current = null;
+            });
+            query.enter(h.is('scene_heading'), function(item, fq) {
+                var same_scene = fq.current && fq.current.token.location() === item.location();
+                fq.current = fq.select(same_scene ? fq.current.token : item);
+                if (!same_scene) {
+                    fq.current.location = item.location();
+                    fq.current.scenes_lines = [];
+                }
 
-            fq.current.scenes++;
-            fq.current.scenes_lines.push(0);
+                fq.current.scenes++;
+                fq.current.scenes_lines.push(0);
 
-        });
-        query.enter(query.not(h.is('scene_heading')), function(item, fq) {
-            if (fq.current) {
-                fq.current.lines += item.lines.length;
-                fq.current.pages = fq.current.lines / data.config.print().lines_per_page;
-                fq.current.scenes_lines[fq.current.scenes_lines.length - 1] += item.lines.length;
-            }
-        });
-        return query;
+            });
+            query.enter(query.not(h.is('scene_heading')), function(item, fq) {
+                if (fq.current) {
+                    fq.current.lines += item.lines.length;
+                    fq.current.pages = fq.current.lines / lines_per_page;
+                    fq.current.scenes_lines[fq.current.scenes_lines.length - 1] += item.lines.length;
+                }
+            });
+            return query.run(tokens);
+        };
+        return runner;
     };
 
     var create_dialogue_breakdown = function() {

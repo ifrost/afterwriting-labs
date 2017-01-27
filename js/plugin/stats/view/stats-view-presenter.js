@@ -32,7 +32,7 @@ define(function(require) {
             statsData.who_with_who = queries.dialogue_breakdown.run(this.scriptModel.parsed_stats.tokens, basics, this.scriptModel.config.stats_who_with_who_max);
             statsData.page_balance = queries.page_balance.run(this.scriptModel.parsed_stats.lines);
             statsData.tempo = queries.tempo.run(this.scriptModel.parsed_stats.tokens);
-            statsData.locationsBreakdown = queries.locationsBreakdown.run(this.scriptModel.parsed_stats.tokens);
+            statsData.locationsBreakdown = queries.locationsBreakdown.run(this.scriptModel.parsed_stats.tokens, this.scriptModel.config.print().lines_per_page);
 
             this.view.data = statsData;
         },
