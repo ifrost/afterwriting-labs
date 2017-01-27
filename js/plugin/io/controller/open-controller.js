@@ -35,8 +35,8 @@ define(function(require) {
             inject: EditorController
         },
 
-        settingsModel: {
-            inject: 'settings'
+        settingsLoaderModel: {
+            inject: 'settingsLoaderModel'
         },
 
         init: function() {
@@ -76,7 +76,7 @@ define(function(require) {
                 this.ioModel.lastUsedInfo.title = this.scriptModel.data('last-used-title');
             }
 
-            Protoplast.utils.bind(this, 'settingsModel.values.userSettingsLoaded', this._openLastUsedOnStartup);
+            Protoplast.utils.bind(this, 'settingsLoaderModel.userSettingsLoaded', this._openLastUsedOnStartup);
         },
 
         createNew: function() {

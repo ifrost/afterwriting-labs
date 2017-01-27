@@ -2,6 +2,7 @@ define(function(require) {
 
     var Protoplast = require('p'),
         SettingsConfigProvider = require('plugin/settings/model/settings-config-provider'),
+        SettingsWidgetModel = require('plugin/settings/model/settings-widget-model'),
         ThemeController = require('aw-bubble/controller/theme-controller');
     
     var SettingsController = Protoplast.Object.extend({
@@ -9,8 +10,16 @@ define(function(require) {
         scriptModel: {
             inject: 'script'
         },
+
+        settingsLoaderModel: {
+            inject: 'settingsLoaderModel'
+        },
         
-        settingsModel: {
+        settingsWidgetModel: {
+            inject: SettingsWidgetModel
+        },
+
+        settings: {
             inject: 'settings'
         },
 
@@ -24,12 +33,12 @@ define(function(require) {
 
         init: function() {
             var settingsConfigProvider = SettingsConfigProvider.create();
-            this.settingsModel.groups = settingsConfigProvider.getSettingGroups();
+            this.settingsWidgetModel.groups = settingsConfigProvider.getSettingGroups();
             this._loadSettings();
         },
 
         updateValue: function(key, value) {
-            this.settingsModel.update(key, value);
+            this.settings[key] = value;
         },
 
         // TODO: unused?
@@ -43,22 +52,22 @@ define(function(require) {
 
         _loadSettings: function() {
             this.storage.load('settings', function(userSettings) {
-                this.settingsModel.values.fromJSON(userSettings || {});
-                this.scriptModel.config = this.settingsModel.values;
-                this.settingsModel.values.userSettingsLoaded = true;
-                this.settingsModel.values.on('changed', this._saveCurrentSettings, this);
+                this.settings.fromJSON(userSettings || {});
+                this.scriptModel.config = this.settings;
+                this.settingsLoaderModel.userSettingsLoaded = true;
+                this.settings.on('changed', this._saveCurrentSettings, this);
             }.bind(this));
 
             Protoplast.utils.bind(this, {
-                'settingsModel.values.night_mode': this.themeController.nightMode,
-                'settingsModel.values.show_background_image': this.themeController.showBackgroundImage
+                'settings.night_mode': this.themeController.nightMode,
+                'settings.show_background_image': this.themeController.showBackgroundImage
             })
         },
 
         _saveCurrentSettings: function() {
-            this.scriptModel.config = this.settingsModel.values;
+            this.scriptModel.config = this.settings;
             this.scriptModel.script(this.scriptModel.script()); // parse again (e.g. to add/hide tokens)
-            this.storage.save('settings', this.settingsModel.values.toJSON());
+            this.storage.save('settings', this.settings.toJSON());
         }
 
     });

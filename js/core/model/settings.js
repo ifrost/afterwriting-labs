@@ -5,8 +5,6 @@ define(function(require) {
 
     var Settings = Protoplast.Model.extend({
 
-        userSettingsLoaded: false,
-
         // DEBT: Rename Settings properties to CamelCase (+)
         show_background_image: {
             name: 'show_background_image',

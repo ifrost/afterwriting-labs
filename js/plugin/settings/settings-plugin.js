@@ -3,7 +3,8 @@ define(function(require) {
     var Plugin = require('core/plugin'),
         SettingsSection = require('plugin/settings/model/settings-section'),
         SettingsController = require('plugin/settings/controller/settings-controller'),
-        SettingsModel = require('plugin/settings/model/settings-model'),
+        SettingsWidgetModel = require('plugin/settings/model/settings-widget-model'),
+        SettingsLoaderModel = require('plugin/settings/model/settings-loader-model'),
         ThemeController = require('aw-bubble/controller/theme-controller');
 
     var SettingsPlugin = Plugin.extend({
@@ -17,7 +18,8 @@ define(function(require) {
         },
 
         $create: function(context) {
-            context.register('settings', SettingsModel.create());
+            context.register(SettingsWidgetModel.create());
+            context.register('settingsLoaderModel', SettingsLoaderModel.create());
             context.register(SettingsController.create());
         },
 
