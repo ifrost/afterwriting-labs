@@ -2,6 +2,7 @@ define(function(require) {
 
     var Plugin = require('core/plugin'),
         PreviewSection = require('plugin/preview/model/preview-section'),
+        PreviewController = require('plugin/preview/controller/preview-controller'),
         ThemeController = require('aw-bubble/controller/theme-controller');
 
     var PreviewPlugin = Plugin.extend({
@@ -17,7 +18,7 @@ define(function(require) {
         section: null,
 
         $create: function(context) {
-            
+            context.register(PreviewController.create());
         },
 
         init: function() {

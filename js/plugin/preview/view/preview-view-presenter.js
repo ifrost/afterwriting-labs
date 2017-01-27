@@ -1,9 +1,13 @@
 define(function(require) {
 
     var BaseSectionViewPresenter = require('aw-bubble/presenter/base-section-view-presenter'),
-        pdfmaker = require('utils/pdfmaker');
-
+        PreviewController = require('plugin/preview/controller/preview-controller');
+    
     var PreviewViewPresenter = BaseSectionViewPresenter.extend({
+        
+        previewController: {
+            inject: PreviewController
+        },
 
         activate: function() {
             BaseSectionViewPresenter.activate.call(this);
@@ -22,8 +26,9 @@ define(function(require) {
         },
 
         refresh: function() {
+            // TODO: check why timeout
             setTimeout(function() {
-                pdfmaker.get_pdf(function(result) {
+                this.previewController.getPdf(function(result) {
                     this.view.pdf = result;
                 }.bind(this));
             }.bind(this), 0);

@@ -10,8 +10,10 @@ define(function(require) {
         AppView = require('view/app-view'),
         ThemeModel = require('aw-bubble/model/theme-model'),
         ThemeController = require('aw-bubble/controller/theme-controller'),
-        AppController = require('controller/app-controller'),
+        AppController = require('core/controller/app-controller'),
+        AppModel = require('core/model/app-model'),
         GoogleAnalyticsMonitor = require('core/controller/google-analytics-monitor'),
+        PdfController = require('core/controller/pdf-controller'),
         Storage = require('core/model/storage'),
         ScriptModel = require('core/model/script-model'),
         InfoPlugin = require('plugin/info/info-plugin'),
@@ -71,7 +73,9 @@ define(function(require) {
         di.register('monitor', GoogleAnalyticsMonitor.create());
         di.register('storage', Storage.create());
         di.register('script', ScriptModel.create());
+        di.register('pdf', PdfController.create());
         di.register(AppController.create());
+        di.register('appModel', AppModel.create());
         di.register(InfoPlugin.create(di));
         di.register(IoPlugin.create(di));
         di.register(EditorPlugin.create(di));

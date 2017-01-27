@@ -5,7 +5,6 @@ define(function(require) {
         db = require('utils/dropbox'),
         $ = require('jquery'),
         saveAs = require('saveAs'),
-        pdfmaker = require('utils/pdfmaker'),
         tree = require('utils/tree'),
         forms = require('utils/forms'),
         decorator = require('utils/decorator');
@@ -14,6 +13,10 @@ define(function(require) {
 
         scriptModel: {
             inject: 'script'
+        },
+        
+        pdfController: {
+            inject: 'pdf'
         },
 
         saveFountainLocally: function() {
@@ -91,12 +94,12 @@ define(function(require) {
 
         savePdfLocally: function() {
             forms.text('Select file name: ', this.scriptModel.data('pdf-filename') || 'screenplay.pdf', function (result) {
-                pdfmaker.get_pdf(function (pdf) {
+                this.pdfController.getPdf(function (pdf) {
                     this.scriptModel.data('pdf-filename', result.text);
                     this.scriptModel.data('fountain-filename', result.text.split('.')[0] + '.fountain');
                     saveAs(pdf.blob, result.text);
-                });
-            });
+                }.bind(this));
+            }.bind(this));
         },
 
         savePdfToDropbox: function() {
@@ -108,7 +111,7 @@ define(function(require) {
                         path += (path[path.length - 1] !== '/' ? '/' : '') + filename;
                     }
                     this.scriptModel.parse();
-                    pdfmaker.get_pdf(function (result) {
+                    this.pdfController.getPdf(function (result) {
                         db.save(path, result.blob, function () {
                             if (filename) {
                                 this.scriptModel.data('pdf-filename', filename);
@@ -131,7 +134,7 @@ define(function(require) {
                 client: gd,
                 save_callback: function (selected, filename) {
                     this.scriptModel.parse();
-                    pdfmaker.get_pdf(function (pdf) {
+                    this.pdfController.getPdf(function (pdf) {
                         gd.upload({
                             blob: pdf.blob,
                             filename: filename,
