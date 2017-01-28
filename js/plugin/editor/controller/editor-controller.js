@@ -78,7 +78,7 @@ define(function(require) {
             }
             else if (this.editorModel.lastContent !== content) {
                 this.editorModel.lastContent = content;
-                this.scriptModel.script(content);
+                this.scriptModel.script = content;
                 this.scriptModel.parse();
                 //plugin.synced();
                 // if (active) {
@@ -120,7 +120,7 @@ define(function(require) {
             if (this.ioModel.dbPath) {
                 var path = this.ioModel.dbPath;
                 
-                blob = new Blob([this.scriptModel.script()], {
+                blob = new Blob([this.scriptModel.script], {
                     type: "text/plain;charset=utf-8"
                 });
                 
@@ -131,7 +131,7 @@ define(function(require) {
             else if (this.ioModel.gdFileId) {
                 var fileId = this.ioModel.gdFileId;
                 
-                blob = new Blob([this.scriptModel.script()], {
+                blob = new Blob([this.scriptModel.script], {
                     type: "text/plain;charset=utf-8"
                 });
                 

@@ -6,6 +6,8 @@ define(function(require) {
     // DEBT: Decouple plugin-specific settings (+)
     var Settings = Protoplast.Model.extend({
 
+        snippets: null,
+        
         // DEBT: Rename Settings properties to CamelCase (+)
         show_background_image: {
             name: 'show_background_image',

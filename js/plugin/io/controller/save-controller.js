@@ -31,7 +31,7 @@ define(function(require) {
         saveFountainLocally: function() {
             forms.text('Select file name: ', this.ioModel.fountainFileName || 'screenplay.fountain', function (result) {
                 this.scriptModel.parse();
-                var blob = new Blob([this.scriptModel.script()], {
+                var blob = new Blob([this.scriptModel.script], {
                     type: "text/plain;charset=utf-8"
                 });
                 this.ioModel.fountainFileName = result.text;
@@ -46,7 +46,7 @@ define(function(require) {
                 save_callback: function (selected, filename) {
                     this.scriptModel.parse();
                     var path = selected.data.path,
-                        blob = new Blob([this.scriptModel.script()], {
+                        blob = new Blob([this.scriptModel.script], {
                             type: "text/plain;charset=utf-8"
                         });
                     if (selected.data.isFolder) {
@@ -73,7 +73,7 @@ define(function(require) {
                 client: gd,
                 save_callback: function (selected, filename) {
                     this.scriptModel.parse();
-                    var blob = new Blob([this.scriptModel.script()], {
+                    var blob = new Blob([this.scriptModel.script], {
                         type: "text/plain;charset=utf-8"
                     });
                     gd.upload({

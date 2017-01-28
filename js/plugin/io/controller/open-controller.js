@@ -52,14 +52,14 @@ define(function(require) {
             this.saveController.on('fountain-saved-to-google-drive', this._savedToGoogleDrive);
             this.saveController.on('fountain-saved-to-dropbox', this._savedToDropbox);
 
-            this.scriptModel.bindScript(function () {
+            Protoplast.utils.bind(this.scriptModel, 'script', function () {
                 var title = '';
-                this.storage.setItem('last-used-script', this.scriptModel.script());
+                this.storage.setItem('last-used-script', this.scriptModel.script);
                 this.storage.setItem('last-used-date', helper.format_date(new Date()));
-                if (this.scriptModel.script()) {
+                if (this.scriptModel.script) {
                     var title_match;
                     var wait_for_non_empty = false;
-                    this.scriptModel.script().split('\n').some(function (line) {
+                    this.scriptModel.script.split('\n').some(function (line) {
                         title_match = line.match(/title\:(.*)/i);
                         if (wait_for_non_empty) {
                             title = line.trim().replace(/\*/g, '').replace(/_/g, '');
@@ -202,7 +202,7 @@ define(function(require) {
             this._clearLastOpened();
             // DEBT: remove dependency to editor (++)
             this.editorController.cleanUp();
-            this.scriptModel.script(value);
+            this.scriptModel.script = value;
             this.themeController.clearSelectedSection();
         },
 

@@ -1,5 +1,4 @@
 require(['bootstrap',
-		'modules/data',
 		'../test/acceptance/setup'
 ], function (bootstrap) {
     try {

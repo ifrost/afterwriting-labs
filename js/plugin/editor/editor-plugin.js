@@ -1,6 +1,7 @@
 define(function(require) {
 
-    var Plugin = require('core/plugin'),
+    var Protoplast = require('p'),
+        Plugin = require('core/plugin'),
         EditorSection = require('plugin/editor/model/editor-section'),
         EditorController = require('plugin/editor/controller/editor-controller'),
         EditorModel = require('plugin/editor/model/editor-model'),
@@ -25,7 +26,7 @@ define(function(require) {
             var editorSection = EditorSection.create('editor');
             this.themeController.addSection(editorSection);
 
-            this.scriptModel.bindScript(function(){
+            Protoplast.utils.bind(this.scriptModel, 'script', function(){
                 editorSection.isVisibleInMenu = true;
             });
         }

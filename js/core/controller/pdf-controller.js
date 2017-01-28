@@ -32,7 +32,7 @@ define(function(require) {
 
         _fontFix: function(doc) {
             if (this.appModel.urlParams.fontFix) {
-                var unicode_sample = textstats.get_characters(this.scriptModel.script());
+                var unicode_sample = textstats.get_characters(this.scriptModel.script);
                 unicode_sample.forEach(function(character) {
                     doc.format_text(character, 0, 0, {color: '#eeeeee'});
                 })

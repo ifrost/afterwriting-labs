@@ -53,7 +53,6 @@ define(function(require) {
         _loadSettings: function() {
             var userSettings =  this.storage.getItem('settings');
             this.settings.fromJSON(userSettings || {});
-            this.scriptModel.config = this.settings;
             this.settingsLoaderModel.userSettingsLoaded = true;
             this.settings.on('changed', this._saveCurrentSettings, this);
 
@@ -64,8 +63,7 @@ define(function(require) {
         },
 
         _saveCurrentSettings: function() {
-            this.scriptModel.config = this.settings;
-            this.scriptModel.script(this.scriptModel.script()); // parse again (e.g. to add/hide tokens)
+            this.scriptModel.script = this.scriptModel.script; // parse again (e.g. to add/hide tokens)
             this.storage.setItem('settings', this.settings.toJSON());
         }
 

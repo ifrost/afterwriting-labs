@@ -1,6 +1,7 @@
 define(function(require) {
 
-    var Plugin = require('core/plugin'),
+    var Protoplast = require('p'),
+        Plugin = require('core/plugin'),
         FactsSection = require('plugin/stats/model/facts-section'),
         StatsSection = require('plugin/stats/model/stats-section'),
         ThemeController = require('aw-bubble/controller/theme-controller');
@@ -27,7 +28,7 @@ define(function(require) {
             var statsSection = StatsSection.create('stats');
             this.themeController.addSection(statsSection);
 
-            this.scriptModel.bindScript(function(){
+            Protoplast.utils.bind(this.scriptModel, 'script', function(){
                 factsSection.isVisibleInMenu = true;
                 statsSection.isVisibleInMenu = true;
             });

@@ -1,6 +1,7 @@
 define(function(require) {
 
-    var Plugin = require('core/plugin'),
+    var Protoplast = require('p'),
+        Plugin = require('core/plugin'),
         SettingsSection = require('plugin/settings/model/settings-section'),
         SettingsController = require('plugin/settings/controller/settings-controller'),
         SettingsWidgetModel = require('plugin/settings/model/settings-widget-model'),
@@ -27,7 +28,7 @@ define(function(require) {
             var settingsSection = SettingsSection.create('settings');
             this.themeController.addSection(settingsSection);
 
-            this.scriptModel.bindScript(function(){
+            Protoplast.utils.bind(this.scriptModel, 'script', function(){
                 settingsSection.isVisibleInMenu = true;
             });
         }

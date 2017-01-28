@@ -3,8 +3,12 @@ define(function(require) {
     var Protoplast = require('p'),
         fquery = require('utils/fountain/query'),
         fhelpers = require('utils/fountain/helpers'),
-        data = require('modules/data');
-
+        fparser = require('aw-parser').parser,
+        fliner = require('utils/fountain/liner'),
+        converter = require('utils/converters/scriptconverter'),
+        preprocessor = require('utils/fountain/preprocessor'),
+        decorator = require('utils/decorator');
+    
     var h = fhelpers.fq;
 
     var ScriptModel = Protoplast.Model.extend({
@@ -18,62 +22,47 @@ define(function(require) {
          */
         _basicStats: null,
         
-        config: {
-            set: function(value) {
-                data.config = value
-            },
-            get: function() {
-                throw new Error('data.config is deprecated, use Settings instead')
-            }
-        },
-        
-        format: {
-            set: function(value) {
-                data.format = value
-            },
-            get: function() {
-                return data.format
-            }
-        },
+        format: null,
 
-        parsed: {
-            set: function(value) {
-                data.parsed = value;
+        parsed: null,
+        
+        parsed_stats: null,
+        
+        script: {
+            set: function (value) {
+                var result = converter.to_fountain(value);
+                result.value = preprocessor.process_snippets(result.value, this.settings.snippets);
+                this.format = this.format || result.format;
+                this._script = result.value;
+                this.dispatch('script_changed');
             },
             get: function() {
-                return data.parsed;
+                return this._script;
             }
         },
         
-        parsed_stats: {
-            set: function(value) {
-                data.parsed_stats = value;
-            },
-            get: function() {
-                return data.parsed_stats;
-            }
-        },
+        parse: function () {
+            this.parsed = fparser.parse(this.script, this.settings);
+            this.parsed.lines = fliner.line(this.parsed.tokens, this.settings);
 
-        bindScript: function(callback) {
-            return data.bindScript(callback);
-        },
-        
-        script: function(value) {
-            if (arguments.length) {
-                return data.script(value);
+            if (this.settings.use_print_settings_for_stats) {
+                this.parsed_stats = this.parsed;
+            } else {
+                var stats_config = Object.create(this.settings);
+                stats_config.print_actions = true;
+                stats_config.print_headers = true;
+                stats_config.print_dialogues = true;
+                stats_config.print_sections = false;
+                stats_config.print_notes = false;
+                stats_config.print_synopsis = false;
+                this.parsed_stats = fparser.parse(this.script, stats_config);
+                this.parsed_stats.lines = fliner.line(this.parsed_stats.tokens, stats_config);
             }
-            else {
-                return data.script();
-            }
-        },
-        
-        parse: function() {
-            return data.parse();
         },
         
         getBasicStats: function() {
             this._createStatsQuery(); // to refresh config-related properties
-            return this._basicStats.run(data.parsed_stats.lines);
+            return this._basicStats.run(this.parsed_stats.lines);
         },
         
         _createStatsQuery: function() {

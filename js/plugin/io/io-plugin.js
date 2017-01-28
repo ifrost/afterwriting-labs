@@ -1,6 +1,7 @@
 define(function(require) {
 
-    var Plugin = require('core/plugin'),
+    var Protoplast = require('p'),
+        Plugin = require('core/plugin'),
         IoModel = require('plugin/io/model/io-model'),
         OpenController = require('plugin/io/controller/open-controller'),
         SaveController = require('plugin/io/controller/save-controller'),
@@ -31,7 +32,7 @@ define(function(require) {
             var saveSection = SaveSection.create('save');
             this.themeController.addSection(saveSection);
             
-            this.scriptModel.bindScript(function(){
+            Protoplast.utils.bind(this.scriptModel, 'script', function(){
                 saveSection.isVisibleInMenu = true;
             });
         }

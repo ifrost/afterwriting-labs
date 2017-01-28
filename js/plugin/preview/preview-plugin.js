@@ -1,6 +1,7 @@
 define(function(require) {
 
-    var Plugin = require('core/plugin'),
+    var Protoplast = require('p'),
+        Plugin = require('core/plugin'),
         PreviewSection = require('plugin/preview/model/preview-section'),
         PreviewController = require('plugin/preview/controller/preview-controller'),
         ThemeController = require('aw-bubble/controller/theme-controller');
@@ -25,7 +26,7 @@ define(function(require) {
             var previewSection = PreviewSection.create('preview');
             this.themeController.addSection(previewSection);
 
-            this.scriptModel.bindScript(function(){
+            Protoplast.utils.bind(this.scriptModel, 'script', function(){
                 previewSection.isVisibleInMenu = true;
             });
         }

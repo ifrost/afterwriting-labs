@@ -44,8 +44,8 @@ define(function(require) {
             Protoplast.utils.bindProperty(this.editorModel, 'saveInProgress' , this.view, 'saveInProgress');
             Protoplast.utils.bindProperty(this.editorModel, 'pendingChange' , this.view, 'pendingChanges');
 
-            this.scriptModel.bindScript(function() {
-                this.view.content = this.scriptModel.script();
+            Protoplast.utils.bind(this.scriptModel, 'script', function() {
+                this.view.content = this.scriptModel.script;
             }.bind(this));
         },
 
@@ -56,7 +56,7 @@ define(function(require) {
             this.view.syncAvailable = !!(this.ioModel.gdFileId || this.ioModel.dbPath || local.sync_available());
 
             setTimeout(function () {
-                this.view.content = this.scriptModel.script();
+                this.view.content = this.scriptModel.script;
                 this.view.refresh();
 
                 if (this.editorModel.cursorPosition) {
@@ -77,7 +77,7 @@ define(function(require) {
         },
 
         _restore: function() {
-            this.scriptModel.script(this.editorModel.lastContent);
+            this.scriptModel.script = this.editorModel.lastContent;
             this.scriptModel.parse();
             // TODO: needed?
             // if (active) {
@@ -103,12 +103,13 @@ define(function(require) {
         },
         
         _editorContentChanged: function() {
-            this.editorModel.pendingChanges = this.scriptModel.script() !== this.view.getEditorContent();
-            this.scriptModel.script(this.view.getEditorContent());
+            // DEBT: delegate to controller (+)
+            this.editorModel.pendingChanges = this.scriptModel.script !== this.view.getEditorContent();
+            this.scriptModel.script = this.view.getEditorContent();
         },
         
         _enableSync: function() {
-            this.editorModel.lastContent = this.scriptModel.script();
+            this.editorModel.lastContent = this.scriptModel.script;
             
             var self = this;
             $.prompt("You can start writing in your editor. Content will be synchronized with ’afterwriting! PDF preview, facts and stats will be automatically updated.", {
