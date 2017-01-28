@@ -76,7 +76,7 @@ define(function(require) {
             }.bind(this));
 
             if (this.storage.getItem('last-used-date')) {
-                this.storage.setItem('filename', '');
+                this.ioModel.fileName = '';
                 // log.info('Last used exists. Loading: ', data.data('last-used-title'), data.data('last-used-date'));
                 this.ioModel.lastUsedInfo = LastUsedInfo.create();
                 this.ioModel.lastUsedInfo.script = this.storage.getItem('last-used-script');
