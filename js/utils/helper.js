@@ -1,7 +1,6 @@
 define('utils/helper', function (require) {
 
-	var data = require('modules/data'),
-		d3 = require('d3');
+	var d3 = require('d3');
 
 	/**
 	 * Basic helpers
@@ -36,10 +35,6 @@ define('utils/helper', function (require) {
 	var date_formatter = d3.time.format("%Y-%m-%d %H:%M");
 	module.format_date = function (date) {
 		return date_formatter(date);
-	};
-
-	module.lines_to_minutes = function (lines) {
-		return lines / data.config.print().lines_per_page;
 	};
 	
 	var EIGHTS_LEVELS = [0.0625, 0.1875, 0.3125, 0.4375, 0.5625, 0.6875, 0.8125, 0.9375, 1.0625];

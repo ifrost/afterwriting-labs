@@ -33,6 +33,11 @@ define(function(require) {
             inject: ThemeModel
         },
 
+        // DEBT: Move to presenter? (+)
+        settings: {
+            inject: 'settings'
+        },
+
         whoWithWhoHeader: {
             component: Header
         },
@@ -134,8 +139,8 @@ define(function(require) {
 
             this.barChart.render('#stats-scene-length', this.data.scenes, {
                 tooltip: function(d) {
-                    return d.header + ' (time: ' + helper.format_time(helper.lines_to_minutes(d.length)) + ')'
-                },
+                    return d.header + ' (time: ' + helper.format_time((d.length / this.settings.print().lines_per_page)) + ')'
+                }.bind(this),
                 value: 'length',
                 small: themeModel.small,
                 show_tooltip: themeController.showTooltip.bind(themeController),
