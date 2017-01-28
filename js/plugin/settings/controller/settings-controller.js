@@ -51,12 +51,11 @@ define(function(require) {
         },
 
         _loadSettings: function() {
-            this.storage.load('settings', function(userSettings) {
-                this.settings.fromJSON(userSettings || {});
-                this.scriptModel.config = this.settings;
-                this.settingsLoaderModel.userSettingsLoaded = true;
-                this.settings.on('changed', this._saveCurrentSettings, this);
-            }.bind(this));
+            var userSettings =  this.storage.getItem('settings');
+            this.settings.fromJSON(userSettings || {});
+            this.scriptModel.config = this.settings;
+            this.settingsLoaderModel.userSettingsLoaded = true;
+            this.settings.on('changed', this._saveCurrentSettings, this);
 
             Protoplast.utils.bind(this, {
                 'settings.night_mode': this.themeController.nightMode,
@@ -67,7 +66,7 @@ define(function(require) {
         _saveCurrentSettings: function() {
             this.scriptModel.config = this.settings;
             this.scriptModel.script(this.scriptModel.script()); // parse again (e.g. to add/hide tokens)
-            this.storage.save('settings', this.settings.toJSON());
+            this.storage.setItem('settings', this.settings.toJSON());
         }
 
     });

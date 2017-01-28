@@ -4,6 +4,26 @@ define(function(require) {
 
     var IoModel = Protoplast.Model.extend({
 
+        fileName: null,
+        
+        fountainFileName: null,
+        
+        pdfFileName: null,
+        
+        dbPath: null,
+        
+        dbPdfPath: null,
+        
+        gdLink: null,
+        
+        gdFileId: null,
+        
+        gdPdfId: null,
+        
+        gdParents: null,
+        
+        gdPdfParents: null,
+        
         /**
          * @type {LastUsedInfo}
          */

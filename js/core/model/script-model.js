@@ -58,15 +58,6 @@ define(function(require) {
             return data.bindScript(callback);
         },
         
-        data: function(key, value) {
-            if (arguments.length === 1) {
-                return data.data(key);
-            }
-            else {
-                return data.data(key, value);
-            }
-        },
-        
         script: function(value) {
             if (arguments.length) {
                 return data.script(value);

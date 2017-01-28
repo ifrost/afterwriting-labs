@@ -1,6 +1,7 @@
 define(function(require) {
 
     var Protoplast = require('p'),
+        IoModel = require('plugin/io/model/io-model'),
         gd = require('utils/googledrive'),
         db = require('utils/dropbox'),
         $ = require('jquery'),
@@ -11,6 +12,10 @@ define(function(require) {
     
     var SaveController = Protoplast.Object.extend({
 
+        ioModel: {
+            inject: IoModel
+        },
+        
         scriptModel: {
             inject: 'script'
         },
@@ -24,15 +29,15 @@ define(function(require) {
         },
 
         saveFountainLocally: function() {
-            forms.text('Select file name: ', this.scriptModel.data('fountain-filename') || 'screenplay.fountain', function (result) {
+            forms.text('Select file name: ', this.ioModel.fountainFileName || 'screenplay.fountain', function (result) {
                 this.scriptModel.parse();
                 var blob = new Blob([this.scriptModel.script()], {
                     type: "text/plain;charset=utf-8"
                 });
-                this.scriptModel.data('fountain-filename', result.text);
-                this.scriptModel.data('pdf-filename', result.text.split('.')[0] + '.pdf');
+                this.ioModel.fountainFileName = result.text;
+                this.ioModel.pdfFileName = result.text.split('.')[0] + '.pdf';
                 saveAs(blob, result.text);
-            });
+            }.bind(this));
         },
 
         saveFountainToDropbox: function() {
@@ -49,13 +54,13 @@ define(function(require) {
                     }
                     db.save(path, blob, function () {
                         if (filename) {
-                            this.scriptModel.data('fountain-filename', filename);
+                            this.ioModel.fountainFileName = filename;
                         }
                         this._fileSaved();
                         this.dispatch('fountain-saved-to-dropbox', path);
                     }.bind(this));
                 }.bind(this),
-                selected: this.scriptModel.data('db-path'),
+                selected: this.ioModel.dbPath,
                 list_options: {
                     lazy: this.settings.cloud_lazy_loading
                 },
@@ -77,7 +82,7 @@ define(function(require) {
                         filename: filename,
                         callback: function (file) {
                             if (filename) {
-                                this.scriptModel.data('fountain-filename', filename);
+                                this.ioModel.fountainFileName = filename;
                             }
                             this._fileSaved();
                             this.dispatch('fountain-saved-to-google-drive', file);
@@ -86,8 +91,8 @@ define(function(require) {
                         fileid: selected.data.isFolder ? null : selected.data.id
                     });
                 }.bind(this),
-                selected: this.scriptModel.data('gd-fileid'),
-                selected_parents: this.scriptModel.data('gd-parents'),
+                selected: this.ioModel.gdFileId,
+                selected_parents: this.ioModel.gdParents,
                 list_options: {
                     writeOnly: true,
                     lazy: this.settings.cloud_lazy_loading
@@ -97,10 +102,10 @@ define(function(require) {
         },
 
         savePdfLocally: function() {
-            forms.text('Select file name: ', this.scriptModel.data('pdf-filename') || 'screenplay.pdf', function (result) {
+            forms.text('Select file name: ', this.ioModel.pdfFileName || 'screenplay.pdf', function (result) {
                 this.pdfController.getPdf(function (pdf) {
-                    this.scriptModel.data('pdf-filename', result.text);
-                    this.scriptModel.data('fountain-filename', result.text.split('.')[0] + '.fountain');
+                    this.ioModel.pdfFileName = result.text;
+                    this.ioModel.fountainFileName = result.text.split('.')[0] + '.fountain';
                     saveAs(pdf.blob, result.text);
                 }.bind(this));
             }.bind(this));
@@ -118,13 +123,13 @@ define(function(require) {
                     this.pdfController.getPdf(function (result) {
                         db.save(path, result.blob, function () {
                             if (filename) {
-                                this.scriptModel.data('pdf-filename', filename);
+                                this.ioModel.pdfFileName = filename;
                             }
                             this._fileSaved();
                         }.bind(this));
                     }.bind(this));
                 }.bind(this),
-                selected: this.scriptModel.data('db-pdf-path'),
+                selected: this.ioModel.dbPdfPath,
                 list_options: {
                     pdfOnly: true,
                     lazy: this.settings.cloud_lazy_loading
@@ -144,24 +149,24 @@ define(function(require) {
                             filename: filename,
                             callback: function (file) {
                                 if (filename) {
-                                    this.scriptModel.data('pdf-filename', filename);
+                                    this.ioModel.pdfFileName = filename;
                                 }
                                 this._fileSaved();
-                                this.scriptModel.data('gd-pdf-id', file.id);
+                                this.ioModel.gdPdfId = file.id;
                                 var selected_parents = selected.parents.slice(0, selected.parents.length-2);
                                 if (selected.type === 'default') {
                                     selected_parents.unshift(selected.id);
                                 }
-                                this.scriptModel.data('gd-pdf-parents', selected_parents.reverse());
+                                this.ioModel.gdPdfParents = selected_parents.reverse();
                             }.bind(this),
                             convert: false,
                             parents: selected.data.isRoot ? [] : [selected.data],
-                            fileid: selected.data.isFolder ? null : selected.data.id,
+                            fileid: selected.data.isFolder ? null : selected.data.id
                         });
                     }.bind(this));
                 }.bind(this),
-                selected: this.scriptModel.data('gd-pdf-id'),
-                selected_parents: this.scriptModel.data('gd-pdf-parents'),
+                selected: this.ioModel.gdPdfId,
+                selected_parents: this.ioModel.gdPdfParents,
                 list_options: {
                     pdfOnly: true,
                     writeOnly: true,

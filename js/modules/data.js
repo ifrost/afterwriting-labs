@@ -1,14 +1,12 @@
 define('modules/data', function (require) {
 
-	var Modernizr = require('modernizr'),
-		fparser = require('aw-parser').parser,
+	var fparser = require('aw-parser').parser,
 		fliner = require('utils/fountain/liner'),
 		converter = require('utils/converters/scriptconverter'),
 		preprocessor = require('utils/fountain/preprocessor'),
 		decorator = require('utils/decorator');
 
 	var plugin = {};
-	var _tempStorage = {};
 	var url_params = {};
 
 	if (window && window.location && window.location.search) {
@@ -16,22 +14,6 @@ define('modules/data', function (require) {
 			url_params[key] = value;
 		});
 	}
-
-	plugin.data = function (key, value) {
-		if (Modernizr.localstorage) {
-			if (arguments.length === 1) {
-				return window.localStorage.getItem('com.afterwriting.labs.local-storage.' + key);
-			} else {
-				window.localStorage.setItem('com.afterwriting.labs.local-storage.' + key, value);
-			}
-		} else {
-			if (arguments.length === 1) {
-				return _tempStorage[key];
-			} else {
-				_tempStorage[key] = value;
-			}
-		}
-	};
 
 	plugin.format = '';
 

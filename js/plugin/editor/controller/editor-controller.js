@@ -1,10 +1,10 @@
 define(function(require) {
 
     var Protoplast = require('p'),
+        IoModel = require('plugin/io/model/io-model'),
         converter = require('utils/converters/scriptconverter'),
         gd = require('utils/googledrive'),
         db = require('utils/dropbox'),
-        save = require('utils/save'),
         local = require('utils/local'),
         ThemeController = require('aw-bubble/controller/theme-controller'),
         EditorModel = require('plugin/editor/model/editor-model');
@@ -13,6 +13,11 @@ define(function(require) {
         
         scriptModel: {
             inject: 'script'
+        },
+
+        // DEBT: decouple io? (+)
+        ioModel: {
+            inject: IoModel
         },
         
         editorModel: {
@@ -45,11 +50,11 @@ define(function(require) {
             this.editorModel.toggleSync();
             if (this.editorModel.isSyncEnabled) {
                 this.setAutoSave(false);
-                if (this.scriptModel.data('gd-fileid')) {
-                    gd.sync(this.scriptModel.data('gd-fileid'), 3000, this._handleSync);
+                if (this.ioModel.gdFileId) {
+                    gd.sync(this.ioModel.gdFileId, 3000, this._handleSync);
                     // plugin.syced('google-drive');
-                } else if (this.scriptModel.data('db-path')) {
-                    db.sync(this.scriptModel.data('db-path'), 3000, this._handleSync);
+                } else if (this.ioModel.dbPath) {
+                    db.sync(this.ioModel.dbPath, 3000, this._handleSync);
                     // plugin.synced('drobox');
                 } else if (local.sync_available()) {
                     local.sync(3000, this._handleSync);
@@ -102,9 +107,44 @@ define(function(require) {
             if (!this.editorModel.saveInProgress && this.editorModel.pendingChanges) {
                 this.editorModel.pendingChanges = false;
                 this.editorModel.saveInProgress = true;
-                save.save_current_script(function(){
+                this._saveCurrentScript(function(){
                     this.editorModel.saveInProgress = false;
                 }.bind(this));
+            }
+        },
+        
+        // DEBT: move to io? (+)
+        _saveCurrentScript: function(callback) {
+            var blob;
+            
+            if (this.ioModel.dbPath) {
+                var path = this.ioModel.dbPath;
+                
+                blob = new Blob([this.scriptModel.script()], {
+                    type: "text/plain;charset=utf-8"
+                });
+                
+                db.save(path, blob, function () {
+                    callback(true);
+                });
+            }
+            else if (this.ioModel.gdFileId) {
+                var fileId = this.ioModel.gdFileId;
+                
+                blob = new Blob([this.scriptModel.script()], {
+                    type: "text/plain;charset=utf-8"
+                });
+                
+                gd.upload({
+                    blob: blob,
+                    callback: function () {
+                        callback(true);
+                    },
+                    fileid: fileId
+                });
+            }
+            else {
+                callback(false);
             }
         },
         

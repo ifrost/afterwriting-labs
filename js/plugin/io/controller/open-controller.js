@@ -19,6 +19,10 @@ define(function(require) {
             inject: 'script'
         },
         
+        storage: {
+            inject: 'storage'
+        },
+        
         settings: {
             inject: 'settings'
         },
@@ -50,8 +54,8 @@ define(function(require) {
 
             this.scriptModel.bindScript(function () {
                 var title = '';
-                this.scriptModel.data('last-used-script', this.scriptModel.script());
-                this.scriptModel.data('last-used-date', helper.format_date(new Date()));
+                this.storage.setItem('last-used-script', this.scriptModel.script());
+                this.storage.setItem('last-used-date', helper.format_date(new Date()));
                 if (this.scriptModel.script()) {
                     var title_match;
                     var wait_for_non_empty = false;
@@ -68,16 +72,16 @@ define(function(require) {
                         return title && !wait_for_non_empty;
                     });
                 }
-                this.scriptModel.data('last-used-title', title || 'No title');
+                this.storage.setItem('last-used-title', title || 'No title');
             }.bind(this));
 
-            if (this.scriptModel.data('last-used-date')) {
-                this.scriptModel.data('filename', '');
+            if (this.storage.getItem('last-used-date')) {
+                this.storage.setItem('filename', '');
                 // log.info('Last used exists. Loading: ', data.data('last-used-title'), data.data('last-used-date'));
                 this.ioModel.lastUsedInfo = LastUsedInfo.create();
-                this.ioModel.lastUsedInfo.script = this.scriptModel.data('last-used-script');
-                this.ioModel.lastUsedInfo.date = this.scriptModel.data('last-used-date');
-                this.ioModel.lastUsedInfo.title = this.scriptModel.data('last-used-title');
+                this.ioModel.lastUsedInfo.script = this.storage.getItem('last-used-script');
+                this.ioModel.lastUsedInfo.date = this.storage.getItem('last-used-date');
+                this.ioModel.lastUsedInfo.title = this.storage.getItem('last-used-title');
             }
 
             Protoplast.utils.bind(this, 'settingsLoaderModel.userSettingsLoaded', this._openLastUsedOnStartup);
@@ -114,7 +118,7 @@ define(function(require) {
             this._openFromCloud(db, this._openFromDropbox, function (selected) {
                 db.load_file(selected.data.path, function (content) {
                     this._setScript(content);
-                    this.scriptModel.data('db-path', selected.data.path);
+                    this.ioModel.dbPath = selected.data.path;
                     // this.dispatch('opened-from-dropbox', data.format);
                 }.bind(this));
             }.bind(this));
@@ -124,9 +128,9 @@ define(function(require) {
             this._openFromCloud(gd, this.openFromGoogleDrive, function (selected) {
                 gd.load_file(selected.data.id, function (content, link, fileid) {
                     this._setScript(content);
-                    this.scriptModel.data('gd-link', link);
-                    this.scriptModel.data('gd-fileid', fileid);
-                    this.scriptModel.data('gd-parents', selected.parents.slice(0, selected.parents.length-2).reverse());
+                    this.ioModel.gdLink = link;
+                    this.ioModel.gdFileId = fileid;
+                    this.ioModel.gdParents = selected.parents.slice(0, selected.parents.length-2).reverse();
                     // this.dispatch('opened-from-google-drive', data.format);
                 }.bind(this));
             }.bind(this));
@@ -140,9 +144,9 @@ define(function(require) {
 
         _savedToGoogleDrive: function(item) {
             this._clearLastOpened();
-            this.scriptModel.data('gd-link', item.alternateLink);
-            this.scriptModel.data('gd-fileid', item.id);
-            this.scriptModel.data('filename', '');
+            this.ioModel.gdLink = item.alternateLink;
+            this.ioModel.gdFileId = item.id;
+            this.ioModel.fileName = '';
             // TODO: needed?
             // if (editor.is_active) {
             //     editor.activate(); // refresj
@@ -151,8 +155,8 @@ define(function(require) {
 
         _savedToDropbox: function(path) {
             this._clearLastOpened();
-            this.scriptModel.data('db-path', path);
-            this.scriptModel.data('filename', '');
+            this.ioModel.dbPath = path;
+            this.ioModel.fileName = '';
             // TODO: needed?
             // if (editor.is_active) {
             //     editor.activate(); // refresh
@@ -204,13 +208,13 @@ define(function(require) {
 
         _clearLastOpened: function() {
             this.scriptModel.format = undefined;
-            this.scriptModel.data('db-path', '');
-            this.scriptModel.data('gd-link', '');
-            this.scriptModel.data('gd-fileid', '');
-            this.scriptModel.data('gd-pdf-id', '');
-            this.scriptModel.data('db-pdf-path', '');
-            this.scriptModel.data('fountain-filename', '');
-            this.scriptModel.data('pdf-filename', '');
+            this.ioModel.dbPath = '';
+            this.ioModel.gdLink = '';
+            this.ioModel.gdFileId = '';
+            this.ioModel.gdPdfId = '';
+            this.ioModel.dbPdfPath = '';
+            this.ioModel.fountainFileName = '';
+            this.ioModel.pdfFileName = '';
             local.local_file(null);
         }
         

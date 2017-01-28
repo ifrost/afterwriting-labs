@@ -2,6 +2,7 @@ define(function(require) {
 
     var $ = require('jquery'),
         Protoplast = require('p'),
+        IoModel = require('plugin/io/model/io-model'),
         BaseSectionViewPresenter = require('aw-bubble/presenter/base-section-view-presenter'),
         local = require('utils/local'),
         EditorController = require('plugin/editor/controller/editor-controller'),
@@ -11,6 +12,15 @@ define(function(require) {
 
         scriptModel: {
             inject: 'script'
+        },
+        
+        // DEBT: move to editor controller / model (+)
+        storage: {
+            inject: 'storage'
+        },
+        
+        ioModel: {
+            inject: IoModel
         },
 
         editorModel: {
@@ -41,8 +51,9 @@ define(function(require) {
 
         activate: function() {
             BaseSectionViewPresenter.activate.call(this);
-            this.view.autoSaveAvailable = !!((this.scriptModel.data('gd-fileid') || this.scriptModel.data('db-path')) && this.scriptModel.format !== 'fdx');
-            this.view.syncAvailable = !!(this.scriptModel.data('gd-fileid') || this.scriptModel.data('db-path') || local.sync_available());
+            // DEBT: decouple from io (+)
+            this.view.autoSaveAvailable = !!((this.ioModel.gdFileId || this.ioModel.dbPath) && this.scriptModel.format !== 'fdx');
+            this.view.syncAvailable = !!(this.ioModel.gdFileId || this.ioModel.dbPath || local.sync_available());
 
             setTimeout(function () {
                 this.view.content = this.scriptModel.script();
@@ -66,7 +77,7 @@ define(function(require) {
         },
 
         _restore: function() {
-            this.scriptModel.script(this.scriptModel.data('editor-last-state'));
+            this.scriptModel.script(this.editorModel.lastContent);
             this.scriptModel.parse();
             // TODO: needed?
             // if (active) {
@@ -97,7 +108,7 @@ define(function(require) {
         },
         
         _enableSync: function() {
-            this.scriptModel.data('editor-last-state', this.scriptModel.script());
+            this.editorModel.lastContent = this.scriptModel.script();
             
             var self = this;
             $.prompt("You can start writing in your editor. Content will be synchronized with ’afterwriting! PDF preview, facts and stats will be automatically updated.", {

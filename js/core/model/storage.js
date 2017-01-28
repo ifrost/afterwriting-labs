@@ -21,7 +21,7 @@ define(function(require) {
             }
         },
 
-        save: function(key, value, callback) {
+        setItem: function(key, value, callback) {
             var prefixed = this.prefix + key,
                 textValue = JSON.stringify(value);
             window.localStorage.setItem(prefixed, textValue);
@@ -30,7 +30,7 @@ define(function(require) {
             }
         },
 
-        load: function(key, callback) {
+        getItem: function(key) {
             var prefixed = this.prefix + key,
                 textValue = window.localStorage.getItem(prefixed),
                 value;
@@ -39,7 +39,7 @@ define(function(require) {
             } catch(e) {
                 value = null;
             }
-            callback(value);
+            return value;
         }
 
     });
