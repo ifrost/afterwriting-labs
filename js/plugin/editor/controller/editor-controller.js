@@ -49,6 +49,7 @@ define(function(require) {
         toggleSync: function() {
             this.editorModel.toggleSync();
             if (this.editorModel.isSyncEnabled) {
+                this.editorModel.lastContent = this.scriptModel.script;
                 this.setAutoSave(false);
                 if (this.ioModel.gdFileId) {
                     gd.sync(this.ioModel.gdFileId, 3000, this._handleSync);
@@ -77,7 +78,6 @@ define(function(require) {
                 // }
             }
             else if (this.editorModel.lastContent !== content) {
-                this.editorModel.lastContent = content;
                 this.scriptModel.script = content;
                 this.scriptModel.parse();
                 //plugin.synced();
@@ -107,14 +107,14 @@ define(function(require) {
             if (!this.editorModel.saveInProgress && this.editorModel.pendingChanges) {
                 this.editorModel.pendingChanges = false;
                 this.editorModel.saveInProgress = true;
-                this._saveCurrentScript(function(){
+                this._saveScript(function(){
                     this.editorModel.saveInProgress = false;
                 }.bind(this));
             }
         },
         
         // DEBT: move to io? (+)
-        _saveCurrentScript: function(callback) {
+        _saveScript: function(callback) {
             var blob;
             
             if (this.ioModel.dbPath) {

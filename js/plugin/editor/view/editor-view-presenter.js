@@ -77,6 +77,7 @@ define(function(require) {
         },
 
         _restore: function() {
+            // DEBT: move to presenter
             this.scriptModel.script = this.editorModel.lastContent;
             this.scriptModel.parse();
             // TODO: needed?
@@ -123,8 +124,6 @@ define(function(require) {
         },
         
         _disableSync: function() {
-            this.editorController.toggleSync();
-            
             var self = this;
             $.prompt('Synchronization turned off.', {
                 buttons: {'Keep content': true, 'Load version before sync': false},
@@ -132,6 +131,7 @@ define(function(require) {
                     if (!v) {
                         self._restore();
                     }
+                    self.editorController.toggleSync();
                 }
             });
         }
