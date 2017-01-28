@@ -152,6 +152,11 @@ define(function(require) {
 
         addInteractions: function() {
             this.editor = this.createEditor();
+            
+            //  Set content if it had been set before (e.g. when loading last used script)
+            if (this.content) {
+                this._updateContent();
+            }
 
             this.editor.on('change', function () {
                 this.dispatch('editorContentChanged');
