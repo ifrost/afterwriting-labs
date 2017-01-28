@@ -17,6 +17,7 @@ define(function(require) {
         Storage = require('core/model/storage'),
         Settings = require('core/model/settings'),
         ScriptModel = require('core/model/script-model'),
+        MonitorPlugin = require('plugin/monitor/monitor-plugin'),
         InfoPlugin = require('plugin/info/info-plugin'),
         IoPlugin = require('plugin/io/io-plugin'),
         EditorPlugin = require('plugin/editor/editor-plugin'),
@@ -84,6 +85,7 @@ define(function(require) {
         di.register(StatsPlugin.create(di));
         di.register(SettingsPlugin.create(di));
         di.register(PreviewPlugin.create(di));
+        di.register(MonitorPlugin.create(di));
         di.build();
         var root = Protoplast.Component.Root(document.body, di);
         

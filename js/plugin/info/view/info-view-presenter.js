@@ -4,8 +4,8 @@ define(function(require) {
 
     var InfoViewPresenter = Protoplast.Object.extend({
 
-        monitor: {
-            inject: 'monitor'
+        pub: {
+            inject: 'pub'
         },
 
         init: function() {
@@ -13,7 +13,7 @@ define(function(require) {
         },
         
         _downloadClicked: function() {
-            this.monitor.track('feature', 'download');
+            this.pub('info/download-link/clicked');
         }
         
     });
