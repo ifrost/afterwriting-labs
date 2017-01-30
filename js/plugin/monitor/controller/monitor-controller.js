@@ -57,8 +57,8 @@ define(function(require) {
             }
         },
 
-        appSwitchToSection: {
-            sub: 'app/switch-link',
+        themeSwitchToSection: {
+            sub: 'aw-bubble/switcher/clicked',
             value: function(sectionName) {
                 this.monitor.track('navigation', sectionName, 'switcher');
             }

@@ -15,16 +15,10 @@ define(function(require) {
 
         init: function() {
             this.view.on('download-clicked', this._downloadClicked, this);
-            this.view.on('switch-to-open', this._switchToOpen, this);
         },
         
         _downloadClicked: function() {
             this.pub('info/download-link/clicked');
-        },
-        
-        _switchToOpen: function() {
-            this.themeController.selectSectionByName('open');
-            this.pub('app/switch-link', 'open');
         }
         
     });

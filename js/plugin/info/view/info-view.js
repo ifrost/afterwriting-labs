@@ -3,7 +3,8 @@ define(function(require) {
     var template = require('text!plugin/info/view/info.hbs'),
         $ = require('jquery'),
         InfoViewPresenter = require('plugin/info/view/info-view-presenter'),
-        HandlebarComponent = require('utils/handlebar-component');
+        HandlebarComponent = require('utils/handlebar-component'),
+        Switcher = require('aw-bubble/view/switcher');
     
     return HandlebarComponent.extend({
 
@@ -11,13 +12,17 @@ define(function(require) {
             presenter: InfoViewPresenter
         },
         
+        switchToOpen: {
+            component: Switcher
+        },
+        
         hbs: template,
 
-        switchToOpen: null,
-
         addInteractions: function() {
+            this.switchToOpen.sectionName = 'open';
+            this.switchToOpen.title = 'samples';
+            
             $('#download-link').click(this.dispatch.bind(this, 'download-clicked'));
-            $(this.switchToOpen).click(this.dispatch.bind(this, 'switch-to-open'));
         }
 
     });
