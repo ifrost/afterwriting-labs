@@ -23,6 +23,18 @@ define(function(require) {
 
         $night_mode: 'input[data-id="night_mode"]',
 
+        $close_icon: '.close-content',
+
+        $info_icon: function(section_name) {
+            return '.info-icon[section="' + section_name + '"]';
+        },
+        
+        $expand_icon: '.expand',
+        
+        $switch_link: function(section_name) {
+            return '.switch[section="' + section_name + '"]';
+        },
+
         $stats: {
             value: {
                 $page_balance: {
@@ -43,6 +55,10 @@ define(function(require) {
 
         $plugin: function(name) {
             return '.menu-item.' + name;
+        },
+
+        $toolbar: function(name) {
+            return '.tool.' + name;
         },
 
         $file_link: function(file) {

@@ -42,6 +42,11 @@ define(function(require) {
         event_tracked: function(category, action, label) {
             var eventName = [category, action, label].filter(function(value){return value;}).join('/');
             chai.assert.ok(this.ga.hasEvent(category, action, label), 'Event: ' + eventName + ' not found');
+        },
+
+        event_not_tracked: function(category, action, label) {
+            var eventName = [category, action, label].filter(function(value){return value;}).join('/');
+            chai.assert.ok(!this.ga.hasEvent(category, action, label), 'Event: ' + eventName + ' was tracked');
         }
 
     });

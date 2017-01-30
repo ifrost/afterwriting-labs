@@ -16,22 +16,45 @@ define(function(require) {
 
         describe('Navigation', function() {
             it('Switching plugins from the main menu', function() {
-                env.assert.event_tracked('navigation', 'info', 'menu');
+                env.user.open_plugin('open');
+                env.assert.event_tracked('navigation', 'open', 'main');
             });
             it('Switching plugins from the toolbar', function() {
-                env.assert.event_tracked('navigation', 'info', 'toolbar');
+                env.user.open_plugin('info');
+                env.user.open_plugin('info');
+                env.assert.event_not_tracked('navigation', 'info', 'toolbar');
+
+                env.user.open_plugin_from_toolbar('open');
+                env.assert.event_tracked('navigation', 'open', 'toolbar');
             });
             it('Switching between plugins using internal links', function() {
-                env.assert.event_tracked('navigation', 'info', 'switcher');
+                env.user.open_plugin('info');
+
+                env.user.click_switch_link('open');
+
+                env.assert.event_tracked('navigation', 'open', 'switcher');
             });
             it('Closing content from the toolbar', function() {
-                env.assert.event_tracked('navigation', 'toolbar-close', 'info');
+                env.user.open_plugin('open');
+                env.user.close_content();
+                env.assert.event_tracked('navigation', 'toolbar-close', 'open');
             });
             it('Closing content by clicking on the background', function() {
-                env.assert.event_tracked('navigation', 'back-close', 'info');
+                env.user.open_plugin('open');
+                env.user.back_to_main();
+                env.assert.event_tracked('navigation', 'back-close', 'open');
             });
             it('Expanding section info (question mark icon)', function() {
-                env.assert.event_tracked('feature', 'help', 'sectionName');
+                env.user.open_plugin('open');
+                env.user.click_info_icon('open-start');
+                env.assert.event_tracked('feature', 'help', 'open-start');
+            });
+            it('Stretching section container to span the whole window', function() {
+                env.user.open_plugin('open');
+                env.user.click_expand_icon();
+                env.assert.event_tracked('feature', 'expand');
+
+                env.user.click_expand_icon();
             });
         });
 

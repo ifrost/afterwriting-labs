@@ -40,13 +40,20 @@ define(function(require) {
                 $(this).removeClass('tool-hover');
             });
 
-            this.root.onclick = this.dispatch.bind(this, 'clicked');
+            this.root.onclick = this.dispatch.bind(this, 'clicked', this._selected);
         },
 
         renderIcon: {
             bindWith: 'section.smallIcon',
             value: function() {
                 this.root.setAttribute('src', this.section.smallIcon);
+            }
+        },
+
+        render: {
+            bindWith: 'section.name',
+            value: function() {
+                this.root.className = 'tool ' + this.section.name;
             }
         }
 

@@ -14,7 +14,15 @@ define(function(require) {
         },
 
         click: function(selector) {
-            this.browser.click($(selector).get(0));
+            // DEBT: decide on error handling convention (+)
+            try {
+                this.browser.click($(selector).get(0));
+            }
+            catch (e) {
+                if (e === "NodeDoesNotExist") {
+                    throw new Error('Cannot click on selector "' + selector + '". Element not found.');
+                }
+            }
             this.browser.tick(20000);
         },
 
@@ -24,6 +32,26 @@ define(function(require) {
 
         open_plugin: function(name) {
             this.click(this.dom.$plugin(name));
+        },
+
+        open_plugin_from_toolbar: function(name) {
+            this.click(this.dom.$toolbar(name));
+        },
+        
+        close_content: function() {
+            this.click(this.dom.$close_icon);
+        },
+        
+        click_info_icon: function(section_name) {
+            this.click(this.dom.$info_icon(section_name));
+        },
+        
+        click_expand_icon: function() {
+            this.click(this.dom.$expand_icon);
+        },
+        
+        click_switch_link: function(section_name) {
+            this.click(this.dom.$switch_link(section_name));
         },
 
         open_from_dropbox: function() {

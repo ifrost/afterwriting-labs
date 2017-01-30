@@ -13,10 +13,11 @@ define(function(require) {
         
         hbs: template,
 
-        plugin: null,
+        switchToOpen: null,
 
         addInteractions: function() {
             $('#download-link').click(this.dispatch.bind(this, 'download-clicked'));
+            $(this.switchToOpen).click(this.dispatch.bind(this, 'switch-to-open'));
         }
 
     });

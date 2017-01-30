@@ -8,6 +8,8 @@ define(function(require) {
         '<h2><span data-prop="elemTitle"></span>&nbsp;<span data-prop="elemInfoIcon" class="info-icon"/></h2>' +
         '<p data-prop="elemDescription" class="info-content" style="display: none"></p>' +
         '</div>',
+        
+        id: null,
 
         elemTitle: null,
 
@@ -20,6 +22,8 @@ define(function(require) {
         description: '',
         
         descriptionVisible: false,
+        
+        sectionTrackingId: null,
         
         $create: function() {
             this.$root = $(this.root);
@@ -34,6 +38,7 @@ define(function(require) {
             Protoplast.utils.bind(this, 'title', this.updateTitle.bind(this));
             Protoplast.utils.bind(this, 'description', this.updateDescription.bind(this));
             Protoplast.utils.bind(this, 'descriptionVisible', this.toggleDescription.bind(this));
+            Protoplast.utils.bind(this, 'sectionName', this.updateSectionName.bind(this));
         },
 
         updateTitle: function() {
@@ -67,6 +72,10 @@ define(function(require) {
                     easing: 'linear'
                 });
             }
+        },
+        
+        updateSectionName: function() {
+            this.elemInfoIcon.setAttribute('section', this.id);
         }
 
     });

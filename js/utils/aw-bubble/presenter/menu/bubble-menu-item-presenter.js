@@ -5,6 +5,10 @@ define(function(require) {
 
     var BubbleMenuItemPresenter = Protoplast.Object.extend({
 
+        pub: {
+            inject: 'pub'
+        },
+
         themeController: {
             inject: ThemeController
         },
@@ -15,6 +19,7 @@ define(function(require) {
 
         selectSection: function() {
             this.themeController.selectSection(this.view.section);
+            this.pub('aw-bubble/main-menu/item/selected', this.view.section.name);
         }
 
     });

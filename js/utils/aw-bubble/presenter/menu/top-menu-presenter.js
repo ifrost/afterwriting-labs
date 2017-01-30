@@ -6,6 +6,10 @@ define(function(require) {
 
     var TopMenuPresenter = Protoplast.Model.extend({
         
+        pub: {
+            inject: 'pub'
+        },
+        
         sections: null,
 
         themeModel: {
@@ -44,11 +48,14 @@ define(function(require) {
         },
 
         closeCurrentContent: function() {
+            var currentSection = this.themeModel.sections.selected;
             this.themeController.clearSelectedSection();
+            this.pub('aw-bubble/top-menu/close', currentSection.name);
         },
 
         toggleExpanded: function() {
             this.themeController.toggleExpanded();
+            this.pub('aw-bubble/top-menu/expand');
         },
 
         $create: function() {

@@ -1,12 +1,21 @@
 define(function(require) {
 
     var Protoplast = require('p'),
-        ThemeController = require('aw-bubble/controller/theme-controller');
+        ThemeController = require('aw-bubble/controller/theme-controller'),
+        ThemeModel = require('aw-bubble/model/theme-model');
 
     var BackgroundPresenter = Protoplast.Object.extend({
-        
+
+        pub: {
+            inject: 'pub'
+        },
+
         themeController: {
             inject: ThemeController
+        },
+
+        themeModel: {
+            inject: ThemeModel
         },
         
         init: function() {
@@ -14,7 +23,11 @@ define(function(require) {
         },
         
         clearSelectedSection: function() {
-            this.themeController.clearSelectedSection();
+            var currentSection = this.themeModel.sections.selected;
+            if (currentSection) {
+                this.themeController.clearSelectedSection();
+                this.pub('aw-bubble/background/clicked', currentSection.name);
+            }
         }
         
     });

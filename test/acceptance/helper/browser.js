@@ -45,7 +45,10 @@ define(function(require) {
         click: function(node) {
             var event;
 
-            if (node.click) {
+            if (!node) {
+                throw "NodeDoesNotExist";
+            }
+            else if (node.click) {
                 node.click();
             }
             else if (node instanceof SVGElement) {

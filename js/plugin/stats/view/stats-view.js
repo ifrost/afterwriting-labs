@@ -89,25 +89,32 @@ define(function(require) {
             this.pageBalanceChart = PageBalanceChart;
             this.lineChart = LineChart;
             this.locationsBreakdown = LocationsBreakdown;
-            
+
+            this.whoWithWhoHeader.id = "stats-who";
             this.whoWithWhoHeader.title = "Who talks with who (by number of scenes)";
             this.whoWithWhoHeader.description = "Each character is represented by a circle (max. 10 characters). If characters are connected with a line that means they are talking in the same scene. Thicker the line - more scenes together. Hover the mouse cursor over a character circle to see how many dialogues scenes that character have with other characters.";
 
+            this.scriptPulseHeader.id = "stats-tempo";
             this.scriptPulseHeader.title = "Script Pulse";
             this.scriptPulseHeader.description = "Short scenes and short action/dialogue blocks bump the tempo up. Long scenes and long blocks set it back.";
-            
+
+            this.sceneLengthHeader.id = "stats-scene-length";
             this.sceneLengthHeader.title = "Scene length";
             this.sceneLengthHeader.description = "Each bar represent one scene (white bars for day scenes, black bars for night scenes). Hover the mouse cursor over a bar to see estimated time of a scene. You can click on a bar to jump to selected scene in the editor.";
-            
+
+            this.locationsBreakdown.id = "stats-locations-breakdown";
             this.locationsBreakdownHeader.title = "Locations breakdown";
             this.locationsBreakdownHeader.description = "Blocks on the top strip represent amount of time spent in a location. If a location occurs more than once in the script, it's highlighted by a colour (white colour is used for each location occurring only once).<br />Pie chart below shows time distribution for each location. Mouse over the blocks to see corresponding data on the pie chart (and vice versa).";
-            
+
+            this.pageBalanceHeader.id = "stats-page-balance";
             this.pageBalanceHeader.title = "Page balance";
             this.pageBalanceHeader.description = "Shows balance between action time and dialogue time on each page. Click on a page to jump to the editor.";
 
+            this.daysAndNightsHeader.id = "stats-days-nights";
             this.daysAndNightsHeader.title = "Days and nights";
             this.daysAndNightsHeader.description = "Pie chart representing day vs night scenes breakdown. Hover over sections to see number of day/night scenes.";
 
+            this.intVsExtHeader.id = "stats-int-ext";
             this.intVsExtHeader.title = "INT. vs EXT.";
             this.intVsExtHeader.description = "Pie chart representing interior vs exterior scenes breakdown. Hover over sections to see number of int/ext scenes.";
         },

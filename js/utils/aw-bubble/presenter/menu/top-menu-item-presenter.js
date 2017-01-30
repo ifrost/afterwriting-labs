@@ -5,16 +5,23 @@ define(function(require) {
 
     var TopMenuItemPresenter = Protoplast.Object.extend({
 
+        pub: {
+            inject: 'pub'
+        },
+        
         themeController: {
             inject: ThemeController
         },
-
+        
         init: function() {
-            this.view.on('clicked', this.selectSection.bind(this));
+            this.view.on('clicked', this.sectionClicked.bind(this));
         },
 
-        selectSection: function() {
-            this.themeController.selectSection(this.view.section);
+        sectionClicked: function(isSelected) {
+            if (!isSelected) {
+                this.themeController.selectSection(this.view.section);
+                this.pub('aw-bubble/top-menu/item/selected', this.view.section.name);
+            }
         }
 
     });

@@ -6,6 +6,9 @@ define(function(require) {
      * Represents a section/page on the site
      */
     var Section = Protoplast.Model.extend({
+
+        // DEBT: unify id and name (at the moment id is used for tracking)
+        id: null,
         
         bigIcon: null,
         

@@ -2,10 +2,15 @@ define(function(require) {
 
     var $ = require('jquery'),
         Protoplast = require('p'),
+        SectionContainerPresenter = require('aw-bubble/presenter/section-container-presenter'),
         ThemeModel = require('aw-bubble/model/theme-model');
 
     var SectionContainer = Protoplast.Component.extend({
 
+        $meta: {
+            presenter: SectionContainerPresenter
+        },
+        
         html: '<div style="overflow: hidden; position: relative">' +
         '<h1 style="float: left; border-bottom: 1px dashed lightgray"><span data-prop="title"></span>&nbsp;<span data-prop="infoIcon" class="info-icon"/></h1>' +
         '<div data-comp="toolsParent"></div>' +
@@ -53,11 +58,15 @@ define(function(require) {
 
             this.infoIcon.onclick = function() {
                 this.descriptionVisible = !this.descriptionVisible;
+                if (this.descriptionVisible) {
+                    this.dispatch('sectionDescriptionShown', this.section.id);
+                }
             }.bind(this)
         },
 
         init: function() {
             Protoplast.utils.bind(this, 'section.title', this.updateTitle.bind(this));
+            Protoplast.utils.bind(this, 'section.name', this.updateSectionName.bind(this));
             Protoplast.utils.bind(this, 'section.tools', this.updateTools.bind(this));
             Protoplast.utils.bind(this, 'section.mainContent', this.recreateContent.bind(this));
             Protoplast.utils.bind(this, 'section.description', this.updateDescription.bind(this));
@@ -114,6 +123,10 @@ define(function(require) {
 
         updateTitle: function() {
             this.title.innerHTML = this.section.title;
+        },
+
+        updateSectionName: function() {
+            this.infoIcon.setAttribute('section', this.section.id);
         },
 
         updateDescription: function() {
