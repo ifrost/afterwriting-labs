@@ -120,6 +120,12 @@ define(function(require) {
             });
         });
 
+        describe('Preview', function() {
+            it('Switching to save section', function() {
+                env.assert.event_tracked('navigation', 'save', 'switcher');
+            });
+        });
+
         describe('Stats', function() {
             it('Switching to editor from scene length', function() {
                 env.assert.event_tracked('feature', 'stats-scene-length-goto');
