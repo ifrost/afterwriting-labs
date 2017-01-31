@@ -1,7 +1,22 @@
-Same functionality in theme-update as in master
-- sync
-- auto reload
-Rebase develop
-Refactor models and stuff in modules
-Rename plugins to modules?
-Add test coverage
+awc.js
+performance (+measure tool)
+test coverage:
+- google drive
+- unit tests (controllers)
+- integration tests (gd sync)
+
+docs
+protoplast docs
+indentation
+tests CamelCasing
+conventions
+
+app/init vs theme/init
+DEBT
+extract tools (+tests):
+- fountain-related
+- cmmode
+- pdfmaker
+libs - why two jquery versions?
+refactor queries
+convert stats into components
