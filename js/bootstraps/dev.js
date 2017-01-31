@@ -1,10 +1,3 @@
-require(['bootstrap'], function (bootstrap) {
-    try {
-        bootstrap.init(arguments);
-    }
-    catch (e) {
-        // workaround for missing stack traces in PhantomJS
-        console.error('Bootstrap error: ', e.message, e.stack);
-        throw e;
-    }
+require(['bootstrap'], function (Bootstrap) {
+    Bootstrap.init();
 });

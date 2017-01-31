@@ -14,6 +14,10 @@ define(function(require) {
         
         theme: {
             component: BubbleTheme
+        },
+
+        init: function() {
+            $('#loader').remove();
         }
         
     });
