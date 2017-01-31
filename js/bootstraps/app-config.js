@@ -1,19 +1,34 @@
 define(function(require) {
 
-    var Plugin = require('core/plugin'),
-        CoreConfig = require('bootstraps/core-config'),
+    var CoreConfig = require('bootstraps/core-config'),
+        ThemeModel = require('aw-bubble/model/theme-model'),
+        ThemeController = require('aw-bubble/controller/theme-controller'),
+        AppController = require('core/controller/app-controller'),
+        AppModel = require('core/model/app-model'),
         InfoPlugin = require('plugin/info/info-plugin'),
         IoPlugin = require('plugin/io/io-plugin'),
         EditorPlugin = require('plugin/editor/editor-plugin'),
         StatsPlugin = require('plugin/stats/stats-plugin'),
         SettingsPlugin = require('plugin/settings/settings-plugin'),
         PreviewPlugin = require('plugin/preview/preview-plugin'),
-        MonitorPlugin = require('plugin/monitor/monitor-plugin');
+        MonitorPlugin = require('plugin/monitor/monitor-plugin'),
+        AppView = require('view/app-view');
 
-    var AppConfig = Plugin.extend({
+    var AppConfig = CoreConfig.extend({
+
+        MainView: {
+            value: AppView
+        },
         
-        $create: function(context) {
-            CoreConfig.create(context);
+        init: function(context) {
+            
+            CoreConfig.init.call(this, context);
+
+            context.register(ThemeModel.create());
+            context.register(ThemeController.create());
+            context.register(AppController.create());
+            context.register('appModel', AppModel.create());
+
             context.register(InfoPlugin.create(context));
             context.register(IoPlugin.create(context));
             context.register(EditorPlugin.create(context));

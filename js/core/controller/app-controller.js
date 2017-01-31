@@ -2,7 +2,6 @@ define(function(require) {
 
     var common = require('utils/common'),
         Protoplast = require('p'),
-        AppModel = require('core/model/app-model'),
         ThemeModel = require('aw-bubble/model/theme-model'),
         ThemeController = require('aw-bubble/controller/theme-controller');
 
@@ -33,9 +32,6 @@ define(function(require) {
             value: function() {
 
                 var footer = common.data.footer;
-                if (window.hasOwnProperty('ENVIRONMENT') && window.ENVIRONMENT == 'dev') {
-                    footer += '<br /><span class="version">development version</span>';
-                }
                 this.themeController.setFooter(footer);
 
                 this.pub('bubble-theme/init');

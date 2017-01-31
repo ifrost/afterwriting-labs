@@ -13,7 +13,6 @@
 
         <!-- only for acceptance test purposes so far; sinon does not play well with PhantomJS's Blob -->
         <script type="text/javascript">
-            var ENVIRONMENT = 'dev';
             var ACCEPTANCE = window.location.search.indexOf('ACCEPTANCE') !== -1 || navigator.userAgent.indexOf('PhantomJS') !== -1;
 
             // XXX: if you turn the workers on, the acceptance test will fail because

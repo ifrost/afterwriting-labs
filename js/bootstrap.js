@@ -1,13 +1,11 @@
 define(function(require) {
 
     var _ = require('dependencies'),
-        logger = require('logger'),
-        Protoplast = require('p'),
-        AppView = require('view/app-view');
+        Protoplast = require('p');
     
     var Bootstrap = Protoplast.extend({
 
-        config: null,
+        Config: null,
         
         context: null,
 
@@ -27,8 +25,10 @@ define(function(require) {
         },
         
         _bootstrap: function(Config) {
+            this.Config = Config;
             this.context = Protoplast.Context.create();
-            this.config = Config.create(this.context);
+
+            this.Config.init(this.context);
             this.context.register(this);
             this.context.build();
         },
@@ -36,13 +36,15 @@ define(function(require) {
         _onContextReady: {
             injectInit: true,
             value: function() {
-                var root = Protoplast.Component.Root(document.body, this.context);
-                root.add(AppView.create());
+                if (this.Config.MainView) {
+                    var root = Protoplast.Component.Root(document.body, this.context);
+                    root.add(this.Config.MainView.create());
+                }
 
                 this.pub('app/init');
 
-                if (this.config.afterHook) {
-                    this.config.afterHook();
+                if (this.Config.afterHook) {
+                    this.Config.afterHook();
                 }
             }
         }

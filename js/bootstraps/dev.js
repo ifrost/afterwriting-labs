@@ -1,3 +1,3 @@
-require(['bootstrap', 'bootstraps/core-config'], function (Bootstrap, Config) {
-    Bootstrap.init(Config);
+require(['bootstrap', 'bootstraps/dev-config'], function (Bootstrap, DevConfig) {
+    Bootstrap.init(DevConfig);
 });
