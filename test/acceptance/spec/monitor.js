@@ -66,29 +66,56 @@ define(function(require) {
             });
         });
 
-        describe('Open', function() {
+        describe.only('Open', function() {
+            
+            beforeEach(function() {
+                env.user.open_plugin('open');
+            });
+            
             it('Opening a sample', function() {
-                env.assert.event_tracked('feature', 'open-sample', 'sampleName');
+                env.user.open_sample('brick_and_steel');
+                env.assert.event_tracked('feature', 'open-sample', 'brick_and_steel');
             });
             it('Creating a new script', function() {
+                env.user.create_new();
                 env.assert.event_tracked('feature', 'open-new');
             });
             it('Opening a file dialog', function() {
+                env.user.open_file_dialog();
                 env.assert.event_tracked('feature', 'open-file-dialog');
             });
-            it('Opening a local file', function() {
+            it.skip('Opening a local file', function() {
                 env.assert.event_tracked('feature', 'open-file-opened', 'format');
             });
-            it('Opening a file from Dropbox', function() {
-                env.assert.event_tracked('feature', 'open-dropbox', 'format');
+            // DEBT: code duplication with open.js
+            it('Opening a file from Dropbox', function(done) {
+                env.dropbox.has_file({
+                    name: 'file.fountain',
+                    content: 'test content'
+                });
+
+                env.user.open_from_dropbox();
+                env.dropbox.auth_dropbox();
+                env.browser.tick(3000);
+                env.user.select_file('file.fountain');
+                env.user.confirm_popup();
+
+                env.browser.read_files(function() {
+                    env.browser.tick(3000);
+
+                    env.assert.event_tracked('feature', 'open-dropbox', 'fountain');
+                    done();
+                });
             });
-            it('Opening a file from GoogleDrive', function() {
-                env.assert.event_tracked('feature', 'open-googledriv', 'format');
+            it.skip('Opening a file from GoogleDrive', function() {
+                env.user.open_from_googledrive();
+                env.assert.event_tracked('feature', 'open-googledrive', 'format');
             });
-            it('Opening last used (on startup)', function() {
+            it.skip('Opening last used (on startup)', function() {
                 env.assert.event_tracked('feature', 'open-last-used', 'startup');
             });
             it('Opening last used (link)', function() {
+                env.user.open_last_used();
                 env.assert.event_tracked('feature', 'open-last-used', 'manual');
             });
         });

@@ -53,6 +53,7 @@ define(function(require) {
             }.bind(this));
 
             $('a[open-action="open"]').click(function() {
+                this.dispatch('open-file-dialog');
                 $("#open-file").click();
             }.bind(this));
         },

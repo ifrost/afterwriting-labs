@@ -62,6 +62,55 @@ define(function(require) {
             value: function(sectionName) {
                 this.monitor.track('navigation', sectionName, 'switcher');
             }
+        },
+
+        openCreateNew: {
+            sub: 'plugin/io/create-new',
+            value: function() {
+                this.monitor.track('feature', 'open-new');
+            }
+        },
+
+        openLastUsed: {
+            sub: 'plugin/io/open-last-used',
+            value: function() {
+                this.monitor.track('feature', 'open-last-used', 'manual');
+            }
+        },
+
+        openLastUsedStartup: {
+            sub: 'plugin/io/startup/opened-last-used',
+            value: function() {
+                this.monitor.track('feature', 'open-last-used', 'startup');
+            }
+        },
+
+        openSample: {
+            sub: 'plugin/io/open-sample',
+            value: function(sampleName) {
+                this.monitor.track('feature', 'open-sample', sampleName);
+            }
+        },
+
+        openDialog: {
+            sub: 'plugin/io/open-local-file-dialog',
+            value: function() {
+                this.monitor.track('feature', 'open-file-dialog');
+            }
+        },
+
+        openFromDropbox: {
+            sub: 'plugin/io/opened-from-dropbox',
+            value: function(format) {
+                this.monitor.track('feature', 'open-dropbox', format);
+            }
+        },
+
+        openFromGoogleDrive: {
+            sub: 'plugin/io/opened-from-google-drive',
+            value: function(format) {
+                this.monitor.track('feature', 'open-googledrive', format);
+            }
         }
         
     });

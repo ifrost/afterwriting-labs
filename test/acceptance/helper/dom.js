@@ -11,7 +11,17 @@ define(function(require) {
 
         $create_new: '[open-action=new]',
 
+        $open_local: '[open-action=open]',
+
         $open_dropbox: '[open-action=dropbox]',
+
+        $open_googledrive: '[open-action=googledrive]',
+        
+        $open_sample: function(name) {
+            return '[open-action=sample][value="' + name + '"]';
+        },
+
+        $open_last_used: '[open-action=last]',
 
         $close_popup: '[name=jqi_state0_buttonCancel]',
 

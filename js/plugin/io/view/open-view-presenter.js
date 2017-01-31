@@ -10,6 +10,10 @@ define(function(require) {
      */
     var OpenViewPresenter = BaseSectionViewPresenter.extend({
 
+        pub: {
+            inject: 'pub'
+        },
+        
         openController: {
             inject: OpenController
         },
@@ -27,25 +31,30 @@ define(function(require) {
             this.view.on('create-new', this._createNew);
             this.view.on('open-last-used', this._openLastUsed);
             this.view.on('open-file', this._openFile);
+            this.view.on('open-file-dialog', this._openFileDialog);
             this.view.on('open-from-dropbox', this._openFromDropbox);
             this.view.on('open-from-google-drive', this._openFromGoogleDrive);
         },
         
         _createNew: function() {
             this.openController.createNew();
-            // track
+            this.pub('plugin/io/create-new');
         },
 
         _openSample: function(name) {
             this.openController.openSample(name);
-            // tack
+            this.pub('plugin/io/open-sample', name);
         },
         
         _openLastUsed: function() {
             this.openController.openLastUsed();
-            // track
+            this.pub('plugin/io/open-last-used');
         },
         
+        _openFileDialog: function() {
+            this.pub('plugin/io/open-local-file-dialog');
+        },
+
         _openFile: function(selectedFile) {
             this.openController.openFile(selectedFile);
         },
@@ -56,10 +65,6 @@ define(function(require) {
         
         _openFromGoogleDrive: function() {
             this.openController.openFromGoogleDrive();
-        },
-        
-        _downloadClicked: function() {
-            this.monitor.track('feature', 'download');
         }
         
     });

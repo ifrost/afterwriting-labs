@@ -14,7 +14,11 @@ define(function(require) {
         samples = require('samples');
     
     var OpenController = Protoplast.Object.extend({
-        
+
+        pub: {
+            inject: 'pub'
+        },
+
         scriptModel: {
             inject: 'script'
         },
@@ -119,7 +123,7 @@ define(function(require) {
                 db.load_file(selected.data.path, function (content) {
                     this._setScript(content);
                     this.ioModel.dbPath = selected.data.path;
-                    // this.dispatch('opened-from-dropbox', data.format);
+                    this.pub('plugin/io/opened-from-dropbox', this.scriptModel.format);
                 }.bind(this));
             }.bind(this));
         },
@@ -131,7 +135,7 @@ define(function(require) {
                     this.ioModel.gdLink = link;
                     this.ioModel.gdFileId = fileid;
                     this.ioModel.gdParents = selected.parents.slice(0, selected.parents.length-2).reverse();
-                    // this.dispatch('opened-from-google-drive', data.format);
+                    this.pub('plugin/io/opened-from-google-drive', this.scriptModel.format);
                 }.bind(this));
             }.bind(this));
         },
@@ -139,6 +143,7 @@ define(function(require) {
         _openLastUsedOnStartup: function() {
             if (this.settings.load_last_opened) {
                 this.openLastUsed();
+                this.pub('plugin/io/startup/opened-last-used')
             }
         },
 

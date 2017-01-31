@@ -54,8 +54,24 @@ define(function(require) {
             this.click(this.dom.$switch_link(section_name));
         },
 
+        open_file_dialog: function() {
+            this.click(this.dom.$open_local);
+        },
+
+        open_sample: function(name) {
+            this.click(this.dom.$open_sample(name));
+        },
+
         open_from_dropbox: function() {
             this.click(this.dom.$open_dropbox);
+        },
+
+        open_from_googledrive: function() {
+            this.click(this.dom.$open_googledrive);
+        },
+        
+        open_last_used: function(){
+            this.click(this.dom.$open_last_used);
         },
 
         close_popup: function() {
