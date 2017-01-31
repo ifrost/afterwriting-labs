@@ -47,7 +47,7 @@ define(function(require) {
             this._resetFileInput();
 
             $("#open-file").change(function() {
-                var selected_file = $('#open-file').get(0).files[0];
+                var selected_file = $('#open-file').get(0).files.item(0);
                 this.dispatch('open-file', selected_file);
                 this._resetFileInput();
             }.bind(this));

@@ -111,6 +111,48 @@ define(function(require) {
             value: function(format) {
                 this.monitor.track('feature', 'open-googledrive', format);
             }
+        },
+        
+        saveFountainLocally: {
+            sub: 'plugin/io/save-fountain-locally',
+            value: function() {
+                this.monitor.track('feature', 'save-fountain');
+            }
+        },
+
+        saveFountainDropbox: {
+            sub: 'plugin/io/save-fountain-dropbox',
+            value: function() {
+                this.monitor.track('feature', 'save-fountain-dropbox');
+            }
+        },
+
+        saveFountainGoogleDrive: {
+            sub: 'plugin/io/save-fountain-google-drive',
+            value: function() {
+                this.monitor.track('feature', 'save-fountain-googledrive');
+            }
+        },
+
+        savePdfLocally: {
+            sub: 'plugin/io/save-pdf-locally',
+            value: function() {
+                this.monitor.track('feature', 'save-pdf');
+            }
+        },
+
+        savePdfDropbox: {
+            sub: 'plugin/io/save-pdf-dropbox',
+            value: function() {
+                this.monitor.track('feature', 'save-pdf-dropbox');
+            }
+        },
+
+        savePdfGoogleDrive: {
+            sub: 'plugin/io/save-pdf-google-drive',
+            value: function() {
+                this.monitor.track('feature', 'save-pdf-googledrive');
+            }
         }
         
     });

@@ -66,7 +66,7 @@ define(function(require) {
             });
         });
 
-        describe.only('Open', function() {
+        describe('Open', function() {
             
             beforeEach(function() {
                 env.user.open_plugin('open');
@@ -128,22 +128,36 @@ define(function(require) {
         });
 
         describe('Save', function() {
+
+            beforeEach(function() {
+                env.user.open_plugin('open');
+                env.user.open_sample('brick_and_steel');
+            });
+
             it('Saving as a fountain to local drive', function() {
+                env.user.save_fountain_locally();
+                env.user.close_popup();
                 env.assert.event_tracked('feature', 'save-fountain');
             });
             it('Saving as a pdf to local drive', function() {
+                env.user.save_pdf_locally();
+                env.user.close_popup();
                 env.assert.event_tracked('feature', 'save-pdf');
             });
             it('Saving as a fountain to Dropbox', function() {
+                env.user.save_fountain_dropbox();
                 env.assert.event_tracked('feature', 'save-fountain-dropbox');
             });
             it('Saving as a pdf to Dropbox', function() {
+                env.user.save_pdf_dropbox();
                 env.assert.event_tracked('feature', 'save-pdf-dropbox');
             });
-            it('Saving as a fountain to GoogleDrive', function() {
+            it.skip('Saving as a fountain to GoogleDrive', function() {
+                env.user.save_fountain_google_drive();
                 env.assert.event_tracked('feature', 'save-fountain-googledrive');
             });
-            it('Saving as a pdf to Dropbox', function() {
+            it.skip('Saving as a pdf to GoogleDrive', function() {
+                env.user.save_pdf_google_drive();
                 env.assert.event_tracked('feature', 'save-pdf-googledrive');
             });
         });

@@ -5,7 +5,11 @@ define(function(require) {
         SaveController = require('plugin/io/controller/save-controller');
 
     var SaveViewPresenter = Protoplast.Object.extend({
-        
+
+        pub: {
+            inject: 'pub'
+        },
+
         saveController: {
             inject: SaveController
         },
@@ -29,26 +33,32 @@ define(function(require) {
 
         _saveFountainLocally: function() {
             this.saveController.saveFountainLocally();
+            this.pub('plugin/io/save-fountain-locally');
         },
 
         _saveFountainToDropbox: function() {
             this.saveController.saveFountainToDropbox();
+            this.pub('plugin/io/save-fountain-dropbox');
         },
 
         _saveFountainToGoogleDrive: function() {
             this.saveController.saveFountainToGoogleDrive();
+            this.pub('plugin/io/save-fountain-google-drive');
         },
 
         _savePdfLocally: function() {
             this.saveController.savePdfLocally();
+            this.pub('plugin/io/save-pdf-locally');
         },
 
         _savePdfToDropbox: function() {
             this.saveController.savePdfToDropbox();
+            this.pub('plugin/io/save-pdf-dropbox');
         },
 
         _savePdfToGoogleDrive: function() {
             this.saveController.savePdfToGoogleDrive();
+            this.pub('plugin/io/save-pdf-google-drive');
         }
     });
 

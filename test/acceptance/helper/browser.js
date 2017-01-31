@@ -8,6 +8,8 @@ define(function(require) {
      */
     var BrowserHelper = p.extend({
 
+        files: null,
+
         setup: function() {
             SinonFileReader.setup();
             this.clock = sinon.useFakeTimers();
@@ -16,6 +18,21 @@ define(function(require) {
             this.clear_cookies();
             this.clear_local_storage();
             this.clock.tick(5000);
+
+            this.files = {};
+        },
+        
+        has_local_file: function(file) {
+            this.files[file.name] = new Blob([file.content], {
+                type: file.type || "text/plain;charset=utf-8"
+            });
+        },
+        
+        open_local_file: function(name, node) {
+            node.files.item = function() {
+                return this.files[name]
+            }.bind(this);
+            this.trigger(node, 'change');
         },
 
         read_files: function(done) {
@@ -28,6 +45,7 @@ define(function(require) {
             this.clock.restore();
             window.open.restore();
             SinonFileReader.restore();
+            this.files = {};
         },
 
         clear_cookies: function() {
@@ -40,6 +58,12 @@ define(function(require) {
 
         tick: function(ms) {
             this.clock.tick(ms || 25);
+        },
+
+        trigger: function(node, eventType) {
+            var event = document.createEvent("Event");
+            event.initEvent(eventType, true, true);
+            node.dispatchEvent(event);
         },
 
         click: function(node) {

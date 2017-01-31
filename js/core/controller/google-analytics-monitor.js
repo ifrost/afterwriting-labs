@@ -11,7 +11,10 @@ define(function(require) {
     var GoogleAnalyticsMonitor = Protoplast.Object.extend({
         
         init: function() {
-            if (window.location.protocol !== 'file:') {
+            // DEBT: remove dependecy to window.ACCEPTANCE (+)
+            // it's required at the moment to make sure fake-ga object is not overridden
+            // when analytics are loaded
+            if (window.location.protocol !== 'file:' && !window.ACCEPTANCE) {
                 (function (i, s, o, g, r, a, m) {
                     i['GoogleAnalyticsObject'] = r;
                     i[r] = i[r] || function () {
@@ -33,7 +36,7 @@ define(function(require) {
         track: function (category, action, label) {
             if (window.ga) {
                 log.info('Event sent', category, action, label || '');
-                ga('send', 'event', category, action, label);
+                window.ga('send', 'event', category, action, label);
             } else {
                 log.debug('Event not sent:', category, action, label || '', ' [Google Analytics not loaded.]');
             }

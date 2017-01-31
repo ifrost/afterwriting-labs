@@ -38,6 +38,10 @@ define(function(require) {
             this.click(this.dom.$toolbar(name));
         },
         
+        open_local_file: function(name) {
+            this.browser.open_local_file(name, $(this.dom.$file_input).get(0));
+        },
+        
         close_content: function() {
             this.click(this.dom.$close_icon);
         },
@@ -72,6 +76,30 @@ define(function(require) {
         
         open_last_used: function(){
             this.click(this.dom.$open_last_used);
+        },
+        
+        save_fountain_locally: function() {
+            this.click(this.dom.$save_fountain_locally);
+        },
+        
+        save_fountain_dropbox: function() {
+            this.click(this.dom.$save_fountain_dropbox);
+        },
+        
+        save_fountain_google_drive: function() {
+            this.click(this.dom.$save_fountain_google_drive);
+        },
+        
+        save_pdf_locally: function() {
+            this.click(this.dom.$save_pdf_locally);
+        },
+        
+        save_pdf_dropbox: function() {
+            this.click(this.dom.$save_pdf_dropbox);
+        },
+        
+        save_pdf_google_drive: function() {
+            this.click(this.dom.$save_pdf_google_drive);
         },
 
         close_popup: function() {

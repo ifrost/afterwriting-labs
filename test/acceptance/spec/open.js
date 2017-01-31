@@ -13,6 +13,23 @@ define(function(require) {
         afterEach(function() {
             env.destroy();
         });
+
+        it('Loads file from local disk', function(done) {
+            env.user.open_plugin('open');
+            env.browser.has_local_file({
+                name: 'test.fountain',
+                content: 'test'
+            });
+            env.user.open_local_file('test.fountain');
+            env.browser.read_files(function() {
+                env.user.open_plugin('editor');
+                env.browser.tick(3000);
+
+                env.assert.editor_content('test');
+
+                done();
+            });
+        });
         
         it('Loads file list from dropbox', function() {
             env.user.open_plugin('open');
@@ -38,7 +55,6 @@ define(function(require) {
             env.user.confirm_popup();
 
             env.browser.read_files(function() {
-                console.log('file read');
                 env.browser.tick(3000);
 
                 env.user.open_plugin('editor');

@@ -23,6 +23,18 @@ define(function(require) {
 
         $open_last_used: '[open-action=last]',
 
+        $save_fountain_locally: '[action=save-fountain]',
+
+        $save_fountain_dropbox: '[action=save-dropbox-fountain]',
+
+        $save_fountain_google_drive: '[action=save-gd-fountain]',
+
+        $save_pdf_locally: '[action=save-pdf]',
+
+        $save_pdf_dropbox: '[action=save-dropbox-pdf]',
+
+        $save_pdf_google_drive: '[action=save-gd-pdf]',
+
         $close_popup: '[name=jqi_state0_buttonCancel]',
 
         $confirm_popup: '[name=jqi_state0_buttonOpen]',
@@ -70,6 +82,8 @@ define(function(require) {
         $toolbar: function(name) {
             return '.tool.' + name;
         },
+
+        $file_input: '#open-file',
 
         $file_link: function(file) {
             return $(document.getElementById('/' + file + '_anchor'));
