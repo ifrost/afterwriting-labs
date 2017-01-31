@@ -11,6 +11,10 @@ define(function(require) {
             inject: 'appModel'
         },
         
+        pdfController: {
+            inject: 'pdf'
+        },
+        
         themeModel: {
             inject: ThemeModel
         },
@@ -31,6 +35,10 @@ define(function(require) {
             sub: 'app/init',
             value: function() {
 
+                if (this.appModel.urlParams.fontFix) {
+                    this.pdfController.fontFixEnabled = true;
+                }
+                
                 var footer = common.data.footer;
                 this.themeController.setFooter(footer);
 
