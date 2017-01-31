@@ -1,7 +1,7 @@
 define(function(require) {
 
     var $ = require('jquery'),
-        Protoplast = require('p'),
+        Protoplast = require('protoplast'),
         BubbleMenuItemPresenter = require('aw-bubble/presenter/menu/bubble-menu-item-presenter');
 
     var BubbleMenuItem = Protoplast.Component.extend({

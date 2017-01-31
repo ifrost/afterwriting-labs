@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
+    var Protoplast = require('protoplast'),
         template = require('text!plugin/io/view/save.hbs'),
         $ = require('jquery'),
         HandlebarComponent = require('utils/handlebar-component'),

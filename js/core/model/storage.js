@@ -1,7 +1,7 @@
 define(function(require) {
 
     var Modernizr = require('modernizr'),
-        Protoplast = require('p');
+        Protoplast = require('protoplast');
 
     var StorageAddon = Protoplast.extend({
 

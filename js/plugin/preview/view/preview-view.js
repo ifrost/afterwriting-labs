@@ -2,7 +2,7 @@ define(function(require) {
 
     var template = require('text!plugin/preview/view/preview.hbs'),
         $ = require('jquery'),
-        Protoplast = require('p'),
+        Protoplast = require('protoplast'),
         HandlebarComponent = require('utils/handlebar-component'),
         SectionViewMixin = require('aw-bubble/view/section-view-mixin'),
         PreviewViewPresenter = require('plugin/preview/view/preview-view-presenter'),

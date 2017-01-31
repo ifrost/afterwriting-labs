@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
+    var Protoplast = require('protoplast'),
         SettingsWidgetModel = require('plugin/settings/model/settings-widget-model'),
         SettingsController = require('plugin/settings/controller/settings-controller');
     

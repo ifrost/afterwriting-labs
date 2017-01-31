@@ -4,13 +4,13 @@ define(function(require) {
      * Browser helpers
      * @exports utils/browser
      */
-    var module = {};
+    var browser = {};
 
     /**
      * Returns map of params passed to the URL
      * @returns {Object}
      */
-    module.url_params = function() {
+    browser.url_params = function() {
         var url_params = {};
         if (window && window.location && window.location.search) {
             window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) {
@@ -20,6 +20,6 @@ define(function(require) {
         return url_params;
     };
 
-    return module;
+    return browser;
 
 });

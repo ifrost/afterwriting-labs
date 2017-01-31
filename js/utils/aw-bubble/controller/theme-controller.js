@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
+    var Protoplast = require('protoplast'),
         ThemeModel = require('aw-bubble/model/theme-model');
     
     var ThemeController = Protoplast.Object.extend({

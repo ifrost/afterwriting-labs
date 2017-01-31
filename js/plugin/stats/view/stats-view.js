@@ -4,7 +4,7 @@ define(function(require) {
         $ = require('jquery'),
         helper = require('utils/helper'),
         Header = require('aw-bubble/view/header'),
-        Protoplast = require('p'),
+        Protoplast = require('protoplast'),
         SpiderChart = require('utils/charts/spider'),
         BarChart = require('utils/charts/bar'),
         PieChart = require('utils/charts/pie'),

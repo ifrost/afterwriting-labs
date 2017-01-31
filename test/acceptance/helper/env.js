@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var p = require('p'),
+    var p = require('protoplast'),
         Dom = require('acceptance/helper/dom'),
         Assert = require('acceptance/helper/assert'),
         User = require('acceptance/helper/user'),

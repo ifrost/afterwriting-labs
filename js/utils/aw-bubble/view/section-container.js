@@ -1,7 +1,7 @@
 define(function(require) {
 
     var $ = require('jquery'),
-        Protoplast = require('p'),
+        Protoplast = require('protoplast'),
         SectionContainerPresenter = require('aw-bubble/presenter/section-container-presenter'),
         ThemeModel = require('aw-bubble/model/theme-model');
 

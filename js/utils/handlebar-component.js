@@ -1,7 +1,7 @@
 define(function(require) {
 
     var Handlebars = require('handlebars'),
-        Protoplast = require('p');
+        Protoplast = require('protoplast');
 
     var HandlebarComponent = Protoplast.Component.extend({
         

@@ -1,7 +1,7 @@
 define(function(require) {
 
     var common = require('utils/common'),
-        Protoplast = require('p'),
+        Protoplast = require('protoplast'),
         ThemeController = require('aw-bubble/controller/theme-controller');
 
     var DevController = Protoplast.Object.extend({

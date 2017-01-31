@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
+    var Protoplast = require('protoplast'),
         Plugin = require('core/plugin'),
         EditorSection = require('plugin/editor/model/editor-section'),
         EditorController = require('plugin/editor/controller/editor-controller'),

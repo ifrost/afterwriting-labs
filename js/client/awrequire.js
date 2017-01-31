@@ -16,15 +16,19 @@ var resolve_module_name = function (name) {
 	return module_path + '.js';
 };
 
+var stack = [];
+
 /**
  * modified require 
  */
 require = function () {
 	var name = arguments[0];
-
+    // use node require if module is listed
 	if (config.use_node_require && config.use_node_require.indexOf(name) != -1) {
 		return _require(name);
-	} else if (config.map[name]) {
+	}
+    // map module name, if mapped to an object - return
+    else if (config.map[name]) {
 		if (typeof (config.map[name]) === "string") {
 			name = config.map[name];
 		} else {
@@ -33,8 +37,15 @@ require = function () {
 	}
 
 	var module_path = resolve_module_name(name);
-	var result = _require.call(this, module_path);
-	return result;
+    if (Module._cache[module_path]) {
+        return Module._cache[module_path].exports
+    }
+    else {
+        stack.push(module_path);
+        var result = _require.call(this, module_path);
+        stack.pop();
+        return result;
+    }
 }.bind(this);
 
 /**
@@ -51,8 +62,13 @@ require.config = function(value) {
  * modified define
  */
 global.define = function (name, definition) {
+    if (arguments.length === 1) {
+        definition = name;
+        name = null;
+    }
 	var exp = definition(require);
-	Module._cache[resolve_module_name(name)].exports = exp;
+    var modulePath = stack[stack.length-1];
+	Module._cache[modulePath].exports = exp;
 };
 
 module.exports = require;

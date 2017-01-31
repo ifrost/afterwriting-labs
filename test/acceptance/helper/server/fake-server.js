@@ -1,6 +1,6 @@
 define(function(require){
 
-    var p = require('p');
+    var p = require('protoplast');
 
     /**
      * Fake server allowing to create custom mappings for test requests, e.g.

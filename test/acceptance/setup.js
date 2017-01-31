@@ -1,4 +1,4 @@
-define(['../../test/acceptance/tests', 'p'], function (_, Protoplast) {
+define(['../../test/acceptance/tests', 'protoplast'], function (_, Protoplast) {
     
     var AcceptanceTestsSetup = Protoplast.Object.extend({
         

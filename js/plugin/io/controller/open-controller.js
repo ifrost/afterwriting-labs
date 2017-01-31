@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
+    var Protoplast = require('protoplast'),
         db = require('utils/dropbox'),
         gd = require('utils/googledrive'),
         local = require('utils/local'),

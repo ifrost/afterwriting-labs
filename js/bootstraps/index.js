@@ -1,3 +1,3 @@
-require(['bootstrap', 'bootstraps/app-config'], function (Bootstrap, AppConfig) {
+require(['dependencies', 'bootstrap', 'bootstraps/app-config'], function (_, Bootstrap, AppConfig) {
     Bootstrap.init(AppConfig);
 });

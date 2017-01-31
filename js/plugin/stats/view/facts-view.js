@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
+    var Protoplast = require('protoplast'),
         template = require('text!plugin/stats/view/facts.hbs'),
         $ = require('jquery'),
         helper = require('utils/helper'),

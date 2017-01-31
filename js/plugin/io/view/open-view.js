@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
+    var Protoplast = require('protoplast'),
         template = require('text!plugin/io/view/open.hbs'),
         OpenViewPresenter = require('plugin/io/view/open-view-presenter'),
         $ = require('jquery'),

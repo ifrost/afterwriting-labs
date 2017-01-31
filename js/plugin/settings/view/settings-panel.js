@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
+    var Protoplast = require('protoplast'),
         SettingsPanelPresenter = require('plugin/settings/view/settings-panel-presenter'),
         SettingsPanelGroup = require('plugin/settings/view/settings-panel-group');
 

@@ -1,7 +1,7 @@
 define(function(require) {
 
     var $ = require('jquery'),
-        Protoplast = require('p'),
+        Protoplast = require('protoplast'),
         IoModel = require('plugin/io/model/io-model'),
         BaseSectionViewPresenter = require('aw-bubble/presenter/base-section-view-presenter'),
         local = require('utils/local'),

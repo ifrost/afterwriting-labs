@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
+    var Protoplast = require('protoplast'),
         BaseSectionViewPresenter = require('aw-bubble/presenter/base-section-view-presenter'),
         IoModel = require('plugin/io/model/io-model'),
         OpenController = require('plugin/io/controller/open-controller');

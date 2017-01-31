@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
+    var Protoplast = require('protoplast'),
         SettingsConfigProvider = require('plugin/settings/model/settings-config-provider'),
         SettingsWidgetModel = require('plugin/settings/model/settings-widget-model'),
         ThemeController = require('aw-bubble/controller/theme-controller');

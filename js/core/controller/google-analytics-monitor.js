@@ -1,9 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
-        logger = require('logger');
-
-    var log = logger.get('monitor');
+    var Protoplast = require('protoplast');
 
     /**
      * Implementation of events monitor that sends events to Google Analytics
@@ -35,10 +32,9 @@ define(function(require) {
         
         track: function (category, action, label) {
             if (window.ga) {
-                log.info('Event sent', category, action, label || '');
                 window.ga('send', 'event', category, action, label);
             } else {
-                log.debug('Event not sent:', category, action, label || '', ' [Google Analytics not loaded.]');
+                //log.debug('Event not sent:', category, action, label || '', ' [Google Analytics not loaded.]');
             }
         }
 

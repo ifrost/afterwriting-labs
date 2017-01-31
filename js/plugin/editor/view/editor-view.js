@@ -2,7 +2,7 @@ define(function(require) {
 
     var $ = require('jquery'),
         common = require('utils/common'),
-        Protoplast = require('p'),
+        Protoplast = require('protoplast'),
         cm = require('libs/codemirror/lib/codemirror'),
         EditorViewPresenter = require('plugin/editor/view/editor-view-presenter'),
         HandlebarComponent = require('utils/handlebar-component'),

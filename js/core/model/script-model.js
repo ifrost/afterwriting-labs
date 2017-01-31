@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
+    var Protoplast = require('protoplast'),
         fquery = require('utils/fountain/query'),
         fhelpers = require('utils/fountain/helpers'),
         fparser = require('aw-parser').parser,

@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
+    var Protoplast = require('protoplast'),
         pdfmaker = require('utils/pdfmaker'),
         textstats = require('utils/textstats');
 

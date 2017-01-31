@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
+    var Protoplast = require('protoplast'),
         IoModel = require('plugin/io/model/io-model'),
         converter = require('utils/converters/scriptconverter'),
         gd = require('utils/googledrive'),

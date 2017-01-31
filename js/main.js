@@ -17,7 +17,7 @@
 			jstree: 'libs/jstree.min',
 			cookie: 'libs/jquery.cookie',
 			dropbox: 'libs/dropbox.min',
-			p: '../node_modules/protoplast/dist/protoplast',
+			protoplast: '../node_modules/protoplast/dist/protoplast',
             'aw-bubble': 'utils/aw-bubble',
 			acceptance: '../test/acceptance',
             'aw-parser': '../node_modules/aw-parser/dist/aw-parser.amd',

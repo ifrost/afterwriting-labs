@@ -1,7 +1,6 @@
 define(function(require) {
 
-    var _ = require('dependencies'),
-        Protoplast = require('p');
+    var Protoplast = require('protoplast');
     
     var Bootstrap = Protoplast.extend({
 

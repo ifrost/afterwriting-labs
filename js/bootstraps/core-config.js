@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
+    var Protoplast = require('protoplast'),
         GoogleAnalyticsMonitor = require('core/controller/google-analytics-monitor'),
         PdfController = require('core/controller/pdf-controller'),
         Storage = require('core/model/storage'),

@@ -1,6 +1,6 @@
 define(function(require){
 
-    var p = require('p');
+    var p = require('protoplast');
 
     /**
      * Fake Google Analytics Tracker

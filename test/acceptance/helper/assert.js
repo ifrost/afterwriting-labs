@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var p = require('p');
+    var p = require('protoplast');
 
     /**
      * Performs assertions, all chai/sinon assertions go here

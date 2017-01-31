@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
+    var Protoplast = require('protoplast'),
         Input = require('core/view/control/input'),
         Checkbox = require('core/view/control/checkbox'),
         Dropdown = require('core/view/control/dropdown'),

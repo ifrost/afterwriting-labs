@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Protoplast = require('p'),
+    var Protoplast = require('protoplast'),
         BaseComponent = require('core/view/base-component');
 
     var Checkbox = BaseComponent.extend({
