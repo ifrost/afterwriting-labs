@@ -2,33 +2,22 @@ define(function(require) {
 
     var _ = require('dependencies'),
         logger = require('logger'),
-        common = require('utils/common'),
-        d3 = require('d3'),
         Protoplast = require('p'),
-        AppView = require('view/app-view'),
-        ThemeModel = require('aw-bubble/model/theme-model'),
-        ThemeController = require('aw-bubble/controller/theme-controller'),
-        AppController = require('core/controller/app-controller'),
-        AppModel = require('core/model/app-model'),
-        GoogleAnalyticsMonitor = require('core/controller/google-analytics-monitor'),
-        PdfController = require('core/controller/pdf-controller'),
-        Storage = require('core/model/storage'),
-        Settings = require('core/model/settings'),
-        ScriptModel = require('core/model/script-model'),
-        MonitorPlugin = require('plugin/monitor/monitor-plugin'),
-        InfoPlugin = require('plugin/info/info-plugin'),
-        IoPlugin = require('plugin/io/io-plugin'),
-        EditorPlugin = require('plugin/editor/editor-plugin'),
-        StatsPlugin = require('plugin/stats/stats-plugin'),
-        SettingsPlugin = require('plugin/settings/settings-plugin'),
-        PreviewPlugin = require('plugin/preview/preview-plugin'),
-        AcceptanceTestsSetup = require('../test/acceptance/setup');
-
+        AppView = require('view/app-view');
+    
     var Bootstrap = Protoplast.extend({
 
-        init: function() {
+        config: null,
+        
+        context: null,
+
+        pub: {
+            inject: 'pub'
+        },
+
+        init: function(Config) {
             try {
-                this._bootstrap();
+                this._bootstrap(Config);
             }
             catch (e) {
                 // workaround for missing stack traces in PhantomJS
@@ -37,37 +26,25 @@ define(function(require) {
             }
         },
         
-        _bootstrap: function() {
+        _bootstrap: function(Config) {
+            this.context = Protoplast.Context.create();
+            this.config = Config.create(this.context);
+            this.context.register(this);
+            this.context.build();
+        },
 
-            var di = Protoplast.Context.create();
+        _onContextReady: {
+            injectInit: true,
+            value: function() {
+                var root = Protoplast.Component.Root(document.body, this.context);
+                root.add(AppView.create());
 
-            var testsSetup = AcceptanceTestsSetup.create();
-            di.register(testsSetup);
-            di.register(ThemeModel.create());
-            di.register(ThemeController.create());
-            di.register('monitor', GoogleAnalyticsMonitor.create());
-            di.register('storage', Storage.create());
-            di.register('settings', Settings.create());
-            di.register('script', ScriptModel.create());
-            di.register('pdf', PdfController.create());
-            di.register(AppController.create());
-            di.register('appModel', AppModel.create());
-            di.register(InfoPlugin.create(di));
-            di.register(IoPlugin.create(di));
-            di.register(EditorPlugin.create(di));
-            di.register(StatsPlugin.create(di));
-            di.register(SettingsPlugin.create(di));
-            di.register(PreviewPlugin.create(di));
-            di.register(MonitorPlugin.create(di));
+                this.pub('app/init');
 
-            di.build();
-
-            var root = Protoplast.Component.Root(document.body, di);
-            root.add(AppView.create());
-
-            di._objects.pub('app/init');
-
-            testsSetup.run();
+                if (this.config.afterHook) {
+                    this.config.afterHook();
+                }
+            }
         }
         
     });
