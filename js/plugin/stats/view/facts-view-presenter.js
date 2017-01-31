@@ -2,7 +2,6 @@ define(function(require) {
 
     var BaseSectionViewPresenter = require('aw-bubble/presenter/base-section-view-presenter'),
         queries = require('plugin/stats/model/queries'),
-        decorator = require('utils/decorator'),
         fhelpers = require('utils/fountain/helpers');
 
     var FactsViewPresenter = BaseSectionViewPresenter.extend({

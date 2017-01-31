@@ -6,8 +6,7 @@ define(function(require) {
         fparser = require('aw-parser').parser,
         fliner = require('utils/fountain/liner'),
         converter = require('utils/converters/scriptconverter'),
-        preprocessor = require('utils/fountain/preprocessor'),
-        decorator = require('utils/decorator');
+        preprocessor = require('utils/fountain/preprocessor');
     
     var h = fhelpers.fq;
 

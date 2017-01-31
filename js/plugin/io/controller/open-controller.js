@@ -113,7 +113,7 @@ define(function(require) {
             fileReader.onload = function () {
                 var value = this.result;
                 self._setScript(value);
-                local.local_file(selectedFile);
+                local.local_file = selectedFile;
             };
             fileReader.readAsText(selectedFile);
         },
@@ -220,7 +220,7 @@ define(function(require) {
             this.ioModel.dbPdfPath = '';
             this.ioModel.fountainFileName = '';
             this.ioModel.pdfFileName = '';
-            local.local_file(null);
+            local.local_file = null;
         }
         
     });

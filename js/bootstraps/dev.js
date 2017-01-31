@@ -1,6 +1,4 @@
-require(['bootstrap',
-		'../test/acceptance/setup'
-], function (bootstrap) {
+require(['bootstrap'], function (bootstrap) {
     try {
         bootstrap.init(arguments);
     }

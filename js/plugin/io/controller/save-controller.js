@@ -7,8 +7,7 @@ define(function(require) {
         $ = require('jquery'),
         saveAs = require('saveAs'),
         tree = require('utils/tree'),
-        forms = require('utils/forms'),
-        decorator = require('utils/decorator');
+        forms = require('utils/forms');
     
     var SaveController = Protoplast.Object.extend({
 

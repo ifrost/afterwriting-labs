@@ -1,12 +1,10 @@
 define(function (require) {
 
-    var decorator = require('utils/decorator');
-
     var module = {};
 
     var local_sync_timer = null;
 
-    module.local_file = decorator.property();
+    module.local_file = null;
 
     module.sync = function (interval, handler) {
         local_sync_timer = setInterval(function(){
@@ -14,7 +12,7 @@ define(function (require) {
             fileReader.onload = function () {
                 handler(this.result);
             };
-            fileReader.readAsText(module.local_file());
+            fileReader.readAsText(module.local_file);
         }, interval);
     };
 
@@ -24,7 +22,7 @@ define(function (require) {
     };
 
     module.sync_available = function() {
-        return module.local_file() !== null;
+        return module.local_file !== null;
     };
 
     return module;
