@@ -3,83 +3,6 @@ var Protoplast = require('protoplast');
 var fs = require('fs');
 var stdio = require('stdio');
 
-var ops = stdio.getopt({
-    'source': {
-        key: 'source',
-        args: 1,
-        description: 'Fountain screenplay to load',
-        mandatory: true
-    },
-    'pdf': {
-        key: 'pdf',
-        args: '*',
-        description: 'output PDF filename'
-    },
-    'config': {
-        key: 'config',
-        args: 1,
-        description: 'configuration file'
-    },
-    'overwrite': {
-        key: 'overwrite',
-        args: 0,
-        description: 'overwrite exiting files'
-    }
-});
-
-
-function validate_options() {
-    var i;
-
-    if (ops.pdf === true) {
-        i = ops.source.lastIndexOf('.');
-        ops.pdf = ops.source.slice(0, i) + '.pdf';
-    }
-
-    if (ops.pdf === ops.source) {
-        ops.pdf += '.pdf';
-    }
-}
-
-function file_exits(path) {
-    try {
-        fs.statSync(path);
-        return true;
-    } catch (e) {
-        return false;
-    }
-}
-
-function load_config(config, callback) {
-    if (config) {
-        console.log('Loading config...', config);
-        fs.readFile(config, 'utf8', function (err, data) {
-            if (err) {
-                console.error('Cannot open config file', config);
-                callback({});
-            } else {
-                callback(JSON.parse(data));
-            }
-        });
-    } else {
-        callback({});
-    }
-}
-
-function validate_pdf(callback) {
-    if (file_exits(ops.pdf) && !ops.overwrite) {
-        stdio.question('File ' + ops.pdf + ' already exists. Do you want to overwrite it?', ['y','n'], function(err, decision){
-            if (decision === 'y') {
-                callback();
-            }
-        });
-    }
-    else {
-        callback();
-    }
-}
-
-
 var ClientController = Protoplast.Object.extend({
 
     scriptModel: {
@@ -94,33 +17,68 @@ var ClientController = Protoplast.Object.extend({
         inject: 'pdf'
     },
 
+    options: {
+        inject: 'options'
+    },
+
+    configLoader: {
+        inject: 'configLoader'
+    },
+
     init: function() {
-        validate_options();
 
         var self = this;
-        console.info('Loading script:', ops.source);
+        console.info('Loading script:', this.options.ops.source);
 
-        fs.readFile(ops.source, 'utf8', function (err, text) {
+        this._readFile(this.options.ops.source, function(text) {
+            this.configLoader.loadFromFile(this.options.ops.config, function (config) {
+                self.settings.fromJSON(config);
+                self.scriptModel.script = text;
+                self.scriptModel.parse();
+
+                if (this.options.ops.pdf) {
+                    this._validatePdf(function () {
+                        console.log('Generating PDF', this.options.ops.pdf);
+                        self.pdfController.getPdf(function () {
+                            console.log('Done!');
+                            process.exit(0);
+                        }, this.options.ops.pdf);
+                    }.bind(this));
+                }
+            }.bind(this));
+        }.bind(this));
+    },
+
+    _readFile: function(path, callback) {
+        fs.readFile(path, 'utf8', function (err, text) {
             if (err) {
-                console.error('Cannot open script file', ops.source);
+                console.error('Cannot open script file', path);
             } else {
-                load_config(ops.config, function (config) {
-                    self.settings.fromJSON(config);
-                    self.scriptModel.script = text;
-                    self.scriptModel.parse();
-
-                    if (ops.pdf) {
-                        validate_pdf(function () {
-                            console.log('Generating PDF', ops.pdf);
-                            self.pdfController.getPdf(function () {
-                                console.log('Done!');
-                                process.exit(0);
-                            }, ops.pdf);
-                        });
-                    }
-                });
+                callback(text)
             }
         });
+    },
+
+    _fileExists: function(path) {
+        try {
+            fs.statSync(path);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    },
+
+    _validatePdf: function(callback) {
+        if (this._fileExists(this.options.ops.pdf) && !this.options.ops.overwrite) {
+            stdio.question('File ' + this.options.ops.pdf + ' already exists. Do you want to overwrite it?', ['y','n'], function(err, decision){
+                if (decision === 'y') {
+                    callback();
+                }
+            });
+        }
+        else {
+            callback();
+        }
     }
 
 });
