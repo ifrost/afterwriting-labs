@@ -36,7 +36,7 @@ define(function(require) {
         
         isVisibleInMenu: true,
         
-        isActive: false,
+        isActive: undefined,
         
         isFullyVisible: false,
         

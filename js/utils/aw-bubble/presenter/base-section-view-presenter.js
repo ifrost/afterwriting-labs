@@ -17,26 +17,18 @@ define(function(require) {
          */
         view: null,
         
-        _bindingsInitialised: false,
-        
         init: function() {
             var section = this.view.section;
             Protoplast.utils.bind(section, 'isActive', this._isActiveChanged)
         },
         
         _isActiveChanged: function(value) {
-            // DEBT: binding should allow ignoring undefined values? (+)
-            if (this._bindingsInitialised) {
-                if (value) {
-                    this.scriptModel.parse();
-                    this.activate();
-                }
-                else {
-                    this.deactivate();
-                }
+            if (value) {
+                this.scriptModel.parse();
+                this.activate();
             }
             else {
-                this._bindingsInitialised = true;
+                this.deactivate();
             }
         },
         
