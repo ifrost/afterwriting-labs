@@ -120,7 +120,8 @@ define(function(require) {
             });
         });
 
-        describe('Editor', function() {
+        // DEBT: convert skipped test into integration tests
+        describe.skip('Editor', function() {
             it('Synchronising the content', function() {
                 env.assert.event_tracked('feature', 'sync', 'cloud');
             });

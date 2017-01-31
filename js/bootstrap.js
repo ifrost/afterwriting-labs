@@ -23,7 +23,8 @@ define(function(require) {
         EditorPlugin = require('plugin/editor/editor-plugin'),
         StatsPlugin = require('plugin/stats/stats-plugin'),
         SettingsPlugin = require('plugin/settings/settings-plugin'),
-        PreviewPlugin = require('plugin/preview/preview-plugin');
+        PreviewPlugin = require('plugin/preview/preview-plugin'),
+        AcceptanceTestsSetup = require('../test/acceptance/setup');
 
     var log = logger.get('bootstrap'),
         module = {};
@@ -69,7 +70,8 @@ define(function(require) {
 
         var di = Protoplast.Context.create();
 
-        var themeModel, themeController;
+        var themeModel, themeController, testsSetup = AcceptanceTestsSetup.create();
+        di.register(testsSetup);
         di.register(themeModel = ThemeModel.create());
         di.register(themeController = ThemeController.create());
         di.register('monitor', GoogleAnalyticsMonitor.create());
@@ -115,6 +117,8 @@ define(function(require) {
         log.info('Bootstrapping finished.');
 
         di._objects.pub('app/init');
+        
+        testsSetup.run();
     };
 
 
