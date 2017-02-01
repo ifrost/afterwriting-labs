@@ -272,8 +272,7 @@ module.exports = function(grunt) {
 
         shell: {
             istanbul_instrument: {
-                command: 'istanbul instrument --output coverage/js --no-impact js && istanbul instrument --output coverage/templates --no-impact templates'
-
+                command: 'istanbul instrument --output coverage/js --no-impact js && istanbul instrument --output coverage/test/data --no-impact test/data'
             },
             jsdoc: {
                 command: 'jsdoc -c jsdoc.conf.json'
