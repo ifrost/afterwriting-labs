@@ -40,7 +40,7 @@
     "grunt-mocha-phantom-istanbul": "^0.2.1",
     "grunt-shell": "^1.1.2",
     "grunt-simple-mocha": "~0.4.0",
-    "grunt-template": "^0.2.3",
+    "grunt-template": "^1.0.0",
     "grunt-text-replace": "^0.3.12",
     "istanbul": "^0.3.7",
     "jshint-stylish": "^1.0.0",
