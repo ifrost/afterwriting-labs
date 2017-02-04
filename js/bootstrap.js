@@ -27,6 +27,11 @@ define(function(require) {
             }
         },
         
+        destroy: function() {
+            this.root.remove(this.mainView);
+            this.root.destroy();
+        },
+        
         _bootstrap: function(Config) {
             this.Config = Config;
             this.context = Protoplast.Context.create();

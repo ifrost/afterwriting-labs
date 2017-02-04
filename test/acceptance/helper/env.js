@@ -14,7 +14,14 @@ define(function(require) {
      */
     var Env = p.extend({
 
+        Bootstrap: null,
+
+        Config: null,
+
         $create: function() {
+
+            this.Bootstrap = window.testData.Bootstrap;
+            this.Config = window.testData.Config;
 
             this.proxy = Proxy.create();
             this.dropbox = FakeDropBox.create();
@@ -31,7 +38,7 @@ define(function(require) {
             
             this.browser.setup();
             this.browser.tick(5000);
-            window.Bootstrap.init(window.DevConfig);
+            this.Bootstrap.init(this.Config);
 
             this.browser.tick(5000);
         },
@@ -39,8 +46,7 @@ define(function(require) {
         destroy: function() {
             this.user.back_to_main();
 
-            window.Bootstrap.root.remove(window.Bootstrap.mainView);
-            window.Bootstrap.root.destroy();
+            this.Bootstrap.destroy();
 
             this.proxy.restore();
             this.browser.restore();
