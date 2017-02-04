@@ -7,6 +7,10 @@ define(function(require) {
         Config: null,
         
         context: null,
+        
+        root: null,
+        
+        mainView: null,
 
         pub: {
             inject: 'pub'
@@ -36,8 +40,9 @@ define(function(require) {
             injectInit: true,
             value: function() {
                 if (this.Config.MainView) {
-                    var root = Protoplast.Component.Root(document.body, this.context);
-                    root.add(this.Config.MainView.create());
+                    this.root = Protoplast.Component.Root(document.body, this.context);
+                    this.mainView = this.Config.MainView.create();
+                    this.root.add(this.mainView);
                 }
 
                 this.pub('app/init');

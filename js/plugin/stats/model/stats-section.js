@@ -13,8 +13,8 @@ define(function(require) {
 
         isVisibleInMenu: false,
 
-        mainContent: {
-            value: StatsView.create()
+        MainContent: {
+            value: StatsView
         }
 
     });

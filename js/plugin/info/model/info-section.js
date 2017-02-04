@@ -11,8 +11,8 @@ define(function(require) {
 
         smallIcon: 'gfx/icons/info.svg',
 
-        mainContent: {
-            value: InfoView.create()
+        MainContent: {
+            value: InfoView
         }
 
     });

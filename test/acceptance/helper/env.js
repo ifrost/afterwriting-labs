@@ -31,10 +31,17 @@ define(function(require) {
             
             this.browser.setup();
             this.browser.tick(5000);
+            window.Bootstrap.init(window.DevConfig);
+
+            this.browser.tick(5000);
         },
 
         destroy: function() {
             this.user.back_to_main();
+
+            window.Bootstrap.root.remove(window.Bootstrap.mainView);
+            window.Bootstrap.root.destroy();
+
             this.proxy.restore();
             this.browser.restore();
             this.ga.restore();

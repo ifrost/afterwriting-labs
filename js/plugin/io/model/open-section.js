@@ -15,8 +15,8 @@ define(function(require) {
         
         description: 'You can open a .fountain or .fdx file (it will be converted to Fountain), or use one of the samples below.',
         
-        mainContent: {
-            value: OpenView.create()
+        MainContent: {
+            value: OpenView
         }
 
     });

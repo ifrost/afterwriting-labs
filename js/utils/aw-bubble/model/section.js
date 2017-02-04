@@ -42,6 +42,12 @@ define(function(require) {
         
         $create: function(name) {
             this.name = name;
+            if (this.MainContent) {
+                this.mainContent = this.MainContent.create();
+            }
+            if (this.Tools) {
+                this.tools = this.Tools.create();
+            }
         }
         
     });

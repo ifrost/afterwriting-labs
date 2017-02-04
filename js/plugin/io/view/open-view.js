@@ -40,9 +40,10 @@ define(function(require) {
                 self.dispatch('open-sample', name);
             });
 
-            $('a[open-action="last"]').click(self.dispatch.bind(this, 'open-last-used'));
-            $('a[open-action="dropbox"]').click(self.dispatch.bind(this, 'open-from-dropbox'));
-            $('a[open-action="googledrive"]').click(self.dispatch.bind(this, 'open-from-google-drive'));
+            // DEBT: make sure plugin's buttons are clicked (other may match the same selector) (+)
+            $('a[open-action="last"]').get(0).onclick = self.dispatch.bind(this, 'open-last-used');
+            $('a[open-action="dropbox"]').get(0).onclick = self.dispatch.bind(this, 'open-from-dropbox');
+            $('a[open-action="googledrive"]').get(0).onclick = self.dispatch.bind(this, 'open-from-google-drive');
 
             this._resetFileInput();
 

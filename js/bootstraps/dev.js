@@ -1,3 +1,6 @@
-require(['dependencies', 'bootstrap', 'bootstraps/dev-config'], function (_, Bootstrap, DevConfig) {
-    Bootstrap.init(DevConfig);
+require(['dependencies', 'bootstrap', 'bootstraps/dev-config', '../test/acceptance/setup'], function (_, Bootstrap, DevConfig, AcceptanceTestsSetup) {
+    window.Bootstrap = Bootstrap;
+    window.DevConfig = DevConfig;
+    var setup = AcceptanceTestsSetup.create();
+    setup.run();
 });

@@ -14,12 +14,12 @@ define(function(require) {
 
         isVisibleInMenu: false,
 
-        mainContent: {
-            value: PreviewView.create()
+        MainContent: {
+            value: PreviewView
         },
         
-        tools: {
-            value: PreviewViewMenu.create()
+        Tools: {
+            value: PreviewViewMenu
         }
 
     });

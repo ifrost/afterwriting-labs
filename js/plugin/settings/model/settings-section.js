@@ -15,8 +15,8 @@ define(function(require) {
 
         description: 'You can change configuration here. Some settings (e.g. page size, double space between scenes) may affect statistics which are based on assumption that 1 page = 1 minute of a movie.',
 
-        mainContent: {
-            value: SettingsView.create()
+        MainContent: {
+            value: SettingsView
         }
 
     });

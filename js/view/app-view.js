@@ -18,6 +18,15 @@ define(function(require) {
 
         init: function() {
             $('#loader').remove();
+        },
+
+        destroy: function() {
+            Protoplast.Component.destroy.call(this);
+            $.jstree.destroy();
+            var box = $.prompt.getBox();
+            if (box) {
+                box.remove();
+            }
         }
         
     });
