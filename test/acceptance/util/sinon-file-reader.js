@@ -15,7 +15,6 @@ define(function() {
      * @constructor
      */
     var SinonFileReader = function() {
-        this.real_reader = new RealFileReader();
         this.processing = false;
         SinonFileReader.readers.push(this);
     };
@@ -52,11 +51,12 @@ define(function() {
      */
     SinonFileReader.prototype.readAsText = function(blob) {
         this.processing = true;
-        this.real_reader.onload = function() {
+        var realReader = new RealFileReader();
+        realReader.onload = function() {
             this.processing = false;
-            this.onload.apply(this.real_reader, arguments);
+            this.onload.apply(realReader, arguments);
         }.bind(this);
-        return this.real_reader.readAsText(blob);
+        return realReader.readAsText(blob);
     };
 
     /**
