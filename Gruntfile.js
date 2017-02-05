@@ -326,6 +326,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-text-replace');
     grunt.loadNpmTasks('grunt-mocha-phantom-istanbul');
     grunt.loadNpmTasks('grunt-shell');
+    // DEBT: does not seem to work with node 6 (+)
     grunt.loadNpmTasks('grunt-template');
 
     grunt.registerTask('utest', ['handlebars:test', 'template:test', 'mocha:test']);
