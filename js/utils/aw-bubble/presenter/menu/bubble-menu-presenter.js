@@ -1,6 +1,7 @@
 define(function(require) {
 
-    var Protoplast = require('protoplast'),
+    var _ = require('lodash'),
+        Protoplast = require('protoplast'),
         ThemeModel = require('aw-bubble/model/theme-model');
 
     var BubbleMenuPresenter = Protoplast.Model.extend({
@@ -17,12 +18,16 @@ define(function(require) {
             }
         },
 
+        $create: function() {
+            this.updatePositions = _.debounce(this.updatePositions, 10);
+        },
+
         init: {
             injectInit: true,
             value: function() {
                 Protoplast.utils.bind(this, 'themeModel.sectionsMenu', this.updateSections.bind(this));
-                Protoplast.utils.bind(this, 'themeModel.width', this.updatePositions.bind(this, 0));
-                this.view.on('menuItemAdded',  this.updatePositions.bind(this, this.themeModel.initAnimationDelay))
+                Protoplast.utils.bind(this, 'themeModel.width', this.updatePositions.bind(this, this.themeModel.animationDelay));
+                this.view.on('menuItemAdded',  this.updatePositions.bind(this, this.themeModel.animationDelay))
             }
         },
 

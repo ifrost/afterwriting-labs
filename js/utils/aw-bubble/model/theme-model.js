@@ -13,13 +13,13 @@ define(function(require) {
 
         sectionsMap: null,
         
-        initAnimationDelay: 800,
+        animationDelay: 800,
         
         contentSlideAnimation: 500,
         
-        width: null,
+        width: undefined,
         
-        height: null,
+        height: undefined,
         
         footer: '',
 
