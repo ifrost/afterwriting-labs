@@ -30,8 +30,25 @@ define(function(require) {
                 done();
             });
         });
-        
-        it('Loads file list from dropbox', function() {
+
+        it('Converts FDX to Fountain', function(done) {
+            env.user.open_plugin('open');
+            env.browser.has_local_file({
+                name: 'test.fountain',
+                content: '<?xml version="1.0" encoding="UTF-8"?><FinalDraft DocumentType="Script" Template="No" Version="1"><Content><Paragraph Type="Action"><Text>Action. Action.</Text></Paragraph></Content></FinalDraft>'
+            });
+            env.user.open_local_file('test.fountain');
+            env.browser.read_files(function() {
+                env.user.open_plugin('editor');
+                env.browser.tick(3000);
+
+                env.assert.editor_content('\nAction. Action.\n');
+
+                done();
+            });
+        });
+
+        it('Loads file list from Dropbox', function() {
             env.user.open_plugin('open');
             env.user.open_from_dropbox();
             env.dropbox.auth_dropbox();
@@ -40,7 +57,7 @@ define(function(require) {
             env.user.close_popup();
         });
         
-        it('Loads selected file', function(done) {
+        it('Loads selected Dropbox file', function(done) {
             this.timeout(10000);
             env.dropbox.has_file({
                 name: 'file.fountain',
