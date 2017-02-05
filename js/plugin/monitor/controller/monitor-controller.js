@@ -153,6 +153,13 @@ define(function(require) {
             value: function() {
                 this.monitor.track('feature', 'save-pdf-googledrive');
             }
+        },
+
+        statsSwitchToEditor: {
+            sub: 'stats/scene-length/go-to-editor',
+            value: function() {
+                this.monitor.track('feature', 'stats-scene-length-goto');
+            }
         }
         
     });

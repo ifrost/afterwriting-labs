@@ -87,7 +87,7 @@ define(function(require) {
         $file_input: '#open-file',
 
         $file_link: function(file) {
-            return $("[aria-labelledby='/" + file + "_anchor'] a");
+            return "[aria-labelledby='/" + file + "_anchor'] a";
         },
 
         get_active_plugin: function() {

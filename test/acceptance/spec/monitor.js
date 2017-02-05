@@ -162,14 +162,12 @@ define(function(require) {
             });
         });
 
-        describe('Preview', function() {
-            it('Switching to save section', function() {
-                env.assert.event_tracked('navigation', 'save', 'switcher');
-            });
-        });
-
         describe('Stats', function() {
             it('Switching to editor from scene length', function() {
+                env.user.open_plugin('open');
+                env.user.open_sample('brick_and_steel');
+                env.user.open_plugin('stats');
+                env.user.click_on_page_stats();
                 env.assert.event_tracked('feature', 'stats-scene-length-goto');
             });
         });
