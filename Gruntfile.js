@@ -296,7 +296,7 @@ module.exports = function(grunt) {
                 src: ['test/integration-runner.html']
             },
             acceptance: {
-                src: ['dev.html'],
+                src: ['acceptance.html'],
                 options: {
                     reporter: 'Spec',
                     log: true,
