@@ -1,4 +1,3 @@
-awc.js
 performance (+measure tool)
 test coverage:
 - google drive

@@ -19,12 +19,16 @@ define(function(require) {
         MainView: {
             value: AppView
         },
+
+        sectionsOrder: ['info', 'open', 'settings', 'editor', 'save', 'preview', 'facts', 'stats'],
         
         init: function(context) {
             
+            var themeModel = ThemeModel.create();
+            
             CoreConfig.init.call(this, context);
 
-            context.register(ThemeModel.create());
+            context.register(themeModel);
             context.register(ThemeController.create());
             context.register(AppController.create());
             context.register('appModel', AppModel.create());
@@ -36,6 +40,12 @@ define(function(require) {
             context.register(SettingsPlugin.create(context));
             context.register(PreviewPlugin.create(context));
             context.register(MonitorPlugin.create(context));
+            
+            themeModel.sectionsMenu.addSort({
+                fn: function(a, b) {
+                    return this.sectionsOrder.indexOf(a.name) - this.sectionsOrder.indexOf(b.name);
+                }.bind(this)
+            });
         }
         
     });
