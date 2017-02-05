@@ -60,7 +60,7 @@ define(function(require) {
         },
 
         delta: {
-            url: /https:\/\/api(\d+).dropbox.com\/1\/delta/,
+            url: /https:\/\/api\d*.dropbox.com\/1\/delta/,
             method: 'POST',
             value: function() {
                 return JSON.stringify({
