@@ -1,6 +1,7 @@
 define(function(require) {
 
-    var p = require('protoplast');
+    var $ = require('jquery'),
+        p = require('protoplast');
 
     /**
      * Translates DOM element into meaningful UI descriptions
@@ -86,7 +87,7 @@ define(function(require) {
         $file_input: '#open-file',
 
         $file_link: function(file) {
-            return $(document.getElementById('/' + file + '_anchor'));
+            return $("[aria-labelledby='/" + file + "_anchor'] a");
         },
 
         get_active_plugin: function() {
