@@ -4,7 +4,6 @@ define(function (require) {
         mock = require('../proto-mock'),
 
         SettingsController = require('plugin/settings/controller/settings-controller'),
-        MockSettingsWidgetModel = mock(require('plugin/settings/model/settings-widget-model')),
         MockThemeController = mock(require('aw-bubble/controller/theme-controller')),
 
         OpenController = require('plugin/io/controller/open-controller'),
@@ -16,8 +15,7 @@ define(function (require) {
         SettingsLoaderModel = require('plugin/settings/model/settings-loader-model'),
         Settings = require('core/model/settings'),
         ScriptModel = require('core/model/script-model');
-
-
+    
     describe('Open', function () {
 
         var context,
@@ -41,7 +39,6 @@ define(function (require) {
 
             context.register(SettingsController.create());
             context.register(MockThemeController.create());
-            context.register(MockSettingsWidgetModel.create());
             context.register('settingsLoaderModel', SettingsLoaderModel.create());
 
             context.register(OpenController.create());
