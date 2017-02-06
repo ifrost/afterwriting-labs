@@ -2,7 +2,7 @@ define(function() {
 
     /**
      * Mocks all functions for a given Protoplast prototype
-     * 
+     *
      * @param {Object} Prototype
      * @returns {Object}
      */
@@ -13,7 +13,7 @@ define(function() {
                 Mock[property] = sinon.stub();
             }
             else {
-                Mock[property] = undefined;
+                Object.defineProperty(Mock, property, {value: undefined, writable: true});
             }
         }
         Mock.extend = Mock.create = function() {
@@ -23,5 +23,5 @@ define(function() {
     };
 
     return mock;
-    
+
 });

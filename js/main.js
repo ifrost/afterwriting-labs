@@ -5,6 +5,7 @@
             samples: '../samples/compiled',
             templates: '../templates',
             test_screenplays: '../test/data/test_screenplays',
+            test: '../test',
             jquery: 'libs/jquery-1.11.1.min',
             handlebars: 'libs/handlebars',
             logger: 'libs/logger',
