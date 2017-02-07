@@ -46,19 +46,41 @@ define(function (require) {
             context.register(MockSaveController.create());
         });
         
-        it('Sets the script to last used if set in settings', function() {
+        it('GIVEN loading last content is enabled WHEN app loads THEN last used content is loaded', function() {
+            // GIVEN
             mockStorage.getItem.withArgs('settings').returns({load_last_opened: true});
+
+            // WHEN
             context.build();
 
+            // THEN
             chai.assert.strictEqual(scriptModel.script, 'Script');
         });
 
-        it('Does not set the script to last used if not set in settings', function() {
+        it('GIVEN loading last content is disabled WHEN app loads THEN last used content is notloaded', function() {
+            // GIVEN
             mockStorage.getItem.withArgs('settings').returns({load_last_opened: false});
+
+            // WHEN
             context.build();
 
+            // THEN
             chai.assert.isUndefined(scriptModel.script);
         });
+
+        it.skip('WHEN last content is opened on startup THEN feature/open-last-used/startup event is track', function() {
+            // TODO: Create a separate integration test // env.assert.event_tracked('feature', 'open-last-used', 'startup');
+        });
+
+        it.skip('WHEN a file is loaded from GoogleDrive THEN feautre/open-google-drive event is tracked AND format is passed', function() {
+            // env.user.open_from_googledrive();
+            ///env.assert.event_tracked('feature', 'open-googledrive', 'format');
+        });
+
+        it.skip('WHEN last used content is loaded THEN synchronisation and auto-save is not available', function() {
+
+        });
+
 
     });
 

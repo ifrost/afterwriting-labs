@@ -14,6 +14,40 @@ define(function(require) {
             env.destroy();
         });
 
+        it.skip('WHEN save fountain locally is clicked THEN save fountain dialog is displayed', function() {
+
+        });
+
+        it.skip('WHEN save fountain to Dropbox button is clicked THEN save fountain to Dropbox dialog is displayed', function() {
+
+        });
+
+        it.skip('WHEN save fountain to GoogleDrive button is clicked THEN save fountain to GoogleDrive dialog is displayed', function() {
+
+        });
+
+        it.skip('WHEN a new file is opened THEN synchronisation and auto-save are not available', function() {
+
+        });
+
+        it.skip('WHEN a sample file is opened THEN synchronisation and auto-save are not available', function() {
+
+        });
+
+        it.skip('WHEN GoogleDrive is not available THEN save to GoogleDrive button is not visible', function() {
+
+        });
+
+        it.skip('WHEN Dropbox is not available THEN save to Dropbox button is not visible', function() {
+
+        });
+
+        it.skip('WHEN local file is loaded THEN auto-save is not available AND synchronisation is available', function() {
+
+        });
+        
+        it.skip('WHEN a file is saved to Dropbox AND empty content is created THEN synchronisation and auto-save are notavailable')
+
         describe('After loading from Dropbox', function() {
 
             beforeEach(function(done) {
@@ -38,14 +72,21 @@ define(function(require) {
                 });
             });
 
-            describe('Auto-saves the content', function() {
+            describe('WHEN auto-save is enabled', function() {
 
                 beforeEach(function() {
+                    // WHEN
                     env.assert.dropbox_saved(0);
                     env.user.turn_auto_save_on();
                 });
 
-                it('Saves the content immediately after turning auto save on', function(done) {
+                it('THEN current content is saved immediately', function(done) {
+                    env.assert.dropbox_saved(1);
+                    done();
+                });
+
+                it('AND multiple save cycle passes THEN current content is saved once', function(done) {
+                    // AND
                     env.browser.tick(3000);
                     env.browser.tick(3000);
                     env.browser.tick(3000);
@@ -54,38 +95,39 @@ define(function(require) {
                     done();
                 });
 
-                it('Saves when the content changes', function(done) {
+                it('AND content changes THEN new content is saved', function(done) {
+                    // AND
                     env.user.set_editor_content('changed content');
                     env.browser.tick(5000);
+                    
+                    // THEN
                     env.assert.dropbox_saved(2);
-
                     done();
                 });
 
-                it('Does not save if the content does not change', function(done) {
-                    env.assert.dropbox_saved(1);
-
+                it('AND content changes AND content is set to the same value THEN content is not saved', function(done) {
+                    // AND: content changes
                     env.user.set_editor_content('changed content');
                     env.browser.tick(5000);
-                    env.assert.dropbox_saved(2);
 
+                    // AND: content is set to the same value
                     env.user.set_editor_content('changed content');
                     env.browser.tick(5000);
+                    
+                    // THEN
                     env.assert.dropbox_saved(2);
-
-                    env.user.set_editor_content('changed content');
-                    env.browser.tick(5000);
-                    env.assert.dropbox_saved(2);
-
                     done();
                 });
 
             });
 
-            describe('Synchronization', function() {
+            describe('WHEN synchronisation is enabled AND content of sync file changes', function() {
 
                 beforeEach(function(done) {
+                    // WHEN Synchronisation is enabled
                     env.user.turn_sync_on();
+                    
+                    // AND content od sync file changes
                     env.dropbox.content_change('file.fountain', 'changed content');
                     env.browser.tick(10000);
                     env.browser.read_files(function() {
@@ -94,35 +136,40 @@ define(function(require) {
                     });
                 });
 
-                it('Loads the content', function(done) {
+                it('THEN content of the editor is set to new file contet', function(done) {
+                    // THEN
                     env.assert.editor_content('changed content');
                     done();
                 });
 
-                it('Does not update the content after turning the sync off', function(done) {
+                it('AND synchronisation is disabled AND file content changes THEN editor content is not updated with the latest update', function(done) {
+                    // AND: synchronisation is disabed
                     env.user.turn_sync_off();
+                    
+                    // AND: file content changes
                     env.dropbox.content_change('file.fountain', 'override after sync');
                     env.browser.tick(10000);
+                    
+                    // THEN 
+                    env.assert.editor_content('changed content');
+                    env.user.sync_keep_content();
                     env.assert.editor_content('changed content');
 
-                    env.user.sync_keep_content();
                     done();
                 });
 
-                it('Keeps the content after turning off', function(done) {
-                    env.user.turn_sync_off();
-                    env.user.sync_keep_content();
-                    env.assert.editor_content('changed content');
-
+                it('AND file content changes AND synchronisation is disabled AND previous content is reloaded THEN editor content is set to previous value', function(done) {
+                    // AND: file content changes
                     env.dropbox.content_change('file.fountain', 'override after sync');
                     env.browser.tick(10000);
-                    env.assert.editor_content('changed content');
-                    done();
-                });
 
-                it('Reloads previous content after turning off', function(done) {
+                    // AND: sync disabled
                     env.user.turn_sync_off();
+                    
+                    // AND: previous content is reloaded
                     env.user.sync_reload_content_before_sync();
+                    
+                    // THEN
                     env.assert.editor_content('test content');
                     done();
                 });

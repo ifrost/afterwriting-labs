@@ -2,7 +2,7 @@ define(function (require) {
 
     var Env = require('acceptance/helper/env');
     
-    describe('Smoke test', function () {
+    describe('Facts', function () {
 
         var env;
 
@@ -13,13 +13,9 @@ define(function (require) {
         afterEach(function() {
             env.destroy();
         });
-
-        it('WHEN info plugin is opened from the main menu THEN info plugin is displayed', function() {
-            // act
-            env.user.open_plugin('info');
+        
+        it('GIVEN synchronisation is enabled WHEN facts plugin is selected AND content changes THEN facts are refreshed', function() {
             
-            // assert
-            env.assert.active_plugin_is('info');
         });
         
     });

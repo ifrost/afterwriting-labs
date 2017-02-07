@@ -1,4 +1,3 @@
-performance (+measure tool)
 test coverage:
 - google drive
 - unit tests (controllers)
@@ -7,8 +6,9 @@ test coverage:
 docs
 protoplast docs
 indentation
-tests CamelCasing
+CamelCasing
 conventions
+CSS clean up
 
 app/init vs theme/init
 DEBT
@@ -19,3 +19,4 @@ extract tools (+tests):
 libs - why two jquery versions?
 refactor queries
 convert stats into components
+performance monitor

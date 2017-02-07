@@ -290,10 +290,16 @@ module.exports = function(grunt) {
                 }
             },
             test: {
-                src: ['test/runner.html']
+                src: ['test/runner.html'],
+                options: {
+                    reporter: 'Spec'
+                }
             },
             integration: {
-                src: ['test/integration-runner.html']
+                src: ['test/integration-runner.html'],
+                options: {
+                    reporter: 'Spec'
+                }
             },
             acceptance: {
                 src: ['acceptance.html'],

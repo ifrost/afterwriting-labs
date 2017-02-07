@@ -15,85 +15,143 @@ define(function(require) {
         });
 
         describe('Navigation', function() {
-            it('Switching plugins from the main menu', function() {
+
+            it('WHEN open plugin is selected THEN navigation/open/main event is tracked', function() {
+                // WHEN
                 env.user.open_plugin('open');
+
+                // THEN
                 env.assert.event_tracked('navigation', 'open', 'main');
             });
-            it('Switching plugins from the toolbar', function() {
-                env.user.open_plugin('info');
-                env.user.open_plugin('info');
-                env.assert.event_not_tracked('navigation', 'info', 'toolbar');
 
+            it('WHEN open plugin is selected from toolbar THEN navigation/info/toolbar event is tracked', function() {
+                // GIVEN: make toolbar visible
+                env.user.open_plugin('info');
+
+                // WHEN
                 env.user.open_plugin_from_toolbar('open');
+
+                // THEN
                 env.assert.event_tracked('navigation', 'open', 'toolbar');
             });
-            it('Switching between plugins using internal links', function() {
+
+            it.skip('WHEN selected plugin is re-selected THEN event is tracked only once', function() {
+            });
+
+            it('GIVEN info plugin is displayed WHEN switch to open is clicked THEN navigation/open/switcher event is tracked', function() {
+                // GIVEN
                 env.user.open_plugin('info');
 
+                // WHEN
                 env.user.click_switch_link('open');
 
+                // THEN
                 env.assert.event_tracked('navigation', 'open', 'switcher');
             });
-            it('Closing content from the toolbar', function() {
+
+            it('GIVEN a plugin X is opened WHEN close button is clicked THEN navigation/toolbar-close/X is tracked', function() {
+                // GIVEN
                 env.user.open_plugin('open');
+
+                // WHEN
                 env.user.close_content();
+
+                // THEN
                 env.assert.event_tracked('navigation', 'toolbar-close', 'open');
             });
-            it('Closing content by clicking on the background', function() {
+
+            it('GIVEN a plugin is opened WHEN background is clicked THEN content is hidden', function() {
+                // GIVEN
                 env.user.open_plugin('open');
+
+                // WHEN
                 env.user.back_to_main();
+
+                // THEN
                 env.assert.event_tracked('navigation', 'back-close', 'open');
             });
-            it('Expanding section info (question mark icon)', function() {
+
+            it('WHEN a section X is expanded (question mark icon) THEN feature/help/X event is tracked', function() {
+                // GIVEN
                 env.user.open_plugin('open');
+
+                // WHEN
                 env.user.click_info_icon('open-start');
+
+                // THEN
                 env.assert.event_tracked('feature', 'help', 'open-start');
             });
-            it('Stretching section container to span the whole window', function() {
-                env.user.open_plugin('open');
-                env.user.click_expand_icon();
-                env.assert.event_tracked('feature', 'expand');
 
+            it('WHEN expand button is clicked then feature/expand event is tracked', function() {
+                // GIVEN
+                env.user.open_plugin('open');
+
+                // WHEN
                 env.user.click_expand_icon();
+
+                // THEN
+                env.assert.event_tracked('feature', 'expand');
             });
         });
 
         describe('Info', function() {
-            it('Clicking on download button', function() {
+            it('WHEN download button is clicked THEN feature/download is tracked', function() {
+                // GIVEN
                 env.user.open_plugin('info');
+
+                // WHEN
                 env.user.download_offline_app();
+
+                // THEN
                 env.assert.event_tracked('feature', 'download');
             });
         });
 
         describe('Open', function() {
-            
+
             beforeEach(function() {
                 env.user.open_plugin('open');
             });
-            
-            it('Opening a sample', function() {
+
+            it('WHEN a sample with title title is selected THEN feature/open-sample/title event is tracked', function() {
+                // WHEN
                 env.user.open_sample('brick_and_steel');
+
+                // THEN
                 env.assert.event_tracked('feature', 'open-sample', 'brick_and_steel');
             });
-            it('Creating a new script', function() {
+
+            it('WHEN an empty script is created THEN feature/open-new event is tracked', function() {
+                // WHEN
                 env.user.create_new();
+
+                // THEN
                 env.assert.event_tracked('feature', 'open-new');
             });
-            it('Opening a file dialog', function() {
+
+            it('WHEN open from local disk dialog is opened THEN feature/open-file-dialog event is traced', function() {
+                // WHEN
                 env.user.open_file_dialog();
+
+                // THEN
                 env.assert.event_tracked('feature', 'open-file-dialog');
             });
-            it.skip('Opening a local file', function() {
+
+            // TODO: take steps from open.js
+            it.skip('WHEN a local file is loaded THEN feature/open-file-opened event is tracked AND format is passed', function() {
                 env.assert.event_tracked('feature', 'open-file-opened', 'format');
             });
+
             // DEBT: code duplication with open.js
-            it('Opening a file from Dropbox', function(done) {
+            it('WHEN a file is opened from Dropbox THEN feature/open-dropbox event is tracked AND format is passed', function(done) {
+                // GIVEN
                 env.dropbox.has_file({
                     name: 'file.fountain',
                     content: 'test content'
                 });
+                env.user.open_plugin('open');
 
+                // WHEN
                 env.user.open_from_dropbox();
                 env.dropbox.auth_dropbox();
                 env.browser.tick(3000);
@@ -103,26 +161,26 @@ define(function(require) {
                 env.browser.read_files(function() {
                     env.browser.tick(3000);
 
+                    // THEN
                     env.assert.event_tracked('feature', 'open-dropbox', 'fountain');
                     done();
                 });
             });
-            it.skip('Opening a file from GoogleDrive', function() {
-                env.user.open_from_googledrive();
-                env.assert.event_tracked('feature', 'open-googledrive', 'format');
-            });
-            it.skip('Opening last used (on startup)', function() {
-                env.assert.event_tracked('feature', 'open-last-used', 'startup');
-            });
-            it('Opening last used (link)', function() {
+
+            // TODO: test asserting editor's content
+            it('WHEN open last used in selected THEN feature/open-last-used/manual event is traced', function() {
+                // WHEN
                 env.user.open_last_used();
+
+                // THEN
                 env.assert.event_tracked('feature', 'open-last-used', 'manual');
             });
         });
 
         // DEBT: convert skipped test into integration tests
         describe.skip('Editor', function() {
-            it('Synchronising the content', function() {
+            it('WHEN content is synchronised THEN feature/sync/cloud event is tracked', function() {
+                // THEN
                 env.assert.event_tracked('feature', 'sync', 'cloud');
             });
         });
@@ -134,40 +192,61 @@ define(function(require) {
                 env.user.open_sample('brick_and_steel');
             });
 
-            it('Saving as a fountain to local drive', function() {
+            it('WHEN a fountain file is saved to local disk THEN feature/save-fountain event is tracked', function() {
+                // WHEN
                 env.user.save_fountain_locally();
-                env.user.close_popup();
+
+                // THEN
                 env.assert.event_tracked('feature', 'save-fountain');
             });
-            it('Saving as a pdf to local drive', function() {
+
+            it('WHEN a pdf file is saved to local disk THEN feature/save-pdf event is tracked', function() {
+                // WHEN
                 env.user.save_pdf_locally();
-                env.user.close_popup();
+
+                // THEN
                 env.assert.event_tracked('feature', 'save-pdf');
             });
-            it('Saving as a fountain to Dropbox', function() {
+
+            it('WHEN a fountain file is saved to Dropbox THEN feature/save-fountain-dropbox event is tracked', function() {
+                // WHEN
                 env.user.save_fountain_dropbox();
+
+                // THEN
                 env.assert.event_tracked('feature', 'save-fountain-dropbox');
             });
-            it('Saving as a pdf to Dropbox', function() {
+
+            it('WHEN a pdf file is saved to Dropbox THEN feature/save-pdf-dropbox event is tracked', function() {
+                // WHEN
                 env.user.save_pdf_dropbox();
+
+                // THEN
                 env.assert.event_tracked('feature', 'save-pdf-dropbox');
             });
-            it.skip('Saving as a fountain to GoogleDrive', function() {
+
+            it.skip('WHEN a fountain file is saved to GoogleDriveTHEN feature/save-fountain-googledrive event is tracked', function() {
                 env.user.save_fountain_google_drive();
                 env.assert.event_tracked('feature', 'save-fountain-googledrive');
             });
-            it.skip('Saving as a pdf to GoogleDrive', function() {
+
+            it.skip('WHEN a pdf file is saved to GoogleDrive THEN feature/save-pdf-googledrive event is tracked', function() {
                 env.user.save_pdf_google_drive();
                 env.assert.event_tracked('feature', 'save-pdf-googledrive');
             });
         });
 
         describe('Stats', function() {
-            it('Switching to editor from scene length', function() {
+            it('WHEN scene length graph bar is clicked THEN editor is displayed AND eature/stats-scene-length-goto event is dispatched', function() {
+                // GIVEN
                 env.user.open_plugin('open');
                 env.user.open_sample('brick_and_steel');
                 env.user.open_plugin('stats');
+
+                // WHEN
                 env.user.click_on_page_stats();
+
+                // THEN
+                env.assert.active_plugin_is('editor');
                 env.assert.event_tracked('feature', 'stats-scene-length-goto');
             });
         });
