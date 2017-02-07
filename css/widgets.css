@@ -89,6 +89,17 @@ p.error {
 .content ol {
 	list-style-type: decimal;
 }
+
+.content-parent {
+    width:100%;
+    clear: both;
+    overflow: auto;
+}
+
+.content-parent > *{
+    margin-right: 20px; /** for scrollbar **/
+}
+
 #tooltip {
 	position: absolute;
 	z-index: 100;
@@ -202,6 +213,14 @@ sub {
 
 .in-progress {
 	opacity: 0.4;
+}
+
+.settings-panel table {
+    width: 100%;
+}
+
+.settings-panel table td {
+    width: 50%;
 }
 
 /** rotate **/
