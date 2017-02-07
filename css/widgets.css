@@ -221,6 +221,14 @@ sub {
 
 .settings-panel table td {
     width: 50%;
+    border: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.settings-panel table tr td:nth-child(1) {
+    text-align: right;
+    border-right: 0;
 }
 
 /** rotate **/
