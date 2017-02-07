@@ -8,6 +8,11 @@ The whole codebase should be easy to read and follow. To achieve this, it should
 
 Brief description of used conventions. Details TBD in a separate README file.
 
+## General
+
+* 4 spaces
+* CamelCases
+
 ## Tests
 
 * 3A convention (http://xp123.com/articles/3a-arrange-act-assert/)

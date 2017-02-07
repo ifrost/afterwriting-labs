@@ -10,6 +10,8 @@ define(function(require) {
 
         $background: '#back',
 
+        $content: '.content',
+
         $create_new: '[open-action=new]',
 
         $open_local: '[open-action=open]',
@@ -108,6 +110,20 @@ define(function(require) {
         
         clean_href: function(selector) {
             $(selector).attr('href', 'javascript:void(0)');
+        },
+
+        content_size: function() {
+            return {
+                width: $(this.$content).width(),
+                height: $(this.$content).height()
+            }
+        },
+
+        window_size: function() {
+            return {
+                width: $(window).width(),
+                height: $(window).height()
+            }
         }
 
     });

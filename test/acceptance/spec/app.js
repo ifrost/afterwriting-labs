@@ -26,12 +26,27 @@ define(function (require) {
             env.assert.active_plugin_is('editor');
         });
 
-        it.skip('WHEN expand button is clicked THEN content spans the whole window', function() {
+        it('WHEN expand button is clicked THEN content spans the whole window', function() {
+            // GIVEN
+            env.user.open_plugin('info');
 
+            // WHEN
+            env.user.click_expand_icon();
+
+            // THEN
+            env.assert.content_is_expanded();
         });
 
-        it.skip('GIVEN content is expanded WHEN expand button is clicked THEN content narrows back', function() {
+        it('GIVEN content is expanded WHEN expand button is clicked THEN content narrows back', function() {
+            // GIVEN
+            env.user.open_plugin('info');
+            env.user.click_expand_icon();
 
+            // WHEN
+            env.user.click_expand_icon();
+
+            // THEN
+            env.assert.content_is_not_expanded();
         });
 
         it.skip('WHEN close content is clicked THEN content is hidden', function() {

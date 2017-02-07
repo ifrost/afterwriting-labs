@@ -47,6 +47,20 @@ define(function(require) {
         event_not_tracked: function(category, action, label) {
             var eventName = [category, action, label].filter(function(value){return value;}).join('/');
             chai.assert.ok(!this.ga.hasEvent(category, action, label), 'Event: ' + eventName + ' was tracked');
+        },
+
+        content_is_expanded: function() {
+            var content_size = this.dom.content_size(),
+                window_size = this.dom.window_size();
+
+            chai.assert.strictEqual(content_size.width, window_size.width);
+        },
+
+        content_is_not_expanded: function() {
+            var content_size = this.dom.content_size(),
+                window_size = this.dom.window_size();
+
+            chai.assert.notEqual(content_size.width, window_size.width);
         }
 
     });
