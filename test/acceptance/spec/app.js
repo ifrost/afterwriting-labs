@@ -49,8 +49,15 @@ define(function (require) {
             env.assert.content_is_not_expanded();
         });
 
-        it.skip('WHEN close content is clicked THEN content is hidden', function() {
+        it('WHEN close content is clicked THEN content is hidden', function() {
+            // GIVEN
+            env.user.open_plugin('info');
 
+            // WHEN
+            env.user.close_content();
+
+            // THEN
+            env.assert.active_plugin_is(undefined);
         });
 
         it.skip('WHEN a top menu item is selected THEN selected plugin is displayed', function() {
