@@ -60,8 +60,15 @@ define(function (require) {
             env.assert.active_plugin_is(undefined);
         });
 
-        it.skip('WHEN a top menu item is selected THEN selected plugin is displayed', function() {
+        it('WHEN a top menu item is selected THEN selected plugin is displayed', function() {
+            // GIVEN
+            env.user.open_plugin('info');
 
+            // WHEN
+            env.user.open_plugin_from_toolbar('open');
+
+            // THEN
+            env.assert.active_plugin_is('open');
         });
 
         it.skip('WHEN a main menu item is selected THEN selected plugin is displayed', function(){
