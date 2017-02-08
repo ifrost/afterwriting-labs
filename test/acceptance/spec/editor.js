@@ -44,7 +44,7 @@ define(function(require) {
 
         });
 
-        it('WHEN a new content is created THEN auto-realod AND auto-save are not available', function() {
+        it('WHEN a new content is created THEN auto-reload AND auto-save are not available', function() {
             // WHEN
             env.user.open_plugin('open');
             env.user.create_new();
@@ -52,10 +52,11 @@ define(function(require) {
 
             // THEN
             env.assert.auto_reload_is_visible(false);
+            // AND
             env.assert.auto_save_visible(false);
         });
 
-        it.skip('WHEN a sample file is opened THEN auto-realod and auto-save are not available', function() {
+        it.skip('WHEN a sample file is opened THEN auto-reload AND auto-save are not available', function() {
 
         });
 
@@ -67,8 +68,28 @@ define(function(require) {
 
         });
 
-        it.skip('WHEN local file is loaded THEN auto-save is not available AND auto-reload is available', function() {
+        // DEBT: copy from open.js:18
+        it.only('WHEN local file is loaded THEN auto-save is not available AND auto-reload is available', function(done) {
+            // GIVEN
+            env.browser.has_local_file({
+                name: 'test.fountain',
+                content: 'test'
+            });
+            env.user.open_plugin('open');
 
+            // WHEN
+            env.user.open_local_file('test.fountain');
+            env.browser.read_files(function() {
+                env.user.open_plugin('editor');
+                env.browser.tick(3000);
+
+                // THEN
+                env.assert.auto_reload_is_visible(true);
+                // AND
+                env.assert.auto_save_visible(false);
+
+                done();
+            });
         });
         
         it.skip('WHEN a file is saved to Dropbox AND empty content is created THEN synchronisation and auto-save are not available')
