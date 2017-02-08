@@ -1,7 +1,7 @@
 define(function(require) {
 
     var HandlebarComponent = require('utils/handlebar-component'),
-        SectionViewMixin = require('aw-bubble/view/section-view-mixin'),
+        SectionViewMixin = require('theme/aw-bubble/view/section-view-mixin'),
         SettingsPanel = require('plugin/settings/view/settings-panel');
 
     return HandlebarComponent.extend([SectionViewMixin], {

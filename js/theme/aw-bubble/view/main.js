@@ -1,12 +1,12 @@
 define(function(require) {
 
     var Protoplast = require('protoplast'),
-        MainPresenter = require('aw-bubble/presenter/main-presenter'),
-        Logo = require('aw-bubble/view/logo'),
-        Background = require('aw-bubble/view/background'),
-        Footer = require('aw-bubble/view/footer'),
-        Content = require('aw-bubble/view/content'),
-        BubbleMenu = require('aw-bubble/view/menu/bubble-menu');
+        MainPresenter = require('theme/aw-bubble/presenter/main-presenter'),
+        Logo = require('theme/aw-bubble/view/logo'),
+        Background = require('theme/aw-bubble/view/background'),
+        Footer = require('theme/aw-bubble/view/footer'),
+        Content = require('theme/aw-bubble/view/content'),
+        BubbleMenu = require('theme/aw-bubble/view/menu/bubble-menu');
 
     var Main = Protoplast.Component.extend({
 

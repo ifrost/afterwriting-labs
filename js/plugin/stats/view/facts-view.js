@@ -6,7 +6,7 @@ define(function(require) {
         helper = require('utils/helper'),
         HandlebarComponent = require('utils/handlebar-component'),
         FactsViewPresenter = require('plugin/stats/view/facts-view-presenter'),
-        SectionViewMixin = require('aw-bubble/view/section-view-mixin');
+        SectionViewMixin = require('theme/aw-bubble/view/section-view-mixin');
 
     return HandlebarComponent.extend([SectionViewMixin], {
 

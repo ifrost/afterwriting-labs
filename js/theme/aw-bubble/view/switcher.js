@@ -1,7 +1,7 @@
 define(function(require) {
 
     var Protoplast = require('protoplast'),
-        SwitcherPresenter = require('aw-bubble/presenter/switcher-presenter');
+        SwitcherPresenter = require('theme/aw-bubble/presenter/switcher-presenter');
 
     var Switcher = Protoplast.Component.extend({
         

@@ -2,7 +2,7 @@ define(function(require) {
 
     var common = require('utils/common'),
         Protoplast = require('protoplast'),
-        ThemeController = require('aw-bubble/controller/theme-controller');
+        ThemeController = require('theme/aw-bubble/controller/theme-controller');
 
     var DevController = Protoplast.Object.extend({
         

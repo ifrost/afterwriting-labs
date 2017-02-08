@@ -6,7 +6,7 @@ define(function(require) {
         gd = require('utils/googledrive'),
         db = require('utils/dropbox'),
         local = require('utils/local'),
-        ThemeController = require('aw-bubble/controller/theme-controller'),
+        ThemeController = require('theme/aw-bubble/controller/theme-controller'),
         EditorModel = require('plugin/editor/model/editor-model');
 
     var EditorController = Protoplast.Object.extend({

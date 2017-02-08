@@ -2,7 +2,7 @@ define(function(require) {
 
     var Plugin = require('core/plugin'),
         InfoSection = require('plugin/info/model/info-section'),
-        ThemeController = require('aw-bubble/controller/theme-controller');
+        ThemeController = require('theme/aw-bubble/controller/theme-controller');
     
     var InfoPlugin = Plugin.extend({
         

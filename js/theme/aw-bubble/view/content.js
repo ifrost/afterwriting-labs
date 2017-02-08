@@ -2,9 +2,9 @@ define(function(require) {
 
     var $ = require('jquery'),
         Protoplast = require('protoplast'),
-        TopMenu = require('aw-bubble/view/menu/top-menu'),
-        ContentPresenter = require('aw-bubble/presenter/content-presenter'),
-        Sections = require('aw-bubble/view/sections');
+        TopMenu = require('theme/aw-bubble/view/menu/top-menu'),
+        ContentPresenter = require('theme/aw-bubble/presenter/content-presenter'),
+        Sections = require('theme/aw-bubble/view/sections');
 
     var Content = Protoplast.Component.extend({
         

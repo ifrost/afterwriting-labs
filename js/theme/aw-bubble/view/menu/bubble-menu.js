@@ -1,8 +1,8 @@
 define(function(require) {
 
     var Protoplast = require('protoplast'),
-        BubbleMenuPresenter = require('aw-bubble/presenter/menu/bubble-menu-presenter'),
-        BubbleMenuItem = require('aw-bubble/view/menu/bubble-menu-item');
+        BubbleMenuPresenter = require('theme/aw-bubble/presenter/menu/bubble-menu-presenter'),
+        BubbleMenuItem = require('theme/aw-bubble/view/menu/bubble-menu-item');
 
     var BubbleMenu = Protoplast.Component.extend({
 

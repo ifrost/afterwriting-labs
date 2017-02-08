@@ -3,7 +3,7 @@ define(function(require) {
     var $ = require('jquery'),
         Protoplast = require('protoplast'),
         IoModel = require('plugin/io/model/io-model'),
-        BaseSectionViewPresenter = require('aw-bubble/presenter/base-section-view-presenter'),
+        BaseSectionViewPresenter = require('theme/aw-bubble/presenter/base-section-view-presenter'),
         local = require('utils/local'),
         EditorController = require('plugin/editor/controller/editor-controller'),
         EditorModel = require('plugin/editor/model/editor-model');

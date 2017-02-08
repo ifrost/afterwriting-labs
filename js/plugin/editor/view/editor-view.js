@@ -6,7 +6,7 @@ define(function(require) {
         cm = require('libs/codemirror/lib/codemirror'),
         EditorViewPresenter = require('plugin/editor/view/editor-view-presenter'),
         HandlebarComponent = require('utils/handlebar-component'),
-        SectionViewMixin = require('aw-bubble/view/section-view-mixin');
+        SectionViewMixin = require('theme/aw-bubble/view/section-view-mixin');
 
     require('libs/codemirror/addon/selection/active-line');
     require('libs/codemirror/addon/hint/show-hint');

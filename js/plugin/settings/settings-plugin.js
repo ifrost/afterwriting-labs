@@ -7,7 +7,7 @@ define(function(require) {
         SettingsWidgetsController = require('plugin/settings/controller/settings-widgets-controller'),
         SettingsWidgetModel = require('plugin/settings/model/settings-widget-model'),
         SettingsLoaderModel = require('plugin/settings/model/settings-loader-model'),
-        ThemeController = require('aw-bubble/controller/theme-controller');
+        ThemeController = require('theme/aw-bubble/controller/theme-controller');
 
     var SettingsPlugin = Plugin.extend({
         

@@ -10,7 +10,7 @@ define(function(require) {
         LastUsedInfo = require('plugin/io/model/last-used-info'),
         IoModel = require('plugin/io/model/io-model'),
         SaveController = require('plugin/io/controller/save-controller'),
-        ThemeController = require('aw-bubble/controller/theme-controller'),
+        ThemeController = require('theme/aw-bubble/controller/theme-controller'),
         samples = require('samples');
     
     var OpenController = Protoplast.Object.extend({

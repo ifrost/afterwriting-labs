@@ -4,7 +4,7 @@ define(function(require) {
         $ = require('jquery'),
         InfoViewPresenter = require('plugin/info/view/info-view-presenter'),
         HandlebarComponent = require('utils/handlebar-component'),
-        Switcher = require('aw-bubble/view/switcher');
+        Switcher = require('theme/aw-bubble/view/switcher');
     
     return HandlebarComponent.extend({
 

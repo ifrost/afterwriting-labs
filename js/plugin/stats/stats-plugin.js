@@ -4,7 +4,7 @@ define(function(require) {
         Plugin = require('core/plugin'),
         FactsSection = require('plugin/stats/model/facts-section'),
         StatsSection = require('plugin/stats/model/stats-section'),
-        ThemeController = require('aw-bubble/controller/theme-controller');
+        ThemeController = require('theme/aw-bubble/controller/theme-controller');
 
     var StatsPlugin = Plugin.extend({
         

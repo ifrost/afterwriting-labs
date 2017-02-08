@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var BaseSectionViewPresenter = require('aw-bubble/presenter/base-section-view-presenter'),
+    var BaseSectionViewPresenter = require('theme/aw-bubble/presenter/base-section-view-presenter'),
         queries = require('plugin/stats/model/queries'),
         fhelpers = require('utils/fountain/helpers');
 

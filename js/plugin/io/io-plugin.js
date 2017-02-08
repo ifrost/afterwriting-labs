@@ -7,7 +7,7 @@ define(function(require) {
         SaveController = require('plugin/io/controller/save-controller'),
         OpenSection = require('plugin/io/model/open-section'),
         SaveSection = require('plugin/io/model/save-section'),
-        ThemeController = require('aw-bubble/controller/theme-controller');
+        ThemeController = require('theme/aw-bubble/controller/theme-controller');
     
     var IoPlugin = Plugin.extend({
         

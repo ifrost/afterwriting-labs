@@ -2,7 +2,7 @@ define(function(require) {
 
     var  $ = require('jquery'),
         Protoplast = require('protoplast'),
-        TopMenuItemPresenter = require('aw-bubble/presenter/menu/top-menu-item-presenter');
+        TopMenuItemPresenter = require('theme/aw-bubble/presenter/menu/top-menu-item-presenter');
 
     var TopMenuItem = Protoplast.Component.extend({
 

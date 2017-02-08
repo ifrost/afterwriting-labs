@@ -3,7 +3,7 @@ define(function(require) {
     var template = require('text!plugin/stats/view/stats.hbs'),
         $ = require('jquery'),
         helper = require('utils/helper'),
-        Header = require('aw-bubble/view/header'),
+        Header = require('theme/aw-bubble/view/header'),
         Protoplast = require('protoplast'),
         SpiderChart = require('utils/charts/spider'),
         BarChart = require('utils/charts/bar'),
@@ -11,10 +11,10 @@ define(function(require) {
         PageBalanceChart = require('utils/charts/page_balance'),
         LineChart = require('utils/charts/line'),
         LocationsBreakdown = require('utils/charts/locations_breakdown'),
-        SectionViewMixin = require('aw-bubble/view/section-view-mixin'),
+        SectionViewMixin = require('theme/aw-bubble/view/section-view-mixin'),
         StatsViewPresenter = require('plugin/stats/view/stats-view-presenter'),
-        ThemeModel = require('aw-bubble/model/theme-model'),
-        ThemeController = require('aw-bubble/controller/theme-controller'),
+        ThemeModel = require('theme/aw-bubble/model/theme-model'),
+        ThemeController = require('theme/aw-bubble/controller/theme-controller'),
         HandlebarComponent = require('utils/handlebar-component');
 
     return HandlebarComponent.extend([SectionViewMixin], {

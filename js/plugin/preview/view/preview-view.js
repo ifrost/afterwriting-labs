@@ -4,7 +4,7 @@ define(function(require) {
         $ = require('jquery'),
         Protoplast = require('protoplast'),
         HandlebarComponent = require('utils/handlebar-component'),
-        SectionViewMixin = require('aw-bubble/view/section-view-mixin'),
+        SectionViewMixin = require('theme/aw-bubble/view/section-view-mixin'),
         PreviewViewPresenter = require('plugin/preview/view/preview-view-presenter'),
         pdfjs_viewer = require('utils/pdfjsviewer');
     

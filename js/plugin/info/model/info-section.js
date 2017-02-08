@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Section = require('aw-bubble/model/section'),
+    var Section = require('theme/aw-bubble/model/section'),
         InfoView = require('plugin/info/view/info-view');
 
     var InfoSection = Section.extend({

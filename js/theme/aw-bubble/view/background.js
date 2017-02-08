@@ -1,7 +1,7 @@
 define(function(require) {
 
     var Protoplast = require('protoplast'),
-        BackroundPresenter = require('aw-bubble/presenter/background-presenter');
+        BackroundPresenter = require('theme/aw-bubble/presenter/background-presenter');
 
     var Background = Protoplast.Component.extend({
         

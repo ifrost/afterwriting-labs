@@ -2,7 +2,7 @@ define(function(require) {
 
     var $ = require('jquery'),
         Protoplast = require('protoplast'),
-        ThemeModel = require('aw-bubble/model/theme-model');
+        ThemeModel = require('theme/aw-bubble/model/theme-model');
 
     var MainPresenter = Protoplast.Object.extend({
 

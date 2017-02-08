@@ -1,8 +1,8 @@
 define(function(require) {
 
     var CoreConfig = require('bootstraps/core-config'),
-        ThemeModel = require('aw-bubble/model/theme-model'),
-        ThemeController = require('aw-bubble/controller/theme-controller'),
+        ThemeModel = require('theme/aw-bubble/model/theme-model'),
+        ThemeController = require('theme/aw-bubble/controller/theme-controller'),
         AppController = require('core/controller/app-controller'),
         AppModel = require('core/model/app-model'),
         InfoPlugin = require('plugin/info/info-plugin'),

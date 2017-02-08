@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var Section = require('aw-bubble/model/section'),
+    var Section = require('theme/aw-bubble/model/section'),
         PreviewView = require('plugin/preview/view/preview-view'),
         PreviewViewMenu = require('plugin/preview/view/preview-view-menu');
 

@@ -13,7 +13,7 @@ define(function (require) {
         SettingsController = require('plugin/settings/controller/settings-controller'),
         Settings = require('core/model/settings'),
         SettingsLoaderModel = require('plugin/settings/model/settings-loader-model'),
-        MockThemeController = mock(require('aw-bubble/controller/theme-controller'));
+        MockThemeController = mock(require('theme/aw-bubble/controller/theme-controller'));
 
     describe('Open', function () {
 

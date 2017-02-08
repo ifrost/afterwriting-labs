@@ -1,7 +1,7 @@
 define(function(require) {
 
     var Protoplast = require('protoplast'),
-        ThemeModel = require('aw-bubble/model/theme-model');
+        ThemeModel = require('theme/aw-bubble/model/theme-model');
     
     var ThemeController = Protoplast.Object.extend({
         
@@ -26,7 +26,7 @@ define(function(require) {
         },
 
         clearSelectedSection: function() {
-            this.themeModel.sections.selected = null;
+            this.selectSection(undefined);
         },
         
         toggleExpanded: function() {

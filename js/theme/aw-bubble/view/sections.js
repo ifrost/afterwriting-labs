@@ -1,8 +1,8 @@
 define(function(require) {
 
     var Protoplast = require('protoplast'),
-        SectionsPresenter = require('aw-bubble/presenter/sections-presenter'),
-        SectionContainer = require('aw-bubble/view/section-container');
+        SectionsPresenter = require('theme/aw-bubble/presenter/sections-presenter'),
+        SectionContainer = require('theme/aw-bubble/view/section-container');
 
     var Sections = Protoplast.Component.extend({
 

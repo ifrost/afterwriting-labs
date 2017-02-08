@@ -1,7 +1,7 @@
 define(function(require) {
 
     var Protoplast = require('protoplast'),
-        FooterPresenter = require('aw-bubble/presenter/footer-presenter');
+        FooterPresenter = require('theme/aw-bubble/presenter/footer-presenter');
 
     var Footer = Protoplast.Component.extend({
 

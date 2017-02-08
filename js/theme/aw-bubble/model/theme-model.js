@@ -1,7 +1,7 @@
 define(function(require) {
 
     var Protoplast = require('protoplast'),
-        TooltipModel = require('utils/aw-bubble/model/tooltip');
+        TooltipModel = require('theme/aw-bubble/model/tooltip');
 
     var ThemeModel = Protoplast.Model.extend({
         

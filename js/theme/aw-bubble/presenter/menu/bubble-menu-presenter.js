@@ -2,7 +2,7 @@ define(function(require) {
 
     var _ = require('lodash'),
         Protoplast = require('protoplast'),
-        ThemeModel = require('aw-bubble/model/theme-model');
+        ThemeModel = require('theme/aw-bubble/model/theme-model');
 
     var BubbleMenuPresenter = Protoplast.Model.extend({
         
