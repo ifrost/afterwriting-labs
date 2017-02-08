@@ -4,9 +4,10 @@ define(function(require) {
         template = require('text!plugin/io/view/save.hbs'),
         $ = require('jquery'),
         HandlebarComponent = require('utils/handlebar-component'),
+        SectionViewMixin = require('theme/aw-bubble/view/section-view-mixin'),
         SaveViewPresenter = require('plugin/io/view/save-view-presenter');
     
-    return HandlebarComponent.extend({
+    return HandlebarComponent.extend([SectionViewMixin], {
 
         $meta: {
             presenter: SaveViewPresenter

@@ -87,6 +87,22 @@ define(function(require) {
                 value = true;
             }
             chai.assert.strictEqual(this.dom.is_visible(this.dom.$auto_save_button), value);
+        },
+        
+        save_to_google_drive_visible: function(plugin, format, value) {
+            var method = '$save_' + format + '_google_drive';
+            
+            if (arguments.length === 0) {
+                value = true;
+            }
+            chai.assert.strictEqual(this.dom.is_visible(this.dom[method](plugin)), value);
+        },
+        
+        open_from_google_drive_visible: function(value) {
+            if (arguments.length === 0) {
+                value = true;
+            }
+            chai.assert.strictEqual(this.dom.is_visible(this.dom.$open_googledrive), value);
         }
 
     });

@@ -7,6 +7,7 @@ define(function(require) {
         Browser = require('acceptance/helper/browser'),
         Proxy = require('acceptance/helper/proxy'),
         FakeGoogleAnalytics = require('acceptance/helper/server/fake-ga'),
+        FakeGoogleDrive = require('acceptance/helper/server/fake-googledrive'),
         FakeDropBox = require('acceptance/helper/server/fake-dropbox');
 
     /**
@@ -26,12 +27,14 @@ define(function(require) {
             this.proxy = Proxy.create();
             this.dropbox = FakeDropBox.create();
             this.ga = FakeGoogleAnalytics.create();
+            this.google_drive = FakeGoogleDrive.create();
             this.browser = Browser.create();
             this.dom = Dom.create();
             this.user = User.create(this.browser, this.dom);
             this.assert = Assert.create(this.dom, this.dropbox, this.ga);
             
             this.proxy.register_server(this.dropbox);
+            this.proxy.register_server(this.google_drive);
             this.proxy.setup();
             
             this.ga.init(window);

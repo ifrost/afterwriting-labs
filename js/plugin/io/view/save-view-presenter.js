@@ -1,10 +1,10 @@
 define(function(require) {
 
-    var Protoplast = require('protoplast'),
+    var BaseSectionViewPresenter = require('theme/aw-bubble/presenter/base-section-view-presenter'),
         IoModel = require('plugin/io/model/io-model'),
         SaveController = require('plugin/io/controller/save-controller');
 
-    var SaveViewPresenter = Protoplast.Object.extend({
+    var SaveViewPresenter = BaseSectionViewPresenter.extend({
 
         pub: {
             inject: 'pub'
@@ -19,9 +19,8 @@ define(function(require) {
         },
         
         init: function() {
-            Protoplast.utils.bindProperty(this.ioModel, 'isDropboxAvailable', this.view, 'displayOpenFromDropbox');
-            Protoplast.utils.bindProperty(this.ioModel, 'isGoogleDriveAvailable', this.view, 'displayOpenFromGoogleDrive');
-
+            BaseSectionViewPresenter.init.call(this);
+            
             this.view.on('save-as-fountain', this._saveFountainLocally);
             this.view.on('dropbox-fountain', this._saveFountainToDropbox);
             this.view.on('google-drive-fountain', this._saveFountainToGoogleDrive);
@@ -29,6 +28,13 @@ define(function(require) {
             this.view.on('save-as-pdf', this._savePdfLocally);
             this.view.on('dropbox-pdf', this._savePdfToDropbox);
             this.view.on('google-drive-pdf', this._savePdfToGoogleDrive);
+        },
+        
+        activate: function() {
+            BaseSectionViewPresenter.activate.call(this);
+
+            this.view.displayOpenFromDropbox = this.ioModel.isDropboxAvailable;
+            this.view.displayOpenFromGoogleDrive = this.ioModel.isGoogleDriveAvailable;
         },
 
         _saveFountainLocally: function() {

@@ -86,8 +86,8 @@ define(function(require) {
             this.click(this.dom.$save_fountain_dropbox);
         },
         
-        save_fountain_google_drive: function() {
-            this.click(this.dom.$save_fountain_google_drive);
+        save_fountain_google_drive: function(plugin) {
+            this.click(this.dom.$save_fountain_google_drive(plugin));
         },
         
         save_pdf_locally: function() {

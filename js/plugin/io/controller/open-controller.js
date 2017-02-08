@@ -53,6 +53,8 @@ define(function(require) {
 
         init: function() {
 
+            gd.init();
+
             this.saveController.on('fountain-saved-to-google-drive', this._savedToGoogleDrive);
             this.saveController.on('fountain-saved-to-dropbox', this._savedToDropbox);
 

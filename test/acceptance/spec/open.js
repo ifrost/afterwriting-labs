@@ -105,6 +105,25 @@ define(function(require) {
 
         });
 
+        it('GIVEN GoogleDrive is available WHEN open plugin is opened THEN open from GoogleDrive link is visible', function() {
+            // GIVEN
+            env.user.open_plugin('open');
+
+            // THEN
+            env.assert.open_from_google_drive_visible(true);
+        });
+
+        it('GIVEN GoogleDrive is not available WHEN open plugin is opened THEN open from GoogleDrive link is not visible', function() {
+            // GIVEN
+            env.google_drive.disable();
+            env.user.open_plugin('open');
+
+            // THEN
+            env.assert.open_from_google_drive_visible(false);
+
+            env.google_drive.enable();
+        });
+        
     });
 
 });

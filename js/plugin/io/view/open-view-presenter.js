@@ -23,9 +23,9 @@ define(function(require) {
         },
 
         init: function() {
+            BaseSectionViewPresenter.init.call(this);
+            
             Protoplast.utils.bindProperty(this.ioModel, 'lastUsedInfo', this.view, 'lastUsedInfo');
-            Protoplast.utils.bindProperty(this.ioModel, 'isDropboxAvailable', this.view, 'displayOpenFromDropbox');
-            Protoplast.utils.bindProperty(this.ioModel, 'isGoogleDriveAvailable', this.view, 'displayOpenFromGoogleDrive');
 
             this.view.on('open-sample', this._openSample);
             this.view.on('create-new', this._createNew);
@@ -34,6 +34,13 @@ define(function(require) {
             this.view.on('open-file-dialog', this._openFileDialog);
             this.view.on('open-from-dropbox', this._openFromDropbox);
             this.view.on('open-from-google-drive', this._openFromGoogleDrive);
+        },
+
+        activate: function() {
+            BaseSectionViewPresenter.activate.call(this);
+
+            this.view.displayOpenFromDropbox = this.ioModel.isDropboxAvailable;
+            this.view.displayOpenFromGoogleDrive = this.ioModel.isGoogleDriveAvailable;
         },
         
         _createNew: function() {

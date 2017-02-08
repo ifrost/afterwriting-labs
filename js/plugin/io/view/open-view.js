@@ -4,9 +4,10 @@ define(function(require) {
         template = require('text!plugin/io/view/open.hbs'),
         OpenViewPresenter = require('plugin/io/view/open-view-presenter'),
         $ = require('jquery'),
+        SectionViewMixin = require('theme/aw-bubble/view/section-view-mixin'),
         HandlebarComponent = require('utils/handlebar-component');
     
-    return HandlebarComponent.extend({
+    return HandlebarComponent.extend([SectionViewMixin], {
 
         $meta: {
             presenter: OpenViewPresenter

@@ -56,7 +56,7 @@ define(function(require) {
             env.assert.auto_save_visible(false);
         });
 
-        it.only('WHEN a sample script is opened THEN auto-reload AND auto-save are not available', function() {
+        it('WHEN a sample script is opened THEN auto-reload AND auto-save are not available', function() {
             // WHEN
             env.user.open_plugin('open');
             env.user.open_sample('brick_and_steel');
@@ -67,16 +67,38 @@ define(function(require) {
             // AND
             env.assert.auto_save_visible(false);
         });
+        
+        it('GIVEN GoogleDrive is available THEN save to GoogleDrive button is visible', function() {
+            // GIVEN
+            env.google_drive.disable();
+            env.user.open_plugin('open');
+            env.user.open_sample('brick_and_steel');
+            env.user.open_plugin('editor');
 
-        it.skip('WHEN GoogleDrive is not available THEN save to GoogleDrive button is not visible', function() {
+            // THEN
+            env.assert.save_to_google_drive_visible('editor', 'fountain', true);
 
+            env.google_drive.enable();
+        });
+
+        it.skip('GIVEN GoogleDrive is not available THEN save to GoogleDrive button is not visible', function() {
+            // GIVEN
+            env.google_drive.disable();
+            env.user.open_plugin('open');
+            env.user.open_sample('brick_and_steel');
+            env.user.open_plugin('editor');
+
+            // THEN
+            env.assert.save_to_google_drive_visible('editor', 'fountain', false);
+
+            env.google_drive.enable();
         });
 
         it.skip('WHEN Dropbox is not available THEN save to Dropbox button is not visible', function() {
 
         });
 
-        // DEBT: copy from open.js:18
+        // DEBT: copy from open.js:18 (+)
         it('WHEN local file is loaded THEN auto-save is not available AND auto-reload is available', function(done) {
             // GIVEN
             env.browser.has_local_file({
@@ -100,7 +122,9 @@ define(function(require) {
             });
         });
         
-        it.skip('WHEN a file is saved to Dropbox AND empty content is created THEN synchronisation and auto-save are not available')
+        it.skip('WHEN a file is saved to Dropbox AND empty content is created THEN synchronisation and auto-save are not available', function() {
+
+        });
 
         describe('After loading from Dropbox', function() {
 

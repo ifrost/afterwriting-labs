@@ -30,7 +30,9 @@ define(function(require) {
 
         $save_fountain_dropbox: '[action=save-dropbox-fountain]',
 
-        $save_fountain_google_drive: '[action=save-gd-fountain]',
+        $save_fountain_google_drive: function(plugin) {
+            return '[plugin=' + plugin + '] [action=save-gd-fountain]';
+        },
 
         $save_pdf_locally: '[action=save-pdf]',
 
