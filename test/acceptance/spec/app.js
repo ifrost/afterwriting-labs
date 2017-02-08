@@ -49,7 +49,7 @@ define(function (require) {
             env.assert.content_is_not_expanded();
         });
 
-        it('WHEN close content is clicked THEN content is hidden', function() {
+        it('WHEN close content is clicked THEN no plugin is displayed', function() {
             // GIVEN
             env.user.open_plugin('info');
 
@@ -90,8 +90,15 @@ define(function (require) {
             env.assert.active_plugin_is('info');
         });
 
-        it.skip('GIVEN a plugin is opened WHEN background is clicked THEN content is hidden', function() {
-            
+        it('GIVEN a plugin is opened WHEN background is clicked THEN no plugin is displayed', function() {
+            // GIVEN
+            env.user.open_plugin('info');
+
+            // WHEN
+            env.user.back_to_main();
+
+            // THEN
+            env.assert.active_plugin_is(undefined);
         });
         
     });
