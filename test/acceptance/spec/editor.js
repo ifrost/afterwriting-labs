@@ -56,8 +56,16 @@ define(function(require) {
             env.assert.auto_save_visible(false);
         });
 
-        it.skip('WHEN a sample file is opened THEN auto-reload AND auto-save are not available', function() {
+        it.only('WHEN a sample script is opened THEN auto-reload AND auto-save are not available', function() {
+            // WHEN
+            env.user.open_plugin('open');
+            env.user.open_sample('brick_and_steel');
+            env.user.open_plugin('editor');
 
+            // THEN
+            env.assert.auto_reload_is_visible(false);
+            // AND
+            env.assert.auto_save_visible(false);
         });
 
         it.skip('WHEN GoogleDrive is not available THEN save to GoogleDrive button is not visible', function() {
@@ -69,7 +77,7 @@ define(function(require) {
         });
 
         // DEBT: copy from open.js:18
-        it.only('WHEN local file is loaded THEN auto-save is not available AND auto-reload is available', function(done) {
+        it('WHEN local file is loaded THEN auto-save is not available AND auto-reload is available', function(done) {
             // GIVEN
             env.browser.has_local_file({
                 name: 'test.fountain',
