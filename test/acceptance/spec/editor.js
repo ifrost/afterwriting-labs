@@ -24,7 +24,7 @@ define(function(require) {
             env.assert.select_file_name_popup_is_visible();
         });
 
-        it.only('WHEN save fountain to Dropbox button is clicked THEN save fountain to Dropbox dialog is displayed', function() {
+        it('WHEN save fountain to Dropbox button is clicked THEN save fountain to Dropbox dialog is displayed', function() {
             // WHEN
             env.user.save_fountain_dropbox();
             env.dropbox.auth_dropbox();
