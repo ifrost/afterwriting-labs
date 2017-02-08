@@ -71,8 +71,12 @@ define(function (require) {
             env.assert.active_plugin_is('open');
         });
 
-        it.skip('WHEN a main menu item is selected THEN selected plugin is displayed', function(){
+        it.only('WHEN a main menu item is selected THEN selected plugin is displayed', function(){
+            // WHEN
+            env.user.open_plugin('open');
 
+            // THEN
+            env.assert.active_plugin_is('open');
         });
 
         it.skip('WHEN a selected plugin is re-selected from the top menu THEN the same plugin is shown', function() {
