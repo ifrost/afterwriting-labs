@@ -61,6 +61,10 @@ define(function(require) {
                 window_size = this.dom.window_size();
 
             chai.assert.notEqual(content_size.width, window_size.width);
+        },
+
+        select_file_name_popup_is_visible: function() {
+            chai.assert.lengthOf(this.dom.popup_with_message('Select file name'), 1);
         }
 
     });

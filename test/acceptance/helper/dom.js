@@ -49,6 +49,10 @@ define(function(require) {
         $night_mode: 'input[data-id="night_mode"]',
 
         $close_icon: '.close-content',
+        
+        popup_with_message: function(message) {
+            return $('.jqimessage p:contains(' + message + ')');
+        },
 
         $info_icon: function(section_name) {
             return '.info-icon[section="' + section_name + '"]';
