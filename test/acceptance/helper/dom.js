@@ -53,6 +53,10 @@ define(function(require) {
         popup_with_message: function(message) {
             return $('.jqimessage p:contains(' + message + ')');
         },
+        
+        file_list_popup_with_node: function(name) {
+            return $('.jstree a:contains(' + name + ')');
+        },
 
         $info_icon: function(section_name) {
             return '.info-icon[section="' + section_name + '"]';

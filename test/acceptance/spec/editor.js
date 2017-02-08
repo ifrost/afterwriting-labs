@@ -24,8 +24,14 @@ define(function(require) {
             env.assert.select_file_name_popup_is_visible();
         });
 
-        it.skip('WHEN save fountain to Dropbox button is clicked THEN save fountain to Dropbox dialog is displayed', function() {
+        it.only('WHEN save fountain to Dropbox button is clicked THEN save fountain to Dropbox dialog is displayed', function() {
+            // WHEN
+            env.user.save_fountain_dropbox();
+            env.dropbox.auth_dropbox();
+            env.browser.tick(3000);
 
+            // THEN
+            env.assert.dropbox_popup_visible();
         });
 
         it.skip('WHEN save fountain to GoogleDrive button is clicked THEN save fountain to GoogleDrive dialog is displayed', function() {
