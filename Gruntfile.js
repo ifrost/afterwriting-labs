@@ -279,6 +279,15 @@ module.exports = function(grunt) {
             }
         },
 
+        express: {
+            server: {
+                options: {
+                    script: 'server.js',
+                    node_env: 'test'
+                }
+            }
+        },
+
         mocha: {
             coverage: {
                 src: ['test/coverage.html'],
@@ -302,8 +311,8 @@ module.exports = function(grunt) {
                 }
             },
             acceptance: {
-                src: ['acceptance.html'],
                 options: {
+                    urls: ['http://localhost:8001/acceptance.html'],
                     reporter: 'Spec',
                     log: true,
                     logErrors: true,
@@ -327,6 +336,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-express-server');
     grunt.loadNpmTasks('grunt-git');
     grunt.loadNpmTasks('grunt-bumpup');
     grunt.loadNpmTasks('grunt-text-replace');
@@ -337,7 +347,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('utest', ['handlebars:test', 'template:test', 'mocha:test']);
     grunt.registerTask('itest', ['handlebars:test', 'template:integration', 'mocha:integration']);
-    grunt.registerTask('atest', ['handlebars:test', 'template:acceptance', 'mocha:acceptance']);
+    grunt.registerTask('atest', ['express:server', 'handlebars:test', 'template:acceptance', 'mocha:acceptance', 'express:server:stop']);
     grunt.registerTask('test', ['handlebars:test', 'template:test', 'template:integration', 'template:acceptance', 'mocha:test', 'mocha:integration', 'mocha:acceptance']);
     grunt.registerTask('coverage', ['template:coverage', 'shell:istanbul_instrument', 'mocha:coverage']);
     grunt.registerTask('doc', ['shell:jsdoc']);
