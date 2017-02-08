@@ -73,6 +73,20 @@ define(function(require) {
         
         popup_tree_node_visible: function(name) {
             chai.assert.lengthOf(this.dom.file_list_popup_with_node(name), 1);
+        },
+        
+        auto_reload_is_visible: function(value) {
+            if (arguments.length === 0) {
+                value = true;
+            }
+            chai.assert.strictEqual(this.dom.is_visible(this.dom.$sync_button), value);
+        },
+        
+        auto_save_visible: function(value) {
+            if (arguments.length === 0) {
+                value = true;
+            }
+            chai.assert.strictEqual(this.dom.is_visible(this.dom.$auto_save_button), value);
         }
 
     });

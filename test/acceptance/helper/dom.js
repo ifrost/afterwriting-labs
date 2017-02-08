@@ -107,6 +107,10 @@ define(function(require) {
         jstree_visible: function() {
             return !!$('.jstree-anchor').attr('id');
         },
+
+        is_visible: function(selector) {
+            return $(selector).is(':visible');
+        },
         
         editor_content: function() {
             return $('.CodeMirror').get(0).CodeMirror.getValue();

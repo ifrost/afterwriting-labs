@@ -8,8 +8,6 @@ define(function(require) {
 
         beforeEach(function() {
             env = Env.create();
-
-            env.user.open_sample('brick_and_steel');
         });
 
         afterEach(function() {
@@ -17,6 +15,10 @@ define(function(require) {
         });
 
         it('WHEN save fountain locally is clicked THEN save fountain dialog is displayed', function() {
+            // GIVEN
+            env.user.open_sample('brick_and_steel');
+            env.user.open_plugin('editor');
+
             // WHEN
             env.user.save_fountain_locally();
 
@@ -25,6 +27,10 @@ define(function(require) {
         });
 
         it('WHEN save fountain to Dropbox button is clicked THEN save fountain to Dropbox dialog is displayed', function() {
+            // GIVEN
+            env.user.open_sample('brick_and_steel');
+            env.user.open_plugin('editor');
+
             // WHEN
             env.user.save_fountain_dropbox();
             env.dropbox.auth_dropbox();
@@ -38,11 +44,18 @@ define(function(require) {
 
         });
 
-        it.skip('WHEN a new file is opened THEN synchronisation and auto-save are not available', function() {
+        it('WHEN a new content is created THEN auto-realod AND auto-save are not available', function() {
+            // WHEN
+            env.user.open_plugin('open');
+            env.user.create_new();
+            env.user.open_plugin('editor');
 
+            // THEN
+            env.assert.auto_reload_is_visible(false);
+            env.assert.auto_save_visible(false);
         });
 
-        it.skip('WHEN a sample file is opened THEN synchronisation and auto-save are not available', function() {
+        it.skip('WHEN a sample file is opened THEN auto-realod and auto-save are not available', function() {
 
         });
 
@@ -54,11 +67,11 @@ define(function(require) {
 
         });
 
-        it.skip('WHEN local file is loaded THEN auto-save is not available AND synchronisation is available', function() {
+        it.skip('WHEN local file is loaded THEN auto-save is not available AND auto-reload is available', function() {
 
         });
         
-        it.skip('WHEN a file is saved to Dropbox AND empty content is created THEN synchronisation and auto-save are notavailable')
+        it.skip('WHEN a file is saved to Dropbox AND empty content is created THEN synchronisation and auto-save are not available')
 
         describe('After loading from Dropbox', function() {
 
