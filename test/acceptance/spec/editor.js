@@ -14,7 +14,7 @@ define(function(require) {
             env.destroy();
         });
 
-        it.skip('WHEN save fountain locally is clicked THEN save fountain dialog is displayed', function() {
+        it('WHEN save fountain locally is clicked THEN save fountain dialog is displayed', function() {
             // GIVEN
             env.user.open_sample('brick_and_steel');
             env.user.open_plugin('editor');
@@ -26,7 +26,7 @@ define(function(require) {
             env.assert.select_file_name_popup_is_visible();
         });
 
-        it.skip('WHEN save fountain to Dropbox button is clicked THEN save fountain to Dropbox dialog is displayed', function() {
+        it('WHEN save fountain to Dropbox button is clicked THEN save fountain to Dropbox dialog is displayed', function() {
             // GIVEN
             env.user.open_sample('brick_and_steel');
             env.user.open_plugin('editor');

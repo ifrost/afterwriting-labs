@@ -79,6 +79,7 @@ define(function(require) {
 
         updateTools: function() {
             if (this.section.tools) {
+                this.section.tools.section = this.section;
                 this.toolsParent.add(this.section.tools);
             }
         },
