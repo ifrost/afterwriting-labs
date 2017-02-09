@@ -40,8 +40,18 @@ define(function(require) {
             env.assert.dropbox_popup_visible();
         });
 
-        it.skip('WHEN save fountain to GoogleDrive button is clicked THEN save fountain to GoogleDrive dialog is displayed', function() {
+        it('WHEN save fountain to GoogleDrive button is clicked THEN save fountain to GoogleDrive dialog is displayed', function() {
+            // GIVEN
+            env.user.open_sample('brick_and_steel');
+            env.user.open_plugin('editor');
 
+            // WHEN
+            env.user.save_fountain_google_drive('editor');
+            env.google_drive.auth_google_drive();
+            env.browser.tick(3000);
+
+            // THEN
+            env.assert.google_drive_popup_visible();
         });
 
         it('WHEN a new content is created THEN auto-reload AND auto-save are not available', function() {

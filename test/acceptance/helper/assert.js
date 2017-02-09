@@ -67,9 +67,13 @@ define(function(require) {
         select_file_name_popup_is_visible: function() {
             chai.assert.lengthOf(this.dom.popup_with_message('Select file name'), 1);
         },
-        
+
         dropbox_popup_visible: function() {
             return this.popup_tree_node_visible('Dropbox');
+        },
+
+        google_drive_popup_visible: function() {
+            return this.popup_tree_node_visible('My Drive');
         },
         
         popup_tree_node_visible: function(name) {

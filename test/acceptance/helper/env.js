@@ -7,7 +7,7 @@ define(function(require) {
         Browser = require('acceptance/helper/browser'),
         Proxy = require('acceptance/helper/proxy'),
         FakeGoogleAnalytics = require('acceptance/helper/server/fake-ga'),
-        FakeGoogleDrive = require('acceptance/helper/server/fake-googledrive'),
+        FakeGoogleDrive = require('acceptance/helper/server/fake-google-drive'),
         FakeDropBox = require('acceptance/helper/server/fake-dropbox');
 
     /**
