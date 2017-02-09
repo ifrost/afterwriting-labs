@@ -5,9 +5,9 @@ define(function(require) {
         OpenViewPresenter = require('plugin/io/view/open-view-presenter'),
         $ = require('jquery'),
         SectionViewMixin = require('theme/aw-bubble/view/section-view-mixin'),
-        HandlebarComponent = require('utils/handlebar-component');
+        BaseComponent = require('core/view/base-component');
     
-    return HandlebarComponent.extend([SectionViewMixin], {
+    return BaseComponent.extend([SectionViewMixin], {
 
         $meta: {
             presenter: OpenViewPresenter
@@ -21,8 +21,7 @@ define(function(require) {
 
         displayOpenFromGoogleDrive: false,
 
-        init: function() {
-            HandlebarComponent.init.call(this);
+        addBindings: function() {
             Protoplast.utils.bind(this, {
                 lastUsed: this._updateLastUsedInfo,
                 displayOpenFromDropbox: this._updateOpenFromDropboxVisibility,
@@ -41,10 +40,9 @@ define(function(require) {
                 self.dispatch('open-sample', name);
             });
 
-            // DEBT: make sure plugin's buttons are clicked (other may match the same selector) (+)
-            $('a[open-action="last"]').get(0).onclick = self.dispatch.bind(this, 'open-last-used');
-            $('a[open-action="dropbox"]').get(0).onclick = self.dispatch.bind(this, 'open-from-dropbox');
-            $('a[open-action="googledrive"]').get(0).onclick = self.dispatch.bind(this, 'open-from-google-drive');
+            this.onClick('a[open-action="last"]', self.dispatch.bind(this, 'open-last-used'));
+            this.onClick('a[open-action="dropbox"]', self.dispatch.bind(this, 'open-from-dropbox'));
+            this.onClick('a[open-action="googledrive"]', self.dispatch.bind(this, 'open-from-google-drive'));
 
             this._resetFileInput();
 
@@ -54,7 +52,7 @@ define(function(require) {
                 this._resetFileInput();
             }.bind(this));
 
-            $('a[open-action="open"]').click(function() {
+            this.onClick('a[open-action="open"]', function() {
                 this.dispatch('open-file-dialog');
                 $("#open-file").click();
             }.bind(this));

@@ -3,6 +3,9 @@ define(function(require) {
     var Handlebars = require('handlebars'),
         Protoplast = require('protoplast');
 
+    /**
+     * @deprecated Use BaseComponent
+     */
     var HandlebarComponent = Protoplast.Component.extend({
         
         hbs: null,
