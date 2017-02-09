@@ -224,8 +224,11 @@ define(function(require) {
                 env.assert.event_tracked('feature', 'save-pdf-dropbox');
             });
 
-            it.skip('WHEN a fountain file is saved to GoogleDrive THEN feature/save-fountain-googledrive event is tracked', function() {
+            it('WHEN a fountain file is saved to GoogleDrive THEN feature/save-fountain-googledrive event is tracked', function() {
+                // WHEN
                 env.user.save_fountain_google_drive('save');
+
+                // THEN
                 env.assert.event_tracked('feature', 'save-fountain-googledrive');
             });
 
