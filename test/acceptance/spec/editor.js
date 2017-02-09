@@ -130,12 +130,8 @@ define(function(require) {
                 done();
             });
         });
-        
-        it.skip('WHEN a file is saved to Dropbox AND empty content is created THEN synchronisation and auto-save are not available', function() {
 
-        });
-
-        describe('After loading from Dropbox', function() {
+        describe('WHEN a file is loaded from Dropbox', function() {
 
             beforeEach(function(done) {
 
@@ -159,10 +155,26 @@ define(function(require) {
                 });
             });
 
-            describe('WHEN auto-save is enabled', function() {
+            it('THEN auto-reload and auto-save are available', function() {
+               // THEN
+                env.assert.auto_reload_is_visible(true);
+                env.assert.auto_save_visible(true);
+            });
+
+            it('AND empty content is created THEN auto-reload and auto-save are not available', function() {
+                // AND
+                env.user.open_plugin('open');
+                env.user.create_new();
+
+                // THEN
+                env.assert.auto_reload_is_visible(false);
+                env.assert.auto_save_visible(false);
+            });
+
+            describe('AND auto-save is enabled', function() {
 
                 beforeEach(function() {
-                    // WHEN
+                    // AND
                     env.assert.dropbox_saved(0);
                     env.user.turn_auto_save_on();
                 });
