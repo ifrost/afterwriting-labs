@@ -43,7 +43,7 @@ define(function(require) {
                 env.user.open_plugin_from_toolbar('info');
 
                 // THEN
-                env.assert.event_tracked_n_times(2, 'navigation', 'info', 'toolbar');
+                env.assert.event_tracked_n_times(1, 'navigation', 'info', 'toolbar');
             });
 
             it('GIVEN info plugin is displayed WHEN switch to open is clicked THEN navigation/open/switcher event is tracked', function() {
