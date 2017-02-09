@@ -21,9 +21,13 @@ define(function(require) {
 
         displayOpenFromGoogleDrive: false,
 
+        $create: function() {
+            this.$lastUsed.hide();
+        },
+
         addBindings: function() {
             Protoplast.utils.bind(this, {
-                lastUsed: this._updateLastUsedInfo,
+                lastUsedInfo: this._updateLastUsedInfo,
                 displayOpenFromDropbox: this._updateOpenFromDropboxVisibility,
                 displayOpenFromGoogleDrive: this._updateOpenFromGoogleDriveVisibility
             });
@@ -87,12 +91,12 @@ define(function(require) {
 
         _updateLastUsedInfo: function() {
             if (this.lastUsedInfo) {
-                this.$lastUsed.style.display = 'block';
-                this.$lastUsedTitle.innerHTML = this.lastUsedInfo.title;
-                this.$lastUsedDate.innerHTML = this.lastUsedInfo.date;
+                this.$lastUsed.show();
+                this.$lastUsedTitle.text(this.lastUsedInfo.title);
+                this.$lastUsedDate.text(this.lastUsedInfo.date);
             }
             else {
-                this.$lastUsed.style.display = 'none';
+                this.$lastUsed.hide();
             }
         }
         

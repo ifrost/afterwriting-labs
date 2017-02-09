@@ -113,6 +113,14 @@ define(function(require) {
                 value = true;
             }
             chai.assert.strictEqual(this.dom.is_visible(this.dom.$open_googledrive), value);
+        },
+        
+        last_used_is_visible: function(value) {
+            chai.assert.strictEqual(this.dom.is_visible(this.dom.$open_last_used), value);
+        },
+        
+        last_used_title: function(title) {
+            chai.assert.strictEqual(this.dom.open_last_used_title(), title)
         }
 
     });

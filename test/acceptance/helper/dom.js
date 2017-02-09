@@ -26,6 +26,10 @@ define(function(require) {
 
         $open_last_used: '[open-action=last]',
 
+        open_last_used_title: function() {
+            return $(this.$open_last_used).text();
+        },
+        
         $save_fountain_locally: function(plugin) {
             return '[plugin=' + plugin + '] [action=save-fountain]';
         },

@@ -123,6 +123,41 @@ define(function(require) {
 
             env.google_drive.enable();
         });
+
+        it('GIVEN fresh app WHEN open plugin is opened THEN last used content link is not displayed', function() {
+            // GIVEN
+            env.user.open_plugin('open');
+
+            // THEN
+            env.assert.last_used_is_visible(false);
+        });
+
+        it('GIVEN content is set WHEN app is reloaded THEN last used content link is displayed', function() {
+            // GIVEN
+            env.user.create_new_script('Title: Test Script');
+
+            // WHEN
+            env.refresh();
+
+            // THEN
+            env.user.open_plugin('open');
+            env.assert.last_used_is_visible(true);
+            env.assert.last_used_title('Test Script');
+        });
+
+        it('GIVEN last content link is visible WHEN last opened is clicked THEN editor contains last used content', function() {
+            // GIVEN
+            env.user.create_new_script('Title: Test Script');
+            env.refresh();
+
+            // WHEN
+            env.user.open_plugin('open');
+            env.user.open_last_used();
+            env.user.open_plugin('editor');
+
+            // THEN
+            env.assert.editor_content('Title: Test Script');
+        });
         
     });
 

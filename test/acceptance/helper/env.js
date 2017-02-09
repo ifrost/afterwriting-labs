@@ -46,6 +46,12 @@ define(function(require) {
             this.browser.tick(5000);
         },
 
+        refresh: function() {
+            this.Bootstrap.destroy();
+            this.Bootstrap.init(this.Config);
+            this.browser.tick(5000);
+        },
+
         destroy: function() {
             this.user.back_to_main();
 
