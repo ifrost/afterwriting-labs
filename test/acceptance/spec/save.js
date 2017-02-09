@@ -42,6 +42,14 @@ define(function (require) {
             
         });
 
+        it.skip('GIVEN Dropbox is not available THEN Dropbox links are not visible', function(){
+
+        });
+
+        it.skip('GIVEN GoogleDrive is not available THEN GoogleDrive links are not visible', function(){
+
+        });
+
     });
 
 });

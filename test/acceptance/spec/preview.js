@@ -34,6 +34,13 @@ define(function (require) {
 
         });
 
+        it.skip('GIVEN GoogleDrive is not available THEN save pdf to GoogleDrive is not displayed', function() {
+
+        });
+
+        it.skip('GIVEN Dropbox is not available THEN save pdf to Dropbox is not displayed', function() {
+
+        });
 
     });
 
