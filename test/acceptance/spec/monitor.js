@@ -232,8 +232,11 @@ define(function(require) {
                 env.assert.event_tracked('feature', 'save-fountain-googledrive');
             });
 
-            it.skip('WHEN a pdf file is saved to GoogleDrive THEN feature/save-pdf-googledrive event is tracked', function() {
+            it('WHEN a pdf file is saved to GoogleDrive THEN feature/save-pdf-googledrive event is tracked', function() {
+                // WHEN
                 env.user.save_pdf_google_drive('save');
+
+                // THEN
                 env.assert.event_tracked('feature', 'save-pdf-googledrive');
             });
         });
