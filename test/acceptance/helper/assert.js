@@ -88,10 +88,19 @@ define(function(require) {
             }
             chai.assert.strictEqual(this.dom.is_visible(this.dom.$auto_save_button), value);
         },
-        
+
         save_to_google_drive_visible: function(plugin, format, value) {
             var method = '$save_' + format + '_google_drive';
-            
+
+            if (arguments.length === 0) {
+                value = true;
+            }
+            chai.assert.strictEqual(this.dom.is_visible(this.dom[method](plugin)), value);
+        },
+
+        save_to_dropbox_visible: function(plugin, format, value) {
+            var method = '$save_' + format + '_dropbox';
+
             if (arguments.length === 0) {
                 value = true;
             }

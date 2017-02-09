@@ -1,6 +1,8 @@
 define(function(require) {
 
-    var Protoplast = require('protoplast');
+    var Protoplast = require('protoplast'),
+        db = require('utils/dropbox'),
+        gd = require('utils/googledrive');
 
     var IoModel = Protoplast.Model.extend({
 
@@ -47,13 +49,13 @@ define(function(require) {
 
         isDropboxAvailable: {
             get: function () {
-                return window.location.protocol !== 'file:';
+                return db.is_available();
             }
         },
 
         isGoogleDriveAvailable: {
             get: function () {
-                return window.gapi && window.location.protocol !== 'file:';
+                return gd.is_available();
             }
         }
     });

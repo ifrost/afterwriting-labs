@@ -78,28 +78,28 @@ define(function(require) {
             this.click(this.dom.$open_last_used);
         },
         
-        save_fountain_locally: function() {
-            this.click(this.dom.$save_fountain_locally);
+        save_fountain_locally: function(plugin) {
+            this.click(this.dom.$save_fountain_locally(plugin));
         },
         
-        save_fountain_dropbox: function() {
-            this.click(this.dom.$save_fountain_dropbox);
+        save_fountain_dropbox: function(plugin) {
+            this.click(this.dom.$save_fountain_dropbox(plugin));
         },
         
         save_fountain_google_drive: function(plugin) {
             this.click(this.dom.$save_fountain_google_drive(plugin));
         },
         
-        save_pdf_locally: function() {
-            this.click(this.dom.$save_pdf_locally);
+        save_pdf_locally: function(plugin) {
+            this.click(this.dom.$save_pdf_locally(plugin));
         },
         
-        save_pdf_dropbox: function() {
-            this.click(this.dom.$save_pdf_dropbox);
+        save_pdf_dropbox: function(plugin) {
+            this.click(this.dom.$save_pdf_dropbox(plugin));
         },
         
-        save_pdf_google_drive: function() {
-            this.click(this.dom.$save_pdf_google_drive);
+        save_pdf_google_drive: function(plugin) {
+            this.click(this.dom.$save_pdf_google_drive(plugin));
         },
 
         close_popup: function() {

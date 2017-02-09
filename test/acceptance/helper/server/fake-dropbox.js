@@ -1,6 +1,7 @@
 define(function(require) {
 
-    var FakeServer = require('acceptance/helper/server/fake-server');
+    var FakeServer = require('acceptance/helper/server/fake-server'),
+        db = require('utils/dropbox');
 
     /**
      * Mock the Dropbox API
@@ -17,6 +18,14 @@ define(function(require) {
 
         $create: function() {
             this.saved_count = 0;
+        },
+        
+        enable: function() {
+            db.initialised = true;
+        },
+        
+        disable: function() {
+            db.initialised = false;
         },
 
         setup: function(proxy) {

@@ -26,19 +26,29 @@ define(function(require) {
 
         $open_last_used: '[open-action=last]',
 
-        $save_fountain_locally: '[action=save-fountain]',
+        $save_fountain_locally: function(plugin) {
+            return '[plugin=' + plugin + '] [action=save-fountain]';
+        },
 
-        $save_fountain_dropbox: '[action=save-dropbox-fountain]',
+        $save_fountain_dropbox: function(plugin) {
+            return '[plugin=' + plugin + '] [action=save-dropbox-fountain]';
+        },
 
         $save_fountain_google_drive: function(plugin) {
             return '[plugin=' + plugin + '] [action=save-gd-fountain]';
         },
 
-        $save_pdf_locally: '[action=save-pdf]',
+        $save_pdf_locally: function(plugin) {
+            return '[plugin=' + plugin + '] [action=save-pdf]';
+        },
 
-        $save_pdf_dropbox: '[action=save-dropbox-pdf]',
+        $save_pdf_dropbox: function(plugin) {
+            return '[plugin=' + plugin + '] [action=save-dropbox-pdf]';
+        },
 
-        $save_pdf_google_drive: '[action=save-gd-pdf]',
+        $save_pdf_google_drive: function(plugin) {
+            return '[plugin=' + plugin + '] [action=save-gd-pdf]'
+        },
 
         $close_popup: '[name=jqi_state0_buttonCancel]',
 

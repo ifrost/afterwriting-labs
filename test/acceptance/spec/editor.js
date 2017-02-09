@@ -14,25 +14,25 @@ define(function(require) {
             env.destroy();
         });
 
-        it('WHEN save fountain locally is clicked THEN save fountain dialog is displayed', function() {
+        it.skip('WHEN save fountain locally is clicked THEN save fountain dialog is displayed', function() {
             // GIVEN
             env.user.open_sample('brick_and_steel');
             env.user.open_plugin('editor');
 
             // WHEN
-            env.user.save_fountain_locally();
+            env.user.save_fountain_locally('editor');
 
             // THEN
             env.assert.select_file_name_popup_is_visible();
         });
 
-        it('WHEN save fountain to Dropbox button is clicked THEN save fountain to Dropbox dialog is displayed', function() {
+        it.skip('WHEN save fountain to Dropbox button is clicked THEN save fountain to Dropbox dialog is displayed', function() {
             // GIVEN
             env.user.open_sample('brick_and_steel');
             env.user.open_plugin('editor');
 
             // WHEN
-            env.user.save_fountain_dropbox();
+            env.user.save_fountain_dropbox('editor');
             env.dropbox.auth_dropbox();
             env.browser.tick(3000);
 
@@ -95,7 +95,16 @@ define(function(require) {
         });
 
         it.skip('WHEN Dropbox is not available THEN save to Dropbox button is not visible', function() {
+            // GIVEN
+            env.google_drive.disable();
+            env.user.open_plugin('open');
+            env.user.open_sample('brick_and_steel');
+            env.user.open_plugin('editor');
 
+            // THEN
+            env.assert.save_to_dropbox_visible('editor', 'fountain', false);
+
+            env.google_drive.enable();
         });
 
         // DEBT: copy from open.js:18 (+)

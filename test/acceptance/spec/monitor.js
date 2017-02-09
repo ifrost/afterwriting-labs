@@ -194,7 +194,7 @@ define(function(require) {
 
             it('WHEN a fountain file is saved to local disk THEN feature/save-fountain event is tracked', function() {
                 // WHEN
-                env.user.save_fountain_locally();
+                env.user.save_fountain_locally('save');
 
                 // THEN
                 env.assert.event_tracked('feature', 'save-fountain');
@@ -202,7 +202,7 @@ define(function(require) {
 
             it('WHEN a pdf file is saved to local disk THEN feature/save-pdf event is tracked', function() {
                 // WHEN
-                env.user.save_pdf_locally();
+                env.user.save_pdf_locally('save');
 
                 // THEN
                 env.assert.event_tracked('feature', 'save-pdf');
@@ -210,7 +210,7 @@ define(function(require) {
 
             it('WHEN a fountain file is saved to Dropbox THEN feature/save-fountain-dropbox event is tracked', function() {
                 // WHEN
-                env.user.save_fountain_dropbox();
+                env.user.save_fountain_dropbox('save');
 
                 // THEN
                 env.assert.event_tracked('feature', 'save-fountain-dropbox');
@@ -218,7 +218,7 @@ define(function(require) {
 
             it('WHEN a pdf file is saved to Dropbox THEN feature/save-pdf-dropbox event is tracked', function() {
                 // WHEN
-                env.user.save_pdf_dropbox();
+                env.user.save_pdf_dropbox('save');
 
                 // THEN
                 env.assert.event_tracked('feature', 'save-pdf-dropbox');
@@ -230,7 +230,7 @@ define(function(require) {
             });
 
             it.skip('WHEN a pdf file is saved to GoogleDrive THEN feature/save-pdf-googledrive event is tracked', function() {
-                env.user.save_pdf_google_drive();
+                env.user.save_pdf_google_drive('save');
                 env.assert.event_tracked('feature', 'save-pdf-googledrive');
             });
         });

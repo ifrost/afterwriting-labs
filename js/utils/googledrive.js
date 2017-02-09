@@ -19,6 +19,10 @@ define(function(require) {
         }
     };
 
+    module.is_available = function() {
+        return !!window.gapi && window.location.protocol !== 'file:';
+    };
+
     /**
      * Authorize and run the callback after authorization
      */
