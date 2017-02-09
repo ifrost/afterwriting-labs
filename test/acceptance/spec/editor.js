@@ -81,7 +81,7 @@ define(function(require) {
             env.google_drive.enable();
         });
 
-        it.skip('GIVEN GoogleDrive is not available THEN save to GoogleDrive button is not visible', function() {
+        it('GIVEN GoogleDrive is not available THEN save to GoogleDrive button is not visible', function() {
             // GIVEN
             env.google_drive.disable();
             env.user.open_plugin('open');
@@ -94,9 +94,9 @@ define(function(require) {
             env.google_drive.enable();
         });
 
-        it.skip('WHEN Dropbox is not available THEN save to Dropbox button is not visible', function() {
+        it('WHEN Dropbox is not available THEN save to Dropbox button is not visible', function() {
             // GIVEN
-            env.google_drive.disable();
+            env.dropbox.disable();
             env.user.open_plugin('open');
             env.user.open_sample('brick_and_steel');
             env.user.open_plugin('editor');
@@ -104,7 +104,7 @@ define(function(require) {
             // THEN
             env.assert.save_to_dropbox_visible('editor', 'fountain', false);
 
-            env.google_drive.enable();
+            env.dropbox.enable();
         });
 
         // DEBT: copy from open.js:18 (+)
