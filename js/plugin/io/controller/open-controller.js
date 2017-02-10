@@ -118,6 +118,7 @@ define(function(require) {
                 var value = this.result;
                 self._setScript(value);
                 local.local_file = selectedFile;
+                self.pub('plugin/io/opened-local-file', self.scriptModel.format);
             };
             fileReader.readAsText(selectedFile);
         },

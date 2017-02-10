@@ -145,9 +145,16 @@ define(function(require) {
                 env.assert.event_tracked('feature', 'open-file-dialog');
             });
 
-            // TODO: take steps from open.js
-            it.skip('WHEN a local file is loaded THEN feature/open-file-opened event is tracked AND format is passed', function() {
-                env.assert.event_tracked('feature', 'open-file-opened', 'format');
+            it('WHEN a local file is loaded THEN feature/open-file-opened event is tracked AND format is passed', function(done) {
+                // WHEN
+                env.scenarios.load_local_file({
+                    name: 'test.fountain',
+                    content: 'test'
+                }, function() {
+                    // THEN
+                    env.assert.event_tracked('feature', 'open-file-opened', 'fountain');
+                    done();
+                });
             });
 
             it('WHEN a file is opened from Dropbox THEN feature/open-dropbox event is tracked AND format is passed', function(done) {

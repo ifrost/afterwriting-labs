@@ -17,7 +17,10 @@ define(function(require) {
             env.user.open_plugin('open');
 
             env.user.open_local_file(file.name);
-            env.browser.read_files(callback);
+            env.browser.read_files(function() {
+                env.browser.tick(3000);
+                callback();
+            });
         },
         
         load_dropbox_file: function(file, callback) {

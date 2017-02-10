@@ -99,6 +99,13 @@ define(function(require) {
             }
         },
 
+        openLocalFile: {
+            sub: 'plugin/io/opened-local-file',
+            value: function(format) {
+                this.monitor.track('feature', 'open-file-opened', format);
+            }
+        },
+
         openFromDropbox: {
             sub: 'plugin/io/opened-from-dropbox',
             value: function(format) {
