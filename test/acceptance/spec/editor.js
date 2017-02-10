@@ -2,7 +2,7 @@ define(function(require) {
 
     var Env = require('acceptance/helper/env');
 
-    describe.only('Editor', function() {
+    describe('Editor', function() {
 
         var env;
 
