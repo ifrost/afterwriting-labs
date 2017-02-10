@@ -2,7 +2,7 @@ define(function(require) {
 
     var Env = require('acceptance/helper/env');
 
-    describe('Editor', function() {
+    describe.only('Editor', function() {
 
         var env;
 
@@ -80,15 +80,12 @@ define(function(require) {
         
         it('GIVEN GoogleDrive is available THEN save to GoogleDrive button is visible', function() {
             // GIVEN
-            env.google_drive.disable();
             env.user.open_plugin('open');
             env.user.open_sample('brick_and_steel');
             env.user.open_plugin('editor');
 
             // THEN
             env.assert.save_to_google_drive_visible('editor', 'fountain', true);
-
-            env.google_drive.enable();
         });
 
         it('GIVEN GoogleDrive is not available THEN save to GoogleDrive button is not visible', function() {
@@ -104,7 +101,17 @@ define(function(require) {
             env.google_drive.enable();
         });
 
-        it('WHEN Dropbox is not available THEN save to Dropbox button is not visible', function() {
+        it('GIVEN Dropbox is available THEN save to Dropbox button is visible', function() {
+            // GIVEN
+            env.user.open_plugin('open');
+            env.user.open_sample('brick_and_steel');
+            env.user.open_plugin('editor');
+
+            // THEN
+            env.assert.save_to_dropbox_visible('editor', 'fountain', true);
+        });
+
+        it('GIVEN Dropbox is not available THEN save to Dropbox button is not visible', function() {
             // GIVEN
             env.dropbox.disable();
             env.user.open_plugin('open');
