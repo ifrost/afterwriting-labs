@@ -8,7 +8,8 @@ define(function(require) {
         Proxy = require('acceptance/helper/proxy'),
         FakeGoogleAnalytics = require('acceptance/helper/server/fake-ga'),
         FakeGoogleDrive = require('acceptance/helper/server/fake-google-drive'),
-        FakeDropBox = require('acceptance/helper/server/fake-dropbox');
+        FakeDropBox = require('acceptance/helper/server/fake-dropbox'),
+        Scenarios = require('acceptance/helper/scenarios');
 
     /**
      * Main test environment that aggregates all helpers
@@ -44,6 +45,8 @@ define(function(require) {
             this.Bootstrap.init(this.Config);
 
             this.browser.tick(5000);
+            
+            this.scenarios = Scenarios.create(this);
         },
 
         refresh: function() {

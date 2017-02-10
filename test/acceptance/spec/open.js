@@ -16,48 +16,42 @@ define(function(require) {
 
         it('WHEN a file is loaded from disk THEN editor value is set to its content', function(done) {
             // GIVEN
-            env.browser.has_local_file({
-                name: 'test.fountain',
-                content: 'test'
-            });
-            env.user.open_plugin('open');
-           
-            // WHEN
-            env.user.open_local_file('test.fountain');
-            env.browser.read_files(function() {
-                env.user.open_plugin('editor');
-                env.browser.tick(3000);
+            env.scenarios.load_local_file(
+                {
+                    name: 'test.fountain',
+                    content: 'test'
+                },
+                function() {
+                    env.user.open_plugin('editor');
 
-                // THEN
-                env.assert.editor_content('test');
-                done();
-            });
+                    // THEN
+                    env.assert.editor_content('test');
+
+                    done();
+                }
+            );
         });
 
         it('WHEN a FinalDraft file is loaded THEN editor is set to its converted content', function(done) {
             // WHEN
-            env.browser.has_local_file({
-                name: 'test.fountain',
-                content: '<?xml version="1.0" encoding="UTF-8"?><FinalDraft DocumentType="Script" Template="No" Version="1"><Content><Paragraph Type="Action"><Text>Action. Action.</Text></Paragraph></Content></FinalDraft>'
-            });
-            env.user.open_plugin('open');
+            env.scenarios.load_local_file({
+                    name: 'test.fountain',
+                    content: '<?xml version="1.0" encoding="UTF-8"?><FinalDraft DocumentType="Script" Template="No" Version="1"><Content><Paragraph Type="Action"><Text>Action. Action.</Text></Paragraph></Content></FinalDraft>'
+                },
+                function() {
+                    env.user.open_plugin('editor');
 
-            // WHEN
-            env.user.open_local_file('test.fountain');
-            env.browser.read_files(function() {
-                env.user.open_plugin('editor');
-                env.browser.tick(3000);
-
-                // THEN
-                env.assert.editor_content('\nAction. Action.\n');
-                done();
-            });
+                    // THEN
+                    env.assert.editor_content('\nAction. Action.\n');
+                    done();
+                }
+            );
         });
 
         it('WHEN open from Dropbox is clicked THEN list of files is displayed', function() {
             // GIVE
             env.user.open_plugin('open');
-            
+
             // WHEN
             env.user.open_from_dropbox();
             env.dropbox.auth_dropbox();
@@ -69,28 +63,13 @@ define(function(require) {
 
         it('WHEN a Dropbox file is loaded THEN editor is set to its content', function(done) {
             // GIVEN
-            this.timeout(10000);
-            env.dropbox.has_file({
+            env.scenarios.load_dropbox_file({
                 name: 'file.fountain',
                 content: 'test content'
-            });
-            env.user.open_plugin('open');
-            
-            // WHEN: open file list
-            env.user.open_from_dropbox();
-            env.dropbox.auth_dropbox();
-            env.browser.tick(3000);
-            // WHEN: select a file
-            env.user.select_file('file.fountain');
-            env.user.confirm_popup();
-
-            env.browser.read_files(function() {
-                env.browser.tick(3000);
-
+            }, function() {
                 // THEN: switch to editor
                 env.user.open_plugin('editor');
-                env.browser.tick(3000);
-
+            
                 // THEN
                 env.assert.editor_content('test content');
                 done();
@@ -158,7 +137,7 @@ define(function(require) {
             // THEN
             env.assert.editor_content('Title: Test Script');
         });
-        
+
     });
 
 });

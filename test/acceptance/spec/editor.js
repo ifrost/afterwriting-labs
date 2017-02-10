@@ -77,7 +77,7 @@ define(function(require) {
             // AND
             env.assert.auto_save_visible(false);
         });
-        
+
         it('GIVEN GoogleDrive is available THEN save to GoogleDrive button is visible', function() {
             // GIVEN
             env.user.open_plugin('open');
@@ -124,20 +124,13 @@ define(function(require) {
             env.dropbox.enable();
         });
 
-        // DEBT: copy from open.js:18 (+)
         it('WHEN local file is loaded THEN auto-save is not available AND auto-reload is available', function(done) {
             // GIVEN
-            env.browser.has_local_file({
+            env.scenarios.load_local_file({
                 name: 'test.fountain',
                 content: 'test'
-            });
-            env.user.open_plugin('open');
-
-            // WHEN
-            env.user.open_local_file('test.fountain');
-            env.browser.read_files(function() {
+            }, function() {
                 env.user.open_plugin('editor');
-                env.browser.tick(3000);
 
                 // THEN
                 env.assert.auto_reload_is_visible(true);
@@ -152,28 +145,17 @@ define(function(require) {
 
             beforeEach(function(done) {
 
-                env.dropbox.has_file({
+                env.scenarios.load_dropbox_file({
                     name: 'file.fountain',
                     content: 'test content'
-                });
-
-                env.user.open_plugin('open');
-                env.user.open_from_dropbox();
-                env.dropbox.auth_dropbox();
-                env.browser.tick(3000);
-                env.user.select_file('file.fountain');
-                env.user.confirm_popup();
-
-                env.browser.read_files(function() {
-                    env.browser.tick(3000);
+                }, function() {
                     env.user.open_plugin('editor');
-                    env.browser.tick(3000);
                     done();
                 });
             });
 
             it('THEN auto-reload and auto-save are available', function() {
-               // THEN
+                // THEN
                 env.assert.auto_reload_is_visible(true);
                 env.assert.auto_save_visible(true);
             });
@@ -215,7 +197,7 @@ define(function(require) {
                     // AND
                     env.user.set_editor_content('changed content');
                     env.browser.tick(5000);
-                    
+
                     // THEN
                     env.assert.dropbox_saved(2);
                     done();
@@ -229,7 +211,7 @@ define(function(require) {
                     // AND: content is set to the same value
                     env.user.set_editor_content('changed content');
                     env.browser.tick(5000);
-                    
+
                     // THEN
                     env.assert.dropbox_saved(2);
                     done();
@@ -242,7 +224,7 @@ define(function(require) {
                 beforeEach(function(done) {
                     // WHEN Synchronisation is enabled
                     env.user.turn_sync_on();
-                    
+
                     // AND content od sync file changes
                     env.dropbox.content_change('file.fountain', 'changed content');
                     env.browser.tick(10000);
@@ -261,11 +243,11 @@ define(function(require) {
                 it('AND synchronisation is disabled AND file content changes THEN editor content is not updated with the latest update', function(done) {
                     // AND: synchronisation is disabed
                     env.user.turn_sync_off();
-                    
+
                     // AND: file content changes
                     env.dropbox.content_change('file.fountain', 'override after sync');
                     env.browser.tick(10000);
-                    
+
                     // THEN 
                     env.assert.editor_content('changed content');
                     env.user.sync_keep_content();
@@ -281,10 +263,10 @@ define(function(require) {
 
                     // AND: sync disabled
                     env.user.turn_sync_off();
-                    
+
                     // AND: previous content is reloaded
                     env.user.sync_reload_content_before_sync();
-                    
+
                     // THEN
                     env.assert.editor_content('test content');
                     done();

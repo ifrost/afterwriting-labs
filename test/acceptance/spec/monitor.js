@@ -150,25 +150,12 @@ define(function(require) {
                 env.assert.event_tracked('feature', 'open-file-opened', 'format');
             });
 
-            // DEBT: code duplication with open.js
             it('WHEN a file is opened from Dropbox THEN feature/open-dropbox event is tracked AND format is passed', function(done) {
-                // GIVEN
-                env.dropbox.has_file({
+                // WHEN
+                env.scenarios.load_dropbox_file({
                     name: 'file.fountain',
                     content: 'test content'
-                });
-                env.user.open_plugin('open');
-
-                // WHEN
-                env.user.open_from_dropbox();
-                env.dropbox.auth_dropbox();
-                env.browser.tick(3000);
-                env.user.select_file('file.fountain');
-                env.user.confirm_popup();
-
-                env.browser.read_files(function() {
-                    env.browser.tick(3000);
-
+                }, function() {
                     // THEN
                     env.assert.event_tracked('feature', 'open-dropbox', 'fountain');
                     done();
