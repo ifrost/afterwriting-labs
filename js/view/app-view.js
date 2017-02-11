@@ -24,7 +24,6 @@ define(function(require) {
             Protoplast.Component.destroy.call(this);
             $.jstree.destroy();
             $.prompt.close();
-            $.prompt.close();
         }
         
     });

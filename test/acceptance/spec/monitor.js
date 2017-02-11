@@ -192,6 +192,7 @@ define(function(require) {
             beforeEach(function() {
                 env.user.open_plugin('open');
                 env.user.open_sample('brick_and_steel');
+                env.user.open_plugin('save');
             });
 
             it('WHEN a fountain file is saved to local disk THEN feature/save-fountain event is tracked', function() {
