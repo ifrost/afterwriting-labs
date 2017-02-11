@@ -3,8 +3,8 @@ define(function(require){
     var p = require('protoplast');
 
     /**
-     * Fake server allowing to create custom mappings for test requests, e.g.
-     * FaksServer.extend({
+     * Fake server allowing to create responses for test requests, e.g.
+     * FakeServer.extend({
      *      foo: {
      *          url: /regexp/,
      *          method: 'POST', // any method if not set
@@ -43,6 +43,8 @@ define(function(require){
          * @param callback
          */
         each_endpoint: function(callback) {
+            var content_type, method;
+            
             for (var func in this.$meta.properties.url) {
                 url = this.$meta.properties.url[func];
                 content_type = this.$meta.properties.content_type ? this.$meta.properties.content_type[func] : "application/json";

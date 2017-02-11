@@ -1,6 +1,6 @@
 define(function (require) {
 
-    var Env = require('acceptance/helper/env');
+    var Env = require('acceptance/env');
     
     describe('Preview', function () {
 

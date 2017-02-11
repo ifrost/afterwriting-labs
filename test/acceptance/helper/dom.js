@@ -4,7 +4,9 @@ define(function(require) {
         p = require('protoplast');
 
     /**
-     * Translates DOM element into meaningful UI descriptions
+     * Translates DOM element into meaningful UI descriptions.
+     * 
+     * Selectors are prefixed with "$"
      */
     var DomHelper = p.extend({
 

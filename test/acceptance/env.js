@@ -13,6 +13,12 @@ define(function(require) {
 
     /**
      * Main test environment that aggregates all helpers
+     * 
+     * Env contains all you need to write an acceptance test. Env is created before each step and destroyed after.
+     * 
+     * When env is created, the app is bootstrapped and displayed in the browser. Cookies and local storage is cleared.
+     * 
+     * When env is destroyed, the app is removed from DOM. To simulate refreshing the app during a test (e.g. when a user presses F5), call Env.refresh method.
      */
     var Env = p.extend({
 

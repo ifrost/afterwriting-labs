@@ -2,6 +2,11 @@ define(function(require) {
 
     var Protoplast = require('protoplast');
 
+    /**
+     * More complex step converted into functions
+     * 
+     * If WHEN, GIVEN or THEN section of acceptance test is longer than 4 lines it should be converted to a scenario function
+     */
     var Scenarios = Protoplast.extend({
         
         env: null,
