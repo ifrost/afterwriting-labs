@@ -8,7 +8,7 @@ define(function(require) {
          * Asserts if file list is visible on the screen
          */
         file_list_is_visible: function() {
-            chai.assert.ok(this.dom.jstree_visible(), 'file list is not visible');
+            chai.assert.ok(this.dom.popup.jstree_visible(), 'file list is not visible');
         },
 
         /**
@@ -16,7 +16,7 @@ define(function(require) {
          * @param {Boolean} value
          */
         dialog_form_is_visible: function(value) {
-            chai.assert.strictEqual(this.dom.is_visible(this.dom.$form_dialog), value);
+            chai.assert.strictEqual(this.dom.is_visible(this.dom.popup.$form_dialog), value);
         },
 
         /**
@@ -24,7 +24,7 @@ define(function(require) {
          * @param {String} value
          */
         dialog_message_is: function(value) {
-            var message = this.dom.dialog_message();
+            var message = this.dom.popup.dialog_message();
             chai.assert.strictEqual(value, message);
         },
 
@@ -33,7 +33,7 @@ define(function(require) {
          * @param {String} value
          */
         dialog_input_content_is: function(value) {
-            var input = this.dom.dialog_input();
+            var input = this.dom.popup.dialog_input();
             chai.assert.strictEqual(value, input);
         },
 
@@ -42,7 +42,7 @@ define(function(require) {
          * @param {String} name
          */
         tree_node_visible: function(name) {
-            chai.assert.lengthOf(this.dom.file_list_popup_with_node(name), 1);
+            chai.assert.lengthOf(this.dom.popup.file_list_popup_with_node(name), 1);
         }
     });
 

@@ -9,7 +9,7 @@ define(function(require) {
          * @param {Sting} name
          */
         active_plugin_is: function(name) {
-            chai.assert.strictEqual(this.dom.get_active_plugin(), name, 'Expected ' + name + ' plugin to be active, but ' + this.dom.get_active_plugin() + ' is active');
+            chai.assert.strictEqual(this.dom.theme.get_active_plugin(), name, 'Expected ' + name + ' plugin to be active, but ' + this.dom.theme.get_active_plugin() + ' is active');
         },
 
         /**
@@ -17,7 +17,7 @@ define(function(require) {
          * @param {Boolean} value
          */
         night_mode_is_enabled: function(value) {
-            var night_mode = this.dom.is_night_mode();
+            var night_mode = this.dom.theme.is_night_mode();
             if (value) {
                 chai.assert.ok(night_mode);
             }
@@ -31,8 +31,8 @@ define(function(require) {
          * @param {Boolean} value
          */
         content_is_expanded: function(value) {
-            var content_size = this.dom.content_size(),
-                window_size = this.dom.window_size();
+            var content_size = this.dom.theme.content_size(),
+                window_size = this.dom.theme.window_size();
 
             if (value) {
                 chai.assert.strictEqual(content_size.width, window_size.width);

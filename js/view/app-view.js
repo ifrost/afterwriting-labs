@@ -23,10 +23,8 @@ define(function(require) {
         destroy: function() {
             Protoplast.Component.destroy.call(this);
             $.jstree.destroy();
-            var box = $.prompt.getBox();
-            if (box) {
-                box.remove();
-            }
+            $.prompt.close();
+            $.prompt.close();
         }
         
     });

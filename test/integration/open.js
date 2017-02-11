@@ -73,7 +73,7 @@ define(function (require) {
         });
 
         it.skip('WHEN a file is loaded from GoogleDrive THEN feautre/open-google-drive event is tracked AND format is passed', function() {
-            // env.user.open_from_googledrive();
+            // env.user.open.open_from_googledrive();
             ///env.assert.monitor.event_tracked('feature', 'open-googledrive', 'format');
         });
 

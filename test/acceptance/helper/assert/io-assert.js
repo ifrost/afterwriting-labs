@@ -9,7 +9,7 @@ define(function(require) {
          * @param {Boolean} is_visible
          */
         last_used_is_visible: function(is_visible) {
-            this.is_visible(this.dom.$open_last_used, is_visible);
+            this.is_visible(this.dom.open.$open_last_used, is_visible);
         },
 
         /**
@@ -17,7 +17,7 @@ define(function(require) {
          * @param {String} title
          */
         last_used_title: function(title) {
-            chai.assert.strictEqual(title, this.dom.open_last_used_title());
+            chai.assert.strictEqual(title, this.dom.open.open_last_used_title());
         },
 
         /**
@@ -27,7 +27,7 @@ define(function(require) {
          */
         open_button_visible: function(source, is_visible) {
             var $selector = '$open_' + source;
-            this.is_visible(this.dom[$selector], is_visible);
+            this.is_visible(this.dom.open[$selector], is_visible);
         },
 
         /**
@@ -39,7 +39,7 @@ define(function(require) {
          */
         save_button_visible: function(destination, plugin, format, is_visible) {
             var method = '$save_' + format + '_' + destination;
-            this.is_visible(this.dom[method](plugin), is_visible);
+            this.is_visible(this.dom.save[method](plugin), is_visible);
         }
     });
 

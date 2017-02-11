@@ -57,6 +57,7 @@ define(function(require) {
 
         refresh: function() {
             this.Bootstrap.destroy();
+            this.browser.tick(5000);
             this.Bootstrap.init(this.Config);
             this.browser.tick(5000);
         },
@@ -65,6 +66,7 @@ define(function(require) {
             this.user.back_to_main();
 
             this.Bootstrap.destroy();
+            this.browser.tick(5000);
 
             this.proxy.restore();
             this.browser.restore();
