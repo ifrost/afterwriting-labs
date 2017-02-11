@@ -2,7 +2,7 @@ define(function(require) {
 
     var Env = require('acceptance/helper/env');
 
-    describe.only('Save plugin', function() {
+    describe('Save plugin', function() {
 
         var env;
 
