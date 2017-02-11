@@ -8,6 +8,15 @@ define(function(require) {
             this.dom = dom;
             this.dropbox = dropbox;
             this.ga = ga;
+        },
+
+        /**
+         * Asserts element matching given selector is visible or not
+         * @param {String} $selector
+         * @param {Boolean} is_visible
+         */
+        is_visible: function($selector, is_visible) {
+            chai.assert.strictEqual(this.dom.is_visible($selector), is_visible);
         }
 
     });

@@ -23,7 +23,7 @@ define(function(require) {
             env.user.save_fountain_locally('editor');
 
             // THEN
-            env.assert.popup.select_file_name_popup_is_visible();
+            env.assert.popup.dialog_message_is('Select file name:');
         });
 
         it('WHEN save fountain to Dropbox button is clicked THEN save fountain to Dropbox dialog is displayed', function() {
@@ -37,7 +37,7 @@ define(function(require) {
             env.browser.tick(3000);
 
             // THEN
-            env.assert.popup.dropbox_popup_visible();
+            env.assert.popup.tree_node_visible('Dropbox');
         });
 
         it('WHEN save fountain to GoogleDrive button is clicked THEN save fountain to GoogleDrive dialog is displayed', function() {
@@ -51,7 +51,7 @@ define(function(require) {
             env.browser.tick(3000);
 
             // THEN
-            env.assert.popup.google_drive_popup_visible();
+            env.assert.popup.tree_node_visible('My Drive');
         });
 
         it('WHEN a new content is created THEN auto-reload AND auto-save are not available', function() {
@@ -85,7 +85,7 @@ define(function(require) {
             env.user.open_plugin('editor');
 
             // THEN
-            env.assert.io.save_to_google_drive_visible('editor', 'fountain', true);
+            env.assert.io.save_button_visible('google_drive', 'editor', 'fountain', true);
         });
 
         it('GIVEN GoogleDrive is not available THEN save to GoogleDrive button is not visible', function() {
@@ -96,7 +96,7 @@ define(function(require) {
             env.user.open_plugin('editor');
 
             // THEN
-            env.assert.io.save_to_google_drive_visible('editor', 'fountain', false);
+            env.assert.io.save_button_visible('google_drive', 'editor', 'fountain', false);
 
             env.google_drive.enable();
         });
@@ -108,7 +108,7 @@ define(function(require) {
             env.user.open_plugin('editor');
 
             // THEN
-            env.assert.io.save_to_dropbox_visible('editor', 'fountain', true);
+            env.assert.io.save_button_visible('dropbox', 'editor', 'fountain', true);
         });
 
         it('GIVEN Dropbox is not available THEN save to Dropbox button is not visible', function() {
@@ -119,7 +119,7 @@ define(function(require) {
             env.user.open_plugin('editor');
 
             // THEN
-            env.assert.io.save_to_dropbox_visible('editor', 'fountain', false);
+            env.assert.io.save_button_visible('dropbox', 'editor', 'fountain', false);
 
             env.dropbox.enable();
         });

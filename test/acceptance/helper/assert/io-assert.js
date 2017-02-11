@@ -4,43 +4,42 @@ define(function(require) {
 
     var IoAssert = BaseAssert.extend({
 
-        // generic
-        
-        // open
-
-        last_used_is_visible: function(value) {
-            chai.assert.strictEqual(this.dom.is_visible(this.dom.$open_last_used), value);
+        /**
+         * Asserts if last used optionis visible
+         * @param {Boolean} is_visible
+         */
+        last_used_is_visible: function(is_visible) {
+            this.is_visible(this.dom.$open_last_used, is_visible);
         },
 
+        /**
+         * Asserts if last used title matches given value
+         * @param {String} title
+         */
         last_used_title: function(title) {
-            chai.assert.strictEqual(this.dom.open_last_used_title(), title)
+            chai.assert.strictEqual(title, this.dom.open_last_used_title());
         },
 
-        open_from_google_drive_visible: function(value) {
-            if (arguments.length === 0) {
-                value = true;
-            }
-            chai.assert.strictEqual(this.dom.is_visible(this.dom.$open_googledrive), value);
+        /**
+         * Asserts if open from GoogleDrive button is visible
+         * @param {String} source - source from which file is supposed to be opened: 'google_drive' or 'dropbox'
+         * @param {Boolean} is_visible
+         */
+        open_button_visible: function(source, is_visible) {
+            var $selector = '$open_' + source;
+            this.is_visible(this.dom[$selector], is_visible);
         },
-        
-        // save
 
-        save_to_dropbox_visible: function(plugin, format, value) {
-            var method = '$save_' + format + '_dropbox';
-
-            if (arguments.length === 0) {
-                value = true;
-            }
-            chai.assert.strictEqual(this.dom.is_visible(this.dom[method](plugin)), value);
-        },
-        
-        save_to_google_drive_visible: function(plugin, format, value) {
-            var method = '$save_' + format + '_google_drive';
-
-            if (arguments.length === 0) {
-                value = true;
-            }
-            chai.assert.strictEqual(this.dom.is_visible(this.dom[method](plugin)), value);
+        /**
+         * Asserts if a save button is visible in a given plugin
+         * @param {String} destination - 'dropbox' or 'google_drive'
+         * @param {String} plugin - 'save', 'editor' or 'previe'
+         * @param {String} format - 'fountain' or 'pdf'
+         * @param {Boolean} is_visible
+         */
+        save_button_visible: function(destination, plugin, format, is_visible) {
+            var method = '$save_' + format + '_' + destination;
+            this.is_visible(this.dom[method](plugin), is_visible);
         }
     });
 

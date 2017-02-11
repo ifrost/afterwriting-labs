@@ -71,7 +71,7 @@ define(function(require) {
         },
 
         open_from_googledrive: function() {
-            this.click(this.dom.$open_googledrive);
+            this.click(this.dom.$open_google_drive);
         },
         
         open_last_used: function(){

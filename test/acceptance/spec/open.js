@@ -84,12 +84,31 @@ define(function(require) {
 
         });
 
+        it('GIVEN Dropbox is available WHEN open plugin is opened THEN open from Dropbox link is visible', function() {
+            // GIVEN
+            env.user.open_plugin('open');
+
+            // THEN
+            env.assert.io.open_button_visible('dropbox', true);
+        });
+
+        it('GIVEN Dropbox is not available WHEN open plugin is opened THEN open from Dropbox link is not visible', function() {
+            // GIVEN
+            env.dropbox.disable();
+            env.user.open_plugin('open');
+
+            // THEN
+            env.assert.io.open_button_visible('dropbox', false);
+
+            env.dropbox.enable();
+        });
+
         it('GIVEN GoogleDrive is available WHEN open plugin is opened THEN open from GoogleDrive link is visible', function() {
             // GIVEN
             env.user.open_plugin('open');
 
             // THEN
-            env.assert.io.open_from_google_drive_visible(true);
+            env.assert.io.open_button_visible('google_drive', true);
         });
 
         it('GIVEN GoogleDrive is not available WHEN open plugin is opened THEN open from GoogleDrive link is not visible', function() {
@@ -98,7 +117,7 @@ define(function(require) {
             env.user.open_plugin('open');
 
             // THEN
-            env.assert.io.open_from_google_drive_visible(false);
+            env.assert.io.open_button_visible('google_drive', false);
 
             env.google_drive.enable();
         });

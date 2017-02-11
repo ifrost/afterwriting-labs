@@ -3,25 +3,31 @@ define(function(require) {
     var BaseAssert = require('acceptance/helper/assert/base-assert');
 
     var EditorAssert = BaseAssert.extend({
-        
-        auto_reload_is_visible: function(value) {
-            if (arguments.length === 0) {
-                value = true;
-            }
-            chai.assert.strictEqual(this.dom.is_visible(this.dom.$sync_button), value);
+
+        /**
+         * Asserts if auto-reload icon is visible
+         * @param {Boolean} is_visible
+         */
+        auto_reload_is_visible: function(is_visible) {
+            this.is_visible(this.dom.$sync_button, is_visible);
         },
 
+        /**
+         * Asserts if auto-save icon is visible
+         * @param {Boolean} is_visible
+         */
+        auto_save_visible: function(is_visible) {
+            this.is_visible(this.dom.$auto_save_button, is_visible);
+        },
+
+        /**
+         * Asserts it editor's content matches given value
+         * @param {String} content
+         */
         editor_content: function(content) {
-            chai.assert.equal(this.dom.editor_content(), content, "editor's content does not match expected value");
-        },
-
-        auto_save_visible: function(value) {
-            if (arguments.length === 0) {
-                value = true;
-            }
-            chai.assert.strictEqual(this.dom.is_visible(this.dom.$auto_save_button), value);
+            var current_content = this.dom.editor_content();
+            chai.assert.equal(content, current_content, "editor's content does not match expected value");
         }
-
     });
 
     return EditorAssert;

@@ -34,7 +34,7 @@ define(function (require) {
             env.user.click_expand_icon();
 
             // THEN
-            env.assert.theme.content_is_expanded();
+            env.assert.theme.content_is_expanded(true);
         });
 
         it('GIVEN content is expanded WHEN expand button is clicked THEN content narrows back', function() {
@@ -46,7 +46,7 @@ define(function (require) {
             env.user.click_expand_icon();
 
             // THEN
-            env.assert.theme.content_is_not_expanded();
+            env.assert.theme.content_is_expanded(false);
         });
 
         it('WHEN close content is clicked THEN no plugin is displayed', function() {

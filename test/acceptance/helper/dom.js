@@ -20,7 +20,7 @@ define(function(require) {
 
         $open_dropbox: '[open-action=dropbox]',
 
-        $open_googledrive: '[open-action=googledrive]',
+        $open_google_drive: '[open-action=googledrive]',
         
         $open_sample: function(name) {
             return '[open-action=sample][value="' + name + '"]';
