@@ -69,12 +69,12 @@ define(function (require) {
         });
 
         it.skip('WHEN last content is opened on startup THEN feature/open-last-used/startup event is track', function() {
-            // TODO: Create a separate integration test // env.assert.event_tracked('feature', 'open-last-used', 'startup');
+            // TODO: Create a separate integration test // env.assert.monitor.event_tracked('feature', 'open-last-used', 'startup');
         });
 
         it.skip('WHEN a file is loaded from GoogleDrive THEN feautre/open-google-drive event is tracked AND format is passed', function() {
             // env.user.open_from_googledrive();
-            ///env.assert.event_tracked('feature', 'open-googledrive', 'format');
+            ///env.assert.monitor.event_tracked('feature', 'open-googledrive', 'format');
         });
 
         it.skip('WHEN last used content is loaded THEN synchronisation and auto-save is not available', function() {

@@ -24,13 +24,13 @@ define(function(require) {
             env.user.select_night_mode();
 
             // THEN
-            env.assert.night_mode_is_enabled(true);
+            env.assert.theme.night_mode_is_enabled(true);
             
             // AND WHEN
             env.user.select_night_mode();
             
             // THEN
-            env.assert.night_mode_is_enabled(false);
+            env.assert.theme.night_mode_is_enabled(false);
         });
         
         it('GIVEN no custom settings are set WHEN settings plugin is selected THEN default values are selected', function() {

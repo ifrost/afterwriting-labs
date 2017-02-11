@@ -19,9 +19,9 @@ define(function(require) {
             env.user.save_fountain_locally('save');
 
             // THEN
-            env.assert.dialog_is_visible(true);
-            env.assert.dialog_message_is('Select file name:');
-            env.assert.input_content_is('screenplay.fountain');
+            env.assert.popup.dialog_is_visible(true);
+            env.assert.popup.dialog_message_is('Select file name:');
+            env.assert.popup.input_content_is('screenplay.fountain');
         });
 
         it('WHEN save pdf locally is clicked THEN filename dialog is displayed AND default filr name is screenplay.pdf', function() {
@@ -29,9 +29,9 @@ define(function(require) {
             env.user.save_pdf_locally('save');
 
             // THEN
-            env.assert.dialog_is_visible(true);
-            env.assert.dialog_message_is('Select file name:');
-            env.assert.input_content_is('screenplay.pdf');
+            env.assert.popup.dialog_is_visible(true);
+            env.assert.popup.dialog_message_is('Select file name:');
+            env.assert.popup.input_content_is('screenplay.pdf');
         });
 
         it.skip('WHEN save fountain to Dropbox is clicked THEN Dropbox save fountain dialog is displayed AND pdf files are not listed', function() {

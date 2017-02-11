@@ -25,7 +25,7 @@ define(function(require) {
                     env.user.open_plugin('editor');
 
                     // THEN
-                    env.assert.editor_content('test');
+                    env.assert.editor.editor_content('test');
 
                     done();
                 }
@@ -42,7 +42,7 @@ define(function(require) {
                     env.user.open_plugin('editor');
 
                     // THEN
-                    env.assert.editor_content('\nAction. Action.\n');
+                    env.assert.editor.editor_content('\nAction. Action.\n');
                     done();
                 }
             );
@@ -58,7 +58,7 @@ define(function(require) {
             env.browser.tick(1000);
 
             // THEN
-            env.assert.file_list_is_visible();
+            env.assert.popup.file_list_is_visible();
         });
 
         it('WHEN a Dropbox file is loaded THEN editor is set to its content', function(done) {
@@ -71,7 +71,7 @@ define(function(require) {
                 env.user.open_plugin('editor');
             
                 // THEN
-                env.assert.editor_content('test content');
+                env.assert.editor.editor_content('test content');
                 done();
             });
         });
@@ -89,7 +89,7 @@ define(function(require) {
             env.user.open_plugin('open');
 
             // THEN
-            env.assert.open_from_google_drive_visible(true);
+            env.assert.io.open_from_google_drive_visible(true);
         });
 
         it('GIVEN GoogleDrive is not available WHEN open plugin is opened THEN open from GoogleDrive link is not visible', function() {
@@ -98,7 +98,7 @@ define(function(require) {
             env.user.open_plugin('open');
 
             // THEN
-            env.assert.open_from_google_drive_visible(false);
+            env.assert.io.open_from_google_drive_visible(false);
 
             env.google_drive.enable();
         });
@@ -108,7 +108,7 @@ define(function(require) {
             env.user.open_plugin('open');
 
             // THEN
-            env.assert.last_used_is_visible(false);
+            env.assert.io.last_used_is_visible(false);
         });
 
         it('GIVEN content is set WHEN app is reloaded THEN last used content link is displayed', function() {
@@ -120,8 +120,8 @@ define(function(require) {
 
             // THEN
             env.user.open_plugin('open');
-            env.assert.last_used_is_visible(true);
-            env.assert.last_used_title('Test Script');
+            env.assert.io.last_used_is_visible(true);
+            env.assert.io.last_used_title('Test Script');
         });
 
         it('GIVEN last content link is visible WHEN last opened is clicked THEN editor contains last used content', function() {
@@ -135,7 +135,7 @@ define(function(require) {
             env.user.open_plugin('editor');
 
             // THEN
-            env.assert.editor_content('Title: Test Script');
+            env.assert.editor.editor_content('Title: Test Script');
         });
 
     });

@@ -19,7 +19,7 @@ define(function (require) {
             env.user.open_plugin('info');
             
             // assert
-            env.assert.active_plugin_is('info');
+            env.assert.theme.active_plugin_is('info');
         });
         
     });

@@ -23,7 +23,7 @@ define(function (require) {
             env.user.click_on_page_stats();
 
             // THEN
-            env.assert.active_plugin_is('editor');
+            env.assert.theme.active_plugin_is('editor');
         });
 
         it('WHEN expand button is clicked THEN content spans the whole window', function() {
@@ -34,7 +34,7 @@ define(function (require) {
             env.user.click_expand_icon();
 
             // THEN
-            env.assert.content_is_expanded();
+            env.assert.theme.content_is_expanded();
         });
 
         it('GIVEN content is expanded WHEN expand button is clicked THEN content narrows back', function() {
@@ -46,7 +46,7 @@ define(function (require) {
             env.user.click_expand_icon();
 
             // THEN
-            env.assert.content_is_not_expanded();
+            env.assert.theme.content_is_not_expanded();
         });
 
         it('WHEN close content is clicked THEN no plugin is displayed', function() {
@@ -57,7 +57,7 @@ define(function (require) {
             env.user.close_content();
 
             // THEN
-            env.assert.active_plugin_is(undefined);
+            env.assert.theme.active_plugin_is(undefined);
         });
 
         it('WHEN a top menu item is selected THEN selected plugin is displayed', function() {
@@ -68,7 +68,7 @@ define(function (require) {
             env.user.open_plugin_from_toolbar('open');
 
             // THEN
-            env.assert.active_plugin_is('open');
+            env.assert.theme.active_plugin_is('open');
         });
 
         it('WHEN a main menu item is selected THEN selected plugin is displayed', function(){
@@ -76,7 +76,7 @@ define(function (require) {
             env.user.open_plugin('open');
 
             // THEN
-            env.assert.active_plugin_is('open');
+            env.assert.theme.active_plugin_is('open');
         });
 
         it('WHEN a selected plugin is re-selected from the top menu THEN the same plugin is shown', function() {
@@ -87,7 +87,7 @@ define(function (require) {
             env.user.open_plugin_from_toolbar('info');
 
             // THEN
-            env.assert.active_plugin_is('info');
+            env.assert.theme.active_plugin_is('info');
         });
 
         it('GIVEN a plugin is opened WHEN background is clicked THEN no plugin is displayed', function() {
@@ -98,7 +98,7 @@ define(function (require) {
             env.user.back_to_main();
 
             // THEN
-            env.assert.active_plugin_is(undefined);
+            env.assert.theme.active_plugin_is(undefined);
         });
         
     });

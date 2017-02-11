@@ -23,7 +23,7 @@ define(function(require) {
             env.user.save_fountain_locally('editor');
 
             // THEN
-            env.assert.select_file_name_popup_is_visible();
+            env.assert.popup.select_file_name_popup_is_visible();
         });
 
         it('WHEN save fountain to Dropbox button is clicked THEN save fountain to Dropbox dialog is displayed', function() {
@@ -37,7 +37,7 @@ define(function(require) {
             env.browser.tick(3000);
 
             // THEN
-            env.assert.dropbox_popup_visible();
+            env.assert.popup.dropbox_popup_visible();
         });
 
         it('WHEN save fountain to GoogleDrive button is clicked THEN save fountain to GoogleDrive dialog is displayed', function() {
@@ -51,7 +51,7 @@ define(function(require) {
             env.browser.tick(3000);
 
             // THEN
-            env.assert.google_drive_popup_visible();
+            env.assert.popup.google_drive_popup_visible();
         });
 
         it('WHEN a new content is created THEN auto-reload AND auto-save are not available', function() {
@@ -61,9 +61,9 @@ define(function(require) {
             env.user.open_plugin('editor');
 
             // THEN
-            env.assert.auto_reload_is_visible(false);
+            env.assert.editor.auto_reload_is_visible(false);
             // AND
-            env.assert.auto_save_visible(false);
+            env.assert.editor.auto_save_visible(false);
         });
 
         it('WHEN a sample script is opened THEN auto-reload AND auto-save are not available', function() {
@@ -73,9 +73,9 @@ define(function(require) {
             env.user.open_plugin('editor');
 
             // THEN
-            env.assert.auto_reload_is_visible(false);
+            env.assert.editor.auto_reload_is_visible(false);
             // AND
-            env.assert.auto_save_visible(false);
+            env.assert.editor.auto_save_visible(false);
         });
 
         it('GIVEN GoogleDrive is available THEN save to GoogleDrive button is visible', function() {
@@ -85,7 +85,7 @@ define(function(require) {
             env.user.open_plugin('editor');
 
             // THEN
-            env.assert.save_to_google_drive_visible('editor', 'fountain', true);
+            env.assert.io.save_to_google_drive_visible('editor', 'fountain', true);
         });
 
         it('GIVEN GoogleDrive is not available THEN save to GoogleDrive button is not visible', function() {
@@ -96,7 +96,7 @@ define(function(require) {
             env.user.open_plugin('editor');
 
             // THEN
-            env.assert.save_to_google_drive_visible('editor', 'fountain', false);
+            env.assert.io.save_to_google_drive_visible('editor', 'fountain', false);
 
             env.google_drive.enable();
         });
@@ -108,7 +108,7 @@ define(function(require) {
             env.user.open_plugin('editor');
 
             // THEN
-            env.assert.save_to_dropbox_visible('editor', 'fountain', true);
+            env.assert.io.save_to_dropbox_visible('editor', 'fountain', true);
         });
 
         it('GIVEN Dropbox is not available THEN save to Dropbox button is not visible', function() {
@@ -119,7 +119,7 @@ define(function(require) {
             env.user.open_plugin('editor');
 
             // THEN
-            env.assert.save_to_dropbox_visible('editor', 'fountain', false);
+            env.assert.io.save_to_dropbox_visible('editor', 'fountain', false);
 
             env.dropbox.enable();
         });
@@ -133,9 +133,9 @@ define(function(require) {
                 env.user.open_plugin('editor');
 
                 // THEN
-                env.assert.auto_reload_is_visible(true);
+                env.assert.editor.auto_reload_is_visible(true);
                 // AND
-                env.assert.auto_save_visible(false);
+                env.assert.editor.auto_save_visible(false);
 
                 done();
             });
@@ -156,8 +156,8 @@ define(function(require) {
 
             it('THEN auto-reload and auto-save are available', function() {
                 // THEN
-                env.assert.auto_reload_is_visible(true);
-                env.assert.auto_save_visible(true);
+                env.assert.editor.auto_reload_is_visible(true);
+                env.assert.editor.auto_save_visible(true);
             });
 
             it('AND empty content is created THEN auto-reload and auto-save are not available', function() {
@@ -166,20 +166,20 @@ define(function(require) {
                 env.user.create_new();
 
                 // THEN
-                env.assert.auto_reload_is_visible(false);
-                env.assert.auto_save_visible(false);
+                env.assert.editor.auto_reload_is_visible(false);
+                env.assert.editor.auto_save_visible(false);
             });
 
             describe('AND auto-save is enabled', function() {
 
                 beforeEach(function() {
                     // AND
-                    env.assert.dropbox_saved(0);
+                    env.assert.dropbox.dropbox_saved(0);
                     env.user.turn_auto_save_on();
                 });
 
                 it('THEN current content is saved immediately', function(done) {
-                    env.assert.dropbox_saved(1);
+                    env.assert.dropbox.dropbox_saved(1);
                     done();
                 });
 
@@ -188,7 +188,7 @@ define(function(require) {
                     env.browser.tick(3000);
                     env.browser.tick(3000);
                     env.browser.tick(3000);
-                    env.assert.dropbox_saved(1);
+                    env.assert.dropbox.dropbox_saved(1);
 
                     done();
                 });
@@ -199,7 +199,7 @@ define(function(require) {
                     env.browser.tick(5000);
 
                     // THEN
-                    env.assert.dropbox_saved(2);
+                    env.assert.dropbox.dropbox_saved(2);
                     done();
                 });
 
@@ -213,7 +213,7 @@ define(function(require) {
                     env.browser.tick(5000);
 
                     // THEN
-                    env.assert.dropbox_saved(2);
+                    env.assert.dropbox.dropbox_saved(2);
                     done();
                 });
 
@@ -236,7 +236,7 @@ define(function(require) {
 
                 it('THEN content of the editor is set to new file contet', function(done) {
                     // THEN
-                    env.assert.editor_content('changed content');
+                    env.assert.editor.editor_content('changed content');
                     done();
                 });
 
@@ -249,9 +249,9 @@ define(function(require) {
                     env.browser.tick(10000);
 
                     // THEN 
-                    env.assert.editor_content('changed content');
+                    env.assert.editor.editor_content('changed content');
                     env.user.sync_keep_content();
-                    env.assert.editor_content('changed content');
+                    env.assert.editor.editor_content('changed content');
 
                     done();
                 });
@@ -268,7 +268,7 @@ define(function(require) {
                     env.user.sync_reload_content_before_sync();
 
                     // THEN
-                    env.assert.editor_content('test content');
+                    env.assert.editor.editor_content('test content');
                     done();
                 });
             });
