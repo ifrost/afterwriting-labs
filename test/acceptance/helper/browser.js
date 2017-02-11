@@ -4,7 +4,7 @@ define(function(require) {
         SinonFileReader = require('acceptance/util/sinon-file-reader');
 
     /**
-     * Helper for common browser tasks
+     * Helper for common browser tasks, e.g. time progressing, opening local files, local storage operations.
      */
     var BrowserHelper = p.extend({
 
@@ -66,6 +66,7 @@ define(function(require) {
             node.dispatchEvent(event);
         },
 
+        // user?
         click: function(node) {
             var event;
 
