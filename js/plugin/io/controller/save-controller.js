@@ -28,7 +28,7 @@ define(function(require) {
         },
 
         saveFountainLocally: function() {
-            forms.text('Select file name: ', this.ioModel.fountainFileName || 'screenplay.fountain', function (result) {
+            forms.text('Select file name:', this.ioModel.fountainFileName || 'screenplay.fountain', function (result) {
                 this.scriptModel.parse();
                 var blob = new Blob([this.scriptModel.script], {
                     type: "text/plain;charset=utf-8"
@@ -101,7 +101,7 @@ define(function(require) {
         },
 
         savePdfLocally: function() {
-            forms.text('Select file name: ', this.ioModel.pdfFileName || 'screenplay.pdf', function (result) {
+            forms.text('Select file name:', this.ioModel.pdfFileName || 'screenplay.pdf', function (result) {
                 this.pdfController.getPdf(function (pdf) {
                     this.ioModel.pdfFileName = result.text;
                     this.ioModel.fountainFileName = result.text.split('.')[0] + '.fountain';

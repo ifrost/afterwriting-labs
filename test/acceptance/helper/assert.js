@@ -103,6 +103,20 @@ define(function(require) {
             chai.assert.strictEqual(this.dom.is_visible(this.dom[method](plugin)), value);
         },
 
+        dialog_is_visible: function(value) {
+            chai.assert.strictEqual(this.dom.is_visible(this.dom.$form_dialog), value);
+        },
+        
+        dialog_message_is: function(value) {
+            var message = this.dom.dialog_message();
+            chai.assert.strictEqual(value, message);
+        },
+
+        input_content_is: function(value) {
+            var input = this.dom.dialog_input();
+            chai.assert.strictEqual(value, input);
+        },
+
         save_to_dropbox_visible: function(plugin, format, value) {
             var method = '$save_' + format + '_dropbox';
 

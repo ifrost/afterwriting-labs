@@ -29,6 +29,20 @@ define(function(require) {
         open_last_used_title: function() {
             return $(this.$open_last_used).text();
         },
+
+        $dialog_message: '.jqimessage',
+
+        $form_dialog: 'form.jqiform',
+
+        dialog_message: function() {
+            return $(this.$dialog_message).text();
+        },
+
+        $dialog_input: '.jqiform .text_input',
+
+        dialog_input: function() {
+            return $(this.$dialog_input).prop('value');
+        },
         
         $save_fountain_locally: function(plugin) {
             return '[plugin=' + plugin + '] [action=save-fountain]';
