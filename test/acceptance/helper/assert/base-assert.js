@@ -12,8 +12,8 @@ define(function(require) {
 
         /**
          * Asserts element matching given selector is visible or not
-         * @param {String} $selector
-         * @param {Boolean} is_visible
+         * @param {string} $selector
+         * @param {boolean} is_visible
          */
         is_visible: function($selector, is_visible) {
             chai.assert.strictEqual(this.dom.is_visible($selector), is_visible);

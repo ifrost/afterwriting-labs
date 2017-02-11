@@ -6,9 +6,9 @@ define(function(require) {
 
         /**
          * Asserts if given even has been tracked at least once
-         * @param {String} category
-         * @param {String} action
-         * @param {String} label
+         * @param {string} category
+         * @param {string} action
+         * @param {string} label
          */
         event_tracked: function(category, action, label) {
             var eventName = [category, action, label].filter(function(value){return value;}).join('/');
@@ -17,10 +17,10 @@ define(function(require) {
 
         /**
          * Asserts if a given event has been tracked given number of times
-         * @param {Number} n
-         * @param {String} category
-         * @param {String} action
-         * @param {String} label
+         * @param {number} n
+         * @param {string} category
+         * @param {string} action
+         * @param {string} label
          */
         event_tracked_n_times: function(n, category, action, label) {
             var eventName = [category, action, label].filter(function(value){return value;}).join('/'),

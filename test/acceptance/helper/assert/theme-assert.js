@@ -14,7 +14,7 @@ define(function(require) {
 
         /**
          * Asserts if night mode is enabled
-         * @param {Boolean} value
+         * @param {boolean} value
          */
         night_mode_is_enabled: function(value) {
             var night_mode = this.dom.theme.is_night_mode();
@@ -28,7 +28,7 @@ define(function(require) {
 
         /**
          * Asserts if active plugin's content is expanded or not
-         * @param {Boolean} value
+         * @param {boolean} value
          */
         content_is_expanded: function(value) {
             var content_size = this.dom.theme.content_size(),

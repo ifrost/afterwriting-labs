@@ -32,7 +32,7 @@ define(function(require) {
         lastUsedInfo: undefined,
 
         /**
-         * @type {Boolean}
+         * @type {boolean}
          */
         lastUsedInfoLoaded: false,
 

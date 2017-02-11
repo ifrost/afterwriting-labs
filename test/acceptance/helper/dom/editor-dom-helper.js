@@ -16,7 +16,7 @@ define(function(require) {
 
         /**
          * Retrun current content of the editor
-         * @returns {String}
+         * @returns {string}
          */
         editor_content: function() {
             return $('.CodeMirror').get(0).CodeMirror.getValue();

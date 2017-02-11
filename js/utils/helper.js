@@ -118,7 +118,7 @@ define('utils/helper', function (require) {
 	 * Return a "space" only string of the length of provided text
 	 * E.g. "123" -> "   "
 	 * @param text
-	 * @returns {String}
+	 * @returns {string}
 	 */
 	module.blank_text = function(text) {
 		return (text || '').replace(/./g, ' ');
@@ -126,8 +126,8 @@ define('utils/helper', function (require) {
 
 	/**
 	 * Return string indentation, e.g. "   123" -> "   "
-	 * @param {String} text
-	 * @returns {String}
+	 * @param {string} text
+	 * @returns {string}
 	 */
 	module.get_indentation = function(text) {
 		var match = (text || '').match(/^(\s+)/);

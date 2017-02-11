@@ -7,7 +7,7 @@ define(function(require) {
         /**
          * Asserts if saving to Dropbox was invoked given number of timer
          * 
-         * @param {Number} count - number of saves
+         * @param {number} count - number of saves
          */
         dropbox_saved: function(count) {
             chai.assert.equal(this.dropbox.saved_count, count, 'content has been saved ' + this.dropbox.saved_count + ', expected: ', count);

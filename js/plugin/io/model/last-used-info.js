@@ -8,7 +8,7 @@ define(function(require) {
     var LastUsedInfo = Protoplast.Model.extend({
 
         /**
-         * @type {String}
+         * @type {string}
          */
         script: null,
 
@@ -18,7 +18,7 @@ define(function(require) {
         date: null,
 
         /**
-         * @type {String}
+         * @type {string}
          */
         title: null
     });

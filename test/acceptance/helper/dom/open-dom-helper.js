@@ -36,8 +36,8 @@ define(function(require) {
 
         /**
          * Button to open a sample
-         * @param {String} name - sample name
-         * @returns {String}
+         * @param {string} name - sample name
+         * @returns {string}
          */
         $open_sample: function(name) {
             return '[open-action=sample][value="' + name + '"]';
@@ -45,7 +45,7 @@ define(function(require) {
 
         /**
          * Last used content's title
-         * @returns {String}
+         * @returns {string}
          */
         open_last_used_title: function() {
             return $(this.$open_last_used).text();

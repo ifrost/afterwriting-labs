@@ -16,7 +16,7 @@ define(function(require) {
 
         /**
          * Dialog message displayed in the popup
-         * @returns {String}
+         * @returns {string}
          */
         dialog_message: function() {
             return $('.jqimessage').text();
@@ -24,7 +24,7 @@ define(function(require) {
 
         /**
          * Dialog's input content
-         * @returns {String}
+         * @returns {string}
          */
         dialog_input: function() {
             return $('.jqiform .text_input').prop('value');
@@ -32,7 +32,7 @@ define(function(require) {
 
         /**
          * Tree node with a name containing given value
-         * @param {String} text
+         * @param {string} text
          * @returns {jQuery}
          */
         file_list_popup_with_node: function(text) {
@@ -41,8 +41,8 @@ define(function(require) {
 
         /**
          * Link to a file on a tree-list
-         * @param {String} filename
-         * @returns {String}
+         * @param {string} filename
+         * @returns {string}
          */
         $file_link: function(filename) {
             return "[aria-labelledby='/" + filename + "_anchor'] a";
@@ -50,7 +50,7 @@ define(function(require) {
 
         /**
          * True if tree is visible
-         * @returns {Boolean}
+         * @returns {boolean}
          */
         jstree_visible: function() {
             return !!$('.jstree-anchor').attr('id');
