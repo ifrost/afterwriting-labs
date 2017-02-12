@@ -22,7 +22,7 @@ define(function(require) {
                     content: 'test'
                 },
                 function() {
-                    env.user.open_plugin('editor');
+                    env.user.theme.open_plugin('editor');
 
                     // THEN
                     env.assert.editor.editor_content('test');
@@ -39,7 +39,7 @@ define(function(require) {
                     content: '<?xml version="1.0" encoding="UTF-8"?><FinalDraft DocumentType="Script" Template="No" Version="1"><Content><Paragraph Type="Action"><Text>Action. Action.</Text></Paragraph></Content></FinalDraft>'
                 },
                 function() {
-                    env.user.open_plugin('editor');
+                    env.user.theme.open_plugin('editor');
 
                     // THEN
                     env.assert.editor.editor_content('\nAction. Action.\n');
@@ -50,10 +50,10 @@ define(function(require) {
 
         it('WHEN open from Dropbox is clicked THEN list of files is displayed', function() {
             // GIVE
-            env.user.open_plugin('open');
+            env.user.theme.open_plugin('open');
 
             // WHEN
-            env.user.open_from_dropbox();
+            env.user.open.open_from_dropbox();
             env.dropbox.auth_dropbox();
             env.browser.tick(1000);
 
@@ -68,7 +68,7 @@ define(function(require) {
                 content: 'test content'
             }, function() {
                 // THEN: switch to editor
-                env.user.open_plugin('editor');
+                env.user.theme.open_plugin('editor');
             
                 // THEN
                 env.assert.editor.editor_content('test content');
@@ -86,7 +86,7 @@ define(function(require) {
 
         it('GIVEN Dropbox is available WHEN open plugin is opened THEN open from Dropbox link is visible', function() {
             // GIVEN
-            env.user.open_plugin('open');
+            env.user.theme.open_plugin('open');
 
             // THEN
             env.assert.io.open_button_visible('dropbox', true);
@@ -95,7 +95,7 @@ define(function(require) {
         it('GIVEN Dropbox is not available WHEN open plugin is opened THEN open from Dropbox link is not visible', function() {
             // GIVEN
             env.dropbox.disable();
-            env.user.open_plugin('open');
+            env.user.theme.open_plugin('open');
 
             // THEN
             env.assert.io.open_button_visible('dropbox', false);
@@ -105,7 +105,7 @@ define(function(require) {
 
         it('GIVEN GoogleDrive is available WHEN open plugin is opened THEN open from GoogleDrive link is visible', function() {
             // GIVEN
-            env.user.open_plugin('open');
+            env.user.theme.open_plugin('open');
 
             // THEN
             env.assert.io.open_button_visible('google_drive', true);
@@ -114,7 +114,7 @@ define(function(require) {
         it('GIVEN GoogleDrive is not available WHEN open plugin is opened THEN open from GoogleDrive link is not visible', function() {
             // GIVEN
             env.google_drive.disable();
-            env.user.open_plugin('open');
+            env.user.theme.open_plugin('open');
 
             // THEN
             env.assert.io.open_button_visible('google_drive', false);
@@ -124,7 +124,7 @@ define(function(require) {
 
         it('GIVEN fresh app WHEN open plugin is opened THEN last used content link is not displayed', function() {
             // GIVEN
-            env.user.open_plugin('open');
+            env.user.theme.open_plugin('open');
 
             // THEN
             env.assert.io.last_used_is_visible(false);
@@ -132,26 +132,26 @@ define(function(require) {
 
         it('GIVEN content is set WHEN app is reloaded THEN last used content link is displayed', function() {
             // GIVEN
-            env.user.create_new_script('Title: Test Script');
+            env.scenarios.create_new_script('Title: Test Script');
 
             // WHEN
             env.refresh();
 
             // THEN
-            env.user.open_plugin('open');
+            env.user.theme.open_plugin('open');
             env.assert.io.last_used_is_visible(true);
             env.assert.io.last_used_title('Test Script');
         });
 
         it('GIVEN last content link is visible WHEN last opened is clicked THEN editor contains last used content', function() {
             // GIVEN
-            env.user.create_new_script('Title: Test Script');
+            env.scenarios.create_new_script('Title: Test Script');
             env.refresh();
 
             // WHEN
-            env.user.open_plugin('open');
-            env.user.open_last_used();
-            env.user.open_plugin('editor');
+            env.user.theme.open_plugin('open');
+            env.user.open.open_last_used();
+            env.user.theme.open_plugin('editor');
 
             // THEN
             env.assert.editor.editor_content('Title: Test Script');

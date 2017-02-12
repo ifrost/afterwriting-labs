@@ -32,11 +32,11 @@ define(function(require) {
         /**
          * A link for switching to a plugin
          * @see Switcher
-         * @param {string} section_name
+         * @param {string} plugin_name
          * @returns {string}
          */
-        $switch_link: function(section_name) {
-            return '.switch[section="' + section_name + '"]';
+        $switch_link: function(plugin_name) {
+            return '.switch[section="' + plugin_name + '"]';
         },
 
         /**

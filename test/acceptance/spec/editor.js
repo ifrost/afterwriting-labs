@@ -16,11 +16,11 @@ define(function(require) {
 
         it('WHEN save fountain locally is clicked THEN save fountain dialog is displayed', function() {
             // GIVEN
-            env.user.open_sample('brick_and_steel');
-            env.user.open_plugin('editor');
+            env.user.open.open_sample('brick_and_steel');
+            env.user.theme.open_plugin('editor');
 
             // WHEN
-            env.user.save_fountain_locally('editor');
+            env.user.save.save_fountain_locally('editor');
 
             // THEN
             env.assert.popup.dialog_message_is('Select file name:');
@@ -28,11 +28,11 @@ define(function(require) {
 
         it('WHEN save fountain to Dropbox button is clicked THEN save fountain to Dropbox dialog is displayed', function() {
             // GIVEN
-            env.user.open_sample('brick_and_steel');
-            env.user.open_plugin('editor');
+            env.user.open.open_sample('brick_and_steel');
+            env.user.theme.open_plugin('editor');
 
             // WHEN
-            env.user.save_fountain_dropbox('editor');
+            env.user.save.save_fountain_dropbox('editor');
             env.dropbox.auth_dropbox();
             env.browser.tick(3000);
 
@@ -42,11 +42,11 @@ define(function(require) {
 
         it('WHEN save fountain to GoogleDrive button is clicked THEN save fountain to GoogleDrive dialog is displayed', function() {
             // GIVEN
-            env.user.open_sample('brick_and_steel');
-            env.user.open_plugin('editor');
+            env.user.open.open_sample('brick_and_steel');
+            env.user.theme.open_plugin('editor');
 
             // WHEN
-            env.user.save_fountain_google_drive('editor');
+            env.user.save.save_fountain_google_drive('editor');
             env.google_drive.auth_google_drive();
             env.browser.tick(3000);
 
@@ -56,9 +56,9 @@ define(function(require) {
 
         it('WHEN a new content is created THEN auto-reload AND auto-save are not available', function() {
             // WHEN
-            env.user.open_plugin('open');
-            env.user.create_new();
-            env.user.open_plugin('editor');
+            env.user.theme.open_plugin('open');
+            env.user.open.create_new();
+            env.user.theme.open_plugin('editor');
 
             // THEN
             env.assert.editor.auto_reload_is_visible(false);
@@ -68,9 +68,9 @@ define(function(require) {
 
         it('WHEN a sample script is opened THEN auto-reload AND auto-save are not available', function() {
             // WHEN
-            env.user.open_plugin('open');
-            env.user.open_sample('brick_and_steel');
-            env.user.open_plugin('editor');
+            env.user.theme.open_plugin('open');
+            env.user.open.open_sample('brick_and_steel');
+            env.user.theme.open_plugin('editor');
 
             // THEN
             env.assert.editor.auto_reload_is_visible(false);
@@ -80,9 +80,9 @@ define(function(require) {
 
         it('GIVEN GoogleDrive is available THEN save to GoogleDrive button is visible', function() {
             // GIVEN
-            env.user.open_plugin('open');
-            env.user.open_sample('brick_and_steel');
-            env.user.open_plugin('editor');
+            env.user.theme.open_plugin('open');
+            env.user.open.open_sample('brick_and_steel');
+            env.user.theme.open_plugin('editor');
 
             // THEN
             env.assert.io.save_button_visible('google_drive', 'editor', 'fountain', true);
@@ -91,9 +91,9 @@ define(function(require) {
         it('GIVEN GoogleDrive is not available THEN save to GoogleDrive button is not visible', function() {
             // GIVEN
             env.google_drive.disable();
-            env.user.open_plugin('open');
-            env.user.open_sample('brick_and_steel');
-            env.user.open_plugin('editor');
+            env.user.theme.open_plugin('open');
+            env.user.open.open_sample('brick_and_steel');
+            env.user.theme.open_plugin('editor');
 
             // THEN
             env.assert.io.save_button_visible('google_drive', 'editor', 'fountain', false);
@@ -103,9 +103,9 @@ define(function(require) {
 
         it('GIVEN Dropbox is available THEN save to Dropbox button is visible', function() {
             // GIVEN
-            env.user.open_plugin('open');
-            env.user.open_sample('brick_and_steel');
-            env.user.open_plugin('editor');
+            env.user.theme.open_plugin('open');
+            env.user.open.open_sample('brick_and_steel');
+            env.user.theme.open_plugin('editor');
 
             // THEN
             env.assert.io.save_button_visible('dropbox', 'editor', 'fountain', true);
@@ -114,9 +114,9 @@ define(function(require) {
         it('GIVEN Dropbox is not available THEN save to Dropbox button is not visible', function() {
             // GIVEN
             env.dropbox.disable();
-            env.user.open_plugin('open');
-            env.user.open_sample('brick_and_steel');
-            env.user.open_plugin('editor');
+            env.user.theme.open_plugin('open');
+            env.user.open.open_sample('brick_and_steel');
+            env.user.theme.open_plugin('editor');
 
             // THEN
             env.assert.io.save_button_visible('dropbox', 'editor', 'fountain', false);
@@ -130,7 +130,7 @@ define(function(require) {
                 name: 'test.fountain',
                 content: 'test'
             }, function() {
-                env.user.open_plugin('editor');
+                env.user.theme.open_plugin('editor');
 
                 // THEN
                 env.assert.editor.auto_reload_is_visible(true);
@@ -149,7 +149,7 @@ define(function(require) {
                     name: 'file.fountain',
                     content: 'test content'
                 }, function() {
-                    env.user.open_plugin('editor');
+                    env.user.theme.open_plugin('editor');
                     done();
                 });
             });
@@ -162,8 +162,8 @@ define(function(require) {
 
             it('AND empty content is created THEN auto-reload and auto-save are not available', function() {
                 // AND
-                env.user.open_plugin('open');
-                env.user.create_new();
+                env.user.theme.open_plugin('open');
+                env.user.open.create_new();
 
                 // THEN
                 env.assert.editor.auto_reload_is_visible(false);
@@ -175,7 +175,7 @@ define(function(require) {
                 beforeEach(function() {
                     // AND
                     env.assert.dropbox.dropbox_saved(0);
-                    env.user.turn_auto_save_on();
+                    env.user.editor.turn_auto_save_on();
                 });
 
                 it('THEN current content is saved immediately', function(done) {
@@ -195,7 +195,7 @@ define(function(require) {
 
                 it('AND content changes THEN new content is saved', function(done) {
                     // AND
-                    env.user.set_editor_content('changed content');
+                    env.user.editor.set_editor_content('changed content');
                     env.browser.tick(5000);
 
                     // THEN
@@ -205,11 +205,11 @@ define(function(require) {
 
                 it('AND content changes AND content is set to the same value THEN content is not saved', function(done) {
                     // AND: content changes
-                    env.user.set_editor_content('changed content');
+                    env.user.editor.set_editor_content('changed content');
                     env.browser.tick(5000);
 
                     // AND: content is set to the same value
-                    env.user.set_editor_content('changed content');
+                    env.user.editor.set_editor_content('changed content');
                     env.browser.tick(5000);
 
                     // THEN
@@ -223,7 +223,7 @@ define(function(require) {
 
                 beforeEach(function(done) {
                     // WHEN Synchronisation is enabled
-                    env.user.turn_sync_on();
+                    env.user.editor.turn_sync_on();
 
                     // AND content od sync file changes
                     env.dropbox.content_change('file.fountain', 'changed content');
@@ -242,7 +242,7 @@ define(function(require) {
 
                 it('AND synchronisation is disabled AND file content changes THEN editor content is not updated with the latest update', function(done) {
                     // AND: synchronisation is disabed
-                    env.user.turn_sync_off();
+                    env.user.editor.turn_sync_off();
 
                     // AND: file content changes
                     env.dropbox.content_change('file.fountain', 'override after sync');
@@ -250,7 +250,7 @@ define(function(require) {
 
                     // THEN 
                     env.assert.editor.editor_content('changed content');
-                    env.user.sync_keep_content();
+                    env.user.popup.sync_keep_content();
                     env.assert.editor.editor_content('changed content');
 
                     done();
@@ -262,10 +262,10 @@ define(function(require) {
                     env.browser.tick(10000);
 
                     // AND: sync disabled
-                    env.user.turn_sync_off();
+                    env.user.editor.turn_sync_off();
 
                     // AND: previous content is reloaded
-                    env.user.sync_reload_content_before_sync();
+                    env.user.popup.sync_reload_content_before_sync();
 
                     // THEN
                     env.assert.editor.editor_content('test content');

@@ -63,7 +63,7 @@ define(function(require) {
         },
 
         destroy: function() {
-            this.user.back_to_main();
+            this.user.theme.back_to_main();
 
             this.Bootstrap.destroy();
             this.browser.tick(5000);

@@ -18,7 +18,7 @@ define(function(require) {
 
             it('WHEN open plugin is selected THEN navigation/open/main event is tracked', function() {
                 // WHEN
-                env.user.open_plugin('open');
+                env.user.theme.open_plugin('open');
 
                 // THEN
                 env.assert.monitor.event_tracked('navigation', 'open', 'main');
@@ -26,10 +26,10 @@ define(function(require) {
 
             it('WHEN open plugin is selected from toolbar THEN navigation/info/toolbar event is tracked', function() {
                 // GIVEN: make toolbar visible
-                env.user.open_plugin('info');
+                env.user.theme.open_plugin('info');
 
                 // WHEN
-                env.user.open_plugin_from_toolbar('open');
+                env.user.theme.open_plugin_from_toolbar('open');
 
                 // THEN
                 env.assert.monitor.event_tracked('navigation', 'open', 'toolbar');
@@ -37,10 +37,10 @@ define(function(require) {
 
             it('WHEN selected plugin is re-selected THEN event is tracked only once', function() {
                 // GIVEN
-                env.user.open_plugin('info');
+                env.user.theme.open_plugin('info');
 
                 // WHEN
-                env.user.open_plugin_from_toolbar('info');
+                env.user.theme.open_plugin_from_toolbar('info');
 
                 // THEN
                 env.assert.monitor.event_tracked_n_times(1, 'navigation', 'info', 'toolbar');
@@ -48,10 +48,10 @@ define(function(require) {
 
             it('GIVEN info plugin is displayed WHEN switch to open is clicked THEN navigation/open/switcher event is tracked', function() {
                 // GIVEN
-                env.user.open_plugin('info');
+                env.user.theme.open_plugin('info');
 
                 // WHEN
-                env.user.click_switch_link('open');
+                env.user.theme.click_switch_link('open');
 
                 // THEN
                 env.assert.monitor.event_tracked('navigation', 'open', 'switcher');
@@ -59,10 +59,10 @@ define(function(require) {
 
             it('GIVEN a plugin X is opened WHEN close button is clicked THEN navigation/toolbar-close/X is tracked', function() {
                 // GIVEN
-                env.user.open_plugin('open');
+                env.user.theme.open_plugin('open');
 
                 // WHEN
-                env.user.close_content();
+                env.user.theme.close_content();
 
                 // THEN
                 env.assert.monitor.event_tracked('navigation', 'toolbar-close', 'open');
@@ -70,10 +70,10 @@ define(function(require) {
 
             it('GIVEN a plugin is opened WHEN background is clicked THEN content is hidden', function() {
                 // GIVEN
-                env.user.open_plugin('open');
+                env.user.theme.open_plugin('open');
 
                 // WHEN
-                env.user.back_to_main();
+                env.user.theme.back_to_main();
 
                 // THEN
                 env.assert.monitor.event_tracked('navigation', 'back-close', 'open');
@@ -81,10 +81,10 @@ define(function(require) {
 
             it('WHEN a section X is expanded (question mark icon) THEN feature/help/X event is tracked', function() {
                 // GIVEN
-                env.user.open_plugin('open');
+                env.user.theme.open_plugin('open');
 
                 // WHEN
-                env.user.click_info_icon('open-start');
+                env.user.theme.click_info_icon('open-start');
 
                 // THEN
                 env.assert.monitor.event_tracked('feature', 'help', 'open-start');
@@ -92,10 +92,10 @@ define(function(require) {
 
             it('WHEN expand button is clicked then feature/expand event is tracked', function() {
                 // GIVEN
-                env.user.open_plugin('open');
+                env.user.theme.open_plugin('open');
 
                 // WHEN
-                env.user.click_expand_icon();
+                env.user.theme.click_expand_icon();
 
                 // THEN
                 env.assert.monitor.event_tracked('feature', 'expand');
@@ -105,10 +105,10 @@ define(function(require) {
         describe('Info', function() {
             it('WHEN download button is clicked THEN feature/download is tracked', function() {
                 // GIVEN
-                env.user.open_plugin('info');
+                env.user.theme.open_plugin('info');
 
                 // WHEN
-                env.user.download_offline_app();
+                env.user.info.download_offline_app();
 
                 // THEN
                 env.assert.monitor.event_tracked('feature', 'download');
@@ -118,12 +118,12 @@ define(function(require) {
         describe('Open', function() {
 
             beforeEach(function() {
-                env.user.open_plugin('open');
+                env.user.theme.open_plugin('open');
             });
 
             it('WHEN a sample with title title is selected THEN feature/open-sample/title event is tracked', function() {
                 // WHEN
-                env.user.open_sample('brick_and_steel');
+                env.user.open.open_sample('brick_and_steel');
 
                 // THEN
                 env.assert.monitor.event_tracked('feature', 'open-sample', 'brick_and_steel');
@@ -131,7 +131,7 @@ define(function(require) {
 
             it('WHEN an empty script is created THEN feature/open-new event is tracked', function() {
                 // WHEN
-                env.user.create_new();
+                env.user.open.create_new();
 
                 // THEN
                 env.assert.monitor.event_tracked('feature', 'open-new');
@@ -139,7 +139,7 @@ define(function(require) {
 
             it('WHEN open from local disk dialog is opened THEN feature/open-file-dialog event is traced', function() {
                 // WHEN
-                env.user.open_file_dialog();
+                env.user.open.open_file_dialog();
 
                 // THEN
                 env.assert.monitor.event_tracked('feature', 'open-file-dialog');
@@ -172,7 +172,7 @@ define(function(require) {
             // TODO: test asserting editor's content
             it('WHEN open last used in selected THEN feature/open-last-used/manual event is traced', function() {
                 // WHEN
-                env.user.open_last_used();
+                env.user.open.open_last_used();
 
                 // THEN
                 env.assert.monitor.event_tracked('feature', 'open-last-used', 'manual');
@@ -190,14 +190,14 @@ define(function(require) {
         describe('Save', function() {
 
             beforeEach(function() {
-                env.user.open_plugin('open');
-                env.user.open_sample('brick_and_steel');
-                env.user.open_plugin('save');
+                env.user.theme.open_plugin('open');
+                env.user.open.open_sample('brick_and_steel');
+                env.user.theme.open_plugin('save');
             });
 
             it('WHEN a fountain file is saved to local disk THEN feature/save-fountain event is tracked', function() {
                 // WHEN
-                env.user.save_fountain_locally('save');
+                env.user.save.save_fountain_locally('save');
 
                 // THEN
                 env.assert.monitor.event_tracked('feature', 'save-fountain');
@@ -205,7 +205,7 @@ define(function(require) {
 
             it('WHEN a pdf file is saved to local disk THEN feature/save-pdf event is tracked', function() {
                 // WHEN
-                env.user.save_pdf_locally('save');
+                env.user.save.save_pdf_locally('save');
 
                 // THEN
                 env.assert.monitor.event_tracked('feature', 'save-pdf');
@@ -213,7 +213,7 @@ define(function(require) {
 
             it('WHEN a fountain file is saved to Dropbox THEN feature/save-fountain-dropbox event is tracked', function() {
                 // WHEN
-                env.user.save_fountain_dropbox('save');
+                env.user.save.save_fountain_dropbox('save');
 
                 // THEN
                 env.assert.monitor.event_tracked('feature', 'save-fountain-dropbox');
@@ -221,7 +221,7 @@ define(function(require) {
 
             it('WHEN a pdf file is saved to Dropbox THEN feature/save-pdf-dropbox event is tracked', function() {
                 // WHEN
-                env.user.save_pdf_dropbox('save');
+                env.user.save.save_pdf_dropbox('save');
 
                 // THEN
                 env.assert.monitor.event_tracked('feature', 'save-pdf-dropbox');
@@ -229,7 +229,7 @@ define(function(require) {
 
             it('WHEN a fountain file is saved to GoogleDrive THEN feature/save-fountain-googledrive event is tracked', function() {
                 // WHEN
-                env.user.save_fountain_google_drive('save');
+                env.user.save.save_fountain_google_drive('save');
 
                 // THEN
                 env.assert.monitor.event_tracked('feature', 'save-fountain-googledrive');
@@ -237,7 +237,7 @@ define(function(require) {
 
             it('WHEN a pdf file is saved to GoogleDrive THEN feature/save-pdf-googledrive event is tracked', function() {
                 // WHEN
-                env.user.save_pdf_google_drive('save');
+                env.user.save.save_pdf_google_drive('save');
 
                 // THEN
                 env.assert.monitor.event_tracked('feature', 'save-pdf-googledrive');
@@ -247,12 +247,12 @@ define(function(require) {
         describe('Stats', function() {
             it('WHEN scene length graph bar is clicked THEN editor is displayed AND eature/stats-scene-length-goto event is dispatched', function() {
                 // GIVEN
-                env.user.open_plugin('open');
-                env.user.open_sample('brick_and_steel');
-                env.user.open_plugin('stats');
+                env.user.theme.open_plugin('open');
+                env.user.open.open_sample('brick_and_steel');
+                env.user.theme.open_plugin('stats');
 
                 // WHEN
-                env.user.click_on_page_stats();
+                env.user.stats.click_on_page_stats();
 
                 // THEN
                 env.assert.theme.active_plugin_is('editor');

@@ -19,9 +19,9 @@ define(function(require) {
             var env = this.env;
             
             env.browser.has_local_file(file);
-            env.user.open_plugin('open');
+            env.user.theme.open_plugin('open');
 
-            env.user.open_local_file(file.name);
+            env.user.open.open_local_file(file.name);
             env.browser.read_files(function() {
                 env.browser.tick(3000);
                 callback();
@@ -32,18 +32,31 @@ define(function(require) {
             var env = this.env;
             
             env.dropbox.has_file(file);
-            env.user.open_plugin('open');
+            env.user.theme.open_plugin('open');
 
-            env.user.open_from_dropbox();
+            env.user.open.open_from_dropbox();
             env.dropbox.auth_dropbox();
             env.browser.tick(3000);
-            env.user.select_file(file.name);
-            env.user.confirm_popup();
+            env.user.popup.select_file(file.name);
+            env.user.popup.confirm_popup();
 
             env.browser.read_files(function() {
                 env.browser.tick(3000);
                 callback();
             });
+        },
+
+        /**
+         * Create new script with a given text as content
+         * @param {string} text
+         */
+        create_new_script: function(text) {
+            var env = this.env;
+
+            env.user.theme.open_plugin('open');
+            env.user.open.create_new();
+            env.user.theme.open_plugin('editor');
+            env.user.editor.set_editor_content(text);
         }
         
     });

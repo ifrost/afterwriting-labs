@@ -16,7 +16,7 @@ define(function(require) {
 
         it('WHEN save fountain locally is clicked THEN filename dialog is displayed AND default file name is screenplay.fountain', function() {
             // WHEN
-            env.user.save_fountain_locally('save');
+            env.user.save.save_fountain_locally('save');
 
             // THEN
             env.assert.popup.dialog_form_is_visible(true);
@@ -26,7 +26,7 @@ define(function(require) {
 
         it('WHEN save pdf locally is clicked THEN filename dialog is displayed AND default filr name is screenplay.pdf', function() {
             // WHEN
-            env.user.save_pdf_locally('save');
+            env.user.save.save_pdf_locally('save');
 
             // THEN
             env.assert.popup.dialog_form_is_visible(true);
@@ -36,7 +36,7 @@ define(function(require) {
 
         it.skip('WHEN save fountain to Dropbox is clicked THEN Dropbox save fountain dialog is displayed AND pdf files are not listed', function() {
             // WHEN
-            env.user.save_fountain_dropbox('save');
+            env.user.save.save_fountain_dropbox('save');
 
             // THEN
 
@@ -44,7 +44,7 @@ define(function(require) {
 
         it.skip('WHEN save pdf to Dropbox is clicked THEN Dropbox save PDF dialog is displayed AND only pdf files are listed', function() {
             // WHEN
-            env.user.save_pdf_dropbox('save');
+            env.user.save.save_pdf_dropbox('save');
 
             // THEN
 
@@ -52,7 +52,7 @@ define(function(require) {
 
         it.skip('WHEN save fountain to GoogleDrive is clicked THEN Dropbox save fountain dialog is displayed AND pdf files are not listed', function() {
             // WHEN
-            env.user.save_fountain_google_drive('save');
+            env.user.save.save_fountain_google_drive('save');
 
             // THEN
 
@@ -60,7 +60,7 @@ define(function(require) {
 
         it.skip('WHEN save pdf to GoogleDrive is clicked THEN Dropbox save PDF dialog is displayed AND only pdf files are listed', function() {
             // WHEN
-            env.user.save_pdf_google_drive('save');
+            env.user.save.save_pdf_google_drive('save');
 
             // THEN
 
@@ -68,7 +68,7 @@ define(function(require) {
 
         it.skip('WHEN save dialog is displayed THEN search bar is not visible', function() {
             // WHEN
-            env.user.save_fountain_dropbox('save');
+            env.user.save.save_fountain_dropbox('save');
 
             // THEN
             

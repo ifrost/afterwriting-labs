@@ -16,7 +16,7 @@ define(function (require) {
 
         it('WHEN info plugin is opened from the main menu THEN info plugin is displayed', function() {
             // act
-            env.user.open_plugin('info');
+            env.user.theme.open_plugin('info');
             
             // assert
             env.assert.theme.active_plugin_is('info');

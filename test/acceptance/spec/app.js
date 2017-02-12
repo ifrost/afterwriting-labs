@@ -16,11 +16,11 @@ define(function (require) {
 
         it('WHEN page stats is clicked THEN app is switched to editor', function() {
             // GIVEN
-            env.user.create_new_script('test');
-            env.user.open_plugin('stats');
+            env.scenarios.create_new_script('test');
+            env.user.theme.open_plugin('stats');
 
             // WHEN
-            env.user.click_on_page_stats();
+            env.user.stats.click_on_page_stats();
 
             // THEN
             env.assert.theme.active_plugin_is('editor');
@@ -28,10 +28,10 @@ define(function (require) {
 
         it('WHEN expand button is clicked THEN content spans the whole window', function() {
             // GIVEN
-            env.user.open_plugin('info');
+            env.user.theme.open_plugin('info');
 
             // WHEN
-            env.user.click_expand_icon();
+            env.user.theme.click_expand_icon();
 
             // THEN
             env.assert.theme.content_is_expanded(true);
@@ -39,11 +39,11 @@ define(function (require) {
 
         it('GIVEN content is expanded WHEN expand button is clicked THEN content narrows back', function() {
             // GIVEN
-            env.user.open_plugin('info');
-            env.user.click_expand_icon();
+            env.user.theme.open_plugin('info');
+            env.user.theme.click_expand_icon();
 
             // WHEN
-            env.user.click_expand_icon();
+            env.user.theme.click_expand_icon();
 
             // THEN
             env.assert.theme.content_is_expanded(false);
@@ -51,10 +51,10 @@ define(function (require) {
 
         it('WHEN close content is clicked THEN no plugin is displayed', function() {
             // GIVEN
-            env.user.open_plugin('info');
+            env.user.theme.open_plugin('info');
 
             // WHEN
-            env.user.close_content();
+            env.user.theme.close_content();
 
             // THEN
             env.assert.theme.active_plugin_is(undefined);
@@ -62,10 +62,10 @@ define(function (require) {
 
         it('WHEN a top menu item is selected THEN selected plugin is displayed', function() {
             // GIVEN
-            env.user.open_plugin('info');
+            env.user.theme.open_plugin('info');
 
             // WHEN
-            env.user.open_plugin_from_toolbar('open');
+            env.user.theme.open_plugin_from_toolbar('open');
 
             // THEN
             env.assert.theme.active_plugin_is('open');
@@ -73,7 +73,7 @@ define(function (require) {
 
         it('WHEN a main menu item is selected THEN selected plugin is displayed', function(){
             // WHEN
-            env.user.open_plugin('open');
+            env.user.theme.open_plugin('open');
 
             // THEN
             env.assert.theme.active_plugin_is('open');
@@ -81,10 +81,10 @@ define(function (require) {
 
         it('WHEN a selected plugin is re-selected from the top menu THEN the same plugin is shown', function() {
             // GIVEN
-            env.user.open_plugin('info');
+            env.user.theme.open_plugin('info');
 
             // WHEN
-            env.user.open_plugin_from_toolbar('info');
+            env.user.theme.open_plugin_from_toolbar('info');
 
             // THEN
             env.assert.theme.active_plugin_is('info');
@@ -92,10 +92,10 @@ define(function (require) {
 
         it('GIVEN a plugin is opened WHEN background is clicked THEN no plugin is displayed', function() {
             // GIVEN
-            env.user.open_plugin('info');
+            env.user.theme.open_plugin('info');
 
             // WHEN
-            env.user.back_to_main();
+            env.user.theme.back_to_main();
 
             // THEN
             env.assert.theme.active_plugin_is(undefined);
