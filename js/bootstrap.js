@@ -30,6 +30,7 @@ define(function(require) {
         destroy: function() {
             this.root.remove(this.mainView);
             this.root.destroy();
+            this.context.destroy();
         },
         
         _bootstrap: function(Config) {

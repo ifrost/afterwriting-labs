@@ -32,7 +32,8 @@ define(function(require) {
         } else {
             var state = Dropbox.Util.Oauth.randomAuthStateParam();
             var popup = window.open('https://www.dropbox.com/1/oauth2/authorize?response_type=token&redirect_uri=' + redirect_uri + '&client_id=' + key + '&state=' + state, '_blank', 'width=500, height=500');
-            window.addEventListener('message', function(e) {
+            $(window).on('message.dropboxclient', function(e) {
+                e = e.originalEvent;
                 e.target.removeEventListener(e.type, arguments.callee);
                 if (e.origin !== 'https://ifrost.github.io' && e.origin !== 'http://afterwriting.com' && e.origin !== 'http://localhost:8000') {
                     return;
@@ -280,6 +281,10 @@ define(function(require) {
         client.writeFile(path, data, {}, callback);
     };
     module.save = auth_method(save);
+
+    module.destroy = function() {
+        $(window).off('message.dropboxclient');
+    };
 
     return module;
 

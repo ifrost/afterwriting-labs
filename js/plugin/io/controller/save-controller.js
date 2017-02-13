@@ -175,6 +175,14 @@ define(function(require) {
             });
         },
 
+        // DEBT: move injectDestroy to Protoplast.Object?
+        destroy: {
+            injectDestroy: true,
+            value: function() {
+                db.destroy();
+            }
+        },
+
         /**
          * Save to the cloud using options:
          *  client - cloud client (dropox/googledrive)
