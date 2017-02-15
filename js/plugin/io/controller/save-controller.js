@@ -175,12 +175,8 @@ define(function(require) {
             });
         },
 
-        // DEBT: move injectDestroy to Protoplast.Object?
-        destroy: {
-            injectDestroy: true,
-            value: function() {
-                db.destroy();
-            }
+        destroy: function() {
+            db.destroy();
         },
 
         /**
