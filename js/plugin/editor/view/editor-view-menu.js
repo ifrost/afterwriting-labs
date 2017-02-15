@@ -6,6 +6,7 @@ define(function(require) {
         EditorViewMenuPresenter = require('plugin/editor/view/editor-view-menu-presenter'),
         SectionViewMixin = require('theme/aw-bubble/view/section-view-mixin');
 
+    // TODO: Create base save menu view/presenter :) (preview+save) (+)
     return BaseComponent.extend([SectionViewMixin], {
 
         $meta: {
@@ -21,7 +22,7 @@ define(function(require) {
         displayOpenFromDropbox: false,
 
         displayOpenFromGoogleDrive: false,
-
+        
         addBindings: function() {
             Protoplast.utils.bind(this, {
                 displayOpenFromDropbox: this._updateOpenFromDropboxVisibility,
