@@ -10,7 +10,11 @@ define(function(require) {
         EditorModel = require('plugin/editor/model/editor-model');
 
     var EditorController = Protoplast.Object.extend({
-        
+
+        pub: {
+            inject: 'pub'
+        },
+
         scriptModel: {
             inject: 'script'
         },
@@ -53,14 +57,12 @@ define(function(require) {
                 this.setAutoSave(false);
                 if (this.ioModel.gdFileId) {
                     gd.sync(this.ioModel.gdFileId, 3000, this._handleSync);
-                    // plugin.syced('google-drive');
                 } else if (this.ioModel.dbPath) {
                     db.sync(this.ioModel.dbPath, 3000, this._handleSync);
-                    // plugin.synced('drobox');
                 } else if (local.sync_available()) {
                     local.sync(3000, this._handleSync);
-                    // plugin.synced('local');
                 }
+                this.pub('plugin/editor/auto-reload/enabled', this._fileSource());
             }
             else {
                 gd.unsync();
@@ -94,6 +96,7 @@ define(function(require) {
                 this.editorModel.saveInProgress = false;
                 this.autoSaveSyncTimer = setInterval(this.saveCurrentScript, 3000);
                 this.saveCurrentScript();
+                this.pub('plugin/editor/auto-save/enabled', this._fileSource());
             }
             else {
                 clearInterval(this.autoSaveSyncTimer);
@@ -157,6 +160,16 @@ define(function(require) {
             this.editorModel.scrollInfo = null;
 
             this.themeController.selectSectionByName('editor');
+        },
+
+        _fileSource: function() {
+            if (this.ioModel.gdFileId) {
+               return 'google-drive';
+            } else if (this.ioModel.dbPath) {
+                return 'dropbox';
+            } else if (local.sync_available()) {
+                return 'local';
+            }
         }
         
     });

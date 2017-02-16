@@ -167,6 +167,20 @@ define(function(require) {
             value: function() {
                 this.monitor.track('feature', 'stats-scene-length-goto');
             }
+        },
+
+        enableAutoSave: {
+            sub: 'plugin/editor/auto-save/enabled',
+            value: function(destination) {
+                this.monitor.track('feature', 'auto-save', destination);
+            }
+        },
+
+        enableAutoReload: {
+            sub: 'plugin/editor/auto-reload/enabled',
+            value: function(source) {
+                this.monitor.track('feature', 'auto-reload', source);
+            }
         }
         
     });
