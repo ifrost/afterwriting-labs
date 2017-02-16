@@ -14,7 +14,7 @@ define(function (require) {
             env.destroy();
         });
 
-        it('WHEN page stats is clicked THEN app is switched to editor', function() {
+        it('GIVEN stats plugin is active WHEN page stats is clicked THEN app is switched to editor', function() {
             // GIVEN
             env.scenarios.create_new_script('test');
             env.user.theme.open_plugin('stats');
@@ -26,7 +26,7 @@ define(function (require) {
             env.assert.theme.active_plugin_is('editor');
         });
 
-        it('WHEN expand button is clicked THEN content spans the whole window', function() {
+        it('GIVEN a plugin is active WHEN expand button is clicked THEN content spans the whole window', function() {
             // GIVEN
             env.user.theme.open_plugin('info');
 
@@ -49,7 +49,7 @@ define(function (require) {
             env.assert.theme.content_is_expanded(false);
         });
 
-        it('WHEN close content is clicked THEN no plugin is displayed', function() {
+        it('GIVEN a plugin is active WHEN close content is clicked THEN no plugin is displayed', function() {
             // GIVEN
             env.user.theme.open_plugin('info');
 
@@ -60,7 +60,7 @@ define(function (require) {
             env.assert.theme.active_plugin_is(undefined);
         });
 
-        it('WHEN a top menu item is selected THEN selected plugin is displayed', function() {
+        it('GIVEN a plugin is active WHEN a top menu item is selected THEN selected plugin is displayed', function() {
             // GIVEN
             env.user.theme.open_plugin('info');
 
@@ -71,7 +71,7 @@ define(function (require) {
             env.assert.theme.active_plugin_is('open');
         });
 
-        it('WHEN a main menu item is selected THEN selected plugin is displayed', function(){
+        it('GIVEN a plugin is active WHEN a main menu item is selected THEN selected plugin is displayed', function(){
             // WHEN
             env.user.theme.open_plugin('open');
 
@@ -79,7 +79,7 @@ define(function (require) {
             env.assert.theme.active_plugin_is('open');
         });
 
-        it('WHEN a selected plugin is re-selected from the top menu THEN the same plugin is shown', function() {
+        it('GIVEN a plugin is active WHEN a selected plugin is re-selected from the top menu THEN the same plugin is shown', function() {
             // GIVEN
             env.user.theme.open_plugin('info');
 
@@ -90,7 +90,7 @@ define(function (require) {
             env.assert.theme.active_plugin_is('info');
         });
 
-        it('GIVEN a plugin is opened WHEN background is clicked THEN no plugin is displayed', function() {
+        it('GIVEN a plugin is active WHEN background is clicked THEN no plugin is displayed', function() {
             // GIVEN
             env.user.theme.open_plugin('info');
 
