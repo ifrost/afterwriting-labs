@@ -57,6 +57,25 @@ define(function(require) {
             env.user.open.create_new();
             env.user.theme.open_plugin('editor');
             env.user.editor.set_editor_content(text);
+        },
+
+        /**
+         * Creates a new script and triggers saving to dropbox in given format
+         */
+        initialise_saving_to_dropbox: function(format) {
+            var env = this.env;
+
+            env.user.theme.open_plugin('open');
+            env.user.open.create_new();
+            env.user.theme.open_plugin('save');
+            if (format === 'pdf') {
+                env.user.save.save_pdf_dropbox('save');
+            }
+            else if (format === 'fountain') {
+                env.user.save.save_fountain_dropbox('save');
+            }
+            env.dropbox.auth_dropbox();
+            env.browser.tick(3000);
         }
         
     });

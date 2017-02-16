@@ -37,7 +37,7 @@ define(function(require) {
             env.browser.tick(3000);
 
             // THEN
-            env.assert.popup.tree_node_visible('Dropbox');
+            env.assert.popup.tree_node_visible('Dropbox', true);
         });
 
         it('WHEN save fountain to GoogleDrive button is clicked THEN save fountain to GoogleDrive dialog is displayed', function() {
@@ -51,7 +51,7 @@ define(function(require) {
             env.browser.tick(3000);
 
             // THEN
-            env.assert.popup.tree_node_visible('My Drive');
+            env.assert.popup.tree_node_visible('My Drive', true);
         });
 
         it('WHEN a new content is created THEN auto-reload AND auto-save are not available', function() {

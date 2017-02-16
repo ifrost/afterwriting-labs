@@ -83,7 +83,7 @@ define(function (require) {
 					}
 				}).on('ready.jstree', function () {
 					if (options.search) {
-						var search_input = $('<p>find: <input/> (min. 3 characters)</p>');
+						var search_input = $('<p>find: <input class="popup_search_bar"/> (min. 3 characters)</p>');
 
 						search_input.find('input').keyup(function () {
 							var query = $(this).val();

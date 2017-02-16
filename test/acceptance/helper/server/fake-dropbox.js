@@ -16,16 +16,20 @@ define(function(require) {
 
         saved_count: null,
 
+        enabled: true,
+
         $create: function() {
             this.saved_count = 0;
         },
         
         enable: function() {
             db.initialised = true;
+            this.enabled = true;
         },
         
         disable: function() {
             db.initialised = false;
+            this.enabled = false;
         },
 
         setup: function(proxy) {
@@ -54,7 +58,7 @@ define(function(require) {
                     client_mtime: 'Wed, 21 Nov 2012 18:26:43 +0000',
                     icon: 'page_white_text',
                     is_dir: false,
-                    mime_type: 'text/plain',
+                    mime_type: file.mime_type || 'text/plain',
                     modified: 'Wed, 21 Nov 2012 18:26:43 +0000',
                     modifier: null,
                     path: '/' + file.name,
@@ -93,6 +97,9 @@ define(function(require) {
             url: /https:\/\/api-content.dropbox.com\/1\/files\/auto\//,
             method: 'POST',
             value: function() {
+                if (!this.enabled) {
+                    throw new Error();
+                }
                 this.saved_count++;
                 return JSON.stringify({
                     bytes: 10,

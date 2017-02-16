@@ -15,6 +15,16 @@ define(function(require) {
         $confirm_popup: '[name=jqi_state0_buttonOpen]',
 
         /**
+         * Sav button on a popup
+         */
+        $save_popup: '[name=jqi_state0_buttonSave]',
+
+        /**
+         * Search bar for filtering files
+         */
+        $search_bar: '.popup_search_bar',
+
+        /**
          * Dialog message displayed in the popup
          * @returns {string}
          */

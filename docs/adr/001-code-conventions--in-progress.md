@@ -27,6 +27,8 @@ Brief description of used conventions. Details TBD in a separate README file.
 
 * Each bug needs to have a regression acceptance test
 
+* Assertions should be as generic as possible
+
 # Status: In Progress
 
 # Consequences

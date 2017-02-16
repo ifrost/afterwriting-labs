@@ -40,9 +40,19 @@ define(function(require) {
         /**
          * Asserts if a node with a given name is on the tree list
          * @param {string} name
+         * @param {boolean} value - true for visible, false for not visible
          */
-        tree_node_visible: function(name) {
-            chai.assert.lengthOf(this.dom.popup.file_list_popup_with_node(name), 1);
+        tree_node_visible: function(name, value) {
+            var expectedLength = value ? 1 : 0;
+            chai.assert.lengthOf(this.dom.popup.file_list_popup_with_node(name), expectedLength);
+        },
+
+        /**
+         * Assert if search bar is visible above the tree list
+         * @param {boolean} value
+         */
+        search_bar_visible: function(value) {
+            this.dom.is_visible(this.dom.popup.$search_bar, value);
         }
     });
 

@@ -10,6 +10,10 @@ define(function(require) {
         confirm_popup: function() {
             this.click(this.dom.popup.$confirm_popup);
         },
+        
+        save_popup: function() {
+            this.click(this.dom.popup.$save_popup);
+        },
 
         /**
          * Select file with a given file name

@@ -51,7 +51,11 @@ define(function(require) {
                     if (selected.data.isFolder) {
                         path += (path[path.length - 1] !== '/' ? '/' : '') + filename;
                     }
-                    db.save(path, blob, function () {
+                    db.save(path, blob, function (error) {
+                        if (error) {
+                            this._fileNotSaved();
+                            return;
+                        }
                         if (filename) {
                             this.ioModel.fountainFileName = filename;
                         }
@@ -120,7 +124,11 @@ define(function(require) {
                     }
                     this.scriptModel.parse();
                     this.pdfController.getPdf(function (result) {
-                        db.save(path, result.blob, function () {
+                        db.save(path, result.blob, function (error) {
+                            if (error) {
+                                this._fileNotSaved();
+                                return;
+                            }
                             if (filename) {
                                 this.ioModel.pdfFileName = filename;
                             }
@@ -216,6 +224,15 @@ define(function(require) {
         _fileSaved: function() {
             $.prompt.close();
             $.prompt('File saved!');
+        },
+
+        /**
+         * Display file not saved message
+         * @private
+         */
+        _fileNotSaved: function() {
+            $.prompt.close();
+            $.prompt('Could not save the file. Try again later.');
         }
 
     });

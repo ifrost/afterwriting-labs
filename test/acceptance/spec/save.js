@@ -24,7 +24,7 @@ define(function(require) {
             env.assert.popup.dialog_input_content_is('screenplay.fountain');
         });
 
-        it('WHEN save pdf locally is clicked THEN filename dialog is displayed AND default filr name is screenplay.pdf', function() {
+        it('WHEN save pdf locally is clicked THEN filename dialog is displayed AND default file name is screenplay.pdf', function() {
             // WHEN
             env.user.save.save_pdf_locally('save');
 
@@ -33,23 +33,72 @@ define(function(require) {
             env.assert.popup.dialog_message_is('Select file name:');
             env.assert.popup.dialog_input_content_is('screenplay.pdf');
         });
+        
+        describe('GIVEN user has a fountain file AND user has a pdf file on Dropbox', function() {
 
-        it.skip('WHEN save fountain to Dropbox is clicked THEN Dropbox save fountain dialog is displayed AND pdf files are not listed', function() {
-            // WHEN
-            env.user.save.save_fountain_dropbox('save');
+            beforeEach(function() {
+                // GIVEN
+                env.dropbox.has_file({
+                    name: 'file.fountain',
+                    content: 'test content'
+                });
+                env.dropbox.has_file({
+                    name: 'file.pdf',
+                    content: '%%%',
+                    mime_type: 'application/pdf'
+                });
+            });
+            
+            it('WHEN save fountain to Dropbox is clicked THEN Dropbox save fountain dialog is displayed AND fountain and PDF files are listed AND search bar is not visible', function() {
+                // WHEN
+                env.scenarios.initialise_saving_to_dropbox('fountain');
 
-            // THEN
+                // THEN
+                env.assert.popup.tree_node_visible('Dropbox', true);
+                env.assert.popup.tree_node_visible('file.fountain', true);
+                env.assert.popup.tree_node_visible('file.pdf', true);
+                // AND
+                env.assert.popup.search_bar_visible(false);
+            });
 
+            it('WHEN save pdf to Dropbox is clicked THEN Dropbox save PDF dialog is displayed AND only pdf files are listed', function() {
+                // WHEN
+                env.scenarios.initialise_saving_to_dropbox('pdf');
+
+                // THEN
+                env.assert.popup.tree_node_visible('Dropbox', true);
+                env.assert.popup.tree_node_visible('file.fountain', false);
+                env.assert.popup.tree_node_visible('file.pdf', true);
+                // AND
+                env.assert.popup.search_bar_visible(false);
+            });
+
+            it('WHEN fountain is saved to Dropbox THEN confirmation message is displayed', function() {
+                // WHEN
+                env.scenarios.initialise_saving_to_dropbox('fountain');
+                env.user.popup.select_file('file.fountain');
+                env.user.popup.save_popup();
+
+                // THEN
+                env.assert.dropbox.dropbox_saved(1);
+                env.assert.popup.dialog_message_is('File saved!');
+            });
+
+            it('WHEN saving fountain file is rejected THEN rejection message is displayed', function() {
+                // WHEN
+                env.scenarios.initialise_saving_to_dropbox('fountain');
+                env.user.popup.select_file('file.fountain');
+
+                env.dropbox.disable();
+                env.user.popup.save_popup();
+
+                // THEN
+                env.assert.dropbox.dropbox_saved(0);
+                env.assert.popup.dialog_message_is('Could not save the file. Try again later.');
+            });
+            
         });
-
-        it.skip('WHEN save pdf to Dropbox is clicked THEN Dropbox save PDF dialog is displayed AND only pdf files are listed', function() {
-            // WHEN
-            env.user.save.save_pdf_dropbox('save');
-
-            // THEN
-
-        });
-
+        
         it.skip('WHEN save fountain to GoogleDrive is clicked THEN Dropbox save fountain dialog is displayed AND pdf files are not listed', function() {
             // WHEN
             env.user.save.save_fountain_google_drive('save');
@@ -64,14 +113,6 @@ define(function(require) {
 
             // THEN
 
-        });
-
-        it.skip('WHEN save dialog is displayed THEN search bar is not visible', function() {
-            // WHEN
-            env.user.save.save_fountain_dropbox('save');
-
-            // THEN
-            
         });
 
         it.skip('GIVEN Dropbox is not available THEN Dropbox links are not visible', function() {
