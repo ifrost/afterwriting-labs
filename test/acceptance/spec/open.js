@@ -76,11 +76,50 @@ define(function(require) {
             });
         });
 
-        it.skip('WHEN open dialog is displayed THEN search bar is visible', function() {
+        it('WHEN open dialog is displayed THEN search bar is visible', function() {
+            // GIVEN
+            env.dropbox.has_file({name: 'screenplay.fountain', content: 'test'});
+            env.dropbox.has_file({name: 'script.fountain', content: 'test'});
+            env.user.theme.open_plugin('open');
 
+            // WHEN
+            env.user.open.open_from_dropbox();
+            env.dropbox.auth_dropbox();
+            env.browser.tick(3000);
+
+            // THEN
+            env.assert.popup.search_bar_visible(true);
         });
 
-        it.skip('WHEN open dialog is displayed AND at least 3 letters are typed to search THEN list is filtered', function() {
+        it('WHEN open dialog is displayed AND at least 3 letters are typed to search THEN list is filtered', function() {
+            // GIVEN
+            env.dropbox.has_file({name: 'screenplay.fountain', content: 'test'});
+            env.dropbox.has_file({name: 'script.fountain', content: 'test'});
+            env.user.theme.open_plugin('open');
+
+            // WHEN
+            env.user.open.open_from_dropbox();
+            env.dropbox.auth_dropbox();
+            env.browser.tick(3000);
+
+            env.assert.popup.tree_node_visible('screenplay.fountain', true);
+            env.assert.popup.tree_node_visible('script.fountain', true);
+
+            env.user.popup.type_in_search_bar('s');
+            env.assert.popup.tree_node_visible('screenplay.fountain', true);
+            env.assert.popup.tree_node_visible('script.fountain', true);
+
+            env.user.popup.type_in_search_bar('c');
+            env.assert.popup.tree_node_visible('screenplay.fountain', true);
+            env.assert.popup.tree_node_visible('script.fountain', true);
+
+            env.user.popup.type_in_search_bar('r');
+            env.assert.popup.tree_node_visible('screenplay.fountain', true);
+            env.assert.popup.tree_node_visible('script.fountain', true);
+
+            env.user.popup.type_in_search_bar('e');
+            env.assert.popup.tree_node_visible('screenplay.fountain', true);
+            env.assert.popup.tree_node_visible('script.fountain', false);
 
         });
 

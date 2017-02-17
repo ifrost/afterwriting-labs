@@ -43,8 +43,8 @@ define(function(require) {
          * @param {boolean} value - true for visible, false for not visible
          */
         tree_node_visible: function(name, value) {
-            var expectedLength = value ? 1 : 0;
-            chai.assert.lengthOf(this.dom.popup.file_list_popup_with_node(name), expectedLength);
+            var visible = this.dom.popup.file_list_popup_with_node(name).is(':visible');
+            chai.assert.strictEqual(visible, value);
         },
 
         /**

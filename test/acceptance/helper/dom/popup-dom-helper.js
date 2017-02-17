@@ -22,7 +22,7 @@ define(function(require) {
         /**
          * Search bar for filtering files
          */
-        $search_bar: '.popup_search_bar',
+        $search_bar: 'input.popup_search_bar',
 
         /**
          * Dialog message displayed in the popup

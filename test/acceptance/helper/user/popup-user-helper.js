@@ -35,6 +35,14 @@ define(function(require) {
          */
         sync_reload_content_before_sync: function() {
             this.click_button('Load version before sync');
+        },
+
+        /**
+         * Put a letter in search bar
+         * @param {String} char
+         */
+        type_in_search_bar: function(char) {
+            this.type(this.dom.popup.$search_bar, char);
         }
         
     });
