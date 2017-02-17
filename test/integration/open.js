@@ -69,7 +69,7 @@ define(function (require) {
         });
 
         it.skip('WHEN last content is opened on startup THEN feature/open-last-used/startup event is track', function() {
-            // TODO: Create a separate integration test // env.assert.monitor.event_tracked('feature', 'open-last-used', 'startup');
+            // TODO: Create a separate integration test // env.assert.monitor.event_tracked('feature', 'open-last-used', 'startup');  (+)
         });
 
         it.skip('WHEN a file is loaded from GoogleDrive THEN feautre/open-google-drive event is tracked AND format is passed', function() {

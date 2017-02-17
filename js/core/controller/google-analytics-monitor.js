@@ -8,7 +8,7 @@ define(function(require) {
     var GoogleAnalyticsMonitor = Protoplast.Object.extend({
         
         init: function() {
-            // DEBT: remove dependecy to window.ACCEPTANCE (+)
+            // TODO: remove dependecy to window.ACCEPTANCE (+)
             // it's required at the moment to make sure fake-ga object is not overridden
             // when analytics are loaded
             if (window.location.protocol !== 'file:' && !window.ACCEPTANCE) {

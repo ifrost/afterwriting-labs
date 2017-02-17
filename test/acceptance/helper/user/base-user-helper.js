@@ -19,7 +19,7 @@ define(function(require) {
         },
 
         click: function(selector) {
-            // DEBT: decide on error handling convention (+)
+            // TODO: decide on error handling convention (+)
             try {
                 this.browser.click($(selector).get(0));
             }

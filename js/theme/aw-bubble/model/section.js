@@ -7,7 +7,7 @@ define(function(require) {
      */
     var Section = Protoplast.Model.extend({
 
-        // DEBT: unify id and name (at the moment id is used for tracking)
+        // TODO: unify id and name (at the moment id is used for tracking) (+)
         id: null,
         
         bigIcon: null,

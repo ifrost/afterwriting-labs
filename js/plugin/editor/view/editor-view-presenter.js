@@ -14,7 +14,7 @@ define(function(require) {
             inject: 'script'
         },
         
-        // DEBT: move to editor controller / model (+)
+        // TODO: move to editor controller / model (+)
         storage: {
             inject: 'storage'
         },
@@ -51,7 +51,7 @@ define(function(require) {
 
         activate: function() {
             BaseSectionViewPresenter.activate.call(this);
-            // DEBT: decouple from io (+)
+            // TODO: decouple from io (+)
             this.view.autoSaveAvailable = !!((this.ioModel.gdFileId || this.ioModel.dbPath) && this.scriptModel.format !== 'fdx');
             this.view.syncAvailable = !!(this.ioModel.gdFileId || this.ioModel.dbPath || local.sync_available());
 
@@ -77,10 +77,10 @@ define(function(require) {
         },
 
         _restore: function() {
-            // DEBT: move to presenter
+            // TODO: move to presenter
             this.scriptModel.script = this.editorModel.lastContent;
             this.scriptModel.parse();
-            // TODO: needed?
+            // TODO: needed? (+)
             // if (active) {
             //     plugin.activate();
             // }
@@ -104,7 +104,7 @@ define(function(require) {
         },
         
         _editorContentChanged: function() {
-            // DEBT: delegate to controller (+)
+            // TODO: delegate to controller (+)
             this.editorModel.pendingChanges = this.scriptModel.script !== this.view.getEditorContent();
             this.scriptModel.script = this.view.getEditorContent();
         },

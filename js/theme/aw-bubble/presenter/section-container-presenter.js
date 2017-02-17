@@ -9,7 +9,7 @@ define(function(require) {
         },
         
         init: function() {
-            // DEBT: decide about name convention for events (+)
+            // TODO: decide about name convention for events (+)
             this.view.on('sectionDescriptionShown', this._publishDescriptionShowEvent);
         },
 

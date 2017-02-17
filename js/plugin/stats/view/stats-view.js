@@ -33,7 +33,7 @@ define(function(require) {
             inject: ThemeModel
         },
 
-        // DEBT: Move to presenter? (+)
+        // TODO: Move to presenter? (+)
         settings: {
             inject: 'settings'
         },

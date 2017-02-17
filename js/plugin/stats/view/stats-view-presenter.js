@@ -1,7 +1,7 @@
 define(function(require) {
 
     var BaseSectionViewPresenter = require('theme/aw-bubble/presenter/base-section-view-presenter'),
-        // DEBT: decouple modules (+++)
+        // TODO: decouple modules (+++)
         EditorController = require('plugin/editor/controller/editor-controller'),
         queries = require('plugin/stats/model/queries');
 

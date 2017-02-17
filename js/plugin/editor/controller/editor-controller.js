@@ -19,7 +19,7 @@ define(function(require) {
             inject: 'script'
         },
 
-        // DEBT: decouple io? (+)
+        // TODO: decouple io? (+)
         ioModel: {
             inject: IoModel
         },
@@ -116,7 +116,7 @@ define(function(require) {
             }
         },
         
-        // DEBT: move to io? (+)
+        // TODO: move to io? (+)
         _saveScript: function(callback) {
             var blob;
             

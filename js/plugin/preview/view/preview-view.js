@@ -16,7 +16,7 @@ define(function(require) {
             inject: 'settings'
         },
         
-        // DEBT: remove direct references in views? (+)
+        // TODO: remove direct references in views? (+)
         scriptModel: {
             inject: 'script'
         },

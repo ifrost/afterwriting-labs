@@ -157,7 +157,7 @@ define(function(require) {
             this.ioModel.gdLink = item.alternateLink;
             this.ioModel.gdFileId = item.id;
             this.ioModel.fileName = '';
-            // TODO: needed?
+            // TODO: needed? (+)
             // if (editor.is_active) {
             //     editor.activate(); // refresj
             // }
@@ -167,7 +167,7 @@ define(function(require) {
             this._clearLastOpened();
             this.ioModel.dbPath = path;
             this.ioModel.fileName = '';
-            // TODO: needed?
+            // TODO: needed? (+)
             // if (editor.is_active) {
             //     editor.activate(); // refresh
             // }
@@ -210,7 +210,7 @@ define(function(require) {
 
         _setScript: function(value) {
             this._clearLastOpened();
-            // DEBT: remove dependency to editor (++)
+            // TODO: remove dependency to editor (++)
             this.editorController.cleanUp();
             this.scriptModel.script = value;
             this.themeController.clearSelectedSection();

@@ -3,12 +3,12 @@ define(function(require) {
     var Protoplast = require('protoplast'),
         print_profiles = require('utils/print-profiles');
 
-    // DEBT: Decouple plugin-specific settings (+)
+    // TODO: Decouple plugin-specific settings (+)
     var Settings = Protoplast.Model.extend({
 
         snippets: null,
         
-        // DEBT: Rename Settings properties to CamelCase (+)
+        // TODO: Rename Settings properties to CamelCase (+)
         show_background_image: {
             name: 'show_background_image',
             value: true

@@ -7,7 +7,7 @@ define(function(require) {
      */
     var BaseSectionPresenter = Protoplast.Object.extend({
 
-        // DEBT: data should be parsed when needed, by using computed properties and bindings (++)
+        // TODO: data should be parsed when needed, by using computed properties and bindings (++)
         scriptModel: {
             inject: 'script'
         },
