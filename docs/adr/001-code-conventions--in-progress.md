@@ -1,36 +1,37 @@
 # ADR001: Code Conventions
 
-# Context
+## Status
 
-The whole codebase should be easy to read and follow. To achieve this, it should follow well-defined code conventions.
+Work In Progress
 
-# Decision
+Todo: Use linting tool for checking code conventions.
 
-Brief description of used conventions. Details TBD in a separate README file.
+## Context
 
-## General
+The whole codebase should be easy to read. 
 
-* 4 spaces
-* CamelCases
+## Decision
 
-## Tests
+Each file should look like it was created by one person to make it easier to follow. Defined standards should help
+making decision of where code should be added and how it should we written.
 
-* 3A convention (http://xp123.com/articles/3a-arrange-act-assert/)
-  Clear distinction should quickly point out fragments that can be extracted, for acceptance tests: GIVEN/WHEN/THEN marks should map to GIVEN/WHEN/THEN in description
-  arrange/act/assert could be used but it should be clear in acceptance test which fragment is linked to description; drawback - it's not that obvious that THEN should contain only asserts
-  
-* Acceptance/Integration/Unit tests names: GIVEN something AND something WHEN something happens AND something else happens THEN something happens AND something else happens
-  Above may seem to be too much but it prevents from writing sloppy descriptions and help to make clear what is tested. What is more, if one sees the description is too complex it may be a sign that too many things are tested. It's not important to list all GIVEN, WHEN, THEN - only these that are crucial. Especially GIVEN section may be omitted if WHEN section clearly identifies GIVEN section (e.g. GIVEN the button WHEN the button is clicked...)
- For multi WHEN-THEN tests: GIVEN aaa WHEN bbb THEN ccc AND WHEN ddd THEN eee
+Code conventions will be added in separate files, modified accordingly to need. A rule should become a convention if:
+* It helps to find the right place to put code
 
-* When to write a unit, integration, acceptance test. Unit for controllers, utils
+        example: Controllers should be responsible for business logic, hence they should never manipulate DOM
+        
+* or it makes code more readable
 
-* Each bug needs to have a regression acceptance test
+        example: All variables should have meaningful names
 
-* Assertions should be as generic as possible
+* or it helps prevent from bugs
 
-# Status: In Progress
+        example: Always add "use strict" to each file
 
-# Consequences
+If a rule does not support neither, should not be a convention (e.g. "Always use.forEach instead of for" does not support
+any of above)
 
-It may not be possible to follow the rules strictly, e.g. dependencies/libraries may use different naming conventions (underscores instead of CamelCases). Hence it's not required to follow conventions defined here for libraries extracted to separate projects.
+## Consequences
+
+To make sure rules are follow, as many rules as possible should be linted by a linting tool. Tool should be used in the build
+process, i.e. build should fail if conventions are not followed.
