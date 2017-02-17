@@ -1,6 +1,6 @@
 define(function(require) {
 
-    var CoreConfig = require('bootstraps/core-config'),
+    var CoreConfig = require('bootstrap/core-config'),
         PdfController = require('core/controller/pdf-controller'),
         Settings = require('core/model/settings'),
         ScriptModel = require('core/model/script-model'),

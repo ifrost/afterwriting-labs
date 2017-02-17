@@ -68,7 +68,7 @@ module.exports = function(grunt) {
                 options: {
                     separator: ''
                 },
-                src: ['js/main.js', 'js/bootstraps/index.js'],
+                src: ['js/main.js', 'js/bootstrap/index.js'],
                 dest: 'js/afterwriting-bootstrap.js'
 
             },
