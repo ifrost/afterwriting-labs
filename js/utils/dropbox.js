@@ -43,6 +43,14 @@ define(function(require) {
                     return;
                 }
 
+                if (
+                    (e.data.indexOf('access_token') === -1) ||
+                    (e.data.indexOf('uid') === -1) ||
+                    (e.data.indexOf('state') === -1)
+                ) {
+                    return
+                }
+
                 var token = /access_token=([^\&]*)/.exec(e.data)[1],
                     uid = /uid=([^\&]*)/.exec(e.data)[1],
                     state_r = /state=([^\&]*)/.exec(e.data)[1];

@@ -60,6 +60,20 @@ define(function() {
     };
 
     /**
+     * readAsArrayBuffer decorator
+     * @param {Blob} blob
+     */
+    SinonFileReader.prototype.readAsArrayBuffer = function(blob) {
+        this.processing = true;
+        var realReader = new RealFileReader();
+        realReader.onload = function() {
+            this.processing = false;
+            this.onload.apply(realReader, arguments);
+        }.bind(this);
+        return realReader.readAsArrayBuffer(blob);
+    };
+
+    /**
      * True if there's any processing FileReader
      * @returns {boolean}
      */

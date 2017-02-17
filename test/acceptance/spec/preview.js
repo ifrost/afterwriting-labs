@@ -1,25 +1,51 @@
-define(function (require) {
+define(function(require) {
 
     var Env = require('acceptance/env');
-    
-    describe('Preview', function () {
+
+    describe('Preview', function() {
 
         var env;
 
         beforeEach(function() {
             env = Env.create();
+            env.scenarios.create_new_script('test');
         });
 
         afterEach(function() {
             env.destroy();
         });
 
-        it.skip('GIVEN JavaScript PDF Viewer is enabled WHEN preview plugin is selected THEN JavaScript preview is loaded', function() {
+        it('GIVEN JavaScript PDF Viewer is enabled WHEN preview plugin is selected THEN JavaScript preview is loaded', function(done) {
+            // GIVEN
+            env.user.theme.open_plugin('settings');
+            env.user.preview.select_js_viewer(true);
 
+            // WHEN
+            env.user.theme.open_plugin('preview');
+            env.browser.tick(3000);
+
+            env.browser.read_files(function() {
+                // THEN
+                env.assert.preview.preview_is_in_mode('js');
+                done();
+            });
         });
 
-        it.skip('GIVEN JavaScript PDF Viewer is disabled WHEN preview plugin is selected THEN Embedded preview is loaded', function() {
+        // TODO: do not use browser.wait (+)
+        it('GIVEN JavaScript PDF Viewer is disabled WHEN preview plugin is selected THEN embedded preview is loaded', function(done) {
+            this.timeout(5000);
 
+            // GIVEN
+            env.user.theme.open_plugin('settings');
+            env.user.preview.select_js_viewer(false);
+
+            // WHEN
+            env.user.theme.open_plugin('preview');
+            env.browser.wait(function() {
+                // THEN
+                env.assert.preview.preview_is_in_mode('embedded');
+                done();
+            }, 3000);
         });
 
         it('WHEN save pdf locally is clicked THEN save pdf dialog is displayed', function() {
@@ -32,20 +58,30 @@ define(function (require) {
             env.assert.popup.dialog_input_content_is('screenplay.pdf');
         });
 
-        it.skip('WHEN save pdf to Dropbox button is clicked THEN save pdf to Dropbox dialog is displayed', function() {
+        it('WHEN save pdf to Dropbox button is clicked THEN save pdf to Dropbox dialog is displayed', function() {
+            // GIVEN
+            env.user.theme.open_plugin('preview');
+
             // WHEN
             env.user.save.save_pdf_dropbox('preview');
+            env.dropbox.auth_dropbox();
+            env.browser.tick(3000);
 
             // THEN
-
+            env.assert.popup.tree_node_visible('Dropbox', true);
         });
 
-        it.skip('WHEN save pdf to GoogleDrive button is clicked THEN save pdf to GoogleDrive dialog is displayed', function() {
+        it('WHEN save pdf to GoogleDrive button is clicked THEN save pdf to GoogleDrive dialog is displayed', function() {
+            // GIVEN
+            env.user.theme.open_plugin('preview');
+
             // WHEN
             env.user.save.save_pdf_google_drive('preview');
+            env.google_drive.auth_google_drive();
+            env.browser.tick(3000);
 
             // THEN
-
+            env.assert.popup.tree_node_visible('My Drive', true);
         });
 
         it('GIVEN GoogleDrive is not available THEN save pdf to GoogleDrive is not displayed', function() {

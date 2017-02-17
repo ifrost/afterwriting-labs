@@ -39,6 +39,10 @@ define(function(require) {
             SinonFileReader.wait(done);
         },
 
+        wait: function(callback, ms) {
+            sinon.timers.setTimeout.call(window, callback, ms);
+        },
+
         restore: function() {
             this.clear_cookies();
             this.clear_local_storage();
