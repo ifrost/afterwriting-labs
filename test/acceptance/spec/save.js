@@ -98,33 +98,33 @@ define(function(require) {
             });
             
         });
-        
-        it.skip('WHEN save fountain to GoogleDrive is clicked THEN Dropbox save fountain dialog is displayed AND pdf files are not listed', function() {
-            // WHEN
-            env.user.save.save_fountain_google_drive('save');
 
-            // THEN
-
-        });
-
-        it.skip('WHEN save pdf to GoogleDrive is clicked THEN Dropbox save PDF dialog is displayed AND only pdf files are listed', function() {
-            // WHEN
-            env.user.save.save_pdf_google_drive('save');
-
-            // THEN
-
-        });
-
-        it.skip('GIVEN Dropbox is not available THEN Dropbox links are not visible', function() {
+        it('GIVEN Dropbox is not available THEN Dropbox links are not visible', function() {
             // GIVEN
             env.dropbox.disable();
+            env.scenarios.create_new_script('test');
+            env.user.theme.open_plugin('save');
+
+            // THEN
+            env.assert.io.save_button_visible('dropbox', 'save', 'fountain', false);
+            env.assert.io.save_button_visible('dropbox', 'save', 'pdf', false);
+            env.assert.io.save_button_visible('google_drive', 'save', 'fountain', true);
+            env.assert.io.save_button_visible('google_drive', 'save', 'pdf', true);
 
             env.dropbox.enable();
         });
 
-        it.skip('GIVEN GoogleDrive is not available THEN GoogleDrive links are not visible', function() {
+        it('GIVEN GoogleDrive is not available THEN GoogleDrive links are not visible', function() {
             // GIVEN
             env.google_drive.disable();
+            env.scenarios.create_new_script('test');
+            env.user.theme.open_plugin('save');
+
+            // THEN
+            env.assert.io.save_button_visible('google_drive', 'save', 'fountain', false);
+            env.assert.io.save_button_visible('google_drive', 'save', 'pdf', false);
+            env.assert.io.save_button_visible('dropbox', 'save', 'fountain', true);
+            env.assert.io.save_button_visible('dropbox', 'save', 'pdf', true);
 
             env.google_drive.enable();
         });

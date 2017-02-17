@@ -33,7 +33,7 @@ define(function(require) {
         /**
          * Asserts if a save button is visible in a given plugin
          * @param {string} destination - 'dropbox' or 'google_drive'
-         * @param {string} plugin - 'save', 'editor' or 'previe'
+         * @param {string} plugin - 'save', 'editor' or 'preview'
          * @param {string} format - 'fountain' or 'pdf'
          * @param {boolean} is_visible
          */
