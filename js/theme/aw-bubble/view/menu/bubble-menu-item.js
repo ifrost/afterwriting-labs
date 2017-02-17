@@ -34,6 +34,7 @@ define(function(require) {
                 top: $(window).height() / 2,
                 left: $(window).width() / 2
             }).css({
+                'position': 'fixed',
                 'opacity': 0
             });
             

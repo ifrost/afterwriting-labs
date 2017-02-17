@@ -1,7 +1,4 @@
-test coverage:
-- google drive
-- unit tests (controllers)
-- integration tests (gd sync)
+Tests: manual, performance, cross-browser
 
 docs
 protoplast docs
