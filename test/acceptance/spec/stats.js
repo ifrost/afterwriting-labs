@@ -13,9 +13,42 @@ define(function (require) {
         afterEach(function() {
             env.destroy();
         });
+        
+        it('GIVEN a script WHEN content changes AND facts plugin is selected THEN stats are refreshed', function() {
+            // GIVEN 
+            env.scenarios.create_new_script('INT. TEST');
+            env.user.theme.open_plugin('facts');
+            env.assert.facts.number_of_scenes_is(1);
+            
+            // WHEN
+            env.user.theme.open_plugin('editor');
+            env.user.editor.set_editor_content('INT. TEST\n\nINT. TEST');
 
-        it('GIVEN synchronisation is enabled WHEN stats plugin is selected AND content changes THEN stats are refreshed', function() {
+            // THEN
+            env.user.theme.open_plugin('facts');
+            env.assert.facts.number_of_scenes_is(2);
+        });
 
+        it.skip('GIVEN synchronisation is enabled WHEN facts plugin is selected AND content changes THEN stats are refreshed', function(done) {
+            // GIVEN
+            env.scenarios.load_dropbox_file({
+                name: 'file.fountain',
+                content: 'INT. TEST'
+            }, function() {
+                env.user.theme.open_plugin('editor');
+                env.user.editor.turn_sync_on();
+
+                // WHEN
+                env.user.theme.open_plugin('facts');
+                env.assert.facts.number_of_scenes_is(1);
+
+                // AND
+                env.scenarios.dropbox_file_changes('file.fountain', 'INT. TEST\n\nINT. TEST', function() {
+                    // THEN
+                    env.assert.facts.number_of_scenes_is(2);
+                    done();
+                });
+            });
         });
         
     });

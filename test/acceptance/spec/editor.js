@@ -225,13 +225,8 @@ define(function(require) {
                     // WHEN Synchronisation is enabled
                     env.user.editor.turn_sync_on();
 
-                    // AND content od sync file changes
-                    env.dropbox.content_change('file.fountain', 'changed content');
-                    env.browser.tick(10000);
-                    env.browser.read_files(function() {
-                        env.browser.tick(3000);
-                        done();
-                    });
+                    // AND content of synced file changes
+                    env.scenarios.dropbox_file_changes('file.fountain', 'changed content', done);
                 });
 
                 it('THEN content of the editor is set to new file contet', function(done) {

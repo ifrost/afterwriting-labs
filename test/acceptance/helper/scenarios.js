@@ -47,6 +47,23 @@ define(function(require) {
         },
 
         /**
+         * Changes content of the the file and waits for the readers to read the content when synchronisation is on
+         * @param {string} filename
+         * @param {string} new_content
+         * @param {function} callback
+         */
+        dropbox_file_changes: function(filename, new_content, callback) {
+            var env = this.env;
+            
+            env.dropbox.content_change(filename, new_content);
+            env.browser.tick(10000);
+            env.browser.read_files(function() {
+                env.browser.tick(3000);
+                callback();
+            });
+        },
+
+        /**
          * Create new script with a given text as content
          * @param {string} text
          */

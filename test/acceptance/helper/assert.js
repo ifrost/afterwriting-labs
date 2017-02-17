@@ -7,6 +7,7 @@ define(function(require) {
         IoAssert = require('acceptance/helper/assert/io-assert'),
         MonitorAssert = require('acceptance/helper/assert/monitor-assert'),
         PopupAssert = require('acceptance/helper/assert/popup-assert'),
+        FactsAssert = require('acceptance/helper/assert/facts-assert'),
         PreviewAssert = require('acceptance/helper/assert/preview-assert'),
         ThemeAssert = require('acceptance/helper/assert/theme-assert');
 
@@ -28,6 +29,8 @@ define(function(require) {
         
         popup: null,
 
+        facts: null,
+
         preview: null,
         
         theme: null,
@@ -39,6 +42,7 @@ define(function(require) {
             this.io = IoAssert.create(dom, dropbox, ga);
             this.monitor = MonitorAssert.create(dom, dropbox, ga);
             this.popup = PopupAssert.create(dom, dropbox, ga);
+            this.facts = FactsAssert.create(dom, dropbox, ga);
             this.preview = PreviewAssert.create(dom, dropbox, ga);
             this.theme = ThemeAssert.create(dom, dropbox, ga);
         }
