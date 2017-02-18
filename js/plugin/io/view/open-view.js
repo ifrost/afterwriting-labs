@@ -50,12 +50,6 @@ define(function(require) {
 
             this._resetFileInput();
 
-            $("#open-file").change(function() {
-                var selected_file = $('#open-file').get(0).files.item(0);
-                this.dispatch('open-file', selected_file);
-                this._resetFileInput();
-            }.bind(this));
-
             this.onClick('a[open-action="open"]', function() {
                 this.dispatch('open-file-dialog');
                 $("#open-file").click();
@@ -71,6 +65,12 @@ define(function(require) {
         _resetFileInput: function() {
             $('#open-file-wrapper').empty()
                 .html('<input id="open-file" type="file" style="display:none" />');
+
+            $("#open-file").change(function() {
+                var selected_file = $('#open-file').get(0).files.item(0);
+                this.dispatch('open-file', selected_file);
+                this._resetFileInput();
+            }.bind(this));
         },
 
         _updateOpenFromDropboxVisibility: function() {

@@ -32,6 +32,22 @@ define(function(require) {
             );
         });
 
+        // Regression
+        it.only('GIVEN a loocal file is loaded WHEN a file is loaded from disk again THEN editor value is set to its content', function(done) {
+            // GIVEN
+            env.scenarios.load_local_file({name: 'test.fountain', content: 'test'},
+                function() {
+                    env.scenarios.load_local_file({name: 'test2.fountain', content: 'test2'},
+                        function() {
+                            // THEN
+                            env.assert.editor.editor_content('test2');
+                            done();
+                        }
+                    );
+                }
+            );
+        });
+
         it('WHEN a FinalDraft file is loaded THEN editor is set to its converted content', function(done) {
             // WHEN
             env.scenarios.load_local_file({
