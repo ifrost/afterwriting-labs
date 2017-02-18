@@ -77,9 +77,7 @@ define(function(require) {
         },
 
         _restore: function() {
-            // TODO: move to presenter
-            this.scriptModel.script = this.editorModel.lastContent;
-            this.scriptModel.parse();
+            this.editorController.restoreBeforeSync();
             // TODO: needed? (+)
             // if (active) {
             //     plugin.activate();
@@ -110,7 +108,8 @@ define(function(require) {
         },
         
         _enableSync: function() {
-            this.editorModel.lastContent = this.scriptModel.script;
+            // TODO: Not needed? Already done in controller (+) 
+            this.editorModel.contentBeforeSync = this.scriptModel.script;
             
             var self = this;
             $.prompt("You can start writing in your editor. Content will be synchronized with ’afterwriting! PDF preview, facts and stats will be automatically updated.", {

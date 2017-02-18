@@ -53,7 +53,8 @@ define(function(require) {
         toggleSync: function() {
             this.editorModel.toggleSync();
             if (this.editorModel.isSyncEnabled) {
-                this.editorModel.lastContent = this.scriptModel.script;
+                this.editorModel.lastSyncContent = undefined;
+                this.editorModel.contentBeforeSync = this.scriptModel.script;
                 this.setAutoSave(false);
                 if (this.ioModel.gdFileId) {
                     gd.sync(this.ioModel.gdFileId, 3000, this._handleSync);
@@ -70,22 +71,21 @@ define(function(require) {
                 local.unsync();
             }
         },
+        
+        restoreBeforeSync: function() {
+            this.scriptModel.script = this.editorModel.contentBeforeSync;
+            this.scriptModel.parse();
+        },
 
         _handleSync: function(content) {
             content = converter.to_fountain(content).value;
             if (content === undefined) {
                 this.toggleSync();
-                // if (active) {
-                //     plugin.activate();
-                // }
             }
-            else if (this.editorModel.lastContent !== content) {
+            else if (this.editorModel.lastSyncContent !== content) {
+                this.editorModel.lastSyncContent = content; // kept separately as scriptModel processing may modify newline characters
                 this.scriptModel.script = content;
                 this.scriptModel.parse();
-                //plugin.synced();
-                // if (active) {
-                //     plugin.activate();
-                // }
             }
         },
         

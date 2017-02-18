@@ -33,7 +33,7 @@ define(function(require) {
         });
 
         // Regression
-        it.only('GIVEN a loocal file is loaded WHEN a file is loaded from disk again THEN editor value is set to its content', function(done) {
+        it('GIVEN a local file is loaded WHEN a file is loaded from disk again THEN editor value is set to its content', function(done) {
             // GIVEN
             env.scenarios.load_local_file({name: 'test.fountain', content: 'test'},
                 function() {

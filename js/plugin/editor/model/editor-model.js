@@ -12,14 +12,16 @@ define(function(require) {
         
         isAutoSaveEnabled: false,
         
-        lastContent: '',
+        contentBeforeSync: '',
+        
+        lastSyncContent: '',
         
         cursorPosition: null,
         
         scrollInfo: null,
         
         toggleSync: function() {
-            this.lastContent = '';
+            this.contentBeforeSync = '';
             this.isSyncEnabled = !this.isSyncEnabled;
         }
         
