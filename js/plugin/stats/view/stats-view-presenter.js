@@ -28,11 +28,9 @@ define(function(require) {
             this.view.on('goto', this._goto);
         },
 
-        activate: function() {
-            BaseSectionViewPresenter.activate.call(this);
-
+        _scriptChanged: function() {
             var statsData = {};
-            // editor.synced.add(plugin.refresh);
+
             statsData.days_and_nights = queries.days_and_nights.run(this.scriptModel.parsed_stats.tokens, this.settings.stats_keep_last_scene_time);
             statsData.int_and_ext = queries.int_and_ext.run(this.scriptModel.parsed_stats.tokens);
             statsData.scenes = queries.scene_length.run(this.scriptModel.parsed_stats.tokens, this.settings.stats_keep_last_scene_time);
@@ -43,11 +41,6 @@ define(function(require) {
             statsData.locationsBreakdown = queries.locationsBreakdown.run(this.scriptModel.parsed_stats.tokens, this.settings.print().lines_per_page);
 
             this.view.data = statsData;
-        },
-
-        deactivate: function() {
-            BaseSectionViewPresenter.deactivate.call(this);
-            //editor.synced.remove(plugin.refresh);
         },
 
         _goto: function(line) {

@@ -8,6 +8,7 @@ define(function(require) {
         MonitorAssert = require('acceptance/helper/assert/monitor-assert'),
         PopupAssert = require('acceptance/helper/assert/popup-assert'),
         FactsAssert = require('acceptance/helper/assert/facts-assert'),
+        StatsAssert = require('acceptance/helper/assert/stats-assert'),
         PreviewAssert = require('acceptance/helper/assert/preview-assert'),
         ThemeAssert = require('acceptance/helper/assert/theme-assert');
 
@@ -31,6 +32,8 @@ define(function(require) {
 
         facts: null,
 
+        stats: null,
+
         preview: null,
         
         theme: null,
@@ -43,6 +46,7 @@ define(function(require) {
             this.monitor = MonitorAssert.create(dom, dropbox, ga);
             this.popup = PopupAssert.create(dom, dropbox, ga);
             this.facts = FactsAssert.create(dom, dropbox, ga);
+            this.stats = StatsAssert.create(dom, dropbox, ga);
             this.preview = PreviewAssert.create(dom, dropbox, ga);
             this.theme = ThemeAssert.create(dom, dropbox, ga);
         }
