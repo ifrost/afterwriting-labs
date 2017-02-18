@@ -13,20 +13,10 @@ define(function(require) {
         scriptModel: {
             inject: 'script'
         },
-        
-        activate: function() {
-            BaseSectionViewPresenter.activate.call(this);
-            //editor.synced.add(plugin.refresh);
-            this.refresh();
-        },
-        
-        deactivate: function() {
-            //editor.synced.remove(plugin.refresh);
-        },
-        
+
         _facts: null,
         
-        refresh: function() {
+        _scriptChanged: function() {
             this.view.facts = this._generateData();
             this.view.eachSceneOnNewPage = this.settings.each_scene_on_new_page;
             this.view.primaryCharacters = this._getCharactersByLevel(1);

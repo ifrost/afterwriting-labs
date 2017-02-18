@@ -47,7 +47,7 @@
     "jshint-stylish": "^1.0.0",
     "lodash": "^4.17.4",
     "mocha": "^2.2.1",
-    "protoplast": "^2.0.0-alpha.19",
+    "protoplast": "^2.0.0-alpha.20",
     "sinon": "^1.14.0",
     "text": "requirejs/text"
   },
