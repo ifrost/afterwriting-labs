@@ -78,7 +78,7 @@ define(function(require) {
 
         _restore: function() {
             this.editorController.restoreBeforeSync();
-            // TODO: needed? (+)
+            // TODO: needed? (+++)
             // if (active) {
             //     plugin.activate();
             // }
@@ -102,13 +102,13 @@ define(function(require) {
         },
         
         _editorContentChanged: function() {
-            // TODO: delegate to controller (+)
+            // TODO: delegate to controller (++)
             this.editorModel.pendingChanges = this.scriptModel.script !== this.view.getEditorContent();
             this.scriptModel.script = this.view.getEditorContent();
         },
         
         _enableSync: function() {
-            // TODO: Not needed? Already done in controller (+) 
+            // TODO: Not needed? Already done in controller (+++) 
             this.editorModel.contentBeforeSync = this.scriptModel.script;
             
             var self = this;

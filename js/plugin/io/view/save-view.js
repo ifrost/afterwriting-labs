@@ -29,7 +29,7 @@ define(function(require) {
 
         addInteractions: function() {
 
-            // TODO: make sure plugin's buttons are clicked (other may match the same selector) (+)
+            // TODO: make sure plugin's buttons are clicked (other may match the same selector) (+++)
             $('a[action="save-fountain"]').get(0).onclick = this.dispatch.bind(this, 'save-as-fountain');
             $('a[action="save-dropbox-fountain"]').get(0).onclick = this.dispatch.bind(this, 'dropbox-fountain');
             $('a[action="save-gd-fountain"]').get(0).onclick = this.dispatch.bind(this, 'google-drive-fountain');
@@ -41,7 +41,7 @@ define(function(require) {
 
         _updateOpenFromDropboxVisibility: function() {
             if (this.displayOpenFromDropbox) {
-                // TODO: All the queries should be local, not global (+)
+                // TODO: All the queries should be local, not global (+++)
                 $('a[action="save-dropbox-pdf"], a[action="save-dropbox-fountain"]').parent().show();
             } else {
                 $('a[action="save-dropbox-pdf"], a[action="save-dropbox-fountain"]').parent().hide();
