@@ -110,8 +110,6 @@ define(function(require) {
             env.dropbox.enable();
         });
 
-        it.skip('GIVEN synchronisation is enabled WHEN preview plugin is selected AND content changes THEN stats are refreshed')
-
     });
 
 });

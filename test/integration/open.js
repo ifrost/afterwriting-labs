@@ -77,10 +77,6 @@ define(function (require) {
             ///env.assert.monitor.event_tracked('feature', 'open-googledrive', 'format');
         });
 
-        it.skip('WHEN last used content is loaded THEN synchronisation and auto-save is not available', function() {
-
-        });
-
 
     });
 
