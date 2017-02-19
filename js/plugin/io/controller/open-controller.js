@@ -211,6 +211,9 @@ define(function(require) {
         _setScript: function(value) {
             this._clearLastOpened();
             // TODO: remove dependency to editor (++)
+            // https://github.com/ifrost/afterwriting-labs/issues/40
+            // Encapsulate file related props in File objects (stuff like IoModel.dbPath)
+            // and clean up the editor when file is set (in EditorController)
             this.editorController.cleanUp();
             this.scriptModel.script = value;
             this.themeController.clearSelectedSection();
