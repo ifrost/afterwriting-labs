@@ -1,8 +1,7 @@
 define(function(require) {
 
     var BaseSectionViewPresenter = require('theme/aw-bubble/presenter/base-section-view-presenter'),
-        // TODO: decouple modules (+++)
-        EditorController = require('plugin/editor/controller/editor-controller'),
+        StatsController = require('plugin/stats/controller/stats-controller'),
         queries = require('plugin/stats/model/queries');
 
     var StatsViewPresenter = BaseSectionViewPresenter.extend({
@@ -19,8 +18,8 @@ define(function(require) {
             inject: 'script'
         },
         
-        editorController: {
-            inject: EditorController
+        statsController: {
+            inject: StatsController
         },
 
         init: function() {
@@ -44,7 +43,7 @@ define(function(require) {
         },
 
         _goto: function(line) {
-            this.editorController.goto(line);
+            this.statsController.goto(line);
             this.pub('stats/scene-length/go-to-editor');
         }
 

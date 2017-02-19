@@ -2,6 +2,7 @@ define(function(require) {
 
     var Protoplast = require('protoplast'),
         Plugin = require('core/plugin'),
+        StatsController = require('plugin/stats/controller/stats-controller'),
         FactsSection = require('plugin/stats/model/facts-section'),
         StatsSection = require('plugin/stats/model/stats-section'),
         ThemeController = require('theme/aw-bubble/controller/theme-controller');
@@ -17,7 +18,7 @@ define(function(require) {
         },
 
         $create: function(context) {
-
+            context.register(StatsController.create());
         },
 
         init: function() {
