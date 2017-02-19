@@ -33,7 +33,6 @@ var ClientController = Protoplast.Object.extend({
             this.configLoader.loadFromFile(this.options.ops.config, function (config) {
                 this.settings.fromJSON(config);
                 this.scriptModel.script = text;
-                this.scriptModel.parse();
 
                 if (this.options.ops.pdf) {
                     this._validatePdf(function () {

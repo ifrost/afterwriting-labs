@@ -12,7 +12,6 @@ define(function(require) {
      */
     var BaseSectionPresenter = Protoplast.Object.extend({
 
-        // TODO: data should be parsed when needed, by using computed properties and bindings (++)
         scriptModel: {
             inject: 'script'
         },
@@ -40,7 +39,6 @@ define(function(require) {
          * Called when section is shown. Parses the script, shows the view and initialises script bindings
          */
         activate: function() {
-            this.scriptModel.parse();
             this._scriptBindings = Protoplast.utils.bind(this.scriptModel, 'script', this._scriptChanged);
 
             this.view.show();

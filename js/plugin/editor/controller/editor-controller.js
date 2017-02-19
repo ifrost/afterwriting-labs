@@ -74,7 +74,6 @@ define(function(require) {
         
         restoreBeforeSync: function() {
             this.scriptModel.script = this.editorModel.contentBeforeSync;
-            this.scriptModel.parse();
         },
 
         _handleSync: function(content) {
@@ -85,7 +84,6 @@ define(function(require) {
             else if (this.editorModel.lastSyncContent !== content) {
                 this.editorModel.lastSyncContent = content; // kept separately as scriptModel processing may modify newline characters
                 this.scriptModel.script = content;
-                this.scriptModel.parse();
             }
         },
         

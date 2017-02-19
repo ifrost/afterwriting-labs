@@ -29,7 +29,9 @@ define(function (require) {
             env.assert.facts.number_of_scenes_is(2);
         });
 
+        // TODO: move to facts.js (+)
         it('GIVEN synchronisation is enabled WHEN facts plugin is selected AND content changes THEN facts are refreshed', function(done) {
+
             // GIVEN
             env.scenarios.load_dropbox_file({
                 name: 'file.fountain',

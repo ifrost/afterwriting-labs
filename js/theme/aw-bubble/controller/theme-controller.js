@@ -26,7 +26,7 @@ define(function(require) {
         },
 
         clearSelectedSection: function() {
-            this.selectSection(undefined);
+            this.selectSection(null);
         },
         
         toggleExpanded: function() {
