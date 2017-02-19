@@ -13,21 +13,6 @@ define(function (require) {
         afterEach(function() {
             env.destroy();
         });
-        
-        it('GIVEN a script WHEN content changes AND facts plugin is selected THEN stats are refreshed', function() {
-            // GIVEN 
-            env.scenarios.create_new_script('INT. TEST');
-            env.user.theme.open_plugin('facts');
-            env.assert.facts.number_of_scenes_is(1);
-            
-            // WHEN
-            env.user.theme.open_plugin('editor');
-            env.user.editor.set_editor_content('INT. TEST\n\nINT. TEST');
-
-            // THEN
-            env.user.theme.open_plugin('facts');
-            env.assert.facts.number_of_scenes_is(2);
-        });
 
         it('GIVEN synchronisation is enabled WHEN stats plugin is selected AND content changes THEN stats are refreshed', function(done) {
             // GIVEN
