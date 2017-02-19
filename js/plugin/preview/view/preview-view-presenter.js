@@ -10,12 +10,9 @@ define(function(require) {
         },
 
         _scriptChanged: function() {
-            // TODO: why timeout? (++++)
-            setTimeout(function() {
-                this.previewController.getPdf(function(result) {
-                    this.view.pdf = result;
-                }.bind(this));
-            }.bind(this), 0);
+            this.previewController.getPdf(function(result) {
+                this.view.pdf = result;
+            }.bind(this));
         }
 
     });
