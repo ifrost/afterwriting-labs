@@ -75,6 +75,18 @@ define(function(require) {
                 // THEN
                 env.assert.monitor.event_tracked('feature', 'open-last-used', 'manual');
             });
+
+            it('GIVEN open last used is selected WHEN app is reloaded THEN  feature/open-last-used/startup event is tracked', function() {
+                // GIVEN
+                env.scenarios.create_new_script('Title: Test Script');
+                env.user.settings.select_open_last_used_on_startup('Title: Test Script');
+
+                // WHEN
+                env.refresh();
+                
+                // THEN
+                env.assert.monitor.event_tracked('feature', 'open-last-used', 'startup');
+            });
         });
         
     });

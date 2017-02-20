@@ -25,33 +25,28 @@ define(function(require) {
             inject: ThemeController
         },
 
-        init: function() {
-            this._loadSettings();
-        },
-
         updateValue: function(key, value) {
             this.settings[key] = value;
         },
 
-        // TODO: unused?
-        setValues: function(map) {
-            for (var key in map) {
-                if (map.hasOwnProperty(key)) {
-                    this.updateValue(key, map[key]);
-                }
+        /**
+         * Load settings. It's run on app/init; can't be part of initialisation as
+         * some modules (e.g. OpenController) may add binding only on init method,
+         * which may happen after init of SettingsController
+         */
+        _loadSettings: {
+            sub: 'app/init',
+            value: function() {
+                var userSettings =  this.storage.getItem('settings');
+                this.settings.fromJSON(userSettings || {});
+                this.settingsLoaderModel.userSettingsLoaded = true;
+                this.settings.on('changed', this._saveCurrentSettings, this);
+
+                Protoplast.utils.bind(this, {
+                    'settings.night_mode': this.themeController.nightMode,
+                    'settings.show_background_image': this.themeController.showBackgroundImage
+                })
             }
-        },
-
-        _loadSettings: function() {
-            var userSettings =  this.storage.getItem('settings');
-            this.settings.fromJSON(userSettings || {});
-            this.settingsLoaderModel.userSettingsLoaded = true;
-            this.settings.on('changed', this._saveCurrentSettings, this);
-
-            Protoplast.utils.bind(this, {
-                'settings.night_mode': this.themeController.nightMode,
-                'settings.show_background_image': this.themeController.showBackgroundImage
-            })
         },
 
         _saveCurrentSettings: function() {

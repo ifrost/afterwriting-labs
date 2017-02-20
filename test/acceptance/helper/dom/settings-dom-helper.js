@@ -11,6 +11,11 @@ define(function(require) {
         $night_mode: 'input[data-id="night_mode"]',
 
         /**
+         * Load last opened on startup checkbox
+         */
+        $load_last_opened: 'input[data-id="load_last_opened"]',
+
+        /**
          * JavaScript PDF Viewer checkbox
          */
         $js_pdf_viewer: 'input[data-id="pdfjs_viewer"]',

@@ -33,7 +33,7 @@ define(function(require) {
             env.assert.theme.night_mode_is_enabled(false);
         });
         
-        it('GIVEN no custom settings are set WHEN settings plugin is selected THEN default values are selected', function() {
+        it.skip('GIVEN no custom settings are set WHEN settings plugin is selected THEN default values are selected', function() {
             
         });
 

@@ -9,6 +9,13 @@ define(function(require) {
          */
         select_night_mode: function() {
             this.click(this.dom.settings.$night_mode);
+        },
+
+        /**
+         * Select checkbox for opening last used content on startup
+         */
+        select_open_last_used_on_startup: function() {
+            this.click(this.dom.settings.$load_last_opened);
         }
         
     });
