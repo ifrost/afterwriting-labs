@@ -68,8 +68,7 @@ define(function(require) {
                 });
             });
 
-            // TODO: test asserting editor's content (+++)
-            it.only('WHEN open last used in selected THEN feature/open-last-used/manual event is traced', function() {
+            it('WHEN open last used in selected THEN feature/open-last-used/manual event is traced', function() {
                 // WHEN
                 env.user.open.open_last_used();
 
