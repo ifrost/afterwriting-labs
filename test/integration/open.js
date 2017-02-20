@@ -52,6 +52,7 @@ define(function (require) {
 
             // WHEN
             context.build();
+            context._objects.pub('app/init');
 
             // THEN
             chai.assert.strictEqual(scriptModel.script, 'Script');
@@ -63,6 +64,7 @@ define(function (require) {
 
             // WHEN
             context.build();
+            context._objects.pub('app/init');
 
             // THEN
             chai.assert.isUndefined(scriptModel.script);
