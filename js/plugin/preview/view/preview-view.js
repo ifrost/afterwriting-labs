@@ -3,19 +3,19 @@ define(function(require) {
     var template = require('text!plugin/preview/view/preview.hbs'),
         $ = require('jquery'),
         Protoplast = require('protoplast'),
-        HandlebarComponent = require('utils/handlebar-component'),
+        BaseComponent = require('core/view/base-component'),
         SectionViewMixin = require('theme/aw-bubble/view/section-view-mixin'),
         PreviewViewPresenter = require('plugin/preview/view/preview-view-presenter'),
         pdfjs_viewer = require('utils/pdfjsviewer');
-    
-    return HandlebarComponent.extend([SectionViewMixin], {
+
+    return BaseComponent.extend([SectionViewMixin], {
 
         hbs: template,
-        
+
         settings: {
             inject: 'settings'
         },
-        
+
         // TODO: remove direct references in views? (+)
         scriptModel: {
             inject: 'script'
@@ -26,11 +26,21 @@ define(function(require) {
         },
 
         pdf: null,
-        
-        init: function() {
+
+        addBindings: function() {
             Protoplast.utils.bind(this, 'pdf', this._renderPdf);
         },
-        
+
+        addInteractions: function() {
+            this.root.style.height = '100%';
+
+            $('#next').click(pdfjs_viewer.next);
+            $('#prev').click(pdfjs_viewer.prev);
+            $('#zoomin').click(pdfjs_viewer.zoomin);
+            $('#zoomout').click(pdfjs_viewer.zoomout);
+            pdfjs_viewer.set_container(document.getElementById('pdfjs-viewer'));
+        },
+
         _renderPdf: function(result) {
             if (result) {
                 $("#pdf-preview-iframe-container p").remove();
@@ -44,7 +54,7 @@ define(function(require) {
                 $("#pdf-preview-iframe").remove();
             }
         },
-        
+
         show: function() {
             if (this.settings.pdfjs_viewer) {
                 $('#pdf-preview-iframe-container').hide();
@@ -57,19 +67,9 @@ define(function(require) {
 
             $('#pdf-preview-iframe-container').html('<p>Loading preview...</p><embed id="pdf-preview-iframe" style="height: 100%; width: 100%; display:none"  type="application/pdf"></embed>');
         },
-        
+
         hide: function() {
             this.pdf = null;
-        },
-        
-        addInteractions: function() {
-            this.root.style.height = '100%';
-
-            $('#next').click(pdfjs_viewer.next);
-            $('#prev').click(pdfjs_viewer.prev);
-            $('#zoomin').click(pdfjs_viewer.zoomin);
-            $('#zoomout').click(pdfjs_viewer.zoomout);
-            pdfjs_viewer.set_container(document.getElementById('pdfjs-viewer'));
         }
 
     });
