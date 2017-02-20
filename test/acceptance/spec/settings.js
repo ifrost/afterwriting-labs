@@ -32,9 +32,27 @@ define(function(require) {
             // THEN
             env.assert.theme.night_mode_is_enabled(false);
         });
-        
-        it.skip('GIVEN no custom settings are set WHEN settings plugin is selected THEN default values are selected', function() {
-            
+
+        it('GIVEN default settings WHEN an option changes AND app is refresh THEN settings are saved', function() {
+            // GIVEN
+            env.scenarios.create_new_script('test');
+            env.user.theme.open_plugin('settings');
+
+            // WHEN
+            env.assert.theme.night_mode_is_enabled(false);
+            env.user.settings.select_night_mode();
+            env.assert.theme.night_mode_is_enabled(true);
+
+
+            // AND
+            env.refresh();
+
+            // THEN
+            env.scenarios.create_new_script('test');
+            env.user.theme.open_plugin('settings');
+            env.assert.theme.night_mode_is_enabled(true);
+
+            env.user.settings.select_night_mode();
         });
 
     });
