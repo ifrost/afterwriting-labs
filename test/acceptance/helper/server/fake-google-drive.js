@@ -17,8 +17,13 @@ define(function(require) {
 
         enabled: true,
 
-        $create: function() {
+        files: null,
 
+        contents: null,
+
+        $create: function() {
+            this.files = {};
+            this.contents = {};
         },
 
         enable: function() {
@@ -46,16 +51,60 @@ define(function(require) {
             window.gapi.auth.commitInit();
         },
 
+        has_file: function(file) {
+            var id = '/' + file.name;
+            this.contents[id] = file.content;
+
+            this.files[id] = {
+                alternateLink: '#',
+                downloadUrl: 'https://fake-google-drive/' + id,
+                editable: true,
+                id: id,
+                kind: 'drive#file',
+                parents: [],
+                explicitlyTrashed: false,
+                userPermission: {
+                    role: 'owner'
+                },
+                title: file.name,
+                spaces: ['drive'],
+                labels: []
+            };
+        },
+
         restore: function() {
             gd.init = this.gdInit.bind(gd);
         },
 
+        file_details: {
+            url: /drive\/v2\/files\/(.+)/,
+            method: 'GET',
+            value: function(xhr, id) {
+                return JSON.stringify(this.files[id]);
+            }
+        },
+
+        file_content: {
+            url: /https:\/\/fake-google-drive\/(.*)/,
+            method: 'GET',
+            content_type: 'plain/text',
+            value: function(xhr, id) {
+                return this.contents[id];
+            }
+        },
+
         file_list: {
-            url: /drive\/v2\/files/,
+            url: /drive\/v2\/files\/$/,
             method: 'GET',
             value: function() {
+                var files = [];
+                for (var file in this.files) {
+                    if (this.files.hasOwnProperty(file)) {
+                        files.push(this.files[file]);
+                    }
+                }
                 return JSON.stringify({
-                    items: []
+                    items: files
                 });
             }
         }

@@ -27,6 +27,11 @@ define(function(require) {
                     if (response) {
                         callback(response);
                     }
+                },
+                execute: function(callback) {
+                    if (response) {
+                        callback(response.result);
+                    }
                 }
             }
         }

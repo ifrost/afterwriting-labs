@@ -68,6 +68,18 @@ define(function(require) {
                 });
             });
 
+            it('WHEN a file is opened from GoogleDrive THEN feature/open-dropbox event is tracked AND format is passed', function(done) {
+                // WHEN
+                env.scenarios.load_google_drive_file({
+                    name: 'file.fountain',
+                    content: 'test content'
+                }, function() {
+                    // THEN
+                    env.assert.monitor.event_tracked('feature', 'open-googledrive', 'fountain');
+                    done();
+                });
+            });
+
             it('WHEN open last used in selected THEN feature/open-last-used/manual event is traced', function() {
                 // WHEN
                 env.user.open.open_last_used();

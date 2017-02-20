@@ -27,10 +27,10 @@ define(function(require) {
                 callback();
             });
         },
-        
+
         load_dropbox_file: function(file, callback) {
             var env = this.env;
-            
+
             env.dropbox.has_file(file);
             env.user.theme.open_plugin('open');
 
@@ -40,6 +40,26 @@ define(function(require) {
             env.user.popup.select_file(file.name);
             env.user.popup.confirm_popup();
 
+            env.browser.read_files(function() {
+                env.browser.tick(3000);
+                callback();
+            });
+        },
+
+        load_google_drive_file: function(file, callback) {
+            var env = this.env;
+
+            env.google_drive.has_file(file);
+            env.user.theme.open_plugin('open');
+
+            env.user.open.open_from_googledrive();
+            env.google_drive.auth_google_drive();
+            env.browser.tick(3000);
+            env.user.popup.select_file(file.name);
+            env.user.popup.confirm_popup();
+            env.google_drive.auth_google_drive();
+            env.browser.tick(3000);
+            
             env.browser.read_files(function() {
                 env.browser.tick(3000);
                 callback();
