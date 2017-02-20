@@ -2,7 +2,6 @@ define(function(require) {
 
     var Protoplast = require('protoplast'),
         template = require('text!plugin/io/view/save.hbs'),
-        $ = require('jquery'),
         BaseComponent = require('core/view/base-component'),
         SectionViewMixin = require('theme/aw-bubble/view/section-view-mixin'),
         SaveViewPresenter = require('plugin/io/view/save-view-presenter');
@@ -19,6 +18,18 @@ define(function(require) {
 
         displayOpenFromGoogleDrive: false,
 
+        $saveFountainLocally: null,
+
+        $saveFountainDropbox: null,
+
+        $saveFountainGoogleDrive: null,
+
+        $savePdfLocally: null,
+
+        $savePdfDropbox: null,
+
+        $savePdfGoogleDrive: null,
+
         addBindings: function() {
             Protoplast.utils.bind(this, {
                 displayOpenFromDropbox: this._updateOpenFromDropboxVisibility,
@@ -28,30 +39,32 @@ define(function(require) {
 
         addInteractions: function() {
 
-            // TODO: make sure plugin's buttons are clicked (other may match the same selector) (+++)
-            $('a[action="save-fountain"]').get(0).onclick = this.dispatch.bind(this, 'save-as-fountain');
-            $('a[action="save-dropbox-fountain"]').get(0).onclick = this.dispatch.bind(this, 'dropbox-fountain');
-            $('a[action="save-gd-fountain"]').get(0).onclick = this.dispatch.bind(this, 'google-drive-fountain');
+            this.onClick(this.$saveFountainLocally, this.dispatch.bind(this, 'save-as-fountain'));
+            this.onClick(this.$saveFountainDropbox, this.dispatch.bind(this, 'dropbox-fountain'));
+            this.onClick(this.$saveFountainGoogleDrive, this.dispatch.bind(this, 'google-drive-fountain'));
 
-            $('a[action="save-pdf"]').get(0).onclick = this.dispatch.bind(this, 'save-as-pdf');
-            $('a[action="save-dropbox-pdf"]').get(0).onclick = this.dispatch.bind(this, 'dropbox-pdf');
-            $('a[action="save-gd-pdf"]').get(0).onclick = this.dispatch.bind(this, 'google-drive-pdf');
+            this.onClick(this.$savePdfLocally, this.dispatch.bind(this, 'save-as-pdf'));
+            this.onClick(this.$savePdfDropbox, this.dispatch.bind(this, 'dropbox-pdf'));
+            this.onClick(this.$savePdfGoogleDrive, this.dispatch.bind(this, 'google-drive-pdf'));
         },
 
         _updateOpenFromDropboxVisibility: function() {
             if (this.displayOpenFromDropbox) {
-                // TODO: All the queries should be local, not global (+++)
-                $('a[action="save-dropbox-pdf"], a[action="save-dropbox-fountain"]').parent().show();
+                this.$saveFountainDropbox.parent().show();
+                this.$savePdfDropbox.parent().show();
             } else {
-                $('a[action="save-dropbox-pdf"], a[action="save-dropbox-fountain"]').parent().hide();
+                this.$saveFountainDropbox.parent().hide();
+                this.$savePdfDropbox.parent().hide();
             }
         },
 
         _updateOpenFromGoogleDriveVisibility: function() {
             if (this.displayOpenFromGoogleDrive) {
-                $('a[action="save-gd-pdf"], a[action="save-gd-fountain"]').parent().show();
+                this.$saveFountainGoogleDrive.parent().show();
+                this.$savePdfGoogleDrive.parent().show();
             } else {
-                $('a[action="save-gd-pdf"], a[action="save-gd-fountain"]').parent().hide();
+                this.$saveFountainGoogleDrive.parent().hide();
+                this.$savePdfGoogleDrive.parent().hide();
             }
         }
 
