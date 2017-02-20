@@ -25,7 +25,7 @@ define(function(require) {
             this.switchToOpen.sectionName = 'open';
             this.switchToOpen.title = 'samples';
             
-            this.onClick(this.$downloadLink).click(this.dispatch.bind(this, 'download-clicked'));
+            this.onClick(this.$downloadLink, this.dispatch.bind(this, 'download-clicked'));
         }
 
     });
