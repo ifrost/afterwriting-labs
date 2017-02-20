@@ -4,11 +4,11 @@ define(function(require) {
         template = require('text!plugin/stats/view/facts.hbs'),
         $ = require('jquery'),
         helper = require('utils/helper'),
-        HandlebarComponent = require('utils/handlebar-component'),
+        BaseComponent = require('core/view/base-component'),
         FactsViewPresenter = require('plugin/stats/view/facts-view-presenter'),
         SectionViewMixin = require('theme/aw-bubble/view/section-view-mixin');
 
-    return HandlebarComponent.extend([SectionViewMixin], {
+    return BaseComponent.extend([SectionViewMixin], {
 
         $meta: {
             presenter: FactsViewPresenter
@@ -24,11 +24,11 @@ define(function(require) {
 
         secondaryCharacters: null,
 
-        $create: function(){
+        $create: function() {
             this.primaryCharacters = [];
             this.secondaryCharacters = [];
         },
-        
+
         addInteractions: function() {
             Protoplast.utils.bind(this, 'facts', this._updateFacts);
             Protoplast.utils.bind(this, 'primaryCharacters', this._updatePrimaryCharacters);
@@ -59,7 +59,7 @@ define(function(require) {
                 });
             });
         },
-        
+
         _updateFacts: function() {
 
             if (!this.facts) {
