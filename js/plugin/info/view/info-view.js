@@ -19,11 +19,13 @@ define(function(require) {
         
         hbs: template,
 
+        $downloadLink: null,
+
         addInteractions: function() {
             this.switchToOpen.sectionName = 'open';
             this.switchToOpen.title = 'samples';
             
-            $('#download-link').click(this.dispatch.bind(this, 'download-clicked'));
+            this.onClick(this.$downloadLink).click(this.dispatch.bind(this, 'download-clicked'));
         }
 
     });
