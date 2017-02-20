@@ -15,7 +15,6 @@ define(function(require) {
 
         _selectors: null,
 
-
         $create: function() {
             this._selectors = Protoplast.Collection.create();
             if (this.hbs) {

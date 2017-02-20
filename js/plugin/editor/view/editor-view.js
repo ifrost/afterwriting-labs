@@ -5,7 +5,7 @@ define(function(require) {
         Protoplast = require('protoplast'),
         cm = require('libs/codemirror/lib/codemirror'),
         EditorViewPresenter = require('plugin/editor/view/editor-view-presenter'),
-        HandlebarComponent = require('utils/handlebar-component'),
+        BaseComponent = require('core/view/base-component'),
         SectionViewMixin = require('theme/aw-bubble/view/section-view-mixin');
 
     require('libs/codemirror/addon/selection/active-line');
@@ -13,7 +13,7 @@ define(function(require) {
     require('libs/codemirror/addon/hint/anyword-hint');
     require('utils/fountain/cmmode');
 
-    return HandlebarComponent.extend([SectionViewMixin], {
+    return BaseComponent.extend([SectionViewMixin], {
 
         $meta: {
             presenter: EditorViewPresenter
@@ -39,7 +39,7 @@ define(function(require) {
         
         syncOffIcon: 'gfx/icons/other/no-sync.svg',
 
-        init: function() {
+        addBindings: function() {
             Protoplast.utils.bind(this, {
                 isSyncEnabled: this._updateSync,
                 isAutoSaveEnabled: this._updateAutoSave,
@@ -50,6 +50,34 @@ define(function(require) {
                 content: this._updateContent
             });
 
+        },
+        
+        addInteractions: function() {
+            this.editor = this.createEditor();
+
+            //  Set content if it had been set before (e.g. when loading last used script)
+            if (this.content) {
+                this._updateContent();
+            }
+
+            this.editor.on('change', function () {
+                this.dispatch('editorContentChanged');
+            }.bind(this));
+
+            $('a[action="sync-fountain"]').click(function() {
+                if (this.isSyncEnabled) {
+                    this.dispatch('disableSync');
+                }
+                else {
+                    this.dispatch('enableSync');
+                }
+            }.bind(this));
+
+            $('a[action="auto-save"]').click(function() {
+                this.dispatch('toggleAutoSave');
+            }.bind(this));
+
+//            $(window).resize(this._resize);
         },
 
         createEditor: function() {
@@ -85,6 +113,11 @@ define(function(require) {
         
         getDefaultTextHeight: function() {
             return this.editor.defaultTextHeight();
+        },
+
+        updateSize: function() {
+            this.editor.setSize("auto", $(this.root.parentNode).height() - 20);
+            this.editor.refresh();
         },
         
         _updateContent: function() {
@@ -148,41 +181,8 @@ define(function(require) {
         
         getEditorContent: function() {
             return this.editor.getValue();
-        },
-
-        addInteractions: function() {
-            this.editor = this.createEditor();
-            
-            //  Set content if it had been set before (e.g. when loading last used script)
-            if (this.content) {
-                this._updateContent();
-            }
-
-            this.editor.on('change', function () {
-                this.dispatch('editorContentChanged');
-            }.bind(this));
-            
-            $('a[action="sync-fountain"]').click(function() {
-                if (this.isSyncEnabled) {
-                    this.dispatch('disableSync');
-                }
-                else {
-                    this.dispatch('enableSync');
-                }
-            }.bind(this));
-
-            $('a[action="auto-save"]').click(function() {
-                this.dispatch('toggleAutoSave');
-            }.bind(this));
-            
-            var resize = function() {
-                this.editor.setSize("auto", $(this.root.parentNode).height() - 70);
-                this.editor.refresh();
-            }.bind(this);
-
-            resize();
-            $(window).resize(resize);
         }
+
     });
 });
 

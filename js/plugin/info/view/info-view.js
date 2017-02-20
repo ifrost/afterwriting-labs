@@ -4,9 +4,10 @@ define(function(require) {
         $ = require('jquery'),
         InfoViewPresenter = require('plugin/info/view/info-view-presenter'),
         HandlebarComponent = require('utils/handlebar-component'),
+        SectionViewMixin = require('theme/aw-bubble/view/section-view-mixin'),
         Switcher = require('theme/aw-bubble/view/switcher');
     
-    return HandlebarComponent.extend({
+    return HandlebarComponent.extend([SectionViewMixin], {
 
         $meta: {
             presenter: InfoViewPresenter

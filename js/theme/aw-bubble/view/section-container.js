@@ -85,8 +85,15 @@ define(function(require) {
         },
 
         updateHeight: function() {
-            this.$root.height((this.themeModel.height - this.bottomPadding) + 'px');
-            this.contentParent.root.style.height = ($(this.root).height() - $(this.contentParent.root).position().top) + 'px';
+            if (this.section.isFullyVisible) {
+                
+                this.$root.height((this.themeModel.height - this.bottomPadding) + 'px');
+                this.contentParent.root.style.height = ($(this.root).height() - $(this.contentParent.root).position().top) + 'px';
+                
+                if (this.section.mainContent) {
+                    this.section.mainContent.updateSize();
+                }
+            }
         },
         
         fadeIn: function(callback) {

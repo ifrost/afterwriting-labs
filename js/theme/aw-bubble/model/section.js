@@ -21,6 +21,8 @@ define(function(require) {
 
         /**
          * Main content plugin
+         * 
+         * @type {SectionViewMixin}
          */
         mainContent: null,
         
