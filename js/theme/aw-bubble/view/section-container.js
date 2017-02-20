@@ -11,7 +11,7 @@ define(function(require) {
             presenter: SectionContainerPresenter
         },
         
-        html: '<div style="overflow: hidden; position: relative">' +
+        html: '<div style="overflow: hidden; position: relative; height: 100px">' +
         '<h1 style="float: left; border-bottom: 1px dashed lightgray"><span data-prop="title"></span>&nbsp;<span data-prop="infoIcon" class="info-icon"/></h1>' +
         '<div data-comp="toolsParent"></div>' +
         '<p data-prop="description" class="info-content" style="display: none; clear: both"></p>' +
@@ -89,7 +89,6 @@ define(function(require) {
                 
                 this.$root.height((this.themeModel.height - this.bottomPadding) + 'px');
                 this.contentParent.root.style.height = ($(this.root).height() - $(this.contentParent.root).position().top) + 'px';
-                
                 if (this.section.mainContent) {
                     this.section.mainContent.updateSize();
                 }
@@ -125,7 +124,6 @@ define(function(require) {
                 this.$root.attr('plugin', this.section.name);
                 this.$root.addClass('plugin-content', this.section.name);
                 this.contentParent.add(this.section.mainContent);
-                this.updateHeight();
             }
         },
 

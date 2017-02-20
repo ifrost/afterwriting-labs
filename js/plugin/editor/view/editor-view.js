@@ -77,7 +77,6 @@ define(function(require) {
                 this.dispatch('toggleAutoSave');
             }.bind(this));
 
-//            $(window).resize(this._resize);
         },
 
         createEditor: function() {
