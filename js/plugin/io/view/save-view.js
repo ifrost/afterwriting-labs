@@ -3,11 +3,11 @@ define(function(require) {
     var Protoplast = require('protoplast'),
         template = require('text!plugin/io/view/save.hbs'),
         $ = require('jquery'),
-        HandlebarComponent = require('utils/handlebar-component'),
+        BaseComponent = require('core/view/base-component'),
         SectionViewMixin = require('theme/aw-bubble/view/section-view-mixin'),
         SaveViewPresenter = require('plugin/io/view/save-view-presenter');
     
-    return HandlebarComponent.extend([SectionViewMixin], {
+    return BaseComponent.extend([SectionViewMixin], {
 
         $meta: {
             presenter: SaveViewPresenter
@@ -19,8 +19,7 @@ define(function(require) {
 
         displayOpenFromGoogleDrive: false,
 
-        init: function() {
-            HandlebarComponent.init.call(this);
+        addBindings: function() {
             Protoplast.utils.bind(this, {
                 displayOpenFromDropbox: this._updateOpenFromDropboxVisibility,
                 displayOpenFromGoogleDrive: this._updateOpenFromGoogleDriveVisibility
