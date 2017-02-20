@@ -15,14 +15,14 @@ define(function(require) {
         StatsViewPresenter = require('plugin/stats/view/stats-view-presenter'),
         ThemeModel = require('theme/aw-bubble/model/theme-model'),
         ThemeController = require('theme/aw-bubble/controller/theme-controller'),
-        HandlebarComponent = require('utils/handlebar-component');
+        BaseComponent = require('core/view/base-component');
 
-    return HandlebarComponent.extend([SectionViewMixin], {
+    return BaseComponent.extend([SectionViewMixin], {
 
         $meta: {
             presenter: StatsViewPresenter
         },
-        
+
         hbs: template,
 
         themeController: {
@@ -49,8 +49,8 @@ define(function(require) {
         sceneLengthHeader: {
             component: Header
         },
-        
-        locationsBreakdownHeader:{
+
+        locationsBreakdownHeader: {
             component: Header
         },
 
@@ -81,7 +81,7 @@ define(function(require) {
         locationsBreakdown: null,
 
         init: function() {
-            Protoplast.utils.bind(this, 'data', this._render);
+            BaseComponent.init.call(this);
 
             this.spiderChart = SpiderChart;
             this.barChart = BarChart;
@@ -119,9 +119,13 @@ define(function(require) {
             this.intVsExtHeader.description = "Pie chart representing interior vs exterior scenes breakdown. Hover over sections to see number of int/ext scenes.";
         },
 
+        addBindings: function() {
+            Protoplast.utils.bind(this, 'data', this._render);
+        },
+
         addInteractions: function() {
             var themeModel = this.themeModel;
-            
+
             $('#stats-scene-length-type').on('change', this._render);
 
             Protoplast.utils.bind(themeModel, 'expanded', function() {
@@ -130,16 +134,16 @@ define(function(require) {
                 }
             }.bind(this));
         },
-        
+
         _render: function() {
 
             var themeController = this.themeController;
             var themeModel = this.themeModel;
-            
+
             if (!this.data) {
                 return;
             }
-            
+
             this.spiderChart.render('#who-with-who', this.data.who_with_who.characters, this.data.who_with_who.links, {
                 label: 'name'
             });
@@ -273,7 +277,7 @@ define(function(require) {
             });
 
         },
-        
+
         _goto: function(position) {
             this.dispatch('goto', position);
         }
