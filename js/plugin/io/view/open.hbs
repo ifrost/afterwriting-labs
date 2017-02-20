@@ -1,19 +1,19 @@
 <ul class="no-bullets">
 	<li>
 		<img src="gfx/icons/other/new.svg" class="icon" />
-		<a href="#" open-action="new">Create new</a>
+		<a href="#" open-action="new" data-prop="$openNew">Create new</a>
 	</li>
 	<li>
 		<img src="gfx/icons/other/load.svg" class="icon" />
-		<a href="#" open-action="open">Load file</a>
+		<a href="#" open-action="open" data-prop="$openLocalFile">Load file</a>
 	</li>
 	<li>
 		<img src="gfx/icons/other/dropbox.svg" class="icon" />
-		<a href="#" open-action="dropbox">Open from Dropbox</a>
+		<a href="#" open-action="dropbox" data-prop="$openDropboxFile">Open from Dropbox</a>
 	</li>
 	<li>
 		<img src="gfx/icons/other/gd.svg" class="icon" />
-		<a href="#" open-action="googledrive">Open from Google Drive</a>
+		<a href="#" open-action="googledrive" data-prop="$openGoogleDriveFile">Open from Google Drive</a>
 	</li>
 	<li class="last-used" data-prop="$lastUsed">
 		<img src="gfx/icons/other/reuse.svg" class="icon" />Last editor's content:&nbsp;
@@ -33,4 +33,4 @@
 			<i>Printing Trouble</i>
 		</a>&nbsp;by Dan Rahmel</li>
 </ul>
-<div id="open-file-wrapper"></div>
+<div id="open-file-wrapper" data-prop="$fileWrapper"></div>

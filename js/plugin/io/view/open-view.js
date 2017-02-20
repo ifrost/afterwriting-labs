@@ -21,6 +21,14 @@ define(function(require) {
 
         displayOpenFromGoogleDrive: false,
 
+        $openNew: null,
+
+        $openLocalFile: null,
+
+        $openDropboxFile: null,
+
+        $openGoogleDriveFile: null,
+
         $create: function() {
             this.$lastUsed.hide();
         },
@@ -37,22 +45,22 @@ define(function(require) {
 
             var self = this;
 
-            $('a[open-action="new"]').click(self.dispatch.bind(this, 'create-new'));
+            this.$openNew.click(self.dispatch.bind(this, 'create-new'));
             
-            $('a[open-action="sample"]').click(function() {
+            this.$root.find('a[open-action="sample"]').click(function() {
                 var name = $(this).attr('value');
                 self.dispatch('open-sample', name);
             });
 
-            this.onClick('a[open-action="last"]', self.dispatch.bind(this, 'open-last-used'));
-            this.onClick('a[open-action="dropbox"]', self.dispatch.bind(this, 'open-from-dropbox'));
-            this.onClick('a[open-action="googledrive"]', self.dispatch.bind(this, 'open-from-google-drive'));
+            this.onClick(this.$lastUsedTitle, self.dispatch.bind(this, 'open-last-used'));
+            this.onClick(this.$openDropboxFile, self.dispatch.bind(this, 'open-from-dropbox'));
+            this.onClick(this.$openGoogleDriveFile, self.dispatch.bind(this, 'open-from-google-drive'));
 
             this._resetFileInput();
 
-            this.onClick('a[open-action="open"]', function() {
+            this.onClick(this.$openLocalFile, function() {
                 this.dispatch('open-file-dialog');
-                $("#open-file").click();
+                this.$root.find("#open-file").click();
             }.bind(this));
         },
 
@@ -62,12 +70,14 @@ define(function(require) {
 
         $lastUsedDate: null,
 
+        $fileWrapper: null,
+
         _resetFileInput: function() {
-            $('#open-file-wrapper').empty()
+            this.$fileWrapper.empty()
                 .html('<input id="open-file" type="file" style="display:none" />');
 
-            $("#open-file").change(function() {
-                var selected_file = $('#open-file').get(0).files.item(0);
+            this.$root.find("#open-file").change(function() {
+                var selected_file = this.$root.find('#open-file').get(0).files.item(0);
                 this.dispatch('open-file', selected_file);
                 this._resetFileInput();
             }.bind(this));
@@ -75,17 +85,17 @@ define(function(require) {
 
         _updateOpenFromDropboxVisibility: function() {
             if (this.displayOpenFromDropbox) {
-                $('a[open-action="dropbox"]').parent().show();
+                this.$openDropboxFile.parent().show();
             } else {
-                $('a[open-action="dropbox"]').parent().hide();
+                this.$openDropboxFile.parent().hide();
             }
         },
 
         _updateOpenFromGoogleDriveVisibility: function() {
             if (this.displayOpenFromGoogleDrive) {
-                $('a[open-action="googledrive"]').parent().show();
+                this.$openGoogleDriveFile.parent().show();
             } else {
-                $('a[open-action="googledrive"]').parent().hide();
+                this.$openGoogleDriveFile.parent().hide();
             }
         },
 
