@@ -5,6 +5,8 @@ define(function(require) {
         ThemeController = require('theme/aw-bubble/controller/theme-controller'),
         AppController = require('core/controller/app-controller'),
         AppModel = require('core/model/app-model'),
+        Storage = require('core/model/storage'),
+        GoogleAnalyticsMonitor = require('core/controller/google-analytics-monitor'),
         InfoPlugin = require('plugin/info/info-plugin'),
         IoPlugin = require('plugin/io/io-plugin'),
         EditorPlugin = require('plugin/editor/editor-plugin'),
@@ -14,12 +16,22 @@ define(function(require) {
         MonitorPlugin = require('plugin/monitor/monitor-plugin'),
         AppView = require('view/app-view');
 
+    /**
+     * Application Config, contains Core Config + Theme + Plugins
+     *
+     * The order in the menu is defined by sort passed to the theme.
+     * 
+     * @alias AppConfig
+     */
     var AppConfig = CoreConfig.extend({
 
         MainView: {
             value: AppView
         },
 
+        /**
+         * Order in which sections are organised in the menu
+         */
         sectionsOrder: ['info', 'open', 'settings', 'editor', 'save', 'preview', 'facts', 'stats'],
         
         init: function(context) {
@@ -32,6 +44,8 @@ define(function(require) {
             context.register(ThemeController.create());
             context.register(AppController.create());
             context.register('appModel', AppModel.create());
+            context.register('monitor', GoogleAnalyticsMonitor.create());
+            context.register('storage', Storage.create());
 
             context.register(InfoPlugin.create(context));
             context.register(IoPlugin.create(context));
