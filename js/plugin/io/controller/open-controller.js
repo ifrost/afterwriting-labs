@@ -157,20 +157,12 @@ define(function(require) {
             this.ioModel.gdLink = item.alternateLink;
             this.ioModel.gdFileId = item.id;
             this.ioModel.fileName = '';
-            // TODO: needed? (+++)
-            // if (editor.is_active) {
-            //     editor.activate(); // refresj
-            // }
         },
 
         _savedToDropbox: function(path) {
             this._clearLastOpened();
             this.ioModel.dbPath = path;
             this.ioModel.fileName = '';
-            // TODO: needed? (+++)
-            // if (editor.is_active) {
-            //     editor.activate(); // refresh
-            // }
         },
 
         _openFromCloud: function (client, back_callback, load_callback) {

@@ -78,10 +78,6 @@ define(function(require) {
 
         _restore: function() {
             this.editorController.restoreBeforeSync();
-            // TODO: needed? (+++)
-            // if (active) {
-            //     plugin.activate();
-            // }
         },
         
         _toggleAutoSave: function() {
