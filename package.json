@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "chai": "^2.1.1",
+    "docdash": "^0.4.0",
     "express": "^4.14.0",
     "grunt": "~0.4.1",
     "grunt-bumpup": "^0.6.1",
@@ -54,9 +55,7 @@
   "engines": {
     "node": ">=0.10.0"
   },
-  "licenses": {
-    "type": "MIT"
-  },
+  "license": "MIT",
   "dependencies": {
     "aw-parser": "0.0.2",
     "d3": "^3.5.5",

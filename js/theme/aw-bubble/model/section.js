@@ -4,6 +4,8 @@ define(function(require) {
 
     /**
      * Represents a section/page on the site
+     * 
+     * @module theme/aw-bubble/model/section
      */
     var Section = Protoplast.Model.extend({
 

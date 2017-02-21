@@ -7,6 +7,9 @@ define(function(require) {
 
     /**
      * Config for command line tool.
+     *
+     * @module client/client-config
+     * @augments bootstrap/core-config
      */
     var ClientConfig = CoreConfig.extend({
         

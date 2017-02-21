@@ -7,8 +7,10 @@ define(function(require) {
 
     /**
      * Core Config with all core controllers and utils.
+     *
+     * @module bootstrap/core-config
      * 
-     * @alias CoreConfig
+     * @tutorial bootstrap
      */
     var CoreConfig = Protoplast.extend({
         

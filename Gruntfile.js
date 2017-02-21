@@ -275,7 +275,7 @@ module.exports = function(grunt) {
                 command: 'istanbul instrument --output coverage/js --no-impact js && istanbul instrument --output coverage/test/data --no-impact test/data'
             },
             jsdoc: {
-                command: 'jsdoc -c jsdoc.conf.json'
+                command: 'jsdoc -c jsdoc.conf.json -R README.md -P package.json -t node_modules/docdash -u docs/tutorials'
             }
         },
 

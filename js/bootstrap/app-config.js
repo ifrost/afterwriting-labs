@@ -20,8 +20,11 @@ define(function(require) {
      * Application Config, contains Core Config + Theme + Plugins
      *
      * The order in the menu is defined by sort passed to the theme.
+     *
+     * @module bootstrap/app-config
+     * @augments module:bootstrap/core-config
      * 
-     * @alias AppConfig
+     * @tutorial bootstrap
      */
     var AppConfig = CoreConfig.extend({
 

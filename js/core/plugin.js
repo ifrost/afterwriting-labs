@@ -2,6 +2,9 @@ define(function(require) {
 
     var Protoplast = require('protoplast');
 
+    /**
+     * @module core/plugin
+     */
     var Plugin = Protoplast.Object.extend({
         
         context: null,

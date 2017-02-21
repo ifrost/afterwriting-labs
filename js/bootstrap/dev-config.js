@@ -6,7 +6,10 @@ define(function(require) {
     /**
      * Development Config - extension of AppConfig with additional DevController.
      * 
-     * @alias DevConfig
+     * @module bootstrap/dev-config
+     * @augments module:bootstrap/app-config
+     *
+     * @tutorial bootstrap
      */
     var DevConfig = AppConfig.extend({
         

@@ -2,6 +2,9 @@ define(function(require) {
 
     var Protoplast = require('protoplast');
 
+    /**
+     * @mixin theme/aw-bubble/view/section-view-mixin
+     */
     var SectionViewMixin = Protoplast.extend({
         
         section: null,

@@ -5,12 +5,12 @@
     },
     "source": {
         "include": ["js/"],
-		"exclude": ["js/libs"]
+        "exclude": ["js/libs"]
     },
-	"opts": {
-		"recurse": true,
-		"destination": "./docs/code"
-	},
+    "opts": {
+        "recurse": true,
+        "destination": "./docs/code"
+    },
     "plugins": [],
     "templates": {
         "cleverLinks": false,
