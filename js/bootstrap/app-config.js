@@ -28,6 +28,11 @@ define(function(require) {
      */
     var AppConfig = CoreConfig.extend({
 
+        /**
+         * Main view displayed when the config is loaded
+         *
+         * @type {View.AppView}
+         */
         MainView: {
             value: AppView
         },
@@ -36,7 +41,7 @@ define(function(require) {
          * Order in which sections are organised in the menu
          */
         sectionsOrder: ['info', 'open', 'settings', 'editor', 'save', 'preview', 'facts', 'stats'],
-        
+
         init: function(context) {
             
             var themeModel = ThemeModel.create();

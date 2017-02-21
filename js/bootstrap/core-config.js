@@ -13,7 +13,11 @@ define(function(require) {
      * @tutorial bootstrap
      */
     var CoreConfig = Protoplast.extend({
-        
+
+        /**
+         * Initialise config by registering object in context
+         * @param {Context} context
+         */
         init: function(context) {
             context.register('settings', Settings.create());
             context.register('script', ScriptModel.create());

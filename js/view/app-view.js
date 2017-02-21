@@ -4,6 +4,10 @@ define(function(require) {
         AppViewPresenter = require('view/app-view-presenter'),
         BubbleTheme = require('theme/aw-bubble/view/main');
 
+    /**
+     * @module view/app-view
+     * @class View.AppView
+     */
     var AppView = Protoplast.Component.extend({
         
         $meta: {
