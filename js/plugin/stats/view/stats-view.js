@@ -91,7 +91,7 @@ define(function(require) {
             this.locationsBreakdown = LocationsBreakdown;
 
             this.whoWithWhoHeader.id = "stats-who";
-            this.whoWithWhoHeader.title = "Who talks with who (by number of scenes)";
+            this.whoWithWhoHeader.title = "Who talks with whom (by number of scenes)";
             this.whoWithWhoHeader.description = "Each character is represented by a circle (max. 10 characters). If characters are connected with a line that means they are talking in the same scene. Thicker the line - more scenes together. Hover the mouse cursor over a character circle to see how many dialogues scenes that character have with other characters.";
 
             this.scriptPulseHeader.id = "stats-tempo";
