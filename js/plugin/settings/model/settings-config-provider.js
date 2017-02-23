@@ -48,6 +48,7 @@ define(function(require) {
             layoutGroup.addEntry(this.createCheckbox('each_scene_on_new_page', 'Page break after a scene'));
             layoutGroup.addEntry(this.createCheckbox('number_sections', 'Prefix sections with numbers'));
             layoutGroup.addEntry(this.createCheckbox('embolden_scene_headers', 'Embolden scene headers'));
+            layoutGroup.addEntry(this.createCheckbox('underline_scene_headers', 'Underline scene headers'));
             layoutGroup.addEntry(this.createDropdown('scenes_numbers', 'Scene numbers', [
                 {label: 'none', value: 'none'},
                 {label: 'left', value: 'left'},

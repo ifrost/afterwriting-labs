@@ -32,6 +32,7 @@ define(function(require) {
                         text_scene_continued: this.settings.text_scene_continued,
                         show_page_numbers: this.settings.show_page_numbers,
                         embolden_scene_headers: this.settings.embolden_scene_headers,
+                        underline_scene_headers: this.settings.underline_scene_headers,
                         number_sections: this.settings.number_sections,
                         scenes_numbers: this.settings.scenes_numbers
                     },

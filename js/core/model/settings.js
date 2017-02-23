@@ -19,6 +19,11 @@ define(function(require) {
             value: false
         },
 
+        underline_scene_headers: {
+            name: 'underline_scene_headers',
+            value: false
+        },
+
         show_page_numbers: {
             name: 'show_page_numbers',
             value: true

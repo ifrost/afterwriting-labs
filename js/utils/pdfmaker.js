@@ -382,6 +382,10 @@ define('utils/pdfmaker', function(require) {
                     if (line.type === "scene_heading" && cfg.embolden_scene_headers) {
                         text = '**' + text + '**';
                     }
+                    if (line.type === "scene_heading" && cfg.underline_scene_headers) {
+                        text = '_' + text + '_';
+                    }
+
 
                     if (line.type === 'section') {
                         current_section_level = line.token.level;
@@ -431,6 +435,9 @@ define('utils/pdfmaker', function(require) {
                         var scene_text_length = scene_number.length;
                         if (cfg.embolden_scene_headers) {
                             scene_number = '**' + scene_number + '**';
+                        }
+                        if (cfg.underline_scene_headers) {
+                            scene_number = '_' + scene_number + '_';
                         }
 
                         var shift_scene_number;
