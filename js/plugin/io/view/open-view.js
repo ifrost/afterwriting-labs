@@ -103,7 +103,7 @@ define(function(require) {
             if (this.lastUsedInfo) {
                 this.$lastUsed.show();
                 this.$lastUsedTitle.text(this.lastUsedInfo.title);
-                this.$lastUsedDate.text(this.lastUsedInfo.date);
+                this.$lastUsedDate.text('(' + this.lastUsedInfo.date + ')');
             }
             else {
                 this.$lastUsed.hide();

@@ -9,7 +9,7 @@ define(function(require) {
      */
     var InfoSection = Section.extend({
         
-        title: 'Info',
+        title: 'About',
 
         shortTitle: 'info',
 
