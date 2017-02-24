@@ -79,7 +79,7 @@ define(function(require) {
         getStatsGroup: function() {
             var statsGroup = SettingsGroup.create('Statistics');
             statsGroup.addEntry(this.createCheckbox('stats_keep_last_scene_time', 'Keep last scene slugline time of day if not specified'));
-            statsGroup.addEntry(this.createInput('stats_who_with_who_max', '"Who with who" max characters'));
+            statsGroup.addEntry(this.createInput('stats_who_with_who_max', '"Who with whom" max characters'));
             return statsGroup;
         },
 
