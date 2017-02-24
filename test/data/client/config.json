@@ -1,5 +1,6 @@
 {
 	"embolden_scene_headers": false,
+	"underline_scene_headers": false,
 	"show_page_numbers": true,
 	"split_dialogue": true,
 	"print_title_page": false,
