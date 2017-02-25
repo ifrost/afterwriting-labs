@@ -21,7 +21,7 @@ define(function(require) {
                 {
                     callback: callback,
                     filepath: filePath,
-                    print: this.settings.print(),
+                    print: this.settings.print,
                     config: {
                         print_title_page: this.settings.print_title_page,
                         print_header: this.settings.print_header,

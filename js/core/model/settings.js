@@ -206,8 +206,10 @@ define(function(require) {
             }
         },
 
-        print: function() {
-            return print_profiles[this.print_profile];
+        print: {
+            get: function() {
+                return print_profiles[this.print_profile];
+            }
         },
 
         _triggerChanged: function(property, key) {

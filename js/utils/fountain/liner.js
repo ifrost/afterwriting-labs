@@ -232,10 +232,10 @@ define('utils/fountain/liner', function (require) {
 		_state = 'normal';
 
 		tokens.forEach(function (token) {
-			var max = (cfg.print()[token.type] || {}).max || cfg.print().action.max;
+			var max = (cfg.print[token.type] || {}).max || cfg.print.action.max;
 
 			if (token.dual) {
-				max *= cfg.print().dual_max_factor;
+				max *= cfg.print.dual_max_factor;
 			}
 
 			split_token(token, max);
@@ -252,7 +252,7 @@ define('utils/fountain/liner', function (require) {
 		});
 
 		fold_dual_dialogue(lines);
-		lines = break_lines(lines, cfg.print().lines_per_page, cfg.lines_breaker || default_breaker, cfg);
+		lines = break_lines(lines, cfg.print.lines_per_page, cfg.lines_breaker || default_breaker, cfg);
 
 		return lines;
 	};

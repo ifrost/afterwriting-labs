@@ -78,7 +78,7 @@ define(function(require) {
         },
 
         _createStatsQuery: function() {
-            var print = this.settings.print();
+            var print = this.settings.print;
             var basic = fquery(null, {
                 last_page_lines: 0,
                 scenes: 0,

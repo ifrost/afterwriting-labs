@@ -150,7 +150,7 @@ define(function(require) {
 
             this.barChart.render('#stats-scene-length', this.data.scenes, {
                 tooltip: function(d) {
-                    return d.header + ' (time: ' + helper.format_time((d.length / this.settings.print().lines_per_page)) + ')'
+                    return d.header + ' (time: ' + helper.format_time((d.length / this.settings.print.lines_per_page)) + ')'
                 }.bind(this),
                 value: 'length',
                 small: themeModel.small,
