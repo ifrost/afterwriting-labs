@@ -347,6 +347,7 @@ define('utils/pdfmaker', function(require) {
                     scene_continued += scene_continuations[scene_number] > 1 ? ' (' + scene_continuations[scene_number] + ')' : '';
 
                     scene_continued = scene_continued.replace(/\*/g, '');
+                    scene_continued = scene_continued.replace(/_/g, '');
                     doc.simple_text(scene_continued, print.action.feed * 72, number_y * 72);
                     prev_scene_continuation_header = scene_continued;
                 }
