@@ -3,74 +3,26 @@ define(function(require) {
     var Protoplast = require('protoplast'),
         print_profiles = require('utils/print-profiles');
 
-    // TODO: Decouple plugin-specific settings (+)
+    // TODO: Decouple plugin-specific settings (++)
+    // TODO: Rename Settings properties to CamelCase (++)
     var Settings = Protoplast.Model.extend({
 
         snippets: null,
-        
-        // TODO: Rename Settings properties to CamelCase (+)
-        show_background_image: {
-            name: 'show_background_image',
-            value: true
-        },
 
-        embolden_scene_headers: {
-            name: 'embolden_scene_headers',
-            value: false
-        },
-
-        underline_scene_headers: {
-            name: 'underline_scene_headers',
-            value: false
-        },
-
-        show_page_numbers: {
-            name: 'show_page_numbers',
-            value: true
-        },
-
-        split_dialogue: {
-            name: 'split_dialogue',
-            value: true
-        },
-
-        print_title_page: {
-            name: 'print_title_page',
-            value: true
-        },
-
-        text_more: {
-            name: 'text_more',
-            value: '(MORE)'
-        },
-
-        text_contd: {
-            name: 'text_contd',
-            value: "(CONT'D)"
-        },
-
-        text_scene_continued: {
-            name: 'text_scene_continued',
-            value: 'CONTINUED'
-        },
-
-        print_profile: {
-            name: 'print_profile',
-            value: "a4"
-        },
-
-        load_last_opened: {
-            name: 'load_last_opened',
-            value: false
-        },
-
-        night_mode: {
-            name: 'night_mode',
-            value: false
-        },
+        // Parser settings
 
         double_space_between_scenes: {
             name: 'double_space_between_scenes',
+            value: false
+        },
+
+        use_dual_dialogue: {
+            name: 'use_dual_dialogue',
+            value: true
+        },
+
+        each_scene_on_new_page: {
+            name: 'each_scene_on_new_page',
             value: false
         },
 
@@ -99,28 +51,62 @@ define(function(require) {
             value: true
         },
 
-        number_sections: {
-            name: 'number_sections',
+        print_notes: {
+            name: 'print_notes',
             value: false
         },
 
-        use_dual_dialogue: {
-            name: 'use_dual_dialogue',
+        // Liner settings
+
+        text_more: {
+            name: 'text_more',
+            value: '(MORE)'
+        },
+
+        text_contd: {
+            name: 'text_contd',
+            value: "(CONT'D)"
+        },
+
+        split_dialogue: {
+            name: 'split_dialogue',
             value: true
         },
 
-        stats_keep_last_scene_time: {
-            name: 'stats_keep_last_scene_time',
+        // PDF settings
+
+        print_profile: {
+            name: 'print_profile',
+            value: "a4"
+        },
+
+        embolden_scene_headers: {
+            name: 'embolden_scene_headers',
+            value: false
+        },
+
+        underline_scene_headers: {
+            name: 'underline_scene_headers',
+            value: false
+        },
+
+        show_page_numbers: {
+            name: 'show_page_numbers',
             value: true
         },
 
-        stats_who_with_who_max: {
-            name: 'stats_who_with_who_max',
-            value: 10
+        print_title_page: {
+            name: 'print_title_page',
+            value: true
         },
 
-        print_notes: {
-            name: 'print_notes',
+        text_scene_continued: {
+            name: 'text_scene_continued',
+            value: 'CONTINUED'
+        },
+
+        number_sections: {
+            name: 'number_sections',
             value: false
         },
 
@@ -144,16 +130,6 @@ define(function(require) {
             value: 'none'
         },
 
-        each_scene_on_new_page: {
-            name: 'each_scene_on_new_page',
-            value: false
-        },
-
-        use_print_settings_for_stats: {
-            name: 'use_print_settings_for_stats',
-            value: true
-        },
-
         scene_continuation_bottom: {
             name: 'scene_continuation_bottom',
             value: false
@@ -164,6 +140,28 @@ define(function(require) {
             value: false
         },
 
+        // App settings
+
+        show_background_image: {
+            name: 'show_background_image',
+            value: true
+        },
+
+        load_last_opened: {
+            name: 'load_last_opened',
+            value: false
+        },
+
+        night_mode: {
+            name: 'night_mode',
+            value: false
+        },
+
+        use_print_settings_for_stats: {
+            name: 'use_print_settings_for_stats',
+            value: true
+        },
+
         cloud_lazy_loading: {
             name: 'cloud_lazy_loading',
             value: false
@@ -172,6 +170,16 @@ define(function(require) {
         pdfjs_viewer: {
             name: 'pdfjs_viewer',
             value: false
+        },
+
+        stats_keep_last_scene_time: {
+            name: 'stats_keep_last_scene_time',
+            value: true
+        },
+
+        stats_who_with_who_max: {
+            name: 'stats_who_with_who_max',
+            value: 10
         },
 
         $create: function() {
