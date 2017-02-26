@@ -11,7 +11,7 @@ require.config({
 		'modernizr': {},
 		'pdfkit': 'libs/pdfkit'
 	},
-	use_node_require: ['jquery', 'fs', 'd3', 'aw-parser', 'protoplast']
+	use_node_require: ['jquery', 'fs', 'd3', 'aw-parser', 'protoplast', 'lodash']
 });
 
 var Bootstrap = require('bootstrap');

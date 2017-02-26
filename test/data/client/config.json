@@ -5,6 +5,7 @@
 	"split_dialogue": true,
 	"print_title_page": false,
 	"print_profile": "a4",
+	"font_family": "CourierPrime",
 	"double_space_between_scenes": false,
 	"print_sections": false,
 	"print_synopsis": false,

@@ -46,6 +46,7 @@ define('utils/pdfmaker', function(require) {
 
     function initDoc(opts) {
         var print = opts.print;
+        var font_family = opts.config.font_family;
         var options = {
             compress: false,
             size: print.paper_size === "a4" ? 'A4' : 'LETTER',
@@ -57,7 +58,21 @@ define('utils/pdfmaker', function(require) {
             }
         };
         var doc = new PDFDocument(options);
-        doc.font(fonts.prime.normal);
+
+        if (font_family === 'CourierPrime') {
+            doc.registerFont('ScriptNormal', fonts.prime.normal, 'CourierPrime');
+            doc.registerFont('ScriptBold', fonts.prime.bold, 'CourierPrime-Bold');
+            doc.registerFont('ScriptBoldOblique', fonts.prime.bolditalic, 'CourierPrime-BoldOblique');
+            doc.registerFont('ScriptOblique', fonts.prime.italic, 'CourierPrime-Oblique');
+        }
+        else {
+            doc.registerFont('ScriptNormal', 'Courier');
+            doc.registerFont('ScriptBold', 'Courier-Bold');
+            doc.registerFont('ScriptBoldOblique', 'Courier-BoldOblique');
+            doc.registerFont('ScriptOblique','Courier-Oblique');
+        }
+
+        doc.font('ScriptNormal');
         doc.fontSize(print.font_size || 12);
 
         // convert points to inches for text
@@ -72,9 +87,9 @@ define('utils/pdfmaker', function(require) {
         doc.reset_format();
         var inner_text = doc.text;
         doc.simple_text = function() {
-            doc.font(fonts.prime.normal);
+            doc.font('ScriptNormal');
             inner_text.apply(doc, arguments);
-        }
+        };
         doc.format_text = function(text, x, y, options) {
             var cache_current_state = doc.format_state;
             doc.reset_format();
@@ -116,13 +131,13 @@ define('utils/pdfmaker', function(require) {
                     doc.fill('black');
                 } else {
                     if (doc.format_state.bold && doc.format_state.italic) {
-                        //doc.font(fonts.prime.bolditalic);
+                        doc.font('ScriptBoldOblique');
                     } else if (doc.format_state.bold) {
-                        //doc.font(fonts.prime.bold);
+                        doc.font('ScriptBold');
                     } else if (doc.format_state.italic) {
-                        //doc.font(fonts.prime.italic);
+                        doc.font('ScriptOblique');
                     } else {
-                        //doc.font(fonts.prime.normal);
+                        doc.font('ScriptNormal');
                     }
                     if (elem === '\\_' || elem === '\\*') {
                         elem = elem.substr(1, 1);
