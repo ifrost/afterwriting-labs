@@ -30,6 +30,8 @@ define(function(require) {
 
         $savePdfGoogleDrive: null,
 
+        $saveMobilePdfLocally: null,
+
         addBindings: function() {
             Protoplast.utils.bind(this, {
                 displayOpenFromDropbox: this._updateOpenFromDropboxVisibility,
@@ -46,6 +48,8 @@ define(function(require) {
             this.onClick(this.$savePdfLocally, this.dispatch.bind(this, 'save-as-pdf'));
             this.onClick(this.$savePdfDropbox, this.dispatch.bind(this, 'dropbox-pdf'));
             this.onClick(this.$savePdfGoogleDrive, this.dispatch.bind(this, 'google-drive-pdf'));
+
+            this.onClick(this.$saveMobilePdfLocally, this.dispatch.bind(this, 'save-as-mobile-pdf'));
         },
 
         _updateOpenFromDropboxVisibility: function() {

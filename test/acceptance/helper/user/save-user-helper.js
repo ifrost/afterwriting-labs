@@ -56,6 +56,13 @@ define(function(require) {
          */
         save_pdf_google_drive: function(plugin) {
             this.click(this.dom.save.$save_pdf_google_drive(plugin));
+        },
+
+        /**
+         * Save the current script as mobile friendly PDF
+         */
+        save_mobile_pdf: function() {
+            this.click(this.dom.save.$save_mobile_pdf);
         }
         
     });

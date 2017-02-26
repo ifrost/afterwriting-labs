@@ -1,6 +1,7 @@
 define(function(require) {
 
-    var browser = require('utils/browser');
+    var browser = require('utils/browser'),
+        PrintProfileUtil = require('utils/print-profile-util');
 
     var A4_DEFAULT_MAX = 58,
         US_DEFAULT_MAX = 61;
@@ -8,6 +9,7 @@ define(function(require) {
     var print_profiles = {
         "a4": {
             paper_size: "a4",
+            font_size: 12,
             lines_per_page: 57,
             top_margin: 1.0,
             page_width: 8.27,
@@ -95,20 +97,9 @@ define(function(require) {
     // font size = experimental feature
     var url_params = browser.url_params();
     if (url_params.fontSize) {
-        [print_profiles.usletter, print_profiles.a4].forEach(function(profile) {
-            var font_size = parseInt(url_params.fontSize),
-                up = font_size / 12.0,
-                down = 12.0 / font_size;
-            profile.font_size = font_size;
-            profile.lines_per_page = Math.floor(profile.lines_per_page * down);
-            profile.font_width = profile.font_width * up;
-            profile.font_height = profile.font_height * up;
-            Object.keys(profile).forEach(function(key) {
-                if (typeof (profile[key]) === "object") {
-                    profile[key].max = Math.floor(profile[key].max * down);
-                }
-            });
-        });
+        var fontSize = parseInt(url_params.fontSize, 10);
+        print_profiles.usletter = PrintProfileUtil.withNewFontSize(print_profiles.usletter, fontSize);
+        print_profiles.a4 = PrintProfileUtil.withNewFontSize(print_profiles.a4, fontSize);
     }
 
     return print_profiles;

@@ -2,7 +2,8 @@ define(function(require) {
 
     var BaseSectionViewPresenter = require('theme/aw-bubble/presenter/base-section-view-presenter'),
         IoModel = require('plugin/io/model/io-model'),
-        SaveController = require('plugin/io/controller/save-controller');
+        SaveController = require('plugin/io/controller/save-controller'),
+        SaveMobileController = require('plugin/io/controller/save-mobile-controller');
 
     var SaveViewPresenter = BaseSectionViewPresenter.extend({
 
@@ -12,6 +13,10 @@ define(function(require) {
 
         saveController: {
             inject: SaveController
+        },
+        
+        saveMobileController: {
+            inject: SaveMobileController
         },
 
         ioModel: {
@@ -28,6 +33,8 @@ define(function(require) {
             this.view.on('save-as-pdf', this._savePdfLocally);
             this.view.on('dropbox-pdf', this._savePdfToDropbox);
             this.view.on('google-drive-pdf', this._savePdfToGoogleDrive);
+
+            this.view.on('save-as-mobile-pdf', this._saveMobilePdfLocally);
         },
         
         activate: function() {
@@ -65,6 +72,11 @@ define(function(require) {
         _savePdfToGoogleDrive: function() {
             this.saveController.savePdfToGoogleDrive();
             this.pub('plugin/io/save-pdf-google-drive');
+        },
+        
+        _saveMobilePdfLocally: function() {
+            this.saveMobileController.saveMobilePdfLocally();
+            this.pub('plugin/io/save-mobile-pdf');
         }
     });
 

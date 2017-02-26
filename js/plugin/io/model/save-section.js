@@ -9,6 +9,8 @@ define(function(require) {
 
         shortTitle: 'save',
 
+        description: 'You can save your screenplay in Fountain or PDF format here. If you want to read your script on a mobile device, choose mobile-friendly version (font size is beefed up).',
+
         smallIcon: 'gfx/icons/save.svg',
 
         isVisibleInMenu: false,

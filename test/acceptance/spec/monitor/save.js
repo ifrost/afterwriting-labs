@@ -69,6 +69,14 @@ define(function(require) {
                 // THEN
                 env.assert.monitor.event_tracked('feature', 'save-pdf-googledrive');
             });
+            
+            it('WHEN a mobile pdf file is saved THEN feature/save-mobile-pdf event is tracked', function() {
+               // THEN
+                env.user.save.save_mobile_pdf();
+                
+                // THEN
+                env.assert.monitor.event_tracked('feature', 'save-mobile-pdf');
+            });
         });
         
     });

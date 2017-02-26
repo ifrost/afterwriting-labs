@@ -161,6 +161,13 @@ define(function(require) {
                 this.monitor.track('feature', 'save-pdf-googledrive');
             }
         },
+        
+        saveMobilePdf: {
+            sub: 'plugin/io/save-mobile-pdf',
+            value: function() {
+                this.monitor.track('feature', 'save-mobile-pdf')
+            }
+        },
 
         statsSwitchToEditor: {
             sub: 'stats/scene-length/go-to-editor',
