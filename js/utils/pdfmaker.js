@@ -116,13 +116,13 @@ define('utils/pdfmaker', function(require) {
                     doc.fill('black');
                 } else {
                     if (doc.format_state.bold && doc.format_state.italic) {
-                        doc.font(fonts.prime.bolditalic);
+                        //doc.font(fonts.prime.bolditalic);
                     } else if (doc.format_state.bold) {
-                        doc.font(fonts.prime.bold);
+                        //doc.font(fonts.prime.bold);
                     } else if (doc.format_state.italic) {
-                        doc.font(fonts.prime.italic);
+                        //doc.font(fonts.prime.italic);
                     } else {
-                        doc.font(fonts.prime.normal);
+                        //doc.font(fonts.prime.normal);
                     }
                     if (elem === '\\_' || elem === '\\*') {
                         elem = elem.substr(1, 1);
@@ -318,7 +318,7 @@ define('utils/pdfmaker', function(require) {
                     line_break: false
                 });
                 doc.rotate(-angle, options);
-                doc.fontSize(12);
+                doc.fontSize(print.font_size || 12);
             }
         };
 
