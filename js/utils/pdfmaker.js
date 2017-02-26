@@ -141,6 +141,16 @@ define('utils/pdfmaker', function(require) {
         return doc;
     }
 
+    function clearFormatting(text) {
+        var clean = text.replace(/\*/g, '');
+        clean = clean.replace(/_/g, '');
+        return clean;
+    }
+
+    function inline(text) {
+        return text.replace(/\n/g, ' ');
+    }
+
     function finishDoc(doc, callback, filepath) {
         var stream = doc.pipe(create_simplestream(filepath));
         doc.end();
@@ -166,14 +176,14 @@ define('utils/pdfmaker', function(require) {
             print = opts.print,
             lines = parsed.lines;
 
-        var title_token = get_title_page_token('title', parsed);
-        var author_token = get_title_page_token('author', parsed);
+        var title_token = get_title_page_token(parsed, 'title');
+        var author_token = get_title_page_token(parsed, 'author');
         if (!author_token) {
-            author_token = get_title_page_token('authors', parsed);
+            author_token = get_title_page_token(parsed, 'authors');
         }
 
-        doc.info.Title = title_token ? title_token.text : '';
-        doc.info.Author = author_token ? author_token.text : '';
+        doc.info.Title = title_token ? clearFormatting(inline(title_token.text)) : '';
+        doc.info.Author = author_token ? clearFormatting(inline(author_token.text)) : '';
         doc.info.Creator = 'afterwriting.com';
 
         // helper
