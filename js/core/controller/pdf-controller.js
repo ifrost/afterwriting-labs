@@ -23,6 +23,7 @@ define(function(require) {
                     filepath: filePath,
                     print: this.settings.print,
                     config: {
+                        font_family: this.settings.font_family,
                         print_title_page: this.settings.print_title_page,
                         print_header: this.settings.print_header,
                         print_footer: this.settings.print_footer,
