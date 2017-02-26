@@ -75,6 +75,11 @@ define(function(require) {
 
         // PDF settings
 
+        font_family: {
+            name: 'font_family',
+            value: 'CourierPrime'
+        },
+
         print_profile: {
             name: 'print_profile',
             value: "a4"
