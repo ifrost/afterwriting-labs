@@ -1,7 +1,9 @@
 define(function(require) {
 
     var BaseSectionViewPresenter = require('theme/aw-bubble/presenter/base-section-view-presenter'),
+        ThemeModel = require('theme/aw-bubble/model/theme-model'),
         StatsController = require('plugin/stats/controller/stats-controller'),
+        Protoplast = require('protoplast'),
         queries = require('plugin/stats/model/queries');
 
     var StatsViewPresenter = BaseSectionViewPresenter.extend({
@@ -22,8 +24,13 @@ define(function(require) {
             inject: StatsController
         },
 
+        themeModel: {
+            inject: ThemeModel
+        },
+
         init: function() {
             BaseSectionViewPresenter.init.call(this);
+            Protoplast.utils.observe(this, 'themeModel.expanded', this.view.refresh.bind(this.view));
             this.view.on('goto', this._goto);
         },
 

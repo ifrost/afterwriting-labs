@@ -134,6 +134,15 @@ define(function(require) {
                 }
             }.bind(this));
         },
+        
+        refresh: function() {
+            // TODO: Remove refresh method, chart should refresh when parent content changes (+)
+            // Timeout is added to make sure _render is called after content is fully expanded/collapsed
+            // as chart components rely on query ".content" to calculate width of the chart
+            setTimeout(function() {
+                this._render();
+            }.bind(this), 0);
+        },
 
         _render: function() {
 
