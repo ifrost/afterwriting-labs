@@ -1,6 +1,7 @@
 define(function(require) {
 
     var Protoplast = require('protoplast'),
+        fonts = require('utils/fonts'),
         pdfmaker = require('utils/pdfmaker'),
         textstats = require('utils/textstats');
 
@@ -23,7 +24,7 @@ define(function(require) {
                     filepath: filePath,
                     print: this.settings.print,
                     config: {
-                        font_family: this.settings.font_family,
+                        fonts: fonts[this.settings.font_family] || null ,
                         print_title_page: this.settings.print_title_page,
                         print_header: this.settings.print_header,
                         print_footer: this.settings.print_footer,

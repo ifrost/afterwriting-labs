@@ -1,7 +1,6 @@
 define('utils/pdfmaker', function(require) {
 
     var PDFDocument = require('pdfkit'),
-        fonts = require('utils/fonts'),
         helper = require('utils/helper');
 
     var module = {};
@@ -46,7 +45,7 @@ define('utils/pdfmaker', function(require) {
 
     function initDoc(opts) {
         var print = opts.print;
-        var font_family = opts.config.font_family;
+        var fonts = opts.config.fonts || null;
         var options = {
             compress: false,
             size: print.paper_size === "a4" ? 'A4' : 'LETTER',
@@ -59,11 +58,11 @@ define('utils/pdfmaker', function(require) {
         };
         var doc = new PDFDocument(options);
 
-        if (font_family === 'CourierPrime') {
-            doc.registerFont('ScriptNormal', fonts.prime.normal, 'CourierPrime');
-            doc.registerFont('ScriptBold', fonts.prime.bold, 'CourierPrime-Bold');
-            doc.registerFont('ScriptBoldOblique', fonts.prime.bolditalic, 'CourierPrime-BoldOblique');
-            doc.registerFont('ScriptOblique', fonts.prime.italic, 'CourierPrime-Oblique');
+        if (opts.config.fonts) {
+            doc.registerFont('ScriptNormal', fonts.normal.src, fonts.normal.family);
+            doc.registerFont('ScriptBold', fonts.bold.src, fonts.bold.family);
+            doc.registerFont('ScriptBoldOblique', fonts.bolditalic.src, fonts.bolditalic.family);
+            doc.registerFont('ScriptOblique', fonts.italic.src, fonts.italic.family);
         }
         else {
             doc.registerFont('ScriptNormal', 'Courier');
