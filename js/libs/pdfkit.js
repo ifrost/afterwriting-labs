@@ -14979,7 +14979,7 @@ function flow(src) {
     }
   }
 
-  while (state.pipesCount && null !== (chunk = src.read())) {
+  while (state.pipesCount && null !== (chunk = src.read(Number.MAX_SAFE_INTEGER))) {
 
     if (state.pipesCount === 1)
       write(state.pipes, 0, null);
