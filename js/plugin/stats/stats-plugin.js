@@ -1,40 +1,15 @@
 define(function(require) {
 
-    var Protoplast = require('protoplast'),
-        Plugin = require('core/plugin'),
-        StatsController = require('plugin/stats/controller/stats-controller'),
-        FactsSection = require('plugin/stats/model/facts-section'),
-        StatsSection = require('plugin/stats/model/stats-section'),
-        ThemeController = require('theme/aw-bubble/controller/theme-controller');
+    var Plugin = require('core/plugin'),
+        InitStatsController = require('plugin/stats/controller/init-stats-controller'),
+        StatsController = require('plugin/stats/controller/stats-controller');
 
     var StatsPlugin = Plugin.extend({
         
-        scriptModel: {
-            inject: 'script'
-        },
-        
-        themeController: {
-            inject: ThemeController
-        },
-
         $create: function(context) {
+            context.register(InitStatsController.create());
             context.register(StatsController.create());
-        },
-
-        init: function() {
-
-            var factsSection = FactsSection.create('facts');
-            this.themeController.addSection(factsSection);
-
-            var statsSection = StatsSection.create('stats');
-            this.themeController.addSection(statsSection);
-
-            Protoplast.utils.bind(this.scriptModel, 'script', function(){
-                factsSection.isVisibleInMenu = true;
-                statsSection.isVisibleInMenu = true;
-            });
         }
-
     });
 
     return StatsPlugin;

@@ -1,34 +1,16 @@
 define(function(require) {
 
-    var Protoplast = require('protoplast'),
-        Plugin = require('core/plugin'),
-        EditorSection = require('plugin/editor/model/editor-section'),
+    var Plugin = require('core/plugin'),
+        InitEditorController = require('plugin/editor/controller/init-editor-controller'),
         EditorController = require('plugin/editor/controller/editor-controller'),
-        EditorModel = require('plugin/editor/model/editor-model'),
-        ThemeController = require('theme/aw-bubble/controller/theme-controller');
+        EditorModel = require('plugin/editor/model/editor-model');
 
     var EditorPlugin = Plugin.extend({
-        
-        scriptModel: {
-            inject: 'script'
-        },
-        
-        themeController: {
-            inject: ThemeController
-        },
 
         $create: function(context) {
+            context.register(InitEditorController.create());
             context.register(EditorModel.create());
             context.register(EditorController.create());
-        },
-
-        init: function() {
-            var editorSection = EditorSection.create('editor');
-            this.themeController.addSection(editorSection);
-
-            Protoplast.utils.bind(this.scriptModel, 'script', function(){
-                editorSection.isVisibleInMenu = true;
-            });
         }
 
     });

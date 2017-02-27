@@ -1,38 +1,20 @@
 define(function(require) {
 
-    var Protoplast = require('protoplast'),
-        Plugin = require('core/plugin'),
-        SettingsSection = require('plugin/settings/model/settings-section'),
+    var Plugin = require('core/plugin'),
+        InitSettingsController = require('plugin/settings/controller/init-settings-controller'),
         SettingsController = require('plugin/settings/controller/settings-controller'),
         SettingsWidgetsController = require('plugin/settings/controller/settings-widgets-controller'),
         SettingsWidgetModel = require('plugin/settings/model/settings-widget-model'),
-        SettingsLoaderModel = require('plugin/settings/model/settings-loader-model'),
-        ThemeController = require('theme/aw-bubble/controller/theme-controller');
+        SettingsLoaderModel = require('plugin/settings/model/settings-loader-model');
 
     var SettingsPlugin = Plugin.extend({
-        
-        scriptModel: {
-            inject: 'script'
-        },
- 
-        themeController: {
-            inject: ThemeController
-        },
 
         $create: function(context) {
+            context.register(InitSettingsController.create());
             context.register(SettingsWidgetModel.create());
             context.register('settingsLoaderModel', SettingsLoaderModel.create());
             context.register(SettingsController.create());
             context.register(SettingsWidgetsController.create());
-        },
-
-        init: function() {
-            var settingsSection = SettingsSection.create('settings');
-            this.themeController.addSection(settingsSection);
-
-            Protoplast.utils.bind(this.scriptModel, 'script', function(){
-                settingsSection.isVisibleInMenu = true;
-            });
         }
 
     });
