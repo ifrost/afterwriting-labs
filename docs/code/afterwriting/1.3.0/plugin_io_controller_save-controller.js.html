@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>plugin/io/controller/save-controller.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="View.AppView.html">AppView</a></li></ul><h3>Modules</h3><ul><li><a href="module-bootstrap_app-config.html">bootstrap/app-config</a></li><li><a href="module-bootstrap_core-config.html">bootstrap/core-config</a><ul class='methods'><li data-type='method'><a href="module-bootstrap_core-config.html#~init">init</a></li></ul></li><li><a href="module-bootstrap_dev-config.html">bootstrap/dev-config</a></li><li><a href="module-client_client-config.html">client/client-config</a></li><li><a href="module-core_plugin.html">core/plugin</a></li><li><a href="module-plugin_info_info-plugin.html">plugin/info/info-plugin</a></li><li><a href="module-plugin_info_model_info-section.html">plugin/info/model/info-section</a></li><li><a href="module-theme_aw-bubble_model_section.html">theme/aw-bubble/model/section</a></li><li><a href="module-utils_browser.html">utils/browser</a><ul class='methods'><li data-type='method'><a href="module-utils_browser.html#.url_params">url_params</a></li></ul></li><li><a href="module-utils_fn.html">utils/fn</a><ul class='methods'><li data-type='method'><a href="module-utils_fn.html#.conflate">conflate</a></li></ul></li><li><a href="module-utils_helper.html">utils/helper</a><ul class='methods'><li data-type='method'><a href="module-utils_helper.html#.blank_text">blank_text</a></li><li data-type='method'><a href="module-utils_helper.html#.format_time">format_time</a></li><li data-type='method'><a href="module-utils_helper.html#.get_indentation">get_indentation</a></li></ul></li></ul><h3>Mixins</h3><ul><li><a href="theme_aw-bubble_view_section-view-mixin.html">theme/aw-bubble/view/section-view-mixin</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-bootstrap.html">bootstrap</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_basicStats">_basicStats</a></li><li><a href="global.html#_fileSaved">_fileSaved</a></li><li><a href="global.html#_loadSettings">_loadSettings</a></li><li><a href="global.html#_saveToCloud">_saveToCloud</a></li><li><a href="global.html#_scriptChanged">_scriptChanged</a></li><li><a href="global.html#activate">activate</a></li><li><a href="global.html#BaseSectionPresenter">BaseSectionPresenter</a></li><li><a href="global.html#control">control</a></li><li><a href="global.html#date">date</a></li><li><a href="global.html#deactivate">deactivate</a></li><li><a href="global.html#getLastVisitDate">getLastVisitDate</a></li><li><a href="global.html#getSettingGroups">getSettingGroups</a></li><li><a href="global.html#getTdWrapper">getTdWrapper</a></li><li><a href="global.html#goto">goto</a></li><li><a href="global.html#group">group</a></li><li><a href="global.html#groups">groups</a></li><li><a href="global.html#hide">hide</a></li><li><a href="global.html#lastUsedInfo">lastUsedInfo</a></li><li><a href="global.html#LastUsedInfo">LastUsedInfo</a></li><li><a href="global.html#lastUsedInfoLoaded">lastUsedInfoLoaded</a></li><li><a href="global.html#require">require</a></li><li><a href="global.html#resolve_module_name">resolve_module_name</a></li><li><a href="global.html#script">script</a></li><li><a href="global.html#show">show</a></li><li><a href="global.html#title">title</a></li><li><a href="global.html#updateSize">updateSize</a></li><li><a href="global.html#view">view</a></li><li><a href="global.html#withNewFontSize">withNewFontSize</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">plugin/io/controller/save-controller.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>define(function(require) {
+
+    var Protoplast = require('protoplast'),
+        IoModel = require('plugin/io/model/io-model'),
+        gd = require('utils/googledrive'),
+        db = require('utils/dropbox'),
+        $ = require('jquery'),
+        saveAs = require('saveAs'),
+        tree = require('utils/tree'),
+        forms = require('utils/forms');
+    
+    var SaveController = Protoplast.Object.extend({
+
+        ioModel: {
+            inject: IoModel
+        },
+        
+        scriptModel: {
+            inject: 'script'
+        },
+        
+        settings: {
+            inject: 'settings'
+        },
+        
+        pdfController: {
+            inject: 'pdf'
+        },
+
+        saveFountainLocally: function() {
+            forms.text('Select file name:', this.ioModel.fountainFileName || 'screenplay.fountain', function (result) {
+                var blob = new Blob([this.scriptModel.script], {
+                    type: "text/plain;charset=utf-8"
+                });
+                this.ioModel.fountainFileName = result.text;
+                this.ioModel.pdfFileName = result.text.split('.')[0] + '.pdf';
+                saveAs(blob, result.text);
+            }.bind(this));
+        },
+
+        saveFountainToDropbox: function() {
+            this._saveToCloud({
+                client: db,
+                save_callback: function (selected, filename) {
+                    var path = selected.data.path,
+                        blob = new Blob([this.scriptModel.script], {
+                            type: "text/plain;charset=utf-8"
+                        });
+                    if (selected.data.isFolder) {
+                        path += (path[path.length - 1] !== '/' ? '/' : '') + filename;
+                    }
+                    db.save(path, blob, function (error) {
+                        if (error) {
+                            this._fileNotSaved();
+                            return;
+                        }
+                        if (filename) {
+                            this.ioModel.fountainFileName = filename;
+                        }
+                        this._fileSaved();
+                        this.dispatch('fountain-saved-to-dropbox', path);
+                    }.bind(this));
+                }.bind(this),
+                selected: this.ioModel.dbPath,
+                list_options: {
+                    lazy: this.settings.cloud_lazy_loading
+                },
+                default_filename: 'screenplay.fountain'
+            });
+        },
+
+        saveFountainToGoogleDrive: function() {
+            this._saveToCloud({
+                client: gd,
+                save_callback: function (selected, filename) {
+                    var blob = new Blob([this.scriptModel.script], {
+                        type: "text/plain;charset=utf-8"
+                    });
+                    gd.upload({
+                        blob: blob,
+                        convert: /\.gdoc$/.test(filename),
+                        filename: filename,
+                        callback: function (file) {
+                            if (filename) {
+                                this.ioModel.fountainFileName = filename;
+                            }
+                            this._fileSaved();
+                            this.dispatch('fountain-saved-to-google-drive', file);
+                        }.bind(this),
+                        parents: selected.data.isRoot ? [] : [selected.data],
+                        fileid: selected.data.isFolder ? null : selected.data.id
+                    });
+                }.bind(this),
+                selected: this.ioModel.gdFileId,
+                selected_parents: this.ioModel.gdParents,
+                list_options: {
+                    writeOnly: true,
+                    lazy: this.settings.cloud_lazy_loading
+                },
+                default_filename: 'screenplay.fountain'
+            });
+        },
+
+        savePdfLocally: function() {
+            forms.text('Select file name:', this.ioModel.pdfFileName || 'screenplay.pdf', function (result) {
+                this.pdfController.getPdf(function (pdf) {
+                    this.ioModel.pdfFileName = result.text;
+                    this.ioModel.fountainFileName = result.text.split('.')[0] + '.fountain';
+                    saveAs(pdf.blob, result.text);
+                }.bind(this));
+            }.bind(this));
+        },
+
+        savePdfToDropbox: function() {
+            this._saveToCloud({
+                client: db,
+                save_callback: function (selected, filename) {
+                    var path = selected.data.path;
+                    if (selected.data.isFolder) {
+                        path += (path[path.length - 1] !== '/' ? '/' : '') + filename;
+                    }
+                    this.pdfController.getPdf(function (result) {
+                        db.save(path, result.blob, function (error) {
+                            if (error) {
+                                this._fileNotSaved();
+                                return;
+                            }
+                            if (filename) {
+                                this.ioModel.pdfFileName = filename;
+                            }
+                            this._fileSaved();
+                        }.bind(this));
+                    }.bind(this));
+                }.bind(this),
+                selected: this.ioModel.dbPdfPath,
+                list_options: {
+                    pdfOnly: true,
+                    lazy: this.settings.cloud_lazy_loading
+                },
+                default_filename: 'screenplay.pdf'
+            });
+        },
+
+        savePdfToGoogleDrive: function() {
+            this._saveToCloud({
+                client: gd,
+                save_callback: function (selected, filename) {
+                    this.pdfController.getPdf(function (pdf) {
+                        gd.upload({
+                            blob: pdf.blob,
+                            filename: filename,
+                            callback: function (file) {
+                                if (filename) {
+                                    this.ioModel.pdfFileName = filename;
+                                }
+                                this._fileSaved();
+                                this.ioModel.gdPdfId = file.id;
+                                var selected_parents = selected.parents.slice(0, selected.parents.length-2);
+                                if (selected.type === 'default') {
+                                    selected_parents.unshift(selected.id);
+                                }
+                                this.ioModel.gdPdfParents = selected_parents.reverse();
+                            }.bind(this),
+                            convert: false,
+                            parents: selected.data.isRoot ? [] : [selected.data],
+                            fileid: selected.data.isFolder ? null : selected.data.id
+                        });
+                    }.bind(this));
+                }.bind(this),
+                selected: this.ioModel.gdPdfId,
+                selected_parents: this.ioModel.gdPdfParents,
+                list_options: {
+                    pdfOnly: true,
+                    writeOnly: true,
+                    lazy: this.settings.cloud_lazy_loading
+                },
+                default_filename: 'screenplay.pdf'
+            });
+        },
+
+        destroy: function() {
+            db.destroy();
+        },
+
+        /**
+         * Save to the cloud using options:
+         *  client - cloud client (dropox/googledrive)
+         *  list_options - options passed to the client's list call
+         *  selected - selected item
+         *  default_filename - default filename if none has been used before
+         *  save_callback - function call to save the file
+         */
+        _saveToCloud: function (options) {
+            options.list_options = options.list_options || {};
+            options.list_options.before = function () {
+                $.prompt('Please wait...');
+            };
+            options.list_options.after = $.prompt.close;
+            options.client.list(function (root) {
+                root = typeof root !== 'function' ? options.client.convert_to_jstree(root) : root;
+                tree.show({
+                    data: root,
+                    selected: options.selected,
+                    selected_parents: options.selected_parents,
+                    filename: options.default_filename,
+                    save: true,
+                    info: 'Select a file to override or choose a folder to save as a new file.',
+                    callback: function (selected, filename) {
+                        $.prompt('Please wait...');
+                        options.save_callback(selected, filename);
+                    }
+                });
+            }, options.list_options);
+        },
+
+        /**
+         * Display file saved message
+         */
+        _fileSaved: function() {
+            $.prompt.close();
+            $.prompt('File saved!');
+        },
+
+        /**
+         * Display file not saved message
+         * @private
+         */
+        _fileNotSaved: function() {
+            $.prompt.close();
+            $.prompt('Could not save the file. Try again later.');
+        }
+
+    });
+
+    return SaveController;
+});</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta2</a> on Sun Mar 05 2017 19:40:18 GMT+0000 (GMT (czas standardowy)) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

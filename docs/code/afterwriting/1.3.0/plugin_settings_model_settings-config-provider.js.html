@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>plugin/settings/model/settings-config-provider.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="View.AppView.html">AppView</a></li></ul><h3>Modules</h3><ul><li><a href="module-bootstrap_app-config.html">bootstrap/app-config</a></li><li><a href="module-bootstrap_core-config.html">bootstrap/core-config</a><ul class='methods'><li data-type='method'><a href="module-bootstrap_core-config.html#~init">init</a></li></ul></li><li><a href="module-bootstrap_dev-config.html">bootstrap/dev-config</a></li><li><a href="module-client_client-config.html">client/client-config</a></li><li><a href="module-core_plugin.html">core/plugin</a></li><li><a href="module-plugin_info_info-plugin.html">plugin/info/info-plugin</a></li><li><a href="module-plugin_info_model_info-section.html">plugin/info/model/info-section</a></li><li><a href="module-theme_aw-bubble_model_section.html">theme/aw-bubble/model/section</a></li><li><a href="module-utils_browser.html">utils/browser</a><ul class='methods'><li data-type='method'><a href="module-utils_browser.html#.url_params">url_params</a></li></ul></li><li><a href="module-utils_fn.html">utils/fn</a><ul class='methods'><li data-type='method'><a href="module-utils_fn.html#.conflate">conflate</a></li></ul></li><li><a href="module-utils_helper.html">utils/helper</a><ul class='methods'><li data-type='method'><a href="module-utils_helper.html#.blank_text">blank_text</a></li><li data-type='method'><a href="module-utils_helper.html#.format_time">format_time</a></li><li data-type='method'><a href="module-utils_helper.html#.get_indentation">get_indentation</a></li></ul></li></ul><h3>Mixins</h3><ul><li><a href="theme_aw-bubble_view_section-view-mixin.html">theme/aw-bubble/view/section-view-mixin</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-bootstrap.html">bootstrap</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_basicStats">_basicStats</a></li><li><a href="global.html#_fileSaved">_fileSaved</a></li><li><a href="global.html#_loadSettings">_loadSettings</a></li><li><a href="global.html#_saveToCloud">_saveToCloud</a></li><li><a href="global.html#_scriptChanged">_scriptChanged</a></li><li><a href="global.html#activate">activate</a></li><li><a href="global.html#BaseSectionPresenter">BaseSectionPresenter</a></li><li><a href="global.html#control">control</a></li><li><a href="global.html#date">date</a></li><li><a href="global.html#deactivate">deactivate</a></li><li><a href="global.html#getLastVisitDate">getLastVisitDate</a></li><li><a href="global.html#getSettingGroups">getSettingGroups</a></li><li><a href="global.html#getTdWrapper">getTdWrapper</a></li><li><a href="global.html#goto">goto</a></li><li><a href="global.html#group">group</a></li><li><a href="global.html#groups">groups</a></li><li><a href="global.html#hide">hide</a></li><li><a href="global.html#lastUsedInfo">lastUsedInfo</a></li><li><a href="global.html#LastUsedInfo">LastUsedInfo</a></li><li><a href="global.html#lastUsedInfoLoaded">lastUsedInfoLoaded</a></li><li><a href="global.html#require">require</a></li><li><a href="global.html#resolve_module_name">resolve_module_name</a></li><li><a href="global.html#script">script</a></li><li><a href="global.html#show">show</a></li><li><a href="global.html#title">title</a></li><li><a href="global.html#updateSize">updateSize</a></li><li><a href="global.html#view">view</a></li><li><a href="global.html#withNewFontSize">withNewFontSize</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">plugin/settings/model/settings-config-provider.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>define(function(require) {
+
+    var Protoplast = require('protoplast'),
+        Input = require('core/view/control/input'),
+        Checkbox = require('core/view/control/checkbox'),
+        Dropdown = require('core/view/control/dropdown'),
+        SettingsGroup = require('plugin/settings/model/settings-group'),
+        SettingsEntry = require('plugin/settings/model/settings-entry');
+
+    var SettingsConfigProvider = Protoplast.Object.extend({
+
+        /**
+         * Return list of groups used by settings addon
+         */
+        getSettingGroups: function() {
+            return Protoplast.Collection.create([
+                this.getPrintGroup(),
+                this.getLayoutGroup(),
+                this.getTextGroup(),
+                this.getMiscellaneousGroup(),
+                this.getStatsGroup(),
+                this.getExperimentalGroup()
+            ]);
+        },
+
+        getPrintGroup: function() {
+            var printGroup = SettingsGroup.create('Print');
+
+            printGroup.addEntry(this.createDropdown('print_profile', 'Page size', [{label: 'A4', value: 'a4'}, {label: 'US letter', value: 'usletter'}]));
+            printGroup.addEntry(this.createDropdown('font_family', 'Font', [{label: 'Courier Prime', value: 'CourierPrime'}, {label: 'Courier', value: 'Courier'}]));
+            printGroup.addEntry(this.createCheckbox('print_title_page', 'Print title page'));
+            printGroup.addEntry(this.createCheckbox('print_sections', 'Print sections'));
+            printGroup.addEntry(this.createCheckbox('print_synopsis', 'Print synopsis'));
+            printGroup.addEntry(this.createCheckbox('print_notes', 'Print notes'));
+            printGroup.addEntry(this.createCheckbox('print_headers', 'Print headers'));
+            printGroup.addEntry(this.createCheckbox('print_actions', 'Print actions'));
+            printGroup.addEntry(this.createCheckbox('print_dialogues', 'Print dialogue'));
+            printGroup.addEntry(this.createInput('print_header', 'Header'));
+            printGroup.addEntry(this.createInput('print_footer', 'Footer'));
+            printGroup.addEntry(this.createInput('print_watermark', 'Watermark'));
+            return printGroup;
+        },
+
+        getLayoutGroup: function() {
+            var layoutGroup = SettingsGroup.create('Layout');
+            layoutGroup.addEntry(this.createCheckbox('split_dialogue', 'Split dialogue between pages'));
+            layoutGroup.addEntry(this.createCheckbox('use_dual_dialogue', 'Accept dual dialogue'));
+            layoutGroup.addEntry(this.createCheckbox('double_space_between_scenes', 'Double space between scenes'));
+            layoutGroup.addEntry(this.createCheckbox('each_scene_on_new_page', 'Page break after a scene'));
+            layoutGroup.addEntry(this.createCheckbox('number_sections', 'Prefix sections with numbers'));
+            layoutGroup.addEntry(this.createCheckbox('embolden_scene_headers', 'Embolden scene headers'));
+            layoutGroup.addEntry(this.createCheckbox('underline_scene_headers', 'Underline scene headers'));
+            layoutGroup.addEntry(this.createDropdown('scenes_numbers', 'Scene numbers', [
+                {label: 'none', value: 'none'},
+                {label: 'left', value: 'left'},
+                {label: 'right', value: 'right'},
+                {label: 'both', value: 'both'}
+            ]));
+            layoutGroup.addEntry(this.createCheckbox('scene_continuation_bottom', 'Scene continuation (the bottom of a page)'));
+            layoutGroup.addEntry(this.createCheckbox('scene_continuation_top', 'Scene continuation (the top of the next page)'));
+            return layoutGroup;
+        },
+
+        getTextGroup: function() {
+            var textGroup = SettingsGroup.create('Text');
+            textGroup.addEntry(this.createInput('text_more', 'Override (MORE) text to'));
+            textGroup.addEntry(this.createInput('text_contd', "Override (CONT'D) text to"));
+            textGroup.addEntry(this.createInput('text_scene_continued', 'Override CONTINUED (scene continuation) text to'));
+            return textGroup
+        },
+
+        getMiscellaneousGroup: function() {
+            var miscellaneousGroup = SettingsGroup.create('Miscellaneous');
+            miscellaneousGroup.addEntry(this.createCheckbox('show_background_image','Show background image'));
+            miscellaneousGroup.addEntry(this.createCheckbox('load_last_opened','Load last opened on startup'));
+            miscellaneousGroup.addEntry(this.createCheckbox('night_mode','Night mode'));
+            return miscellaneousGroup
+        },
+
+        getStatsGroup: function() {
+            var statsGroup = SettingsGroup.create('Statistics');
+            statsGroup.addEntry(this.createCheckbox('stats_keep_last_scene_time', 'Keep last scene slugline time of day if not specified'));
+            statsGroup.addEntry(this.createInput('stats_who_with_who_max', '"Who with whom" max characters'));
+            return statsGroup;
+        },
+
+        getExperimentalGroup: function() {
+            var experimentalGroup = SettingsGroup.create('Experimental');
+            experimentalGroup.addEntry(this.createCheckbox('cloud_lazy_loading', 'GoogleDrive/Dropbox lazy loading'));
+            experimentalGroup.addEntry(this.createCheckbox('pdfjs_viewer', 'JavaScript PDF viewer'));
+            return experimentalGroup;
+        },
+
+        createDropdown: function(key, label, options) {
+            var dropdown = Dropdown.create();
+            dropdown.options = options;
+            return SettingsEntry.create(key, label, dropdown);
+        },
+
+        createCheckbox: function(key, label) {
+            var checkbox = Checkbox.create();
+            checkbox.id = key;
+            return SettingsEntry.create(key, label, checkbox);
+        },
+
+        createInput: function(key, label) {
+            var input = Input.create();
+            return SettingsEntry.create(key, label, input);
+        }
+
+    });
+
+    return SettingsConfigProvider;
+});</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta2</a> on Sun Mar 05 2017 19:40:18 GMT+0000 (GMT (czas standardowy)) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
