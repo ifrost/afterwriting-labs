@@ -14,6 +14,7 @@ define(function(require) {
         SettingsPlugin = require('plugin/settings/settings-plugin'),
         PreviewPlugin = require('plugin/preview/preview-plugin'),
         MonitorPlugin = require('plugin/monitor/monitor-plugin'),
+        ChangelogPlugin = require('plugin/changelog/changelog-plugin'),
         AppView = require('view/app-view');
 
     /**
@@ -62,6 +63,7 @@ define(function(require) {
             context.register(SettingsPlugin.create(context));
             context.register(PreviewPlugin.create(context));
             context.register(MonitorPlugin.create(context));
+            context.register(ChangelogPlugin.create(context));
             
             themeModel.sectionsMenu.addSort({
                 fn: function(a, b) {

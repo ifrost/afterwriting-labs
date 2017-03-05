@@ -1,5 +1,18 @@
 define(function() {
 
+    _mock = function(object) {
+        var mock = Object.create(object);
+        for (var property in mock) {
+            if (typeof mock[property] === 'function') {
+                mock[property] = sinon.stub();
+            }
+            else {
+                Object.defineProperty(mock, property, {value: undefined, writable: true});
+            }
+        }
+        return mock;
+    };
+
     /**
      * Mocks all functions for a given Protoplast prototype
      *
@@ -7,17 +20,9 @@ define(function() {
      * @returns {Object}
      */
     var mock = function(Prototype) {
-        var Mock = Object.create(Prototype);
-        for (var property in Mock) {
-            if (typeof Mock[property] === 'function') {
-                Mock[property] = sinon.stub();
-            }
-            else {
-                Object.defineProperty(Mock, property, {value: undefined, writable: true});
-            }
-        }
+        var Mock = _mock(Prototype);
         Mock.extend = Mock.create = function() {
-            return Object.create(Mock);
+            return _mock(Prototype);
         };
         return Mock;
     };
