@@ -33,7 +33,7 @@ define(function(require) {
             env.assert.theme.night_mode_is_enabled(false);
         });
 
-        it('GIVEN default settings WHEN an option changes AND app is refresh THEN settings are saved', function() {
+        it('GIVEN default settings WHEN an option changes AND app is refreshed THEN settings are saved', function() {
             // GIVEN
             env.scenarios.create_new_script('test');
             env.user.theme.open_plugin('settings');
