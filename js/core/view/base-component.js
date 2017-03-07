@@ -1,6 +1,7 @@
 define(function(require) {
 
     var Protoplast = require('protoplast'),
+        Handlebars = require('handlebars'),
         $ = require('jquery');
 
     var BaseComponent = Protoplast.Component.extend({

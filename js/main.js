@@ -7,7 +7,7 @@
             test_screenplays: '../test/data/test_screenplays',
             test: '../test',
             jquery: 'libs/jquery-1.11.1.min',
-            handlebars: 'libs/handlebars',
+            handlebars: '../node_modules/handlebars/dist/handlebars.amd',
             logger: 'libs/logger',
             lodash: '../node_modules/lodash/lodash',
             saveAs: 'libs/FileSaver',
