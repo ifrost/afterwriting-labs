@@ -212,17 +212,6 @@ module.exports = function(grunt) {
             }
         },
         bumpup: 'package.json',
-        jshint: {
-            options: {
-                jshintrc: '.jshintrc',
-                reporter: require('jshint-stylish')
-            },
-            check: {
-                files: {
-                    src: ["js/*", "!js/libs/**"]
-                }
-            }
-        },
 
         template: {
             test: {
@@ -335,7 +324,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-compress');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-express-server');
     grunt.loadNpmTasks('grunt-git');
     grunt.loadNpmTasks('grunt-bumpup');

@@ -19,11 +19,13 @@
     "url": "git://github.com/ifrost/afterwriting-labs.git"
   },
   "scripts": {
+    "eslint": "node_modules/.bin/eslint js/**/*.js -c .eslintrc.json",
     "test": "grunt test"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "docdash": "^0.4.0",
+    "eslint": "^3.17.1",
     "express": "^4.14.0",
     "grunt": "~1.0.1",
     "grunt-bumpup": "^0.6.1",
@@ -34,7 +36,6 @@
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-cssmin": "^2.0.0",
     "grunt-contrib-handlebars": "^1.0.0",
-    "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-requirejs": "^1.0.0",
     "grunt-express-server": "^0.5.3",
     "grunt-git": "^1.0.3",
@@ -46,7 +47,6 @@
     "grunt-text-replace": "^0.4.0",
     "handlebars": "^4.0.6",
     "istanbul": "^0.4.5",
-    "jshint-stylish": "^2.2.1",
     "lodash": "^4.17.4",
     "mocha": "^3.2.0",
     "protoplast": "^2.0.0-alpha.21",

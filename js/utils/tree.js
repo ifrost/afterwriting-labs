@@ -1,4 +1,3 @@
-/*jshint -W069 */
 define(function (require) {
 
 	var $ = require('jquery');
