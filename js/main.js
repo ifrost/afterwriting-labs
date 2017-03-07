@@ -11,7 +11,7 @@
             logger: 'libs/logger',
             lodash: '../node_modules/lodash/lodash',
             saveAs: 'libs/FileSaver',
-            d3: 'libs/d3.min',
+            d3: '../node_modules/d3/d3.min',
             modernizr: 'libs/modernizr',
             pdfkit: 'libs/pdfkit',
             impromptu: 'libs/jquery-impromptu.min',
