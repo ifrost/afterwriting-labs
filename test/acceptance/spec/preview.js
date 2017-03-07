@@ -15,6 +15,7 @@ define(function(require) {
             env.destroy();
         });
 
+        // TODO: Test is throwing a "silent" error, to see it enable logs in Gruntfile.js (+)
         it('GIVEN JavaScript PDF Viewer is enabled WHEN preview plugin is selected THEN JavaScript preview is loaded', function(done) {
             // GIVEN
             env.user.theme.open_plugin('settings');
