@@ -314,7 +314,7 @@ module.exports = function(grunt) {
                 options: {
                     urls: ['http://localhost:8001/acceptance.html'],
                     reporter: 'Spec',
-                    log: true,
+                    log: false,
                     logErrors: true,
                     page: {
                         viewportSize: {
