@@ -14,7 +14,7 @@ define(function(require) {
 
         small: {
             get: function() {
-                return this.themeModel.small
+                return this.themeModel.small;
             }
         },
 
@@ -27,7 +27,7 @@ define(function(require) {
             value: function() {
                 Protoplast.utils.bind(this, 'themeModel.sectionsMenu', this.updateSections.bind(this));
                 Protoplast.utils.bind(this, 'themeModel.width', this.updatePositions.bind(this, this.themeModel.animationDelay));
-                this.view.on('menuItemAdded',  this.updatePositions.bind(this, this.themeModel.animationDelay))
+                this.view.on('menuItemAdded',  this.updatePositions.bind(this, this.themeModel.animationDelay));
             }
         },
 

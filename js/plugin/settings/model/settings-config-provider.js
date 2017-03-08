@@ -66,7 +66,7 @@ define(function(require) {
             textGroup.addEntry(this.createInput('text_more', 'Override (MORE) text to'));
             textGroup.addEntry(this.createInput('text_contd', "Override (CONT'D) text to"));
             textGroup.addEntry(this.createInput('text_scene_continued', 'Override CONTINUED (scene continuation) text to'));
-            return textGroup
+            return textGroup;
         },
 
         getMiscellaneousGroup: function() {
@@ -74,7 +74,7 @@ define(function(require) {
             miscellaneousGroup.addEntry(this.createCheckbox('show_background_image','Show background image'));
             miscellaneousGroup.addEntry(this.createCheckbox('load_last_opened','Load last opened on startup'));
             miscellaneousGroup.addEntry(this.createCheckbox('night_mode','Night mode'));
-            return miscellaneousGroup
+            return miscellaneousGroup;
         },
 
         getStatsGroup: function() {

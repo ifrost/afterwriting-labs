@@ -23,7 +23,7 @@ define(function(require) {
         ioModel: {
             inject: IoModel
         },
-        
+
         editorModel: {
             inject: EditorModel
         },
@@ -31,7 +31,7 @@ define(function(require) {
         themeController: {
             inject: ThemeController
         },
-        
+
         autoSaveSyncTimer: null,
 
         cleanUp: function() {
@@ -71,7 +71,7 @@ define(function(require) {
                 local.unsync();
             }
         },
-        
+
         restoreBeforeSync: function() {
             this.scriptModel.script = this.editorModel.contentBeforeSync;
         },
@@ -86,7 +86,7 @@ define(function(require) {
                 this.scriptModel.script = content;
             }
         },
-        
+
         setAutoSave: function(value) {
             this.editorModel.isAutoSaveEnabled = value;
             if (this.editorModel.isAutoSaveEnabled && !this.autoSaveSyncTimer) {
@@ -99,46 +99,46 @@ define(function(require) {
             else {
                 clearInterval(this.autoSaveSyncTimer);
                 this.autoSaveSyncTimer = null;
-                this.editorModel.pendingChanges = false; 
+                this.editorModel.pendingChanges = false;
                 this.editorModel.saveInProgress = false;
             }
         },
-        
+
         saveCurrentScript: function() {
             if (!this.editorModel.saveInProgress && this.editorModel.pendingChanges) {
                 this.editorModel.pendingChanges = false;
                 this.editorModel.saveInProgress = true;
-                this._saveScript(function(){
+                this._saveScript(function() {
                     this.editorModel.saveInProgress = false;
                 }.bind(this));
             }
         },
-        
+
         // TODO: move to io? (+)
         _saveScript: function(callback) {
             var blob;
-            
+
             if (this.ioModel.dbPath) {
                 var path = this.ioModel.dbPath;
-                
+
                 blob = new Blob([this.scriptModel.script], {
                     type: "text/plain;charset=utf-8"
                 });
-                
-                db.save(path, blob, function () {
+
+                db.save(path, blob, function() {
                     callback(true);
                 });
             }
             else if (this.ioModel.gdFileId) {
                 var fileId = this.ioModel.gdFileId;
-                
+
                 blob = new Blob([this.scriptModel.script], {
                     type: "text/plain;charset=utf-8"
                 });
-                
+
                 gd.upload({
                     blob: blob,
-                    callback: function () {
+                    callback: function() {
                         callback(true);
                     },
                     fileid: fileId
@@ -148,7 +148,7 @@ define(function(require) {
                 callback(false);
             }
         },
-        
+
         goto: function(line) {
             this.editorModel.cursorPosition = {
                 ch: 0,
@@ -162,14 +162,14 @@ define(function(require) {
 
         _fileSource: function() {
             if (this.ioModel.gdFileId) {
-               return 'google-drive';
+                return 'google-drive';
             } else if (this.ioModel.dbPath) {
                 return 'dropbox';
             } else if (local.sync_available()) {
                 return 'local';
             }
         }
-        
+
     });
 
     return EditorController;

@@ -132,14 +132,14 @@ define(function(require) {
 
         _updatePrimaryCharacters: function() {
             var primary_characters = this.primaryCharacters.map(function(ch) {
-                return ch.name
+                return ch.name;
             }).join(', ');
             $('#facts-primary-characters').html(primary_characters || '-');
         },
 
         _updateSecondaryCharacters: function() {
             var secondary_characters = this.secondaryCharacters.map(function(ch) {
-                return ch.name
+                return ch.name;
             }).join(', ');
             $('#facts-secondary-characters').html(secondary_characters || '-');
         }

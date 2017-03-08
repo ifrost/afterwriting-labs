@@ -22,7 +22,7 @@ define(function(require) {
 
         small: {
             get: function() {
-                return this.themeModel.small
+                return this.themeModel.small;
             }
         },
 

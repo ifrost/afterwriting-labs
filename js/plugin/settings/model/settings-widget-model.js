@@ -20,7 +20,7 @@ define(function(require) {
                     if (entry.key === key) {
                         result = entry;
                     }
-                })
+                });
             });
             return result;
         }

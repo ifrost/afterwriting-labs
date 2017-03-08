@@ -27,7 +27,7 @@ define(function(require) {
                 }
             },
             get: function() {
-                return this._selected
+                return this._selected;
             }
         },
 

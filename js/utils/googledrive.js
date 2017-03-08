@@ -12,7 +12,7 @@ define(function(require) {
                 script_tag = document.getElementsByTagName('script')[0];
             tag.async = 1;
             tag.src = 'https://apis.google.com/js/client.js';
-            tag.onload = function () {
+            tag.onload = function() {
                 gapi.load('auth');
             };
             script_tag.parentNode.insertBefore(tag, script_tag);
@@ -212,8 +212,7 @@ define(function(require) {
     var list = function(callback, options) {
         options = options || {};
 
-        options.error = options.error || function() {
-            };
+        options.error = options.error || function() {};
 
         if (options.lazy) {
             callback(function(node, callback) {
@@ -238,21 +237,21 @@ define(function(require) {
         var conflate_caller = function(conflate_callback, data) {
             if (data) {
                 gapi.client.request({path: data.nextLink}).then(function(response) {
-                        conflate_callback(response.result);
-                    },
-                    function(response) {
-                        $.prompt.close();
-                        $.prompt(response.result.error.message);
-                    });
+                    conflate_callback(response.result);
+                },
+                function(response) {
+                    $.prompt.close();
+                    $.prompt(response.result.error.message);
+                });
             }
             else {
                 request.then(function(response) {
-                        conflate_callback(response.result);
-                    },
-                    function(response) {
-                        $.prompt.close();
-                        $.prompt(response.result.error.message);
-                    });
+                    conflate_callback(response.result);
+                },
+                function(response) {
+                    $.prompt.close();
+                    $.prompt(response.result.error.message);
+                });
             }
         };
 
@@ -272,13 +271,14 @@ define(function(require) {
             items = items.filter(function(item) {
                 return !item.explicitlyTrashed && !item.labels.trashed;
             });
-            var map_items = {}, root = {
-                title: 'My Drive',
-                id: 'root',
-                isRoot: true,
-                isFolder: true,
-                children: []
-            };
+            var map_items = {},
+                root = {
+                    title: 'My Drive',
+                    id: 'root',
+                    isRoot: true,
+                    isFolder: true,
+                    children: []
+                };
 
             items = items.filter(function(i) {
                 return !options.pdfOnly || i.mimeType === "application/pdf" || i.mimeType === "application/vnd.google-apps.folder";

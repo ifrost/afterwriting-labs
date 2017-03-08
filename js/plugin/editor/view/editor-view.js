@@ -107,7 +107,7 @@ define(function(require) {
         },
         
         getScrollInfo: function() {
-            return this.editor.getScrollInfo()
+            return this.editor.getScrollInfo();
         },
         
         getDefaultTextHeight: function() {

@@ -45,7 +45,7 @@ define(function(require) {
         visible: {
             set: function(value) {
                 this._visible = value;
-                this.root.style.display = value ? 'block' : 'none'
+                this.root.style.display = value ? 'block' : 'none';
             },
             get: function() {
                 return this._visible;
@@ -61,7 +61,7 @@ define(function(require) {
                 if (this.descriptionVisible) {
                     this.dispatch('sectionDescriptionShown', this.section.id);
                 }
-            }.bind(this)
+            }.bind(this);
         },
 
         init: function() {

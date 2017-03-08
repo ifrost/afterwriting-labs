@@ -20,7 +20,7 @@
   },
   "scripts": {
     "eslint": "node_modules/.bin/eslint js/**/*.js -c .eslintrc.json",
-    "test": "grunt test"
+    "test": "npm run eslint && grunt test"
   },
   "devDependencies": {
     "chai": "^3.5.0",

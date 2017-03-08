@@ -41,7 +41,7 @@ define(function(require) {
 
             this.table.on('configValueChanged', function(event) {
                 this.dispatch('configValueChanged', event);
-            }.bind(this))
+            }.bind(this));
         }
 
     });

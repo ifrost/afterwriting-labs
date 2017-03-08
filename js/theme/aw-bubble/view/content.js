@@ -47,7 +47,7 @@ define(function(require) {
         visible: {
             set: function(value) {
                 this._visible = value;
-                this.root.style.display = value ? 'block' : 'none'
+                this.root.style.display = value ? 'block' : 'none';
             },
             get: function() {
                 return this._visible;
@@ -57,7 +57,7 @@ define(function(require) {
         height: {
             set: function(value) {
                 this._height = value;
-                this.$root.height(value)
+                this.$root.height(value);
             },
             get: function() {
                 return this._height;
@@ -76,7 +76,7 @@ define(function(require) {
         
         outerWidth: {
             get: function() {
-                return this.$root ? this.$root.outerWidth() : null
+                return this.$root ? this.$root.outerWidth() : null;
             }
         },
 

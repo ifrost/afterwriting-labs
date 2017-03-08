@@ -42,7 +42,7 @@ define(function(require) {
             this.dispatch('configValueChanged', {
                 key: this.key,
                 value: value
-            })
+            });
         }
 
     });

@@ -11,13 +11,13 @@ define(function(require) {
     }
 
     var module = {}, client, is_lazy = false;
-    
+
     module.init = function() {
         this.initialised = true;
     };
-    
+
     module.is_available = function() {
-        return this.initialised && window.location.protocol !== 'file:';;
+        return this.initialised && window.location.protocol !== 'file:';
     };
 
     var client_authenticate = function(callback) {
@@ -48,7 +48,7 @@ define(function(require) {
                     (e.data.indexOf('uid') === -1) ||
                     (e.data.indexOf('state') === -1)
                 ) {
-                    return
+                    return;
                 }
 
                 var token = /access_token=([^\&]*)/.exec(e.data)[1],

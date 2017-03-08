@@ -107,7 +107,7 @@ define('utils/pdfmaker', function(require) {
             }
 
             var split_for_fromatting = text.split(/(\\\*)|(\*{1,3})|(\\?_)|(\[\[)|(\]\])/g).filter(function(a) {
-                return a
+                return a;
             });
 
             var font_width = print.font_width;

@@ -29,7 +29,7 @@ define(function(require){
             PDFJS.getDocument(uint8array).then(function(pdfFile) {
                 viewer.set_pdf(pdfFile);
             }).catch(function(error){
-                console.log(error)
+                console.log(error);
             });
         };
         fileReader.readAsArrayBuffer(blob);

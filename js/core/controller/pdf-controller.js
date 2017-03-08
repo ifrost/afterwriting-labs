@@ -48,7 +48,7 @@ define(function(require) {
                 var unicode_sample = textstats.get_characters(this.scriptModel.script);
                 unicode_sample.forEach(function(character) {
                     doc.format_text(character, 0, 0, {color: '#eeeeee'});
-                })
+                });
             }
         }
 

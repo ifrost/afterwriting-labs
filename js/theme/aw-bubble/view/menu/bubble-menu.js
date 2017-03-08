@@ -30,7 +30,7 @@ define(function(require) {
                     parent.add(child);
                     view.dispatch('menuItemAdded');
                 }
-            })
+            });
         },
         
         animateItem: function(section, attrs, delay) {

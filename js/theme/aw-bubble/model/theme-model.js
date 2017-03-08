@@ -34,7 +34,7 @@ define(function(require) {
         backgroundImageVisible: {
             computed: ['showBackgroundImage', 'small'],
             value: function() {
-                return this.showBackgroundImage && !this.small
+                return this.showBackgroundImage && !this.small;
             }
         },
         

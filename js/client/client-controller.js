@@ -52,7 +52,7 @@ var ClientController = Protoplast.Object.extend({
             if (err) {
                 console.error('Cannot open script file', path);
             } else {
-                callback(text)
+                callback(text);
             }
         });
     },

@@ -18,7 +18,7 @@ define(function(require) {
         },
 
         render: function() {
-            this.root.innerHTML = this.content
+            this.root.innerHTML = this.content;
         }
         
     });

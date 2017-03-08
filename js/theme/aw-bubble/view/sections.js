@@ -28,7 +28,7 @@ define(function(require) {
                     child.visible = child.section === parent.sections.selected;
                     parent.add(child);
                 }
-            })
+            });
         },
 
         hideAll: function(callback) {

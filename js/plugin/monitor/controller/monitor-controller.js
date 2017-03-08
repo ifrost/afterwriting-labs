@@ -165,7 +165,7 @@ define(function(require) {
         saveMobilePdf: {
             sub: 'plugin/io/save-mobile-pdf',
             value: function() {
-                this.monitor.track('feature', 'save-mobile-pdf')
+                this.monitor.track('feature', 'save-mobile-pdf');
             }
         },
 

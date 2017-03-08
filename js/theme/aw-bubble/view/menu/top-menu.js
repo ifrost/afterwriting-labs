@@ -29,7 +29,7 @@ define(function(require) {
         setSelected: function(section) {
             this.children.forEach(function(topMenuItem) {
                 topMenuItem.selected = topMenuItem.section === section;
-            })
+            });
         }
 
     });

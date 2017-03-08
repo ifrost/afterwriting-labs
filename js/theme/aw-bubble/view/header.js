@@ -31,7 +31,7 @@ define(function(require) {
 
             this.elemInfoIcon.onclick = function() {
                 this.descriptionVisible = !this.descriptionVisible;
-            }.bind(this)
+            }.bind(this);
         },
 
         init: function() {
