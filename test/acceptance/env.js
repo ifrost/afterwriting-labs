@@ -9,6 +9,7 @@ define(function(require) {
         FakeGoogleAnalytics = require('acceptance/helper/server/fake-ga'),
         FakeGoogleDrive = require('acceptance/helper/server/fake-google-drive'),
         FakeDropBox = require('acceptance/helper/server/fake-dropbox'),
+        MemoryCheck = require('acceptance/util/memory-check'),
         Scenarios = require('acceptance/helper/scenarios');
 
     /**
@@ -30,6 +31,8 @@ define(function(require) {
 
             this.Bootstrap = window.testData.Bootstrap;
             this.Config = window.testData.Config;
+
+            this.memoryCheck = MemoryCheck.create();
 
             this.proxy = Proxy.create();
             this.dropbox = FakeDropBox.create();
@@ -62,6 +65,13 @@ define(function(require) {
             this.browser.tick(5000);
         },
 
+        checkMemory: function() {
+            var errors = this.memoryCheck.check();
+            if (errors.length) {
+                throw new Error(errors.join('\n\n'));
+            }
+        },
+
         destroy: function() {
             this.user.theme.back_to_main();
 
@@ -71,6 +81,8 @@ define(function(require) {
             this.proxy.restore();
             this.browser.restore();
             this.ga.restore();
+
+            this.checkMemory();
         }
     });
 
