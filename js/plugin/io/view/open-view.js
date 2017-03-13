@@ -46,12 +46,13 @@ define(function(require) {
             var self = this;
 
             this.$openNew.click(self.dispatch.bind(this, 'create-new'));
-            
-            this.$root.find('a[open-action="sample"]').click(function() {
+
+            var $aSample = this._wrapSelector('a[open-action="sample"]');
+            $aSample.click(function() {
                 var name = $(this).attr('value');
                 self.dispatch('open-sample', name);
             });
-
+            
             this.onClick(this.$lastUsedTitle, self.dispatch.bind(this, 'open-last-used'));
             this.onClick(this.$openDropboxFile, self.dispatch.bind(this, 'open-from-dropbox'));
             this.onClick(this.$openGoogleDriveFile, self.dispatch.bind(this, 'open-from-google-drive'));
@@ -73,10 +74,11 @@ define(function(require) {
         $fileWrapper: null,
 
         _resetFileInput: function() {
+            this.$fileWrapper.off();
             this.$fileWrapper.empty()
                 .html('<input id="open-file" type="file" style="display:none" />');
 
-            this.$root.find("#open-file").change(function() {
+            this.$fileWrapper.change(function() {
                 var selected_file = this.$root.find('#open-file').get(0).files.item(0);
                 this.dispatch('open-file', selected_file);
                 this._resetFileInput();

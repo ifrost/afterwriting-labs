@@ -1,10 +1,10 @@
 define(function(require) {
 
     var $ = require('jquery'),
-        Protoplast = require('protoplast'),
+        BaseComponent = require('core/view/base-component'),
         BubbleMenuItemPresenter = require('theme/aw-bubble/presenter/menu/bubble-menu-item-presenter');
 
-    var BubbleMenuItem = Protoplast.Component.extend({
+    var BubbleMenuItem = BaseComponent.extend({
         
         $meta: {
             presenter: BubbleMenuItemPresenter
@@ -22,7 +22,6 @@ define(function(require) {
         $title: null,
 
         $create: function() {
-            this.$root = $(this.root);
 
             this.$root.hover(function() {
                 $(this).addClass('menu-item-hover');
@@ -37,8 +36,8 @@ define(function(require) {
                 'position': 'fixed',
                 'opacity': 0
             });
-            
-            this.root.onclick = this.dispatch.bind(this, 'clicked');
+
+            this.$root.click(this.dispatch.bind(this, 'clicked'));
         },
         
         render: {
@@ -51,14 +50,14 @@ define(function(require) {
         renderIcon: {
             bindWith: 'section.smallIcon',
             value: function() {
-                this.$icon.setAttribute('src', this.section.smallIcon);
+                this.$icon.attr('src', this.section.smallIcon);
             }
         },
 
         renderTitle: {
             bindWith: 'section.shortTitle',
             value: function() {
-                this.$title.innerHTML = this.section.shortTitle;
+                this.$title.html(this.section.shortTitle);
             }
         },
         

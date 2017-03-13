@@ -1,10 +1,10 @@
 define(function(require) {
 
-    var  $ = require('jquery'),
-        Protoplast = require('protoplast'),
+    var $ = require('jquery'),
+        BaseComponent = require('core/view/base-component'),
         TopMenuItemPresenter = require('theme/aw-bubble/presenter/menu/top-menu-item-presenter');
 
-    var TopMenuItem = Protoplast.Component.extend({
+    var TopMenuItem = BaseComponent.extend({
 
         $meta: {
             presenter: TopMenuItemPresenter
@@ -32,8 +32,6 @@ define(function(require) {
         },
 
         $create: function() {
-            this.$root = $(this.root);
-
             this.$root.hover(function() {
                 $(this).addClass('tool-hover');
             }, function() {

@@ -18,7 +18,7 @@ define(function(require) {
                         var outerHtml = orphan.get(0).outerHTML;
                         var closeTagIndex = outerHtml.indexOf('>');
                         var html = outerHtml.substr(0, closeTagIndex + 1);
-                        orphans.push(html.length > 100 ? html.substr(0, 100) + '...' : html);
+                        orphans.push(html);
 
                         $('body').append(orphan);
                         orphan.off();

@@ -7,21 +7,26 @@ define(function(require) {
     var BaseComponent = Protoplast.Component.extend({
 
         $meta: {
-            elementWrapper: $
+            elementWrapperFunctionName: '_wrapElement'
         },
         
         id: undefined,
 
         hbs: null,
 
-        _selectors: null,
+        __selectors: null,
+
+        _selectors: {
+            get: function() {
+                return this.__selectors || (this.__selectors = Protoplast.Collection.create());
+            }
+        },
 
         $create: function() {
-            this._selectors = Protoplast.Collection.create();
             if (this.hbs) {
                 this.root.innerHTML = Handlebars.compile(this.hbs)();
             }
-            this.$root = $(this.root);
+            this.$root = this._wrapElement(this.root);
             this.processRoot();
         },
         
@@ -35,22 +40,39 @@ define(function(require) {
 
         addInteractions: function() {},
 
-        $on: function(selector, event, handler) {
-            this._selectors.add(selector);
-            this.$root.find(selector).on(event, handler);
+        _wrapSelector: function(selector) {
+            var element = this.$root.find(selector);
+            return this._wrapElement(element);
         },
 
+        _wrapElement: function(element) {
+            var wrapped = $(element);
+            this._selectors.add(wrapped);
+            return wrapped;
+        },
+
+        /**
+         * @deprecated
+         */
+        $on: function(selector, event, handler) {
+            var wrapped = this._wrapSelector(selector);
+            wrapped.on(event, handler);
+        },
+    
+        /**
+         * @deprecated
+         */
         onClick: function(selector, handler) {
             this.$on(selector, 'click', handler);
         },
-        
+
         _updateId: function() {
             this.root.setAttribute('data-id', this.id);
         },
 
         destroy: function() {
             this._selectors.forEach(function(selector) {
-                this.$root.find(selector).off();
+                selector.off();
             }, this);
             Protoplast.Component.destroy.call(this);
         }

@@ -16,6 +16,10 @@ define(function(require) {
 
         hbs: template,
 
+        $expandDialogues: null,
+
+        $expandLocations: null,
+
         facts: null,
 
         eachSceneOnNewPage: false,
@@ -34,7 +38,7 @@ define(function(require) {
             Protoplast.utils.bind(this, 'primaryCharacters', this._updatePrimaryCharacters);
             Protoplast.utils.bind(this, 'secondaryCharacters', this._updateSecondaryCharacters);
 
-            $('.expand-dialogue').click(function() {
+            this.$expandDialogues.click(function() {
                 if ($(this).hasClass('show-all-dialogues')) {
                     $('.show-all-dialogues').hide();
                     $('.show-top-dialogues').show();
@@ -46,7 +50,7 @@ define(function(require) {
                     duration: 200
                 });
             });
-            $('.expand-locations').click(function() {
+            this.$expandLocations.click(function() {
                 if ($(this).hasClass('show-all-locations')) {
                     $('.show-all-locations').hide();
                     $('.show-top-locations').show();

@@ -1,10 +1,11 @@
 define(function(require) {
 
     var Protoplast = require('protoplast'),
+        BaseComponent = require('core/view/base-component'),
         BubbleMenuPresenter = require('theme/aw-bubble/presenter/menu/bubble-menu-presenter'),
         BubbleMenuItem = require('theme/aw-bubble/view/menu/bubble-menu-item');
 
-    var BubbleMenu = Protoplast.Component.extend({
+    var BubbleMenu = BaseComponent.extend({
 
         $meta: {
             presenter: BubbleMenuPresenter
@@ -19,7 +20,7 @@ define(function(require) {
         },
 
         init: function() {
-            this.root.className = 'selector';
+            this.$root.addClass('selector');
             var view = this;
             Protoplast.utils.renderList(this, 'sections', {
                 property: 'section',
