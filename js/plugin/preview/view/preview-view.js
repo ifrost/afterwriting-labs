@@ -25,6 +25,10 @@ define(function(require) {
             presenter: PreviewViewPresenter
         },
 
+        $zoomIn: null,
+
+        $zoomOut: null,
+
         pdf: null,
 
         addBindings: function() {
@@ -34,10 +38,8 @@ define(function(require) {
         addInteractions: function() {
             this.root.style.height = '100%';
 
-            $('#next').click(pdfjs_viewer.next);
-            $('#prev').click(pdfjs_viewer.prev);
-            $('#zoomin').click(pdfjs_viewer.zoomin);
-            $('#zoomout').click(pdfjs_viewer.zoomout);
+            this.$zoomIn.click(pdfjs_viewer.zoomin);
+            this.$zoomOut.click(pdfjs_viewer.zoomout);
             pdfjs_viewer.set_container(document.getElementById('pdfjs-viewer'));
         },
 
