@@ -12,15 +12,6 @@ define(function(require) {
 
         hbs: template,
 
-        settings: {
-            inject: 'settings'
-        },
-
-        // TODO: remove direct references in views? (+)
-        scriptModel: {
-            inject: 'script'
-        },
-
         $meta: {
             presenter: PreviewViewPresenter
         },
@@ -30,6 +21,8 @@ define(function(require) {
         $zoomOut: null,
 
         pdf: null,
+
+        usePDFJSViewer: false,
 
         addBindings: function() {
             Protoplast.utils.bind(this, 'pdf', this._renderPdf);
@@ -46,7 +39,7 @@ define(function(require) {
         _renderPdf: function(result) {
             if (result) {
                 $("#pdf-preview-iframe-container p").remove();
-                if (this.settings.pdfjs_viewer) {
+                if (this.usePDFJSViewer) {
                     pdfjs_viewer.from_blob(result.blob);
                 }
                 else {
@@ -58,7 +51,7 @@ define(function(require) {
         },
 
         show: function() {
-            if (this.settings.pdfjs_viewer) {
+            if (this.usePDFJSViewer) {
                 $('#pdf-preview-iframe-container').hide();
                 $('#pdf-preview-pdfjs-container').show();
             }
