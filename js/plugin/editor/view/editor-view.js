@@ -23,33 +23,13 @@ define(function(require) {
         
         content: '',
         
-        saveInProgress: false,
-        
-        pendingChanges: false,
-        
         isSyncEnabled: false,
         
-        isAutoSaveEnabled: false,
-        
-        syncAvailable: false,
-        
-        autoSaveAvailable: false,
-
-        syncOnIcon: 'gfx/icons/other/sync.svg',
-        
-        syncOffIcon: 'gfx/icons/other/no-sync.svg',
-
         addBindings: function() {
             Protoplast.utils.bind(this, {
                 isSyncEnabled: this._updateSync,
-                isAutoSaveEnabled: this._updateAutoSave,
-                syncAvailable: [this._updateSyncAvailability, this._updateSync],
-                autoSaveAvailable: [this._updateAutoSaveAvailability, this._updateAutoSave],
-                saveInProgress: this._updateAnimation,
-                pendingChanges: this._updateAnimation,
                 content: this._updateContent
             });
-
         },
         
         addInteractions: function() {
@@ -62,19 +42,6 @@ define(function(require) {
 
             this.editor.on('change', function () {
                 this.dispatch('editorContentChanged');
-            }.bind(this));
-
-            $('a[action="sync-fountain"]').click(function() {
-                if (this.isSyncEnabled) {
-                    this.dispatch('disableSync');
-                }
-                else {
-                    this.dispatch('enableSync');
-                }
-            }.bind(this));
-
-            $('a[action="auto-save"]').click(function() {
-                this.dispatch('toggleAutoSave');
             }.bind(this));
 
         },
@@ -127,55 +94,7 @@ define(function(require) {
         },
 
         _updateSync: function() {
-            $('.auto-reload-icon')
-                .attr('src', this.isSyncEnabled ? this.syncOnIcon : this.syncOffIcon)
-                .attr('title', this.isSyncEnabled ? 'Turn auto-reload off' : 'Turn auto-reload on');
             $('.CodeMirror').css('opacity', this.isSyncEnabled ? 0.5 : 1);
-        },
-
-        _updateAutoSave: function() {
-            $('.auto-save-icon')
-                .attr('src', this.isAutoSaveEnabled ? this.syncOnIcon : this.syncOffIcon)
-                .attr('title', this.isAutoSaveEnabled ? 'Turn auto-save off' : 'Turn auto-save on');
-        },
-        
-        _updateSyncAvailability: function() {
-            if (this.syncAvailable) {
-                $('a[action="sync-fountain"]').parent().show();
-            }
-            else {
-                $('a[action="sync-fountain"]').parent().hide();
-            }
-        },
-        
-        _updateAutoSaveAvailability: function() {
-            if (this.autoSaveAvailable) {
-                $('a[action="auto-save"]').parent().show();
-            }
-            else {
-                $('a[action="auto-save"]').parent().hide();
-            }
-        },
-
-        _updateAnimation: function() {
-            if (this.isAutoSaveEnabled) {
-                if (this.pendingChanges || this.saveInProgress) {
-                    $('.auto-save-icon').addClass('in-progress');
-                }
-                else {
-                    $('.auto-save-icon').removeClass('in-progress');
-                }
-
-                if (this.saveInProgress) {
-                    $('.auto-save-icon').addClass('rotate');
-                }
-                else {
-                    $('.auto-save-icon').removeClass('rotate');
-                }
-            }
-            else {
-                $('.auto-save-icon').removeClass('rotate').removeClass('in-progress');
-            }
         },
         
         getEditorContent: function() {

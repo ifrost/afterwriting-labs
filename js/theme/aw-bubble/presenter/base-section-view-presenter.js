@@ -8,9 +8,9 @@ define(function(require) {
      * * deactivate()    called when section is hidden; it will automatically hide the view for the presenter
      * * _scriptChanged  invoked when script changes and section is active; script is parsed before calling the hook
      * 
-     * @alias BaseSectionPresenter
+     * @alias BaseSectionViewPresenter
      */
-    var BaseSectionPresenter = Protoplast.Object.extend({
+    var BaseSectionViewPresenter = Protoplast.Object.extend({
 
         scriptModel: {
             inject: 'script'
@@ -71,5 +71,5 @@ define(function(require) {
         
     });
 
-    return BaseSectionPresenter;
+    return BaseSectionViewPresenter;
 });

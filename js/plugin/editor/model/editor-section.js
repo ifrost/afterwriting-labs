@@ -2,7 +2,7 @@ define(function(require) {
 
     var Section = require('theme/aw-bubble/model/section'),
         EditorView = require('plugin/editor/view/editor-view'),
-        EditorMenuView = require('plugin/editor/view/editor-view-menu');
+        EditorMenuView = require('plugin/editor/view/tools-menu/editor-view-menu');
 
     var EditorSection = Section.extend({
         
