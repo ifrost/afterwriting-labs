@@ -28,7 +28,7 @@ define(function(require) {
                 }
             }
             
-            if (orphans) {
+            if (orphans.length) {
                 errors.push(orphans.length + ' detached DOM elements found:\n\t* ' + orphans.join('\n\t* '));
             }
             
