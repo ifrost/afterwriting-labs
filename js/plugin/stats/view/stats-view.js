@@ -33,6 +33,8 @@ define(function(require) {
             inject: ThemeModel
         },
 
+        $sceneLengthType: null,
+
         // TODO: Move to presenter? (+)
         settings: {
             inject: 'settings'
@@ -126,7 +128,7 @@ define(function(require) {
         addInteractions: function() {
             var themeModel = this.themeModel;
 
-            $('#stats-scene-length-type').on('change', this._render);
+            this.$sceneLengthType.on('change', this._render);
 
             Protoplast.utils.bind(themeModel, 'expanded', function() {
                 if (this.active) {
@@ -167,7 +169,7 @@ define(function(require) {
                 hide_tooltip: themeController.hideTooltip.bind(themeController),
                 move_tooltip: themeController.moveTooltip.bind(themeController),
                 color: function(d) {
-                    if ($('#stats-scene-length-type').val() === "int_ext") {
+                    if (this.$sceneLengthType.val() === "int_ext") {
                         if (d.location_type === 'mixed') {
                             return '#777777';
                         } else if (d.location_type === 'int') {
