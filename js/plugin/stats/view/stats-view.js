@@ -188,7 +188,7 @@ define(function(require) {
                     } else {
                         return '#777777';
                     }
-                },
+                }.bind(this),
                 bar_click: function(d) {
                     if (!themeModel.small) {
                         this._goto(d.token.line);
