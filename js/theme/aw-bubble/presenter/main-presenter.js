@@ -18,10 +18,18 @@ define(function(require) {
 
             this.themeModel.width = $('html').width();
             this.themeModel.height =  $(document).height();
-            $(window).resize(function() {
-                this.themeModel.width = $('html').width();
-                this.themeModel.height =  $(document).height();
-            }.bind(this));
+            this.$window = $(window);
+
+            this.$window.resize(this._updateModelWithWindowSize);
+        },
+        
+        destroy: function() {
+            this.$window.off("resize", this._updateModelWithWindowSize);
+        },
+
+        _updateModelWithWindowSize: function() {
+            this.themeModel.width = $('html').width();
+            this.themeModel.height =  $(document).height();
         },
 
         _updateBackgroundImage: function() {

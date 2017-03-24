@@ -30,6 +30,7 @@ define(function() {
      */
     SinonFileReader.setup = function() {
         window.FileReader = SinonFileReader;
+        SinonFileReader.readers = [];
     };
 
     /**
@@ -37,6 +38,7 @@ define(function() {
      */
     SinonFileReader.restore = function() {
         window.FileReader = RealFileReader;
+        SinonFileReader.readers = [];
     };
 
     /**
