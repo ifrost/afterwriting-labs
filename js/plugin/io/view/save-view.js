@@ -41,15 +41,15 @@ define(function(require) {
 
         addInteractions: function() {
 
-            this.onClick(this.$saveFountainLocally, this.dispatch.bind(this, 'save-as-fountain'));
-            this.onClick(this.$saveFountainDropbox, this.dispatch.bind(this, 'dropbox-fountain'));
-            this.onClick(this.$saveFountainGoogleDrive, this.dispatch.bind(this, 'google-drive-fountain'));
+            this.$saveFountainLocally.click(this.dispatch.bind(this, 'save-as-fountain'));
+            this.$saveFountainDropbox.click(this.dispatch.bind(this, 'dropbox-fountain'));
+            this.$saveFountainGoogleDrive.click(this.dispatch.bind(this, 'google-drive-fountain'));
 
-            this.onClick(this.$savePdfLocally, this.dispatch.bind(this, 'save-as-pdf'));
-            this.onClick(this.$savePdfDropbox, this.dispatch.bind(this, 'dropbox-pdf'));
-            this.onClick(this.$savePdfGoogleDrive, this.dispatch.bind(this, 'google-drive-pdf'));
+            this.$savePdfLocally.click(this.dispatch.bind(this, 'save-as-pdf'));
+            this.$savePdfDropbox.click(this.dispatch.bind(this, 'dropbox-pdf'));
+            this.$savePdfGoogleDrive.click(this.dispatch.bind(this, 'google-drive-pdf'));
 
-            this.onClick(this.$saveMobilePdfLocally, this.dispatch.bind(this, 'save-as-mobile-pdf'));
+            this.$saveMobilePdfLocally.click(this.dispatch.bind(this, 'save-as-mobile-pdf'));
         },
 
         _updateOpenFromDropboxVisibility: function() {

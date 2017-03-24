@@ -51,21 +51,6 @@ define(function(require) {
             return wrapped;
         },
 
-        /**
-         * @deprecated
-         */
-        $on: function(selector, event, handler) {
-            var wrapped = this._wrapSelector(selector);
-            wrapped.on(event, handler);
-        },
-    
-        /**
-         * @deprecated
-         */
-        onClick: function(selector, handler) {
-            this.$on(selector, 'click', handler);
-        },
-
         _updateId: function() {
             this.root.setAttribute('data-id', this.id);
         },

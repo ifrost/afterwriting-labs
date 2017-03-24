@@ -53,13 +53,13 @@ define(function(require) {
                 self.dispatch('open-sample', name);
             });
             
-            this.onClick(this.$lastUsedTitle, self.dispatch.bind(this, 'open-last-used'));
-            this.onClick(this.$openDropboxFile, self.dispatch.bind(this, 'open-from-dropbox'));
-            this.onClick(this.$openGoogleDriveFile, self.dispatch.bind(this, 'open-from-google-drive'));
+            this.$lastUsedTitle.click(self.dispatch.bind(this, 'open-last-used'));
+            this.$openDropboxFile.click(self.dispatch.bind(this, 'open-from-dropbox'));
+            this.$openGoogleDriveFile.click(self.dispatch.bind(this, 'open-from-google-drive'));
 
             this._resetFileInput();
 
-            this.onClick(this.$openLocalFile, function() {
+            this.$openLocalFile.click(function() {
                 this.dispatch('open-file-dialog');
                 this.$root.find("#open-file").click();
             }.bind(this));

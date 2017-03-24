@@ -14,6 +14,8 @@ define(function(require) {
         
         hbs: template,
 
+        $saveLocally: null,
+
         $saveDropbox: null,
 
         $saveGoogleDrive: null,
@@ -30,9 +32,9 @@ define(function(require) {
         },
 
         addInteractions: function() {
-            this.onClick('a[action="save-pdf"]', this.dispatch.bind(this, 'save-as-pdf'));
-            this.onClick('a[action="save-dropbox-pdf"]', this.dispatch.bind(this, 'dropbox-pdf'));
-            this.onClick('a[action="save-gd-pdf"]', this.dispatch.bind(this, 'google-drive-pdf'));
+            this.$saveLocally.click(this.dispatch.bind(this, 'save-as-pdf'));
+            this.$saveDropbox.click(this.dispatch.bind(this, 'dropbox-pdf'));
+            this.$saveGoogleDrive.click(this.dispatch.bind(this, 'google-drive-pdf'));
         },
 
         _updateOpenFromDropboxVisibility: function() {
