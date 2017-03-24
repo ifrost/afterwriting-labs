@@ -2,7 +2,7 @@ define(function(require) {
 
     var Section = require('theme/aw-bubble/model/section'),
         PreviewView = require('plugin/preview/view/preview-view'),
-        PreviewViewMenu = require('plugin/preview/view/preview-view-menu');
+        PreviewViewMenu = require('plugin/preview/view/tools-menu/preview-view-menu');
 
     var PreviewSection = Section.extend({
         
