@@ -23,7 +23,7 @@ define(function(require) {
                     a.async = 1;
                     a.src = g;
                     m.parentNode.insertBefore(a, m);
-                })(window, document, 'script', 'http://www.google-analytics.com/analytics.js', 'ga');
+                })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
                 ga('create', 'UA-53953908-1', 'auto');
                 ga('send', 'pageview');
