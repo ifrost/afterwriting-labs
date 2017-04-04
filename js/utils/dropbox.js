@@ -35,7 +35,7 @@ define(function(require) {
             $(window).on('message.dropboxclient', function(e) {
                 e = e.originalEvent;
                 e.target.removeEventListener(e.type, arguments.callee);
-                if (e.origin !== 'https://ifrost.github.io' && e.origin !== 'http://afterwriting.com' && e.origin !== 'http://localhost:8000') {
+                if (e.origin !== 'https://ifrost.github.io' && e.origin !== 'https://afterwriting.com' && e.origin !== 'http://localhost:8000') {
                     return;
                 }
 
