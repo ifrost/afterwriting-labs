@@ -4,7 +4,7 @@ define(function(require) {
         fn = require('utils/fn'),
         Dropbox = require('dropbox'),
         key = 'p5kky1t8t9c5pqy',
-        redirect_uri = 'https://ifrost.github.io/afterwriting-labs/token.html';
+        redirect_uri = 'https://afterwriting.com/token.html';
 
     if (window.location.href.indexOf('dev=true') !== -1) {
         redirect_uri = 'http://localhost:8000/local/token.html';
