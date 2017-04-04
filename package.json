@@ -47,6 +47,7 @@
     "grunt-text-replace": "^0.4.0",
     "handlebars": "^4.0.6",
     "istanbul": "^0.4.5",
+    "jsdoc": "^3.4.3",
     "lodash": "^4.17.4",
     "mocha": "^3.2.0",
     "protoplast": "^2.0.0-alpha.23",
