@@ -121,7 +121,8 @@ module.exports = function(grunt) {
             },
             master: {
                 options: {
-                    branch: 'master'
+                    branch: 'master',
+                    tags: true
                 }
             },
             develop: {
@@ -265,6 +266,9 @@ module.exports = function(grunt) {
             },
             jsdoc: {
                 command: 'jsdoc -c jsdoc.conf.json -R README.md -P package.json -t node_modules/docdash -u docs/tutorials'
+            },
+            create_change_log: {
+                command: 'echo Changes: > changes.log && git log v<%= pkg.version %>..HEAD --pretty=format:"* [[`%h`](https://github.com/ifrost/afterwriting-labs/commit/%h)] - %s" >> changes.log'
             }
         },
 
@@ -338,8 +342,12 @@ module.exports = function(grunt) {
     grunt.registerTask('test', ['handlebars:test', 'template:test', 'template:integration', 'template:acceptance', 'mocha:test', 'mocha:integration', 'express:server', 'mocha:acceptance', 'express:server:stop']);
     grunt.registerTask('coverage', ['template:coverage', 'shell:istanbul_instrument', 'mocha:coverage']);
     grunt.registerTask('doc', ['shell:jsdoc']);
-
+    
     grunt.registerTask('build', ['test', 'clean:prebuild', 'handlebars:compile', 'replace', 'concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'doc', 'clean:bootstrap']);
+
+    grunt.registerTask('update:patch', ['shell:create_change_log', 'bumpup:patch']);
+    grunt.registerTask('update:minor', ['shell:create_change_log', 'bumpup:minor']);
+    grunt.registerTask('update:major', ['shell:create_change_log', 'bumpup:major']);
 
     grunt.registerTask('release', ['gitadd:all', 'gitcommit:version', 'gittag:version', 'gitcheckout:pages', 'gitmerge:master', 'gitpush:pages', 'gitcheckout:develop', 'gitmerge:master', 'gitpush:master', 'gitpush:develop']);
 
