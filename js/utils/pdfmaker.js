@@ -486,7 +486,7 @@ define('utils/pdfmaker', function(require) {
             // clear after section
             if (line.type === 'section') {
                 after_section = true;
-            } else if (line.type !== 'separator' && line.type !== 'synopsis') {
+            } else if (line.type !== 'separator' && line.type !== 'synopsis' && line.type !== 'page_break') {
                 after_section = false;
             }
 
