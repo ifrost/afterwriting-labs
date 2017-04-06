@@ -82,7 +82,7 @@ define(function(require) {
 
         hide: function(duration) {
             this.$root.animate({
-                top: -1000,
+                top: -window.innerHeight,
                 duration: duration
             });
         },
