@@ -85,9 +85,7 @@ p {
     width: 60px;
     height: 60px;
     background-size: 60px 60px;
-    background-position: center;
-    background-repeat: no-repeat;
-    margin: 30px;
+    background: no-repeat center;
     cursor: pointer;
     float: left;
     margin: 10px;
