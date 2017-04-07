@@ -80,10 +80,9 @@ p.error {
     margin-right: 20px; /** for scrollbar **/
 }
 
-#tooltip {
+.tooltip {
     position: absolute;
     z-index: 100;
-    visibility: hidden;
     background-color: #111111;
     color: #eeeeee;
     padding: 3px;

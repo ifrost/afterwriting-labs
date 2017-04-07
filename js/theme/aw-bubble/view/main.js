@@ -1,6 +1,7 @@
 define(function(require) {
 
-    var Protoplast = require('protoplast'),
+    var $ = require('jquery'),
+        Protoplast = require('protoplast'),
         MainPresenter = require('theme/aw-bubble/presenter/main-presenter'),
         Logo = require('theme/aw-bubble/view/logo'),
         Background = require('theme/aw-bubble/view/background'),
@@ -22,7 +23,6 @@ define(function(require) {
             '<div class="menu"><div data-comp="mainMenu"></div></div>' +
             '<div data-comp="footer"></div>' +
             '<div data-comp="content"></div>' +
-            '<div id="tooltip"></div>' +
             '</main>',
 
         logo: {
@@ -46,19 +46,31 @@ define(function(require) {
         },
         
         init: function() {
+            this.$root = $(this.root);
             Protoplast.utils.bind(this, 'tooltip', this._updateTooltip);
             Protoplast.utils.bind(this, 'tooltip.text', this._updateTooltip);
             Protoplast.utils.bind(this, 'tooltip.x', this._updateTooltipPosition);
             Protoplast.utils.bind(this, 'tooltip.y', this._updateTooltipPosition);
         },
-        
+
         _updateTooltip: function() {
-            var text = this.tooltip.text;
-            $('#tooltip').css("visibility", !!text ? "visible" : "hidden").html(text);
+            var text = this.tooltip.text,
+                tooltip = $('.tooltip'),
+                tooltipVisible = !!text;
+
+            if (!tooltip.length && tooltipVisible) {
+                tooltip = $('<div class="tooltip"></div>').appendTo(this.$root);
+                tooltip.html(text);
+            }
+            else if (tooltip.length && !tooltipVisible) {
+                tooltip.remove();
+            }
         },
         
         _updateTooltipPosition: function() {
-            $('#tooltip').css("top", (this.tooltip.y - 10) + "px").css("left", (this.tooltip.x + 10) + "px");
+            if (this.tooltip && this.tooltip.text) {
+                $('.tooltip').css("top", (this.tooltip.y - 10) + "px").css("left", (this.tooltip.x + 10) + "px");
+            }
         }
 
     });
