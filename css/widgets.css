@@ -204,7 +204,7 @@ sub {
     padding-right: 15px;
 }
 
-.settings-panel table tr td:nth-child(1) {
+.settings-panel td.label {
     text-align: right;
     border-right: 0;
 }

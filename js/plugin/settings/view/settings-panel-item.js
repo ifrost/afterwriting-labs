@@ -4,7 +4,7 @@ define(function(require) {
 
     var SettingsPanelItem = Protoplast.Component.extend({
 
-        html: '<tr><td data-prop="$label"></td></tr>',
+        html: '<tr><td data-prop="$label" class="label"></td></tr>',
 
         label: null,
 
@@ -26,7 +26,7 @@ define(function(require) {
          * @returns {*}
          */
         getTdWrapper: function() {
-            var td = Protoplast.Component.extend({tag: 'td'}).create();
+            var td = Protoplast.Component.extend({html: '<td class="field"></td>'}).create();
             this.add(td);
             return td;
         },
