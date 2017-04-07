@@ -9,7 +9,7 @@ define(function(require) {
             presenter: FooterPresenter
         },
         
-        html: '<div class="footer"></div>',
+        html: '<footer class="main-footer"></footer>',
 
         content: null,
 

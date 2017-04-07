@@ -14,7 +14,7 @@ define(function(require) {
             sub: 'app/init',
             value: function() {
                 var footer = common.data.footer;
-                footer += '<br /><span class="version">development version</span>';
+                footer += '<br />development version';
                 this.themeController.setFooter(footer);
             }
         }

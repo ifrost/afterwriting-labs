@@ -207,7 +207,7 @@ p {
 }
 
 /** footer **/
-.footer {
+.main-footer {
     font-size: 13px;
     color: #999999;
     position: fixed;
@@ -216,14 +216,6 @@ p {
     padding: 5px;
     right: 0;
     bottom: 0;
-}
-
-.footer a {
-    text-decoration: none;
-}
-
-.footer .version {
-    color: #eeeeee;
 }
 
 /** small screens **/

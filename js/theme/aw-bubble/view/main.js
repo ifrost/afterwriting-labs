@@ -16,14 +16,14 @@ define(function(require) {
         
         tooltip: null,
 
-        html: '<div>' +
+        html: '<main>' +
             '<div data-comp="logo"></div>' +
             '<div data-comp="background"></div>' +
             '<div class="menu"><div data-comp="mainMenu"></div></div>' +
             '<div data-comp="footer"></div>' +
             '<div data-comp="content"></div>' +
             '<div id="tooltip"></div>' +
-            '</div>',
+            '</main>',
 
         logo: {
             component: Logo
