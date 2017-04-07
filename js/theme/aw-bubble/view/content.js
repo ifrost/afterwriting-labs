@@ -37,10 +37,10 @@ define(function(require) {
 
         updateExpanded: function() {
             if (this.expanded) {
-                this.$root.addClass('expanded');
+                this.$root.addClass('content--expanded');
             }
             else{
-                this.$root.removeClass('expanded');
+                this.$root.removeClass('content--expanded');
             }
         },
 

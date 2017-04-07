@@ -8,6 +8,24 @@ html {
     background-size: cover;
 }
 
+body {
+    overflow: hidden;
+    height: 100%;
+    font-family: Georgia, serif;
+    font-size: 16px;
+    line-height: 1.5em;
+}
+
+p {
+    text-align: justify;
+}
+
+@font-face {
+    font-family: 'Day Roman';
+    src: url('../fonts/dayroman.ttf');
+}
+
+/** loader - "Loading..." text displayed before the page is loaded */
 .loader {
     left: 50%;
     top: 50%;
@@ -17,36 +35,25 @@ html {
     color: #eeeeee;
 }
 
-body {
-    overflow: hidden;
-    height: 100%;
-}
-
+/** app - main wrapper for the whole application */
 .app {
     width: 100%;
     height: 100%;
 }
 
+/** main - main content of the theme*/
 .main {
     width: 100%;
     height: 100%;
 }
 
-/** logo **/
-@font-face {
-    font-family: 'Day Roman';
-    src: url('../fonts/dayroman.ttf');
-}
-
-.apostrophe, .after, .writing {
-    font-family: 'Day Roman';
-}
-
+/** logo - 'afterwriting logo displayed on top */
 .logo {
     margin: 0;
     font-size: 70px;
     padding: 60px 0 20px 0;
     text-align: center;
+    font-family: 'Day Roman', serif;
 }
 
 .logo__after {
@@ -59,17 +66,6 @@ body {
 
 .logo__after, .logo__writing {
     letter-spacing: 2px;
-}
-
-/** globals **/
-body {
-    font-family: Georgia;
-    font-size: 16px;
-    line-height: 1.5em;
-}
-
-p {
-    text-align: justify;
 }
 
 /** menu **/
@@ -139,7 +135,7 @@ p {
     transition: all 0.2s ease-in-out;
 }
 
-/** content **/
+/** content - main white area with top menu and plugin content **/
 .content {
     background-color: #ffffff;
     width: 800px;
@@ -148,20 +144,22 @@ p {
     top: 0;
 }
 
-.expanded {
+.content--expanded {
     width: 100%;
 }
 
+/** plugin-contents - container for all plugins */
 .plugin-contents {
     padding: 0 30px 0 30px;
     clear: both;
 }
 
+/** plugin-content - container for a single plugin */
 .plugin-content {
     overflow: auto;
 }
 
-/** tools **/
+/** top-bar - menu bar at the top of the content **/
 .top-bar {
     padding: 10px;
     overflow: hidden;
