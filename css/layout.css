@@ -1,5 +1,6 @@
 /** background image **/
 html {
+    height: 100%;
     background: #111111 no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -18,6 +19,17 @@ html {
 
 body {
     overflow: hidden;
+    height: 100%;
+}
+
+.app {
+    width: 100%;
+    height: 100%;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
 }
 
 /** logo **/
@@ -31,31 +43,22 @@ body {
 }
 
 .logo {
+    margin: 0;
     font-size: 70px;
-    margin: 60px auto 20px auto;
+    padding: 60px 0 20px 0;
     text-align: center;
 }
 
-.logo .after {
+.logo__after {
     color: #999999;
 }
 
-.logo .apostrophe, .logo .writing {
+.logo__apostrophe, .logo__writing {
     color: #eeeeee;
 }
 
-.logo .after, .logo .writing {
+.logo__after, .logo__writing {
     letter-spacing: 2px;
-}
-
-.logo .labs {
-    font-size: 20px;
-    position: relative;
-    top: 22px;
-    right: 95px;
-    color: #eeeeee;
-    opacity: 0.3;
-    font-style: oblique;
 }
 
 /** globals **/
