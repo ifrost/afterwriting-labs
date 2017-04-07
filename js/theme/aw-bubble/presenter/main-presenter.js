@@ -2,9 +2,18 @@ define(function(require) {
 
     var $ = require('jquery'),
         Protoplast = require('protoplast'),
+        ThemeController = require('theme/aw-bubble/controller/theme-controller'),
         ThemeModel = require('theme/aw-bubble/model/theme-model');
 
     var MainPresenter = Protoplast.Object.extend({
+
+        pub: {
+            inject: 'pub'
+        },
+
+        themeController: {
+            inject: ThemeController
+        },
 
         themeModel: {
             inject: ThemeModel
@@ -21,8 +30,18 @@ define(function(require) {
             this.$window = $(window);
 
             this.$window.resize(this._updateModelWithWindowSize);
+
+            this.view.on('clicked', this.clearSelectedSection.bind(this));
         },
-        
+
+        clearSelectedSection: function() {
+            var currentSection = this.themeModel.sections.selected;
+            if (currentSection) {
+                this.themeController.clearSelectedSection();
+                this.pub('aw-bubble/background/clicked', currentSection.name);
+            }
+        },
+
         destroy: function() {
             this.$window.off("resize", this._updateModelWithWindowSize);
         },

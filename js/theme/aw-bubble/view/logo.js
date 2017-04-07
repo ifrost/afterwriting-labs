@@ -5,7 +5,7 @@ define(function(require) {
     var Logo = Protoplast.Component.extend({
         
         html: '<p class="logo">' + 
-        '<span class="apostrophe">&rsquo;</span><span class="after">after</span><span class="writing">writing</span>' +
+        '<span class="logo__apostrophe">&rsquo;</span><span class="logo__after">after</span><span class="logo__writing">writing</span>' +
         '</p>'
         
     });

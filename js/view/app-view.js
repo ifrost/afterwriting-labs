@@ -15,14 +15,14 @@ define(function(require) {
             presenter: AppViewPresenter
         },
         
-        html: '<div><div data-comp="theme"></div></div>',
+        html: '<div class="app"><div data-comp="theme"></div></div>',
         
         theme: {
             component: BubbleTheme
         },
 
         init: function() {
-            $('#loader').remove();
+            $('.loader').remove();
         },
 
         destroy: function() {

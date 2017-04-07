@@ -4,7 +4,6 @@ define(function(require) {
         Protoplast = require('protoplast'),
         MainPresenter = require('theme/aw-bubble/presenter/main-presenter'),
         Logo = require('theme/aw-bubble/view/logo'),
-        Background = require('theme/aw-bubble/view/background'),
         Footer = require('theme/aw-bubble/view/footer'),
         Content = require('theme/aw-bubble/view/content'),
         BubbleMenu = require('theme/aw-bubble/view/menu/bubble-menu');
@@ -17,9 +16,8 @@ define(function(require) {
         
         tooltip: null,
 
-        html: '<main>' +
+        html: '<main class="main">' +
             '<div data-comp="logo"></div>' +
-            '<div data-comp="background"></div>' +
             '<div class="menu"><div data-comp="mainMenu"></div></div>' +
             '<div data-comp="footer"></div>' +
             '<div data-comp="content"></div>' +
@@ -27,10 +25,6 @@ define(function(require) {
 
         logo: {
             component: Logo
-        },
-
-        background: {
-            component: Background
         },
 
         mainMenu: {
@@ -51,6 +45,14 @@ define(function(require) {
             Protoplast.utils.bind(this, 'tooltip.text', this._updateTooltip);
             Protoplast.utils.bind(this, 'tooltip.x', this._updateTooltipPosition);
             Protoplast.utils.bind(this, 'tooltip.y', this._updateTooltipPosition);
+    
+            this.root.onclick = this._handleClick;
+        },
+
+        _handleClick: function(event) {
+            if (event.target === this.root) {
+                this.dispatch('clicked');
+            }
         },
 
         _updateTooltip: function() {
