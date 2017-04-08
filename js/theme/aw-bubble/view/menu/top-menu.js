@@ -11,7 +11,7 @@ define(function(require) {
         },
 
         html: '<div class="top-bar">' +
-        '<div><img data-prop="$closeIcon" class="close-content panel-icon" src="gfx/icons/close.svg" /><img data-prop="$expandIcon" class="expand panel-icon" src="gfx/icons/expand.svg" /></div>' +
+        '<div><img data-prop="$closeIcon" class="content-action" src="gfx/icons/close.svg" /><img data-prop="$expandIcon" class="content-action" src="gfx/icons/expand.svg" /></div>' +
         '</div>',
 
         $closeIcon: null,

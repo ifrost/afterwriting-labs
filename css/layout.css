@@ -159,13 +159,13 @@ p {
     overflow: auto;
 }
 
-/** top-bar - menu bar at the top of the content **/
+/** top-bar - menu bar at the top of the content, contains quick menu items and content actions **/
 .top-bar {
     padding: 10px;
     overflow: hidden;
 }
 
-.tool {
+.quick-menu-item {
     background-color: #333333;
     border-radius: 25%;
     padding: 5px;
@@ -182,16 +182,17 @@ p {
     transition: all 0.5s ease-in-out;
 }
 
-.tool.active {
+.quick-menu-item--active {
     opacity: 1.0;
 }
 
-.tool-hover, .tool-hover.active {
+.quick-menu-item:hover {
     background-color: #111111;
     opacity: 1.0;
 }
 
-.panel-icon {
+/** content action for expanding or closing the content */
+.content-action {
     float: right;
     padding: 1px;
     margin-left: 10px;
@@ -203,10 +204,9 @@ p {
     background-color: #aaaaaa;
 }
 
-.panel-icon:hover {
+.content-action:hover {
     opacity: 0.8;
 }
-
 /** footer **/
 .main-footer {
     font-size: 13px;
@@ -250,7 +250,7 @@ p {
         width: 270px;
     }
 
-    .tool {
+    .quick-menu-item {
         visibility: hidden;
     }
 

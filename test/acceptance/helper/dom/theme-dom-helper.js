@@ -3,22 +3,21 @@ define(function(require) {
     var BaseDomHelper = require('acceptance/helper/dom/base-dom-helper');
 
     var ThemeDomHelper = BaseDomHelper.extend({
-        
 
         /**
          * App's background
          */
-        $background: '#back',
+        $background: '.main',
 
         /**
          * Close content's button to close the current active plugin
          */
-        $close_icon: '.close-content',
+        $close_icon: '[data-prop="$closeIcon"]',
 
         /**
          * Expand icon to switch between narrow and expanded content
          */
-        $expand_icon: '.expand',
+        $expand_icon: '[data-prop="$expandIcon"]',
 
         /**
          * Question mark icon to expand section info
@@ -63,7 +62,7 @@ define(function(require) {
          * @returns {string}
          */
         $toolbar: function(name) {
-            return '.tool.' + name;
+            return '.quick-menu-item.' + name;
         },
 
         /**

@@ -10,7 +10,7 @@ define(function(require) {
             presenter: TopMenuItemPresenter
         },
 
-        html: '<img class="tool" />',
+        html: '<img class="quick-menu-item" />',
 
         section: null,
 
@@ -20,10 +20,10 @@ define(function(require) {
             set: function(value) {
                 this._selected = value;
                 if (value) {
-                    this.$root.addClass('active');
+                    this.$root.addClass('quick-menu-item--active');
                 }
                 else {
-                    this.$root.removeClass('active');
+                    this.$root.removeClass('quick-menu-item--active');
                 }
             },
             get: function() {
@@ -32,12 +32,6 @@ define(function(require) {
         },
 
         $create: function() {
-            this.$root.hover(function() {
-                $(this).addClass('tool-hover');
-            }, function() {
-                $(this).removeClass('tool-hover');
-            });
-
             this.root.onclick = this.dispatch.bind(this, 'clicked', this._selected);
         },
 
@@ -51,7 +45,7 @@ define(function(require) {
         render: {
             bindWith: 'section.name',
             value: function() {
-                this.root.className = 'tool ' + this.section.name;
+                this.root.className = 'quick-menu-item ' + this.section.name;
             }
         }
 
