@@ -7,7 +7,7 @@
             test_screenplays: '../test/data/test_screenplays',
             test: '../test',
             jquery: 'libs/jquery-1.11.1.min',
-            'jquery-ui': 'libs/jquery-ui-1.10.3.min',
+            'jquery-ui': 'libs/jquery-ui-1.10.3.amd.min',
             'jquery-ui-touch-punch': 'libs/jquery-ui.touch-punch.amd.min',
             handlebars: '../node_modules/handlebars/dist/handlebars.amd',
             logger: 'libs/logger',
