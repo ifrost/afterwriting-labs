@@ -258,9 +258,14 @@ p {
         padding: 0 5px 0 5px;
     }
 
-    .footer {
+    .main-footer {
+        font-size: 32px;
         opacity: 0.5;
         z-index: -100;
+    }
+
+    .menu-item--hover {
+        background-color: #000000;
     }
 
     .menu-item--hover span {
