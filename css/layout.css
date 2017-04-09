@@ -68,6 +68,15 @@ p {
     letter-spacing: 2px;
 }
 
+.background-click {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 /** menu **/
 .menu {
     padding-top: 50px;
@@ -81,22 +90,12 @@ p {
 
 .menu-item {
     position: fixed;
-    width: 60px;
-    height: 60px;
-    background-size: 60px 60px;
-    background: no-repeat center;
     cursor: pointer;
     float: left;
     margin: 10px;
     border-radius: 50%;
     border: 5px solid #eee;
-    padding: 15px;
     opacity: 0.8;
-}
-
-.menu-item img {
-    width: 60px;
-    height: 60px;
 }
 
 .menu-item span {
@@ -105,7 +104,7 @@ p {
 }
 
 /** menu mouse over **/
-.menu-item-hover {
+.menu-item--hover {
     opacity: 1.0;
     border: 5px solid #aaaaaa;
     background-color: rgba(238, 238, 238, 0.5);
@@ -116,7 +115,7 @@ p {
     transition: all 0.2s ease-in-out;
 }
 
-.menu-item-hover span {
+.menu-item--hover span {
     visibility: visible;
     color: #fff;
     background-color: #aaaaaa;
@@ -207,6 +206,7 @@ p {
 .content-action:hover {
     opacity: 0.8;
 }
+
 /** footer **/
 .main-footer {
     font-size: 13px;
@@ -220,30 +220,30 @@ p {
 }
 
 /** small screens **/
-@media (max-width: 800px) {
+@media (max-device-width: 800px) {
+
+    .content-action--close {
+        float: none;
+        position: absolute;
+        left: 50%;
+        width: 20%;
+        height: 30px;
+        border-radius: 10px;
+        margin-top: 5px;
+        margin-left: -10%;
+    }
+
+    .content-action--expand {
+        display: none;
+    }
+
     .content {
         width: 100%;
         padding: 0px;
     }
 
     .logo {
-        font-size: 40px;
-        width: auto;
-    }
-
-    .logo .labs {
-        display: none;
-    }
-
-    .menu-item {
-        width: 30px;
-        height: 30px;
-        background-size: 30px 30px;
-    }
-
-    .menu-item img {
-        width: 30px;
-        height: 30px;
+        visibility: hidden;
     }
 
     .selector {
@@ -263,7 +263,7 @@ p {
         z-index: -100;
     }
 
-    .menu-item-hover span {
+    .menu-item--hover span {
         visibility: hidden;
     }
 

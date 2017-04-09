@@ -173,19 +173,20 @@ sub {
 }
 
 /** small screens **/
-@media (max-width: 800px) {
+@media (max-device-width: 800px) {
+
     h1 {
-        margin: 10px 5px 5px 5px;
+        font-size: 38px;
     }
 
     h2 {
-        margin: 10px 5px 10px 5px;
+        font-size: 32px;
     }
 
-    p {
-        margin: 5px;
-        text-indent: 5px;
+    body {
+        font-size: 32px;
     }
+
 }
 
 .in-progress {

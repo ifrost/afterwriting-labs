@@ -39,9 +39,20 @@ define(function(require) {
         },
         
         small: {
+            computed: ['deviceWidth'],
+            value: function() {
+                return this.deviceWidth < 800;
+            }
+        },
+
+        deviceWidth: {
             computed: ['width'],
             value: function() {
-                return this.width < 800; 
+                var deviceWidth = !window.orientation ? window.screen.width : window.screen.height;
+                if (navigator.userAgent.indexOf('Android') >= 0 && window.devicePixelRatio) {
+                    deviceWidth = deviceWidth / window.devicePixelRatio;
+                }
+                return deviceWidth;
             }
         },
         

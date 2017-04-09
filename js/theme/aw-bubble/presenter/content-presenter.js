@@ -1,9 +1,14 @@
 define(function(require) {
 
     var Protoplast = require('protoplast'),
+        ThemeController = require('theme/aw-bubble/controller/theme-controller'),
         ThemeModel = require('theme/aw-bubble/model/theme-model');
 
     var ContentPresenter = Protoplast.Object.extend({
+
+        themeController: {
+            inject: ThemeController
+        },
 
         themeModel: {
             inject:  ThemeModel
@@ -18,6 +23,14 @@ define(function(require) {
             Protoplast.utils.bind(this, 'themeModel.height', this.updateContentSize.bind(this));
             Protoplast.utils.bind(this, 'themeModel.width', this.updateContentSize.bind(this));
             Protoplast.utils.bind(this, 'themeModel.expanded', this.updateExpanded.bind(this));
+
+            this.view.on('swipeup', this.closeCurrentContent);
+        },
+
+        closeCurrentContent: function() {
+            var currentSection = this.themeModel.sections.selected;
+            this.themeController.clearSelectedSection();
+            this.pub('aw-bubble/top-menu/swipe/close', currentSection.name);
         },
 
         updateContentVisibility: function() {

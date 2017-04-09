@@ -36,6 +36,13 @@ define(function(require) {
             }
         },
 
+        themeCloseWithSwipeCurrentContent: {
+            sub: 'aw-bubble/top-menu/swipe/close',
+            value: function(lastSectionName) {
+                this.monitor.track('navigation', 'toolbar-swipe-close', lastSectionName);
+            }
+        },
+
         themeExpandContent: {
             sub: 'aw-bubble/top-menu/expand',
             value: function() {

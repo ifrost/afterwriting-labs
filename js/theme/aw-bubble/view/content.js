@@ -33,6 +33,28 @@ define(function(require) {
 
         init: function() {
             Protoplast.utils.bind(this, 'expanded', this.updateExpanded.bind(this));
+
+            var y, revert = true;
+            this.$root.draggable({
+                axis: "y",
+                scroll: true,
+                scrollSensitivity: 25,
+                handle: '.content-action--close',
+                revert: function() {
+                    return revert;
+                },
+                scrollSpeed: 25,
+                addClasses: false,
+                drag: function(event, data) {
+                    revert = Math.abs(data.offset.top) <= 100;
+                },
+                stop: function(event, data) {
+                    if (Math.abs(data.offset.top) > 100) {
+                        this.dispatch('swipeup');
+                    }
+                }.bind(this)
+
+            });
         },
 
         updateExpanded: function() {
@@ -93,8 +115,13 @@ define(function(require) {
                 top: 0,
                 duration: duration
             });
+        },
+
+        destroy: function() {
+            Protoplast.Component.destroy.call(this);
+            this.$root.draggable('destroy');
         }
-        
+
     });
 
     return Content;

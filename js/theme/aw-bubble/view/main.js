@@ -18,6 +18,7 @@ define(function(require) {
 
         html: '<main class="main">' +
             '<div data-comp="logo"></div>' +
+            '<div data-prop="backgroundClick" class="background-click"></div>' +
             '<div class="menu"><div data-comp="mainMenu"></div></div>' +
             '<div data-comp="footer"></div>' +
             '<div data-comp="content"></div>' +
@@ -38,21 +39,18 @@ define(function(require) {
         content: {
             component: Content
         },
+    
+        $backgroundClick: null,
         
         init: function() {
             this.$root = $(this.root);
+            this.$backgroundClick = $(this.backgroundClick);
             Protoplast.utils.bind(this, 'tooltip', this._updateTooltip);
             Protoplast.utils.bind(this, 'tooltip.text', this._updateTooltip);
             Protoplast.utils.bind(this, 'tooltip.x', this._updateTooltipPosition);
             Protoplast.utils.bind(this, 'tooltip.y', this._updateTooltipPosition);
-    
-            this.root.onclick = this._handleClick;
-        },
 
-        _handleClick: function(event) {
-            if (event.target === this.root) {
-                this.dispatch('clicked');
-            }
+            this.$backgroundClick.on('click', this.dispatch.bind(this, 'clicked'));
         },
 
         _updateTooltip: function() {
@@ -73,6 +71,11 @@ define(function(require) {
             if (this.tooltip && this.tooltip.text) {
                 $('.tooltip').css("top", (this.tooltip.y - 10) + "px").css("left", (this.tooltip.x + 10) + "px");
             }
+        },
+
+        destroy: function() {
+            Protoplast.Component.destroy.call(this);
+            this.$backgroundClick.off();
         }
 
     });

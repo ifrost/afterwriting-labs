@@ -24,9 +24,9 @@ define(function(require) {
         $create: function() {
 
             this.$root.hover(function() {
-                $(this).addClass('menu-item-hover');
+                $(this).addClass('menu-item--hover');
             }, function() {
-                $(this).removeClass('menu-item-hover');
+                $(this).removeClass('menu-item--hover');
             });
 
             this.$root.offset({
@@ -63,6 +63,8 @@ define(function(require) {
         
         animate: function(attrs, delay) {
             this.$root.animate(attrs, delay);
+            delete attrs.padding;
+            this.$icon.animate(attrs, delay);
         },
 
         stopAnimation: function() {

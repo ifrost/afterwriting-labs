@@ -7,7 +7,7 @@ define(function(require) {
         /**
          * App's background
          */
-        $background: '.main',
+        $background: '.background-click',
 
         /**
          * Close content's button to close the current active plugin

@@ -14,6 +14,7 @@ define(function(require) {
         },
 
         selectSection: function(selectedSection) {
+            this.themeModel.tooltip.text = '';
             this.themeModel.sections.selected = selectedSection;
             this.themeModel.sections.forEach(function(section) {
                 section.isActive = section === selectedSection;

@@ -47,8 +47,8 @@ define(function(require) {
         getPosition: function(index, all, max) {
 
             var cols = 3;
-            var imgSize = this.small ? 70 : 100;
-            var padding = this.small ? 5 : 15;
+            var imgSize = this.small ? this.themeModel.width / 5 : 60;
+            var padding = (imgSize / 4) + 30;
             var corner = {};
             corner.top = this.small ? 120 : 150;
             var iconsWithPadding = cols * (imgSize + padding) + padding;
@@ -73,13 +73,14 @@ define(function(require) {
         },
         
         getExplodeAttrs: function(index, all, max) {
-            var imgSize = this.small ? 70 : 100;
+            var imgSize = this.small ? this.themeModel.width / 5 : 100;
 
             var attrs = this.getPosition(index, all, max);
             attrs.opacity = 1.0;
             attrs.width = imgSize - 40;
             attrs.height = imgSize - 40;
-
+            attrs.padding = attrs.width / 4;
+            
             return attrs;
         }
         
