@@ -265,7 +265,8 @@ p {
     }
 
     .menu-item--hover {
-        background-color: #000000;
+        background: none;
+        border: 5px solid #eeeeee;
     }
 
     .menu-item--hover span {
