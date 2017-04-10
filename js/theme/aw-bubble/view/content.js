@@ -1,11 +1,11 @@
 define(function(require) {
-
+    
     var $ = require('jquery'),
         Protoplast = require('protoplast'),
         TopMenu = require('theme/aw-bubble/view/menu/top-menu'),
         ContentPresenter = require('theme/aw-bubble/presenter/content-presenter'),
         Sections = require('theme/aw-bubble/view/sections');
-
+    
     var Content = Protoplast.Component.extend({
         
         $meta: {
@@ -24,48 +24,26 @@ define(function(require) {
         sections: {
             component: Sections
         },
-
+        
         expanded: false,
-
+        
         $create: function() {
             this.$root = $(this.root);
         },
-
+        
         init: function() {
             Protoplast.utils.bind(this, 'expanded', this.updateExpanded.bind(this));
-
-            var y, revert = true;
-            this.$root.draggable({
-                axis: "y",
-                scroll: true,
-                scrollSensitivity: 25,
-                handle: '.content-action--close',
-                revert: function() {
-                    return revert;
-                },
-                scrollSpeed: 25,
-                addClasses: false,
-                drag: function(event, data) {
-                    revert = Math.abs(data.offset.top) <= 100;
-                },
-                stop: function(event, data) {
-                    if (Math.abs(data.offset.top) > 100) {
-                        this.dispatch('swipeup');
-                    }
-                }.bind(this)
-
-            });
         },
-
+        
         updateExpanded: function() {
             if (this.expanded) {
                 this.$root.addClass('content--expanded');
             }
-            else{
+            else {
                 this.$root.removeClass('content--expanded');
             }
         },
-
+        
         visible: {
             set: function(value) {
                 this._visible = value;
@@ -75,7 +53,7 @@ define(function(require) {
                 return this._visible;
             }
         },
-
+        
         height: {
             set: function(value) {
                 this._height = value;
@@ -85,7 +63,7 @@ define(function(require) {
                 return this._height;
             }
         },
-
+        
         left: {
             set: function(value) {
                 this._left = value;
@@ -101,7 +79,7 @@ define(function(require) {
                 return this.$root ? this.$root.outerWidth() : null;
             }
         },
-
+        
         hide: function(duration) {
             this.$root.animate({
                 top: -window.innerHeight,
@@ -116,13 +94,13 @@ define(function(require) {
                 duration: duration
             });
         },
-
+        
         destroy: function() {
             Protoplast.Component.destroy.call(this);
             this.$root.draggable('destroy');
         }
-
+        
     });
-
+    
     return Content;
 });

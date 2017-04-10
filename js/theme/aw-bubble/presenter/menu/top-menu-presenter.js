@@ -33,6 +33,7 @@ define(function(require) {
                 Protoplast.utils.bind(this, 'themeModel.sections.selected', this.updateSelectedSection.bind(this));
 
                 this.view.on('close', this.closeCurrentContent.bind(this));
+                this.view.on('swipe', this.swipeCurrentContent.bind(this));
                 this.view.on('expand', this.toggleExpanded.bind(this));
             }
         },
@@ -51,6 +52,12 @@ define(function(require) {
             var currentSection = this.themeModel.sections.selected;
             this.themeController.clearSelectedSection();
             this.pub('aw-bubble/top-menu/close', currentSection.name);
+        },
+
+        swipeCurrentContent: function() {
+            var currentSection = this.themeModel.sections.selected;
+            this.themeController.clearSelectedSection();
+            this.pub('aw-bubble/top-menu/swipe/close', currentSection.name);
         },
 
         toggleExpanded: function() {

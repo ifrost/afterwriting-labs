@@ -48,16 +48,38 @@ define(function (require) {
             // THEN
             env.assert.theme.content_is_expanded(false);
         });
-
+    
         it('GIVEN a plugin is active WHEN close content is clicked THEN no plugin is displayed', function() {
             // GIVEN
             env.user.theme.open_plugin('info');
-
+        
             // WHEN
             env.user.theme.close_content();
-
+        
             // THEN
             env.assert.theme.active_plugin_is(undefined);
+        });
+    
+        it('GIVEN a plugin is active WHEN close content is swiped by more than 100px THEN no plugin is displayed', function() {
+            // GIVEN
+            env.user.theme.open_plugin('info');
+        
+            // WHEN
+            env.user.theme.swipe_content(200);
+        
+            // THEN
+            env.assert.theme.active_plugin_is(undefined);
+        });
+    
+        it('GIVEN X plugin is active WHEN close content is swiped by less than 100px THEN X plugin is displayed', function() {
+            // GIVEN
+            env.user.theme.open_plugin('info');
+        
+            // WHEN
+            env.user.theme.swipe_content(50);
+        
+            // THEN
+            env.assert.theme.active_plugin_is('info');
         });
 
         it('GIVEN a plugin is active WHEN a top menu item is selected THEN selected plugin is displayed', function() {

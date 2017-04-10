@@ -33,6 +33,27 @@ define(function(require) {
         
         click_button: function(label) {
             this.click(this.dom.theme.$button(label));
+        },
+
+        create_event: function(type, options) {
+            var event = $.Event(type, options);
+            return event;
+        },
+
+        trigger_event: function(selector, type, options) {
+            var event = this.create_event(type, options);
+            $(selector).trigger(event);
+            this.browser.tick(10);
+        },
+
+        trigger_mouse_event: function(selector, type, options) {
+            options.pageX = options.pageX || options.x;
+            options.pageY = options.pageY || options.y;
+            options.clientX = options.clientX || options.x;
+            options.clientY = options.pageX || options.y;
+            options.which = options.which || 1;
+
+            this.trigger_event(selector, type, options);
         }
 
     });

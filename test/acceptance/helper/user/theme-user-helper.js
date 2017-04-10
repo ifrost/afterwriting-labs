@@ -34,6 +34,30 @@ define(function(require) {
             this.click(this.dom.theme.$close_icon);
         },
 
+        swipe_element_down: function(selector, distance, moves) {
+            var offset = $(selector).offset(),
+                finalY = offset.top + distance,
+                step = distance / moves,
+                y;
+
+            this.trigger_mouse_event(selector, 'mousedown', {x: offset.left, y: offset.top});
+
+            for (y = offset.top; y <= finalY; y += step) {
+                this.trigger_mouse_event(selector, 'mousemove', {x: offset.left, y: y});
+            }
+
+            this.trigger_mouse_event(selector, 'mouseup', {x: offset.left, y: y});
+        },
+
+        /**
+         * Swipe content
+         */
+        swipe_content: function(distance) {
+            var closeButton = this.dom.theme.$close_icon;
+            this.swipe_element_down(closeButton, distance, distance / 3);
+            this.browser.tick(2000);
+        },
+
         /**
          * Click info icon (question mark) to expand section info
          * @param {string} section_name

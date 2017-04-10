@@ -6,6 +6,10 @@ define(function(require) {
 
     var ContentPresenter = Protoplast.Object.extend({
 
+        pub: {
+            inject: 'pub'
+        },
+
         themeController: {
             inject: ThemeController
         },
@@ -23,14 +27,6 @@ define(function(require) {
             Protoplast.utils.bind(this, 'themeModel.height', this.updateContentSize.bind(this));
             Protoplast.utils.bind(this, 'themeModel.width', this.updateContentSize.bind(this));
             Protoplast.utils.bind(this, 'themeModel.expanded', this.updateExpanded.bind(this));
-
-            this.view.on('swipeup', this.closeCurrentContent);
-        },
-
-        closeCurrentContent: function() {
-            var currentSection = this.themeModel.sections.selected;
-            this.themeController.clearSelectedSection();
-            this.pub('aw-bubble/top-menu/swipe/close', currentSection.name);
         },
 
         updateContentVisibility: function() {

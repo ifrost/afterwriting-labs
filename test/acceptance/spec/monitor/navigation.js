@@ -56,16 +56,27 @@ define(function(require) {
                 // THEN
                 env.assert.monitor.event_tracked('navigation', 'open', 'switcher');
             });
-
+    
             it('GIVEN a plugin X is active WHEN close button is clicked THEN navigation/toolbar-close/X is tracked', function() {
                 // GIVEN
                 env.user.theme.open_plugin('open');
-
+        
                 // WHEN
                 env.user.theme.close_content();
-
+        
                 // THEN
                 env.assert.monitor.event_tracked('navigation', 'toolbar-close', 'open');
+            });
+    
+            it('GIVEN a plugin X is active WHEN close button is swiped by more than 100px THEN navigation/toolbar-swipe-close/X is tracked', function() {
+                // GIVEN
+                env.user.theme.open_plugin('open');
+        
+                // WHEN
+                env.user.theme.swipe_content(200);
+        
+                // THEN
+                env.assert.monitor.event_tracked('navigation', 'toolbar-swipe-close', 'open');
             });
 
             it('GIVEN open plugin is active WHEN background is clicked THEN content is hidden', function() {
