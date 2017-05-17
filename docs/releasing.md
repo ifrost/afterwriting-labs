@@ -3,6 +3,7 @@
   * Features are developed in separate branches
   * Switch to master before release
   * Make sure build is passing on https://travis-ci.org/ifrost/afterwriting-labs
+  * Merge feature/develop branch to master
   * Run `grunt update:patch/minor/major` to update the version and create `changes.log` file
   * Run `grunt build`
   * Do a smoke test in a browser
