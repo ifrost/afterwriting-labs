@@ -43,7 +43,8 @@ define(function(require) {
                     print_synopsis: true,
                     each_scene_on_new_page: false,
                     double_space_between_scenes: false,
-                    use_dual_dialogue: false
+                    use_dual_dialogue: false,
+                    merge_multiple_empty_lines: true
                 });
 
                 parsed.lines = fliner.line(parsed.tokens, {

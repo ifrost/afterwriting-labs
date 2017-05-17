@@ -38,7 +38,8 @@ define(function(require) {
                     print_synopsis: this.settings.print_synopsis,
                     each_scene_on_new_page: this.settings.each_scene_on_new_page,
                     double_space_between_scenes: this.settings.double_space_between_scenes,
-                    use_dual_dialogue: this.settings.use_dual_dialogue
+                    use_dual_dialogue: this.settings.use_dual_dialogue,
+                    merge_multiple_empty_lines: this.settings.merge_empty_lines
                 });
 
                 parsed.lines = fliner.line(parsed.tokens, {

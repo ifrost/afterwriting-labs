@@ -59,7 +59,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "aw-parser": "0.0.2",
+    "aw-parser": "0.0.3",
     "d3": "^3.4.1",
     "grunt": "~1.0.1",
     "jquery": "^3.1.1",

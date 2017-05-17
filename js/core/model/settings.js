@@ -3,8 +3,8 @@ define(function(require) {
     var Protoplast = require('protoplast'),
         print_profiles = require('utils/print-profiles');
 
-    // TODO: Decouple plugin-specific settings (++)
-    // TODO: Rename Settings properties to CamelCase (++)
+    // TODO: Decouple plugin-specific settings (+++)
+    // TODO: Rename Settings properties to CamelCase (+++)
     var Settings = Protoplast.Model.extend({
 
         snippets: null,
@@ -185,6 +185,11 @@ define(function(require) {
         stats_who_with_who_max: {
             name: 'stats_who_with_who_max',
             value: 10
+        },
+    
+        merge_empty_lines: {
+            name: 'merge_empty_lines',
+            value: true
         },
 
         $create: function() {

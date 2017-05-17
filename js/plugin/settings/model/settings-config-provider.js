@@ -58,6 +58,7 @@ define(function(require) {
             ]));
             layoutGroup.addEntry(this.createCheckbox('scene_continuation_bottom', 'Scene continuation (the bottom of a page)'));
             layoutGroup.addEntry(this.createCheckbox('scene_continuation_top', 'Scene continuation (the top of the next page)'));
+            layoutGroup.addEntry(this.createCheckbox('merge_empty_lines', 'Merge empty lines'));
             return layoutGroup;
         },
 
