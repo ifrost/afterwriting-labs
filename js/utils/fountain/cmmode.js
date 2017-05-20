@@ -1,6 +1,7 @@
 define(function(require) {
     "use strict";
-
+    
+    // TODO: Extract CM mode to a separate library (+++++)
     var CodeMirror = require('libs/codemirror/lib/codemirror');
 
     CodeMirror.defineMode('fountain', function(config) {

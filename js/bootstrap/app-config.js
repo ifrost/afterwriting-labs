@@ -56,6 +56,8 @@ define(function(require) {
             context.register('monitor', GoogleAnalyticsMonitor.create());
             context.register('storage', Storage.create());
 
+            // TODO: Disallow injecting plugin's controllers between each other (++)
+            // TODO: Disallow injecting objects directly to views (++)
             context.register(InfoPlugin.create(context));
             context.register(IoPlugin.create(context));
             context.register(EditorPlugin.create(context));

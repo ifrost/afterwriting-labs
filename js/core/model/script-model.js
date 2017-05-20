@@ -9,7 +9,7 @@ define(function(require) {
         preprocessor = require('utils/fountain/preprocessor');
 
     var h = fhelpers.fq;
-
+    
     var ScriptModel = Protoplast.Model.extend({
 
         settings: {

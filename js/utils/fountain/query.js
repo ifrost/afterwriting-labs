@@ -1,5 +1,6 @@
 define(function() {
-
+    
+    // TODO: Extract fquery to a separate library (+++++)
     var fquerybuilder = function(key_name, base, config) {
 
         var fquery = {

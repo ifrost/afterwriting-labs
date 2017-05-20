@@ -1,5 +1,7 @@
 define('utils/pdfmaker', function(require) {
-
+    
+    // TODO: Extract pdfmaker to a separate library (+++++)
+    
     var PDFDocument = require('pdfkit'),
         helper = require('utils/helper');
 

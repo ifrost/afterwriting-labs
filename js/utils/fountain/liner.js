@@ -1,5 +1,6 @@
 define('utils/fountain/liner', function(require) {
-
+    
+    // TODO: Extract liner to a separate library (+++++)
     var h = require('utils/fountain/helpers');
 
     var module = {};
