@@ -4,6 +4,10 @@
 
 See code-conventions.md Tests sections for mode details.
 
+## Mocking
+
+...
+
 ## Unit, integration, and acceptance tests
 
 ### Unit tests
