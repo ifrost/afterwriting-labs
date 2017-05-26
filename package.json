@@ -52,7 +52,7 @@
     "jsdoc": "^3.4.3",
     "lodash": "^4.17.4",
     "mocha": "^3.2.0",
-    "protoplast": "^2.0.0-alpha.23",
+    "protoplast": "^2.0.0-alpha.24",
     "sinon": "^1.14.0",
     "text": "requirejs/text"
   },
