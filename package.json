@@ -20,6 +20,7 @@
   },
   "scripts": {
     "eslint": "node_modules/.bin/eslint js/**/*.js -c .eslintrc.json",
+    "debt": "node tools/debt",
     "test": "npm run eslint && grunt test"
   },
   "devDependencies": {
