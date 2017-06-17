@@ -121,7 +121,7 @@ define('utils/fountain/liner', function(require) {
             }
 
             return true;
-        } else if (lines[index].is_dialogue() !== -1 && lines[after] && lines[after].is("dialogue", "parenthetical")) {
+        } else if (lines[index].is_dialogue() && lines[after] && lines[after].is("dialogue", "parenthetical")) {
             return false; // or break
         }
         return true;
@@ -149,7 +149,10 @@ define('utils/fountain/liner', function(require) {
                 for (p = s - 1; p && !(lines[p].text); p--) {
                 }
                 s = p;
-            } while (!breaker(p, lines, cfg));
+            } while (p && !breaker(p, lines, cfg));
+            if (!p) {
+                p = max;
+            }
         } else {
             p = internal_break - 1;
         }
