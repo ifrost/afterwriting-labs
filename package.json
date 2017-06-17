@@ -47,20 +47,20 @@
     "grunt-simple-mocha": "~0.4.0",
     "grunt-template": "^1.0.0",
     "grunt-text-replace": "^0.4.0",
-    "handlebars": "^4.0.6",
     "istanbul": "^0.4.5",
     "jsdoc": "^3.4.3",
-    "lodash": "^4.17.4",
     "mocha": "^3.2.0",
-    "protoplast": "^2.0.0-alpha.24",
-    "sinon": "^1.14.0",
-    "text": "requirejs/text"
+    "sinon": "^1.14.0"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "license": "MIT",
   "dependencies": {
+    "lodash": "^4.17.4",
+    "handlebars": "^4.0.6",
+    "text": "requirejs/text",
+    "protoplast": "^2.0.0-alpha.24",
     "aw-parser": "0.0.3",
     "d3": "^3.4.1",
     "grunt": "~1.0.1",
