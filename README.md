@@ -1,6 +1,9 @@
 afterwriting-labs
 =================
 
+[![Known Vulnerabilities](https://snyk.io/test/github/ifrost/afterwriting-labs/badge.svg)](https://snyk.io/test/github/ifrost/afterwriting-labs)
+[![Build Status](https://travis-ci.org/ifrost/afterwriting-labs.svg?branch=master)](https://travis-ci.org/ifrost/afterwriting-labs)
+
 Screenwriting experiments :)
 
 App site: http://afterwriting.com
