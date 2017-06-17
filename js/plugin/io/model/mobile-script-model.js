@@ -2,8 +2,8 @@ define(function(require) {
 
     var Protoplast = require('protoplast'),
         MobileScriptSettings = require('plugin/io/model/mobile-script-settings'),
-        fparser = require('aw-parser').parser,
-        fliner = require('utils/fountain/liner');
+        fparser = require('aw-parser'),
+        fliner = require('aw-liner');
 
     /**
      * Script model representing mobile-friendly version of the script
@@ -21,7 +21,16 @@ define(function(require) {
         mobileScriptSetting: {
             inject: MobileScriptSettings
         },
-        
+
+        liner: null,
+
+        parser: null,
+
+        $create: function() {
+            this.parser = fparser.parser;
+            this.liner = new fliner.Liner(fparser.helpers);
+        },
+
         script: {
             computed: ['scriptModel.script'],
             lazy: true,
@@ -34,7 +43,7 @@ define(function(require) {
             computed: ['script'],
             lazy: true,
             value: function() {
-                var parsed = fparser.parse(this.scriptModel.script, {
+                var parsed = this.parser.parse(this.scriptModel.script, {
                     print_headers: true,
                     print_actions: true,
                     print_dialogues: true,
@@ -47,7 +56,7 @@ define(function(require) {
                     merge_multiple_empty_lines: true
                 });
 
-                parsed.lines = fliner.line(parsed.tokens, {
+                parsed.lines = this.liner.line(parsed.tokens, {
                     print: this.mobileScriptSetting.print,
                     text_more: this.settings.text_more,
                     text_contd: this.settings.text_contd,

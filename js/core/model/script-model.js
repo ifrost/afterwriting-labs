@@ -3,8 +3,8 @@ define(function(require) {
     var Protoplast = require('protoplast'),
         fquery = require('utils/fountain/query'),
         fhelpers = require('utils/fountain/helpers'),
-        fparser = require('aw-parser').parser,
-        fliner = require('utils/fountain/liner'),
+        fparser = require('aw-parser'),
+        fliner = require('aw-liner'),
         converter = require('utils/converters/scriptconverter'),
         preprocessor = require('utils/fountain/preprocessor');
 
@@ -22,14 +22,23 @@ define(function(require) {
         _basicStats: null,
 
         format: null,
+        
+        liner: null,
 
+        parser: null,
+        
+        $create: function() {
+            this.parser = fparser.parser;
+            this.liner = new fliner.Liner(fparser.helpers);
+        },
+        
         parsed: {
             computed: ['script'],
             lazy: true,
             value: function() {
                 var parsed;
 
-                parsed = fparser.parse(this.script, {
+                parsed = this.parser.parse(this.script, {
                     print_headers: this.settings.print_headers,
                     print_actions: this.settings.print_actions,
                     print_dialogues: this.settings.print_dialogues,
@@ -42,7 +51,7 @@ define(function(require) {
                     merge_multiple_empty_lines: this.settings.merge_empty_lines
                 });
 
-                parsed.lines = fliner.line(parsed.tokens, {
+                parsed.lines = this.liner.line(parsed.tokens, {
                     print: this.settings.print,
                     text_more: this.settings.text_more,
                     text_contd: this.settings.text_contd,
@@ -69,8 +78,8 @@ define(function(require) {
                     stats_config.print_sections = false;
                     stats_config.print_notes = false;
                     stats_config.print_synopsis = false;
-                    parsed_stats = fparser.parse(this.script, stats_config);
-                    parsed_stats.lines = fliner.line(parsed_stats.tokens, stats_config);
+                    parsed_stats = this.parser.parse(this.script, stats_config);
+                    parsed_stats.lines = this.liner.line(parsed_stats.tokens, stats_config);
                 }
 
                 return parsed_stats;

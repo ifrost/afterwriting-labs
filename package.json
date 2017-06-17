@@ -57,14 +57,15 @@
   },
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.4",
-    "handlebars": "^4.0.6",
-    "text": "requirejs/text",
-    "protoplast": "^2.0.0-alpha.24",
+    "aw-liner": "0.0.2",
     "aw-parser": "0.0.3",
     "d3": "^3.4.1",
     "grunt": "~1.0.1",
+    "handlebars": "^4.0.6",
     "jquery": "^3.1.1",
-    "stdio": "^0.2.7"
+    "lodash": "^4.17.4",
+    "protoplast": "^2.0.0-alpha.24",
+    "stdio": "^0.2.7",
+    "text": "requirejs/text"
   }
 }
