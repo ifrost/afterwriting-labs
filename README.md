@@ -1,7 +1,9 @@
 # afterwriting-labs
 
-[![Known Vulnerabilities](https://snyk.io/test/github/ifrost/afterwriting-labs/badge.svg)](https://snyk.io/test/github/ifrost/afterwriting-labs)
-[![Build Status](https://travis-ci.org/ifrost/afterwriting-labs.svg?branch=master)](https://travis-ci.org/ifrost/afterwriting-labs) [![Twitter](https://img.shields.io/twitter/url/https/github.com/ifrost/afterwriting-labs.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=%5Bobject%20Object%5D) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Known Vulnerabilities](https://snyk.io/test/github/ifrost/afterwriting-labs/badge.svg)](https://snyk.io/test/github/ifrost/afterwriting-labs) 
+[![Build Status](https://travis-ci.org/ifrost/afterwriting-labs.svg?branch=master)](https://travis-ci.org/ifrost/afterwriting-labs)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/ifrost/afterwriting-labs.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=%5Bobject%20Object%5D) 
 
 'afterwriting provides post-processing tools for [Fountain](https://fountain.io) screenplays:
 
@@ -16,17 +18,12 @@ Other features:
   * importing .fdx (FinalDraft)
   * basic editor with auto-complete
 
-# Online version
+# Check it out!
 
-http://afterwriting.com
+  * open online version: [http://afterwriting.com](http://afterwriting.com)
+  * download and extract [offline version](https://afterwriting.com/afterwriting.zip)
+  * try [CLI for node.js](docs/clients.md)
 
-# Offline version
-
-https://afterwriting.com/afterwriting.zip
-
-# Command Line Interface
-
-['afterwriting CLI for node.js](docs/clients.md)
 
 # License: MIT
 
