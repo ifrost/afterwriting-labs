@@ -1,20 +1,34 @@
-afterwriting-labs
-=================
+# afterwriting-labs
 
 [![Known Vulnerabilities](https://snyk.io/test/github/ifrost/afterwriting-labs/badge.svg)](https://snyk.io/test/github/ifrost/afterwriting-labs)
-[![Build Status](https://travis-ci.org/ifrost/afterwriting-labs.svg?branch=master)](https://travis-ci.org/ifrost/afterwriting-labs)
+[![Build Status](https://travis-ci.org/ifrost/afterwriting-labs.svg?branch=master)](https://travis-ci.org/ifrost/afterwriting-labs) [![Twitter](https://img.shields.io/twitter/url/https/github.com/ifrost/afterwriting-labs.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=%5Bobject%20Object%5D) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Screenwriting experiments :)
+'afterwriting provides post-processing tools for [Fountain](https://fountain.io) screenplays:
 
-App site: http://afterwriting.com
-	
-Command Line Interface
-----------------------
+  * converting Fountain format to PDF
+  * extracting basic screenplay info (number of pages, action/dialogue time, locations, etc.)
+  * statistics (location distribution, page balance, dialogue, etc.)
+  * experimental features (script pulse, primary/secondary characters, etc.)
 
-[CLI for node.js](docs/clients.md)
+Other features:
 
-License: MIT
-============
+  * loading and syncing with Google Drive / Dropbox (online version only)
+  * importing .fdx (FinalDraft)
+  * basic editor with auto-complete
+
+# Online version
+
+http://afterwriting.com
+
+# Offline version
+
+https://afterwriting.com/afterwriting.zip
+
+# Command Line Interface
+
+['afterwriting CLI for node.js](docs/clients.md)
+
+# License: MIT
 
 Copyright (c) 2015-2017 Piotr Jamróz
 
