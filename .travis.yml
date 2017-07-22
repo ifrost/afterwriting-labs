@@ -12,9 +12,9 @@ after_success:
 deploy:
   - provider: script
     skip_cleanup: true
-    script: npm version minor -m "Create new version: %s [skip ci]"
+    script: /bin/sh scripts/version.sh minor
     on:
-     branch: master
+      branch: master
   - provider: pages
     skip_cleanup: true
     github_token: $GITHUB_API_KEY
