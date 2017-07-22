@@ -1,2 +1,21 @@
 language: node_js
 node_js: 6
+before_install:
+  - git checkout -
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: /bin/sh tools/version.sh minor
+    on:
+     branch: master
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_API_KEY
+    on:
+      branch: release
+  - provider: npm
+    skip_cleanup: true
+    email: $NPM_EMAIL
+    api_key: $NPM_API_KEY
+    on:
+      branch: release

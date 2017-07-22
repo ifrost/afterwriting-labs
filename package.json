@@ -21,7 +21,10 @@
   "scripts": {
     "eslint": "node_modules/.bin/eslint js/**/*.js -c .eslintrc.json",
     "debt": "node tools/debt",
-    "test": "npm run eslint && grunt test"
+    "test": "npm run eslint && grunt test",
+    "preversion": "grunt shell:print_change_log",
+    "version": "grunt build && git add .",
+    "postversion": "git push --follow-tags"
   },
   "devDependencies": {
     "chai": "^3.5.0",
