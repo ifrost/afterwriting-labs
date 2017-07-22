@@ -7,21 +7,16 @@ before_install:
   - git config --global user.name "Travis CI"
   - git config credential.helper "store --file=.git/credentials"
   - echo "https://${GITHUB_API_KEY}:@github.com" > .git/credentials
-after_success:
-  - git add . && git commit -m "Update test files"
 deploy:
   - provider: script
-    skip_cleanup: true
     script: /bin/sh tools/version.sh minor
     on:
       branch: master
   - provider: pages
-    skip_cleanup: true
     github_token: $GITHUB_API_KEY
     on:
       branch: release
   - provider: npm
-    skip_cleanup: true
     email: $NPM_EMAIL
     api_key: $NPM_API_KEY
     on:
