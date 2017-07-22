@@ -12,7 +12,7 @@ after_success:
 deploy:
   - provider: script
     skip_cleanup: true
-    script: /bin/sh scripts/version.sh minor
+    script: /bin/sh tools/version.sh minor
     on:
       branch: master
   - provider: pages
