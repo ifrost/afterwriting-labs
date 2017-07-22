@@ -21,7 +21,7 @@
   "scripts": {
     "eslint": "node_modules/.bin/eslint js/**/*.js -c .eslintrc.json",
     "debt": "node tools/debt",
-    "test": "npm run eslint && grunt test",
+    "test": "npm run eslint && grunt test && git reset --hard",
     "preversion": "./node_modules/.bin/grunt shell:print_change_log",
     "version": "./node_modules/.bin/grunt build && git add .",
     "postversion": "git push --follow-tags"
