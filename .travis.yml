@@ -2,6 +2,8 @@ language: node_js
 node_js: 6
 before_install:
   - git checkout -
+after_success:
+  - git add . && git commit -m "Update test files"
 deploy:
   - provider: script
     skip_cleanup: true
