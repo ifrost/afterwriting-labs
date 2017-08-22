@@ -27,9 +27,9 @@
     "postversion": "git push --follow-tags"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
+    "chai": "^4.1.1",
     "docdash": "^0.4.0",
-    "eslint": "^3.17.1",
+    "eslint": "^4.5.0",
     "express": "^4.14.0",
     "findit": "^2.0.0",
     "grunt": "~1.0.1",
@@ -53,16 +53,16 @@
     "istanbul": "^0.4.5",
     "jsdoc": "^3.4.3",
     "mocha": "^3.2.0",
-    "sinon": "^1.14.0"
+    "sinon": "^3.2.1"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "license": "MIT",
   "dependencies": {
-    "aw-liner": "0.0.2",
-    "aw-parser": "0.0.3",
-    "d3": "^3.4.1",
+    "aw-liner": "0.0.4",
+    "aw-parser": "0.0.6",
+    "d3": "^4.10.0",
     "grunt": "~1.0.1",
     "handlebars": "^4.0.6",
     "jquery": "^3.1.1",
