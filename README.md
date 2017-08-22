@@ -1,5 +1,7 @@
 # afterwriting-labs
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ifrost/afterwriting-labs.svg)](https://greenkeeper.io/)
+
 [![Known Vulnerabilities](https://snyk.io/test/github/ifrost/afterwriting-labs/badge.svg)](https://snyk.io/test/github/ifrost/afterwriting-labs) 
 [![Build Status](https://travis-ci.org/ifrost/afterwriting-labs.svg?branch=master)](https://travis-ci.org/ifrost/afterwriting-labs)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
