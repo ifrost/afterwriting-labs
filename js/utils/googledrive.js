@@ -226,17 +226,27 @@ define(function(require) {
         }
 
         var request = gapi.client.request({
-            path: '/drive/v2/files/',
+            path: '/drive/v3/files/',
             method: 'GET',
             params: {
-                corpus: "DOMAIN",
-                q: 'trashed=false' + (options.folder ? "and  '" + options.folder + "' in parents" : '')
+                corpus: "user",
+                fields: "nextPageToken,files/id,files/mimeType,files/name,files/trashed,files/explicitlyTrashed,files/parents,files/shared",
+                q: 'trashed=false' + (options.folder ? " and  '" + options.folder + "' in parents" : '')
             }
         });
 
         var conflate_caller = function(conflate_callback, data) {
             if (data) {
-                gapi.client.request({path: data.nextLink}).then(function(response) {
+                gapi.client.request({
+                    path: '/drive/v3/files/',
+                    method: 'GET',
+                    params: {
+                        pageToken: data.nextPageToken,
+                        corpus: "user",
+                        fields: "nextPageToken,files/id,files/mimeType,files/name,files/trashed,files/explicitlyTrashed,files/parents,files/shared",
+                        q: 'trashed=false' + (options.folder ? " and  '" + options.folder + "' in parents" : '')
+                    }
+                }).then(function(response) {
                     conflate_callback(response.result);
                 },
                 function(response) {
@@ -256,20 +266,20 @@ define(function(require) {
         };
 
         var conflate_tester = function(data) {
-            return data.nextLink;
+            return data.nextPageToken;
         };
 
         var conflate_final = function(results) {
             var items = [];
             results.forEach(function(args) {
-                items = items.concat(args[0].items);
+                items = items.concat(args[0].files);
             });
             pull_callback(items);
         };
 
         var pull_callback = function(items) {
             items = items.filter(function(item) {
-                return !item.explicitlyTrashed && !item.labels.trashed;
+                return !item.explicitlyTrashed && !item.trashed;
             });
             var map_items = {},
                 root = {
@@ -286,6 +296,7 @@ define(function(require) {
 
             items.forEach(function(f) {
                 map_items[f.id] = f;
+                f.title = f.name;
                 f.isFolder = f.mimeType === "application/vnd.google-apps.folder";
                 f.disabled = options.writeOnly && f.userPermission && f.userPermission.role && ["owner", "writer"].indexOf(f.userPermission.role) === -1;
                 f.children = [];
@@ -305,7 +316,7 @@ define(function(require) {
                 }
                 else {
                     i.parents.forEach(function(p) {
-                        var parent = map_items[p.id] || root;
+                        var parent = map_items[p] || root;
                         parent.children.push(i);
                     });
                 }
