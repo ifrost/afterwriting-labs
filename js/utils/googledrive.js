@@ -224,45 +224,30 @@ define(function(require) {
         if (options.before) {
             options.before();
         }
-
-        var request = gapi.client.request({
-            path: '/drive/v3/files/',
-            method: 'GET',
-            params: {
-                corpus: "user",
-                fields: "nextPageToken,files/id,files/mimeType,files/name,files/trashed,files/explicitlyTrashed,files/parents,files/shared",
-                q: 'trashed=false' + (options.folder ? " and  '" + options.folder + "' in parents" : '')
-            }
-        });
-
+        
         var conflate_caller = function(conflate_callback, data) {
-            if (data) {
-                gapi.client.request({
-                    path: '/drive/v3/files/',
-                    method: 'GET',
-                    params: {
-                        pageToken: data.nextPageToken,
-                        corpus: "user",
-                        fields: "nextPageToken,files/id,files/mimeType,files/name,files/trashed,files/explicitlyTrashed,files/parents,files/shared",
-                        q: 'trashed=false' + (options.folder ? " and  '" + options.folder + "' in parents" : '')
-                    }
-                }).then(function(response) {
+            var request_data = {
+                path: '/drive/v3/files/',
+                method: 'GET',
+                params: {
+                    corpus: "user",
+                    fields: "nextPageToken,files/id,files/mimeType,files/name,files/trashed,files/explicitlyTrashed,files/parents,files/shared",
+                    q: 'trashed=false' + (options.folder ? " and  '" + options.folder + "' in parents" : '')
+                }
+            };
+    
+            if (data && data.nextPageToken) {
+                request_data.params.pageToken = data.nextPageToken;
+            }
+            
+            gapi.client.request(request_data).then(
+                function(response) {
                     conflate_callback(response.result);
                 },
                 function(response) {
                     $.prompt.close();
                     $.prompt(response.result.error.message);
                 });
-            }
-            else {
-                request.then(function(response) {
-                    conflate_callback(response.result);
-                },
-                function(response) {
-                    $.prompt.close();
-                    $.prompt(response.result.error.message);
-                });
-            }
         };
 
         var conflate_tester = function(data) {
