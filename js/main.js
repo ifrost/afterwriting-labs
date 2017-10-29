@@ -19,7 +19,7 @@
             impromptu: 'libs/jquery-impromptu.min',
             jstree: 'libs/jstree.min',
             cookie: 'libs/jquery.cookie',
-            dropbox: 'libs/dropbox.min',
+            dropbox: '../node_modules/dropbox/dist/Dropbox-sdk.min',
             protoplast: '../node_modules/protoplast/dist/protoplast',
             acceptance: '../test/acceptance',
             'aw-parser': '../node_modules/aw-parser/dist/aw-parser.amd',

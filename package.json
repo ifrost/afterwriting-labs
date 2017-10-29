@@ -29,6 +29,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "docdash": "^0.4.0",
+    "dropbox": "^2.5.12",
     "eslint": "^3.17.1",
     "express": "^4.14.0",
     "findit": "^2.0.0",
