@@ -21,17 +21,15 @@ define(function(require) {
     };
 
     var client_authenticate = function(callback) {
-        client = new Dropbox.Client({
-            key: key,
-            token: $.cookie('dbt'),
-            uid: $.cookie('dbu'),
-            sandbox: false
+        client = new Dropbox({
+            clientId: key
         });
-        if (client.isAuthenticated()) {
+        if (false && client.isAuthenticated()) {
             callback();
         } else {
-            var state = Dropbox.Util.Oauth.randomAuthStateParam();
-            var popup = window.open('https://www.dropbox.com/1/oauth2/authorize?response_type=token&redirect_uri=' + redirect_uri + '&client_id=' + key + '&state=' + state, '_blank', 'width=500, height=500');
+            // var state = Dropbox.Util.Oauth.randomAuthStateParam();
+            var url = client.getAuthenticationUrl(redirect_uri);
+            var popup = window.open(url, '_blank', 'width=500, height=500');
             $(window).on('message.dropboxclient', function(e) {
                 e = e.originalEvent;
                 e.target.removeEventListener(e.type, arguments.callee);
@@ -45,28 +43,19 @@ define(function(require) {
 
                 if (
                     (e.data.indexOf('access_token') === -1) ||
-                    (e.data.indexOf('uid') === -1) ||
-                    (e.data.indexOf('state') === -1)
+                    (e.data.indexOf('uid') === -1)
                 ) {
                     return;
                 }
 
                 var token = /access_token=([^\&]*)/.exec(e.data)[1],
-                    uid = /uid=([^\&]*)/.exec(e.data)[1],
-                    state_r = /state=([^\&]*)/.exec(e.data)[1];
-
-                if (state !== state_r) {
-                    return;
-                }
-
+                    uid = /uid=([^\&]*)/.exec(e.data)[1];
+                
                 $.cookie('dbt', token);
                 $.cookie('dbu', uid);
 
-                client = new Dropbox.Client({
-                    key: key,
-                    sandbox: false,
-                    token: token,
-                    uid: uid
+                client = new Dropbox({
+                    accessToken: token
                 });
 
                 popup.close();
@@ -88,21 +77,21 @@ define(function(require) {
     var item_to_data = function(item) {
         if (is_lazy) {
             return {
-                isFolder: item.isFolder,
+                isFolder: item['.tag'] === 'folder',
                 content: [],
-                folder: item.path.substring(0, item.path.length - item.name.length - 1),
+                folder: item.path_display.substring(0, item.path_display.length - item.name.length - 1),
                 name: item.name,
-                path: item.path,
+                path: item.path_display,
                 entry: item
             };
         }
         else {
             return {
-                isFolder: item.stat.isFolder,
+                isFolder: item['.tag'] === 'folder',
                 content: [],
-                folder: item.path.substring(0, item.stat.path.length - item.stat.name.length - 1),
-                name: item.stat.name,
-                path: item.path,
+                folder: item.path_display.substring(0, item.path_display.length - item.name.length - 1),
+                name: item.name,
+                path: item.path_display,
                 entry: item
             };
         }
@@ -172,7 +161,10 @@ define(function(require) {
                     root.content.push(file);
                 }
                 else {
-                    folders[file.folder || '/'].content.push(file);
+                    var folder = folders[file.folder || '/'];
+                    if (folder) {
+                        folder.content.push(file);
+                    }
                 }
             });
 
@@ -188,7 +180,10 @@ define(function(require) {
                 client.metadata(options.folder, {readDir: true}, conflate_callback);
             }
             else {
-                client.pullChanges(result ? result.cursorTag : null, conflate_callback);
+                client.filesListFolder({
+                    path: '',
+                    recursive: true
+                }).then(conflate_callback);//result ? result.cursorTag : null, conflate_callback);
             }
         };
 
@@ -211,7 +206,7 @@ define(function(require) {
                     changes: []
                 };
                 results.forEach(function(args) {
-                    final_result.changes = final_result.changes.concat(args[1].changes);
+                    final_result.changes = final_result.changes.concat(args[0].entries);
                 });
             }
             pull_callback(last_error, final_result);
