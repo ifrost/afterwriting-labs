@@ -266,9 +266,6 @@ module.exports = function(grunt) {
             },
             jsdoc: {
                 command: 'jsdoc -c jsdoc.conf.json -R README.md -P package.json -t node_modules/docdash -u docs/tutorials'
-            },
-            print_change_log: {
-                command: 'echo Changes: && git log v<%= pkg.version %>..HEAD --pretty=format:"* [[`%h`](https://github.com/ifrost/afterwriting-labs/commit/%h)] - %s"'
             }
         },
 
