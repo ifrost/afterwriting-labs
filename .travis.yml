@@ -10,7 +10,7 @@ before_install:
 deploy:
   - provider: script
     skip_cleanup: true
-    script: /bin/bash scripts/release.sh
+    script: /bin/bash tools/release.sh
     on:
       branch: master
   - provider: pages
