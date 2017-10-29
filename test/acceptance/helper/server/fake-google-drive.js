@@ -63,12 +63,12 @@ define(function(require) {
                 kind: 'drive#file',
                 parents: [],
                 explicitlyTrashed: false,
+                trashed: false,
                 userPermission: {
                     role: 'owner'
                 },
-                title: file.name,
-                spaces: ['drive'],
-                labels: []
+                name: file.name,
+                spaces: ['drive']
             };
         },
 
@@ -94,7 +94,7 @@ define(function(require) {
         },
 
         file_list: {
-            url: /drive\/v2\/files\/$/,
+            url: /drive\/v3\/files\/$/,
             method: 'GET',
             value: function() {
                 var files = [];
@@ -104,7 +104,7 @@ define(function(require) {
                     }
                 }
                 return JSON.stringify({
-                    items: files
+                    files: files
                 });
             }
         }
