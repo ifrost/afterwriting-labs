@@ -22,6 +22,9 @@
   * `[gh-pages]` - to deploy to gh-pages
 * To release current master version add an empty commit with tags, e.g.
   * `git commit --allow-empty -m "Release [patch] [gh-pages]"`
+* Add release notes to https://github.com/ifrost/afterwriting-labs/tags:
+  * Title: vX.X.X (DD/MM/YYYY)
+  * Add short description and list of changes from Travis logs
 
 ## Hotfixes
 
