@@ -234,19 +234,17 @@ define(function(require) {
     };
 
     var load_file = function(path, callback) {
-        client.readFile(path, {
-            blob: true
-        }, function(error, blob) {
-            if (error) {
-                $.prompt('Cannot open the file');
-                callback(undefined);
-            } else {
-                var fileReader = new FileReader();
-                fileReader.onload = function() {
-                    callback(this.result);
-                };
-                fileReader.readAsText(blob);
-            }
+        client.filesDownload({
+            path: path
+        }).then(function(data) {
+            var fileReader = new FileReader();
+            fileReader.onload = function() {
+                callback(this.result);
+            };
+            fileReader.readAsText(data.fileBlob);
+        }, function() {
+            $.prompt('Cannot open the file');
+            callback(undefined);
         });
     };
     module.load_file = auth_method(load_file);
