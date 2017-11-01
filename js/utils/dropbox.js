@@ -21,12 +21,13 @@ define(function(require) {
     };
 
     var client_authenticate = function(callback) {
-        client = new Dropbox({
-            clientId: key
-        });
-        if (false && client.isAuthenticated()) {
+        if (module.token) {
             callback();
         } else {
+            client = new Dropbox({
+                clientId: key
+            });
+    
             // var state = Dropbox.Util.Oauth.randomAuthStateParam();
             var url = client.getAuthenticationUrl(redirect_uri);
             var popup = window.open(url, '_blank', 'width=500, height=500');
@@ -57,6 +58,8 @@ define(function(require) {
                 client = new Dropbox({
                     accessToken: token
                 });
+                
+                module.token = token;
 
                 popup.close();
                 callback();
