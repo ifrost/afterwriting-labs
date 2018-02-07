@@ -1,7 +1,7 @@
 define(function() {
     return {
         data: {
-            footer: 'version: 1.9.0 (2017/10/29)'
+            footer: 'version: 1.9.1 (2018/02/07)'
         }
     };
 
