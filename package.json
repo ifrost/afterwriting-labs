@@ -1,6 +1,6 @@
 {
   "name": "afterwriting",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "Screewriting tools",
   "keywords": [
     "screenwriting",
@@ -63,7 +63,7 @@
   "license": "MIT",
   "dependencies": {
     "aw-liner": "0.0.2",
-    "aw-parser": "0.0.3",
+    "aw-parser": "0.0.8",
     "d3": "^3.4.1",
     "grunt": "~1.0.1",
     "handlebars": "^4.0.6",
