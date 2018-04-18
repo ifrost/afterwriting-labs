@@ -2,6 +2,7 @@ define(function(require) {
 
     var Protoplast = require('protoplast'),
         fonts = require('utils/fonts'),
+        fontUtils = require('utils/font-utils'),
         pdfmaker = require('utils/pdfmaker'),
         textstats = require('utils/textstats');
 
@@ -17,7 +18,21 @@ define(function(require) {
 
         fontFixEnabled: false,
 
-        getPdf: function(callback, filePath) {
+        getPdf: function(callback, filePath, customFonts) {
+
+            // LOAD IN CUSTOM FONT PROFILE(S)
+            if (customFonts) {
+                for (var fontName in customFonts) {
+                    fonts[fontName] = {}
+                    for (var fontType in customFonts[fontName]) {
+                        fonts[fontName][fontType] = {
+                            family: customFonts[fontName][fontType].family,
+                            src: fontUtils.convertBase64ToBinary(customFonts[fontName][fontType].src)
+                        }
+                    }
+                }
+            }
+
             pdfmaker.get_pdf(
                 {
                     callback: callback,
