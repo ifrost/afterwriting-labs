@@ -23,12 +23,12 @@ define(function(require) {
             // LOAD IN CUSTOM FONT PROFILE(S)
             if (customFonts) {
                 for (var fontName in customFonts) {
-                    fonts[fontName] = {}
+                    fonts[fontName] = {};
                     for (var fontType in customFonts[fontName]) {
                         fonts[fontName][fontType] = {
                             family: customFonts[fontName][fontType].family,
                             src: fontUtils.convertBase64ToBinary(customFonts[fontName][fontType].src)
-                        }
+                        };
                     }
                 }
             }
