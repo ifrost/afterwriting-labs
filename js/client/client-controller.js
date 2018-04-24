@@ -37,10 +37,12 @@ var ClientController = Protoplast.Object.extend({
                 if (this.options.ops.pdf) {
                     this._validatePdf(function () {
                         console.log('Generating PDF', this.options.ops.pdf);
-                        this.pdfController.getPdf(function () {
-                            console.log('Done!');
-                            process.exit(0);
-                        }, this.options.ops.pdf);
+                        this.configLoader.loadFromFile(this.options.ops.fonts, function(customFonts) {
+                            this.pdfController.getPdf(function () {
+                                console.log('Done!');
+                                process.exit(0);
+                            }, this.options.ops.pdf, customFonts);
+                        }.bind(this));
                     }.bind(this));
                 }
             }.bind(this));
