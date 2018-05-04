@@ -78,31 +78,19 @@ define(function(require) {
 
 
     var item_to_data = function(item) {
-        if (is_lazy) {
-            return {
-                isFolder: item['.tag'] === 'folder',
-                content: [],
-                folder: item.path_display.substring(0, item.path_display.length - item.name.length - 1),
-                name: item.name,
-                path: item.path_display,
-                entry: item
-            };
-        }
-        else {
-            return {
-                isFolder: item['.tag'] === 'folder',
-                content: [],
-                folder: item.path_display.substring(0, item.path_display.length - item.name.length - 1),
-                name: item.name,
-                path: item.path_display,
-                entry: item
-            };
-        }
+        return {
+            isFolder: item['.tag'] === 'folder',
+            content: [],
+            folder: item.path_lower.substring(0, item.path_lower.length - item.name.length - 1),
+            name: item.name,
+            path: item.path_lower,
+            entry: item
+        };
     };
 
     var list = function(callback, options) {
         options = options || {};
-        options.folder = options.folder || '/';
+        options.folder = options.folder || '';
 
         if (options.lazy) {
             is_lazy = true;
@@ -120,29 +108,20 @@ define(function(require) {
         }
 
         var pull_callback = function(error, result) {
-            result = is_lazy ? result : result.changes;
-            var items = result.filter(function(file) {
-                return !file.wasRemoved;
-            });
             var root = {
                 'isRoot': true,
                 'isFolder': true,
-                'path': '/',
+                'path': '',
                 'name': 'Dropbox',
                 'content': []
             };
-            //root.entry = root;
+
             var folders = {
-                '/': root
+                '': root
             };
             var files = [];
-
-            items = items.filter(function(i) {
-                i = is_lazy ? i : i.stat;
-                return !options.pdfOnly || i.isFolder || i.mimeType === "application/pdf";
-            });
-
-            items.forEach(function(item) {
+            
+            result.forEach(function(item) {
                 var data = item_to_data(item);
                 if (data.isFolder) {
                     folders[data.path] = data;
@@ -164,7 +143,7 @@ define(function(require) {
                     root.content.push(file);
                 }
                 else {
-                    var folder = folders[file.folder || '/'];
+                    var folder = folders[file.folder || ''];
                     if (folder) {
                         folder.content.push(file);
                     }
@@ -178,40 +157,32 @@ define(function(require) {
 
         };
 
-        var conflate_caller = function(conflate_callback, error, result) {
-            if (is_lazy) {
-                client.metadata(options.folder, {readDir: true}, conflate_callback);
+        var conflate_caller = function(conflate_callback, result) {
+            if (result && result.cursor) {
+                client.filesListFolderContinue({
+                    cursor: result.cursor
+                }).then(conflate_callback);
             }
             else {
                 client.filesListFolder({
-                    path: '',
-                    recursive: true
-                }).then(conflate_callback);//result ? result.cursorTag : null, conflate_callback);
+                    path: is_lazy ? options.folder : '',
+                    recursive: !is_lazy
+                }).then(conflate_callback);
             }
         };
 
-        var conflate_tester = function(error, result) {
-            return !error && result.shouldPullAgain;
+        var conflate_tester = function(result) {
+            return result.has_more;
         };
 
         var conflate_final = function(results) {
             var last_error = results[results.length - 1][0],
-                final_result;
-
-            if (is_lazy) {
                 final_result = [];
-                results.forEach(function(args) {
-                    final_result = final_result.concat(args[2]);
-                });
-            }
-            else {
-                final_result = {
-                    changes: []
-                };
-                results.forEach(function(args) {
-                    final_result.changes = final_result.changes.concat(args[0].entries);
-                });
-            }
+    
+            results.forEach(function(args) {
+                final_result = final_result.concat(args[0].entries);
+            });
+            
             pull_callback(last_error, final_result);
         };
 
@@ -220,7 +191,7 @@ define(function(require) {
     module.list = auth_method(list);
 
     var lazy_list = function(options, node, callback) {
-        var folder = node.id === '#' ? '/' : node.id;
+        var folder = node.id === '#' ? '' : node.id;
         var options = {
             folder: folder,
             pdfOnly: options.pdfOnly,
@@ -242,7 +213,7 @@ define(function(require) {
                 callback(this.result);
             };
             fileReader.readAsText(data.fileBlob);
-        }, function() {
+        }).catch(function() {
             $.prompt('Cannot open the file');
             callback(undefined);
         });
@@ -282,7 +253,17 @@ define(function(require) {
     };
 
     var save = function(path, data, callback) {
-        client.writeFile(path, data, {}, callback);
+        client.filesUpload({
+            path: path,
+            contents: data,
+            mode: {
+                '.tag': 'overwrite'
+            }
+        }).then(function(response) {
+            callback();
+        }).catch(function(error) {
+            callback(error);
+        });
     };
     module.save = auth_method(save);
 

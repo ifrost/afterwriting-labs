@@ -26,7 +26,7 @@ define(function(require) {
             env.assert.popup.dialog_message_is('Select file name:');
         });
 
-        it('WHEN save fountain to Dropbox button is clicked THEN save fountain to Dropbox dialog is displayed', function() {
+        it('WHEN save fountain to Dropbox button is clicked THEN save fountain to Dropbox dialog is displayed', function(done) {
             // GIVEN
             env.user.open.open_sample('brick_and_steel');
             env.user.theme.open_plugin('editor');
@@ -34,10 +34,14 @@ define(function(require) {
             // WHEN
             env.user.save.save_fountain_dropbox('editor');
             env.dropbox.auth_dropbox();
-            env.browser.tick(3000);
-
-            // THEN
-            env.assert.popup.tree_node_visible('Dropbox', true);
+            
+            env.browser.wait(function() {
+                env.browser.tick(3000);
+    
+                // THEN
+                env.assert.popup.tree_node_visible('Dropbox', true);
+                done();
+            }, 100);
         });
 
         it('WHEN save fountain to GoogleDrive button is clicked THEN save fountain to GoogleDrive dialog is displayed', function() {
@@ -196,25 +200,29 @@ define(function(require) {
                 it('AND content changes THEN new content is saved', function(done) {
                     // AND
                     env.user.editor.set_editor_content('changed content');
-                    env.browser.tick(5000);
-
-                    // THEN
-                    env.assert.dropbox.dropbox_saved(2);
-                    done();
+                    
+                    env.scenarios.dropbox_file_is_uploaded(function() {
+                        env.assert.dropbox.dropbox_saved(2);
+                        done();
+                    });
                 });
 
                 it('AND content changes AND content is set to the same value THEN content is not saved', function(done) {
                     // AND: content changes
                     env.user.editor.set_editor_content('changed content');
-                    env.browser.tick(5000);
 
                     // AND: content is set to the same value
-                    env.user.editor.set_editor_content('changed content');
-                    env.browser.tick(5000);
-
-                    // THEN
-                    env.assert.dropbox.dropbox_saved(2);
-                    done();
+                    env.scenarios.dropbox_file_is_uploaded(function() {
+                        
+                        env.user.editor.set_editor_content('changed content');
+                        env.browser.tick(5000);
+    
+                        // THEN
+                        env.scenarios.dropbox_file_is_uploaded(function() {
+                            env.assert.dropbox.dropbox_saved(2);
+                            done();
+                        });
+                    });
                 });
 
             });
@@ -244,7 +252,7 @@ define(function(require) {
                     env.dropbox.content_change('file.fountain', 'override after sync');
                     env.browser.tick(10000);
 
-                    // THEN 
+                    // THEN
                     env.assert.editor.editor_content('changed content');
                     env.user.popup.sync_keep_content();
                     env.assert.editor.editor_content('changed content');
