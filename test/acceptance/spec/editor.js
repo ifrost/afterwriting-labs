@@ -224,16 +224,17 @@ define(function(require) {
                 beforeEach(function(done) {
                     // WHEN Synchronisation is enabled
                     env.user.editor.turn_sync_on();
-
+                    
                     // AND content of synced file changes
                     env.scenarios.dropbox_file_changes('file.fountain', 'changed content', done);
                 });
 
-                it('THEN content of the editor is set to new file contet', function(done) {
+                it('THEN content of the editor is set to new file content', function(done) {
+                    this.timeout(10000);
                     // THEN
                     env.assert.editor.editor_content('changed content');
                     done();
-                });
+                }).timeout(10000);
 
                 it('AND synchronisation is disabled AND file content changes THEN editor content is not updated with the latest update', function(done) {
                     // AND: synchronisation is disabed

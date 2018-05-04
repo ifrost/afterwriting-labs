@@ -74,12 +74,13 @@ define(function(require) {
          */
         dropbox_file_changes: function(filename, new_content, callback) {
             var env = this.env;
-            
             env.dropbox.content_change(filename, new_content);
             env.browser.tick(10000);
             env.browser.read_files(function() {
-                env.browser.tick(3000);
-                callback();
+                env.browser.wait(function() {
+                    env.browser.tick(3000);
+                    callback();
+                }, 1000);
             });
         },
 
