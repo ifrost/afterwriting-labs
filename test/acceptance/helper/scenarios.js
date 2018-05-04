@@ -100,7 +100,7 @@ define(function(require) {
         /**
          * Creates a new script and triggers saving to dropbox in given format
          */
-        initialise_saving_to_dropbox: function(format) {
+        initialise_saving_to_dropbox: function(format, callback) {
             var env = this.env;
 
             env.user.theme.open_plugin('open');
@@ -112,8 +112,12 @@ define(function(require) {
             else if (format === 'fountain') {
                 env.user.save.save_fountain_dropbox('save');
             }
+            
             env.dropbox.auth_dropbox();
-            env.browser.tick(3000);
+            env.browser.wait(function() {
+                env.browser.tick(3000);
+                callback();
+            }, 1000);
         }
         
     });

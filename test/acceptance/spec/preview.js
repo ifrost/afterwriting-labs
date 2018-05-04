@@ -59,17 +59,21 @@ define(function(require) {
             env.assert.popup.dialog_input_content_is('screenplay.pdf');
         });
 
-        it('WHEN save pdf to Dropbox button is clicked THEN save pdf to Dropbox dialog is displayed', function() {
+        it.only('WHEN save pdf to Dropbox button is clicked THEN save pdf to Dropbox dialog is displayed', function(done) {
             // GIVEN
             env.user.theme.open_plugin('preview');
 
             // WHEN
             env.user.save.save_pdf_dropbox('preview');
             env.dropbox.auth_dropbox();
-            env.browser.tick(3000);
+            env.browser.wait(function() {
+                env.browser.tick(3000);
 
-            // THEN
-            env.assert.popup.tree_node_visible('Dropbox', true);
+                // THEN
+                env.assert.popup.tree_node_visible('Dropbox', true);
+                done();
+            }, 1000);
+
         });
 
         it('WHEN save pdf to GoogleDrive button is clicked THEN save pdf to GoogleDrive dialog is displayed', function() {
