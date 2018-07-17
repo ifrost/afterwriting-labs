@@ -193,6 +193,51 @@ That hierachy will be converted to a flat list of snippets equivalent to:
         "bond.last": "Bond"
     }
 
+
+Custom fonts:
+-------------
+    
+Custom fonts may be passed via a json file of the correct structure along with a matching value in the font_family property of your config map.
+
+    > node awc.js --source screenplay.fountain --pdf --config config.json --fonts myFonts.json
+
+**config.json**
+
+    {
+		font_family: "MyFont"
+	}
+
+**myFonts.json** (multiple font profiles may be specified)
+
+    {
+      "MyFont":
+      {
+        "normal":
+        {
+          "src": "<base64 encodeded ttf>"
+          "family": "MyFont"
+        },
+        "bold":
+        {
+          "src": "<base64 encodeded ttf>"
+          "family": "MyFont-Bold"
+        },
+        "bolditalic":
+        {
+          "src": "<base64 encodeded ttf>"
+          "family": "MyFont-BoldOblique"
+        },
+        "italic":
+        {
+          "src": "<base64 encodeded ttf>"
+          "family": "MyFont-Oblique"
+        }
+      }
+    }
+
+Note: Monospaced fonts are recommended.  It is not guaranteed that all fonts will render equally well due to differences is character height and width, so please test your configuration prior to distribution or printing.
+
+
 Known issues
 ------------
 

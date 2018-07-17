@@ -27,6 +27,11 @@ var Options = Protoplast.extend({
                 key: 'overwrite',
                 args: 0,
                 description: 'overwrite exiting files'
+            },
+            'fonts': {
+                key: 'fonts',
+                args: 1,
+                description: 'custom font json file'
             }
             
         });
