@@ -392,7 +392,6 @@ define('utils/pdfmaker', function(require) {
             } else {
                 // formatting not supported yet
                 text = line.text;
-                text = text.trim();
 
                 var color = (print[line.type] && print[line.type].color) || '#000000';
                 var text_properties = {
