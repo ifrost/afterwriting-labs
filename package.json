@@ -62,7 +62,7 @@
   "license": "MIT",
   "dependencies": {
     "aw-liner": "0.0.2",
-    "aw-parser": "0.0.8",
+    "aw-parser": "0.1.1",
     "d3": "^3.4.1",
     "grunt": "~1.0.1",
     "handlebars": "^4.0.6",
