@@ -74,7 +74,9 @@ The output can be customized using configuration file passed as --config paramet
 		"print_footer": "",
 		"print_watermark": "",
 		"scenes_numbers": "none",
-		"each_scene_on_new_page": false
+		"each_scene_on_new_page": false,
+        "auto_date" : false,
+        "revision_hash" : false
 	}
 
 Available options:
@@ -100,6 +102,8 @@ Available options:
 | print_watermark | string | watermark text |
 | scenes_numbers | "none"/"left"/"right"/"both" | side of auto-numbering scenes |
 | each_scene_on_new_page | true/false | break page after a scene |
+| auto_date | true/false | Changes any instance of $DATE to today's date |
+| revision_hash | true/false | Only enable if you are working in a git repository, changes any instance of $REVISION to the short hash of the latest commit
 
 Snippets
 ---------
