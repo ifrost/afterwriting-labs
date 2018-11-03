@@ -56,6 +56,16 @@ define(function(require) {
             value: false
         },
 
+        auto_date: {
+            name: 'auto_date', 
+            value: false
+        },
+
+        revision_hash: {
+            name: 'revision_hash',
+            value: false
+        },
+
         // Liner settings
 
         text_more: {

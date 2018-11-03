@@ -89,7 +89,7 @@ define(function(require) {
         script: {
             set: function(value) {
                 var result = converter.to_fountain(value);
-                result.value = preprocessor.process_snippets(result.value, this.settings.snippets);
+                result.value = preprocessor.process_snippets(result.value, this.settings);
                 this.format = this.format || result.format;
                 this._script = result.value;
                 this.dispatch('script_changed');
