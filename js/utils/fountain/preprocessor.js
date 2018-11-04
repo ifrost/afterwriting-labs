@@ -26,7 +26,7 @@ define('utils/fountain/preprocessor', function(require) {
     };
 
     module.process_snippets = function(text, settings) {
-        variables = settings.snippets
+        variables = settings.snippets;
         var merged_variables = {}, all_variables;
 
         merge_keys(variables || {}, merged_variables);
@@ -54,22 +54,20 @@ define('utils/fountain/preprocessor', function(require) {
 
             // From https://stackoverflow.com/a/35778030/1649917
             revision_hash = require('child_process')
-                                .execSync('git rev-parse --short HEAD')
-                                .toString().trim()
+                .execSync('git rev-parse --short HEAD')
+                .toString().trim();
 
-            text = replaceAll(text, '\\$REVISION', revision_hash)
+            text = replaceAll(text, '\\$REVISION', revision_hash);
         }
 
         if(settings.auto_date){
-            var dayjs = require('dayjs')
+            var dayjs = require('dayjs');
 
-            // TODO: Add configurable date with dayjs format string 
+            // TODO: Add configurable date with dayjs format string
             // https://github.com/iamkun/dayjs/blob/master/docs/en/API-reference.md#format-formatstringwithtokens-string
-            var date_string = dayjs().format('YYYY-MM-DD')
-            text = replaceAll(text, '\\$DATE', date_string)
+            var date_string = dayjs().format('YYYY-MM-DD');
+            text = replaceAll(text, '\\$DATE', date_string);
         }
-
-            
 
         return text;
     };
