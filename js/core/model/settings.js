@@ -7,7 +7,10 @@ define(function(require) {
     // TODO: Rename Settings properties to CamelCase (+++)
     var Settings = Protoplast.Model.extend({
 
-        snippets: null,
+        snippets: {
+            name: 'snippets',
+            value: {}
+        },
 
         // Parser settings
 
