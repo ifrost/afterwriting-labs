@@ -65,7 +65,7 @@
     "aw-parser": "0.1.1",
     "d3": "^3.4.1",
     "grunt": "~1.0.1",
-    "handlebars": "^4.0.6",
+    "handlebars": "^4.4.5",
     "jquery": "^3.1.1",
     "lodash": "^4.17.4",
     "protoplast": "2.0.3",
