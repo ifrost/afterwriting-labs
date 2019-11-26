@@ -101,6 +101,13 @@ Available options:
 | scenes_numbers | "none"/"left"/"right"/"both" | side of auto-numbering scenes |
 | each_scene_on_new_page | true/false | break page after a scene |
 
+Provide config as attribute
+---------------------------
+
+You can also provide settings (or override settings loaded from the config file) by using --setting NAME=VALUE attribute:
+
+    > node awc.js --source screenplay.fountain --pdf --config config.json --setting print_title_page=false --setting scenes_numbers=both
+
 Snippets
 ---------
 
