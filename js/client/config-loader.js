@@ -10,7 +10,7 @@ var ConfigLoader = Protoplast.extend({
                 var setting = override.slice(0, firstEq);
                 var value = override.slice(firstEq + 1);
                 if (value === 'true') {
-                    value = true
+                    value = true;
                 }
                 if (value === 'false') {
                     value = false;
