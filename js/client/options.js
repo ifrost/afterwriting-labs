@@ -32,6 +32,11 @@ var Options = Protoplast.extend({
                 key: 'fonts',
                 args: 1,
                 description: 'custom font json file'
+            },
+            'setting': {
+                key: 'setting',
+                description: 'override config setting, e.g. --setting print_title_page=false',
+                multiple: true
             }
             
         });
