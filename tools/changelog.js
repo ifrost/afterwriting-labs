@@ -29,7 +29,7 @@ function getFirstCommit() {
 }
 
 function getChanges(from, repoUrl) {
-    var prettyFormat = "\"* [[`%h`](" + repoUrl + "commit/%h)] - %s\"";
+    var prettyFormat = "\"* [[%h](" + repoUrl + "commit/%h)] - %s\"";
     var listChangesCommand =  "git log " + from + "..HEAD --pretty=format:" + prettyFormat;
     return execSync(listChangesCommand, {encoding: "utf-8"});
 }
