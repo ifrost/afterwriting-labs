@@ -68,7 +68,7 @@
     "d3": "^3.4.1",
     "handlebars": "^4.6.0",
     "jquery": "^3.5.0",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.20",
     "protoplast": "2.0.3",
     "stdio": "^0.2.7",
     "text": "requirejs/text",
