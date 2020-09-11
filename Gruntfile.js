@@ -190,6 +190,12 @@ module.exports = function(grunt) {
                     },
                     {
                         src: 'afterwriting.html'
+                    },
+                    {
+                        src: 'privacy.html'
+                    },
+                    {
+                        src: 'terms.html'
                     }
                 ]
             }

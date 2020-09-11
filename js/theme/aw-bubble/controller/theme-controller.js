@@ -43,6 +43,10 @@ define(function(require) {
         selectedSectionFullyVisible: function() {
             this.themeModel.sections.selected.isFullyVisible = true;
         },
+
+        setMainInfoComponent: function(component) {
+            this.themeModel.mainInfoComponent = component;
+        },
         
         setFooter: function(content) {
             this.themeModel.footer = content;
