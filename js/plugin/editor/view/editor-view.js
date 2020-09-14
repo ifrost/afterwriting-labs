@@ -52,8 +52,16 @@ define(function(require) {
                 lineNumbers: false,
                 lineWrapping: true,
                 styleActiveLine: true,
+                tabSize: 4,
                 extraKeys: {
                     "Ctrl-Space": "autocomplete"
+                }
+            });
+            // use spaces for tabs
+            editor.setOption("extraKeys", {
+                Tab: function(cm) {
+                    var spaces = Array(cm.getOption("tabSize") + 1).join(" ");
+                    cm.replaceSelection(spaces);
                 }
             });
 

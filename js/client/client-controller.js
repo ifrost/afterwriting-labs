@@ -30,14 +30,14 @@ var ClientController = Protoplast.Object.extend({
         console.info('Loading script:', this.options.ops.source);
 
         this._readFile(this.options.ops.source, function(text) {
-            this.configLoader.loadFromFile(this.options.ops.config, function (config) {
+            this.configLoader.loadFromFile(this.options.ops.config, this.options.ops.setting, function (config) {       
                 this.settings.fromJSON(config);
                 this.scriptModel.script = text;
 
                 if (this.options.ops.pdf) {
                     this._validatePdf(function () {
                         console.log('Generating PDF', this.options.ops.pdf);
-                        this.configLoader.loadFromFile(this.options.ops.fonts, function(customFonts) {
+                        this.configLoader.loadFromFile(this.options.ops.fonts, null, function(customFonts) {
                             this.pdfController.getPdf(function () {
                                 console.log('Done!');
                                 process.exit(0);
