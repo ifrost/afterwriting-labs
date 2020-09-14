@@ -2,6 +2,7 @@ define(function(require) {
 
     var common = require('utils/common'),
         Protoplast = require('protoplast'),
+        MainInfo = require('core/view/main-info'),
         ThemeModel = require('theme/aw-bubble/model/theme-model'),
         ThemeController = require('theme/aw-bubble/controller/theme-controller');
 
@@ -38,6 +39,8 @@ define(function(require) {
                 if (this.appModel.urlParams.fontFix) {
                     this.pdfController.fontFixEnabled = true;
                 }
+
+                this.themeController.setMainInfoComponent(MainInfo.create());
                 
                 var footer = common.data.footer;
                 this.themeController.setFooter(footer);

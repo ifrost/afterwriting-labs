@@ -25,6 +25,28 @@ p {
     src: url('../fonts/dayroman.ttf');
 }
 
+.appInfo {
+    color: white;
+    font-family: 'Day Roman', Georgia, serif;
+    width: 700px;
+    padding: 10px;
+    margin-top: 200px;
+    position: absolute;
+    background-color: rgba(0,0,0,0.3);
+}
+
+.appInfo p {
+    text-align: center;
+}
+
+.appInfo a {
+    color: white;
+}
+.appInfo a:hover {
+    opacity: 0.8;
+    color: white;
+}
+
 /** loader - "Loading..." text displayed before the page is loaded */
 .loader {
     left: 50%;
@@ -221,6 +243,10 @@ p {
 
 /** small screens **/
 @media (max-device-width: 800px) {
+
+    .appInfo {
+        margin-top: 300px;
+    }
 
     .content-action--close {
         float: none;

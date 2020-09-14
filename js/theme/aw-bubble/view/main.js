@@ -13,12 +13,15 @@ define(function(require) {
         $meta: {
             presenter: MainPresenter
         },
-        
+
+        mainInfoComponent: null,
+
         tooltip: null,
 
         html: '<main class="main">' +
             '<div data-comp="logo"></div>' +
             '<div data-prop="backgroundClick" class="background-click"></div>' +
+            '<div data-comp="infoPlaceholder"></div>' +
             '<div class="menu"><div data-comp="mainMenu"></div></div>' +
             '<div data-comp="footer"></div>' +
             '<div data-comp="content"></div>' +
@@ -26,6 +29,10 @@ define(function(require) {
 
         logo: {
             component: Logo
+        },
+
+        infoPlaceholder: {
+            component: Protoplast.Component.extend({tag:'div'})
         },
 
         mainMenu: {
@@ -49,6 +56,7 @@ define(function(require) {
             Protoplast.utils.bind(this, 'tooltip.text', this._updateTooltip);
             Protoplast.utils.bind(this, 'tooltip.x', this._updateTooltipPosition);
             Protoplast.utils.bind(this, 'tooltip.y', this._updateTooltipPosition);
+            Protoplast.utils.bind(this, 'mainInfoComponent', this._updateMainInfoComponent);
 
             this.$backgroundClick.on('click', this.dispatch.bind(this, 'clicked'));
         },
@@ -70,6 +78,14 @@ define(function(require) {
         _updateTooltipPosition: function() {
             if (this.tooltip && this.tooltip.text) {
                 $('.tooltip').css("top", (this.tooltip.y - 10) + "px").css("left", (this.tooltip.x + 10) + "px");
+            }
+        },
+
+        _updateMainInfoComponent: function(infoComponent) {
+            if (infoComponent) {
+                this.infoPlaceholder.add(infoComponent);
+            } else {
+                this.infoPlaceholder.removeAll();
             }
         },
 

@@ -30,7 +30,9 @@ define(function(require) {
         showBackgroundImage: true,
         
         tooltip: null,
-        
+
+        mainInfoComponent: null,
+
         backgroundImageVisible: {
             computed: ['showBackgroundImage', 'small'],
             value: function() {
