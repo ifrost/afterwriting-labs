@@ -2,7 +2,7 @@ define(function(require) {
 
     var Env = require('acceptance/env');
 
-    describe.only('Save plugin', function() {
+    describe('Save plugin', function() {
 
         var env;
 
@@ -84,11 +84,14 @@ define(function(require) {
                 env.scenarios.initialise_saving_to_dropbox('fountain', function() {
                     env.user.popup.select_file('file.fountain');
                     env.user.popup.save_popup();
-    
-                    // THEN
-                    env.assert.dropbox.dropbox_saved(1);
-                    env.assert.popup.dialog_message_is('File saved!');
-                    done();
+
+                    Promise.resolve().then(function() {
+                        // THEN
+                        env.browser.tick(1000);
+                        env.assert.dropbox.dropbox_saved(1);
+                        env.assert.popup.dialog_message_is('File saved!');
+                        done();
+                    });
                 });
             });
 
@@ -99,11 +102,14 @@ define(function(require) {
     
                     env.dropbox.disable();
                     env.user.popup.save_popup();
-    
-                    // THEN
-                    env.assert.dropbox.dropbox_saved(0);
-                    env.assert.popup.dialog_message_is('Could not save the file. Try again later.');
-                    done();
+
+                    Promise.resolve().then(function() {
+                        // THEN
+                        env.browser.tick(1000);
+                        env.assert.dropbox.dropbox_saved(0);
+                        env.assert.popup.dialog_message_is('Could not save the file. Try again later.');
+                        done();
+                    });
                 });
             });
             

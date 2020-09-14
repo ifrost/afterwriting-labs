@@ -28,7 +28,6 @@ define(function(require) {
                 clientId: key
             });
     
-            // var state = Dropbox.Util.Oauth.randomAuthStateParam();
             var url = client.getAuthenticationUrl(redirect_uri);
             var popup = window.open(url, '_blank', 'width=500, height=500');
             $(window).on('message.dropboxclient', function(e) {
@@ -125,6 +124,8 @@ define(function(require) {
                 var data = item_to_data(item);
                 if (data.isFolder) {
                     folders[data.path] = data;
+                } else if (options.pdfOnly && !data.name.match(/.*\.pdf$/)) {
+                    return;
                 }
                 files.push(data);
             });
@@ -160,13 +161,15 @@ define(function(require) {
         var conflate_caller = function(conflate_callback, result) {
             if (result && result.cursor) {
                 client.filesListFolderContinue({
-                    cursor: result.cursor
+                    cursor: result.cursor,
+                    include_media_info: true
                 }).then(conflate_callback);
             }
             else {
                 client.filesListFolder({
                     path: is_lazy ? options.folder : '',
-                    recursive: !is_lazy
+                    recursive: !is_lazy,
+                    include_media_info: true
                 }).then(conflate_callback);
             }
         };

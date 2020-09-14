@@ -59,7 +59,7 @@ define(function(require) {
             env.assert.popup.dialog_input_content_is('screenplay.pdf');
         });
 
-        it.only('WHEN save pdf to Dropbox button is clicked THEN save pdf to Dropbox dialog is displayed', function(done) {
+        it('WHEN save pdf to Dropbox button is clicked THEN save pdf to Dropbox dialog is displayed', function(done) {
             // GIVEN
             env.user.theme.open_plugin('preview');
 

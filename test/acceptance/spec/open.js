@@ -51,17 +51,16 @@ define(function(require) {
         it('WHEN a FinalDraft file is loaded THEN editor is set to its converted content', function(done) {
             // WHEN
             env.scenarios.load_local_file({
-                    name: 'test.fountain',
-                    content: '<?xml version="1.0" encoding="UTF-8"?><FinalDraft DocumentType="Script" Template="No" Version="1"><Content><Paragraph Type="Action"><Text>Action. Action.</Text></Paragraph></Content></FinalDraft>'
-                },
-                function() {
-                    env.user.theme.open_plugin('editor');
+                name: 'test.fountain',
+                content: '<?xml version="1.0" encoding="UTF-8"?><FinalDraft DocumentType="Script" Template="No" Version="1"><Content><Paragraph Type="Action"><Text>Action. Action.</Text></Paragraph></Content></FinalDraft>'
+            },
+            function() {
+                env.user.theme.open_plugin('editor');
 
-                    // THEN
-                    env.assert.editor.editor_content('\nAction. Action.\n');
-                    done();
-                }
-            );
+                // THEN
+                env.assert.editor.editor_content('\nAction. Action.\n');
+                done();
+            });
         });
 
         it('WHEN open from Dropbox is clicked THEN list of files is displayed', function(done) {
