@@ -7,7 +7,7 @@ define(function(require) {
         MockStorage = mock(require('core/model/storage')),
         MockSaveController = mock(require('plugin/io/controller/save-controller'));
 
-        describe('OpenController', function() {
+    describe('OpenController', function() {
 
         var openController,
             mockStorage;
