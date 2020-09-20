@@ -105,6 +105,8 @@ define(function(require) {
         }).execute(function(response) {
             if (!response.error) {
                 var url = response.exportLinks && response.exportLinks['text/plain'] ? response.exportLinks['text/plain'] : response.downloadUrl;
+                // see: https://support.google.com/chrome/thread/29767271?hl=en
+                url = url.replace("content.googleapis.com","www.googleapis.com");
                 download(url, function(content) {
                     if (response.mimeType === "application/vnd.google-apps.document") {
                         content = content.replace(/\r\n\r\n/g, '\r\n');
