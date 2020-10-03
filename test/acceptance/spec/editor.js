@@ -238,14 +238,17 @@ define(function(require) {
                 });
 
                 it('THEN content of the editor is set to new file content', function(done) {
-                    this.timeout(10000);
                     // THEN
                     env.assert.editor.editor_content('changed content');
+
+                    // clean up to ensure the sync is turned off
+                    env.user.editor.turn_sync_off();
+                    env.user.popup.sync_keep_content();
                     done();
-                }).timeout(10000);
+                });
 
                 it('AND synchronisation is disabled AND file content changes THEN editor content is not updated with the latest update', function(done) {
-                    // AND: synchronisation is disabed
+                    // AND: synchronisation is disabled
                     env.user.editor.turn_sync_off();
 
                     // AND: file content changes
@@ -263,7 +266,7 @@ define(function(require) {
                 it('AND file content changes AND synchronisation is disabled AND previous content is reloaded THEN editor content is set to previous value', function(done) {
                     // AND: file content changes
                     env.dropbox.content_change('file.fountain', 'override after sync');
-                    env.browser.tick(10000);
+                    env.browser.tick(5000);
 
                     // AND: sync disabled
                     env.user.editor.turn_sync_off();

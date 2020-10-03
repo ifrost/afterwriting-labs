@@ -31,6 +31,12 @@ define(function (require) {
                 env.scenarios.dropbox_file_changes('file.fountain', 'INT. TEST\n\nAction.\n\n===\n\nINT. TEST\n\nAction.', function() {
                     // THEN
                     env.assert.stats.page_balance_pages(2);
+
+                    // CLEAN UP
+                    env.user.theme.open_plugin('editor');
+                    env.user.editor.turn_sync_off();
+                    env.user.popup.sync_keep_content();
+
                     done();
                 });
             });

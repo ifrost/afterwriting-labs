@@ -33,6 +33,10 @@ define(function(require) {
 
                 // THEN
                 env.assert.monitor.event_tracked('feature', 'auto-reload', 'dropbox');
+
+                // CLEAN UP
+                env.user.editor.turn_sync_off();
+                env.user.popup.sync_keep_content();
             });
 
             it('WHEN auto-saving is enabled THEN feature/auto-save event is tracked', function() {

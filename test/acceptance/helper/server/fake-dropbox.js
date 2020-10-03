@@ -45,12 +45,11 @@ define(function(require) {
         has_file: function(file) {
             this.contents[file.name] = file.content;
             this.files.push({
-                    id: file.name,
-                    '.tag': 'file',
-                    path_lower: '/' + file.name,
-                    name: file.name
-                }
-            );
+                id: file.name,
+                '.tag': 'file',
+                path_lower: '/' + file.name,
+                name: file.name
+            });
         },
 
         list_folder: {
@@ -70,7 +69,7 @@ define(function(require) {
         download: {
             url: /https:\/\/content.dropboxapi.com\/2\/files\/download/,
             method: 'POST',
-            content_type: 'text/plain',
+            content_type: 'application/octet-stream',
             value: function(xhr) {
                 var requestedFileName = JSON.parse(xhr.requestHeaders["Dropbox-API-Arg"]).path;
                 // strip "/"
@@ -113,7 +112,7 @@ define(function(require) {
             var event = document.createEvent('CustomEvent');
             event.initEvent('message');
             event.origin = 'http://localhost:8000';
-            event.data = 'access_token=DROPBOX_TOKEN&uid=1&state=oauth_state';
+            event.data = 'access_token=DROPBOX_TOKEN&uid=1';
             window.dispatchEvent(event);
         },
 

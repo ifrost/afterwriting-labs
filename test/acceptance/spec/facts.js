@@ -47,6 +47,12 @@ define(function (require) {
                 env.scenarios.dropbox_file_changes('file.fountain', 'INT. TEST\n\nINT. TEST', function() {
                     // THEN
                     env.assert.facts.number_of_scenes_is(2);
+
+                    // CLEAN UP
+                    env.user.theme.open_plugin('editor');
+                    env.user.editor.turn_sync_off();
+                    env.user.popup.sync_keep_content();
+
                     done();
                 });
             });

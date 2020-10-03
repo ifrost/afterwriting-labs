@@ -161,15 +161,13 @@ define(function(require) {
         var conflate_caller = function(conflate_callback, result) {
             if (result && result.cursor) {
                 client.filesListFolderContinue({
-                    cursor: result.cursor,
-                    include_media_info: true
+                    cursor: result.cursor
                 }).then(conflate_callback);
             }
             else {
                 client.filesListFolder({
                     path: is_lazy ? options.folder : '',
-                    recursive: !is_lazy,
-                    include_media_info: true
+                    recursive: !is_lazy
                 }).then(conflate_callback);
             }
         };
