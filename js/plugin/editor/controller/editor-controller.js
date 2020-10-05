@@ -78,7 +78,7 @@ define(function(require) {
 
         _handleSync: function(content) {
             content = converter.to_fountain(content).value;
-            if (content === undefined) {
+            if (content === undefined && this.editorModel.isSyncEnabled) {
                 this.toggleSync();
             }
             else if (this.editorModel.lastSyncContent !== content) {

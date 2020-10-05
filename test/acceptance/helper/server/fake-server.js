@@ -32,7 +32,10 @@ define(function(require){
                         xhr.respond(500, { "Content-Type": e.content_type || opts.content_type }, e.message);
                         return;
                     }
-                    xhr.respond(200, { "Content-Type": opts.content_type }, result);
+                    var headers = this.headers || {};
+                    headers["Content-Type"] = opts.content_type;
+                    xhr.respond(200, headers, result);
+                    this.headers = null;
                 }
             }.bind(this));
             return resolved;

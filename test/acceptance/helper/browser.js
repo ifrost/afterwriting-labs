@@ -12,7 +12,7 @@ define(function(require) {
 
         setup: function() {
             SinonFileReader.setup();
-            this.clock = sinon.useFakeTimers();
+            this.clock = window.clock;
             sinon.stub(window, 'open', function() {return {close: function() {}}});
             
             this.clear_cookies();
@@ -46,7 +46,6 @@ define(function(require) {
         restore: function() {
             this.clear_cookies();
             this.clear_local_storage();
-            this.clock.restore();
             window.open.restore();
             SinonFileReader.restore();
             this.files = {};

@@ -27,22 +27,47 @@ define(function(require) {
                 callback();
             });
         },
+        
+        list_dropbox_files: function(callback) {
+            var env = this.env;
+            
+            env.user.theme.open_plugin('open');
+    
+            // WHEN
+            env.user.open.open_from_dropbox();
+            env.dropbox.auth_dropbox();
+    
+            env.browser.wait(function() {
+                env.browser.tick(1000);
+                callback();
+            }, 100);
+        },
+        
+        dropbox_file_is_uploaded: function(callback) {
+            var env = this.env;
+            
+            env.browser.wait(function() {
+                env.browser.tick(1000);
+                callback()
+            }, 100);
+        },
 
         load_dropbox_file: function(file, callback) {
             var env = this.env;
 
             env.dropbox.has_file(file);
-            env.user.theme.open_plugin('open');
-
-            env.user.open.open_from_dropbox();
-            env.dropbox.auth_dropbox();
-            env.browser.tick(3000);
-            env.user.popup.select_file(file.name);
-            env.user.popup.confirm_popup();
-
-            env.browser.read_files(function() {
+            
+            this.list_dropbox_files(function() {
                 env.browser.tick(3000);
-                callback();
+                env.user.popup.select_file(file.name);
+                env.user.popup.confirm_popup();
+    
+                env.browser.wait(function() {
+                    env.browser.read_files(function() {
+                        env.browser.tick(3000);
+                        callback();
+                    });
+                }, 100);
             });
         },
 
@@ -74,12 +99,13 @@ define(function(require) {
          */
         dropbox_file_changes: function(filename, new_content, callback) {
             var env = this.env;
-            
             env.dropbox.content_change(filename, new_content);
             env.browser.tick(10000);
             env.browser.read_files(function() {
-                env.browser.tick(3000);
-                callback();
+                env.browser.wait(function() {
+                    env.browser.tick(3000);
+                    callback();
+                }, 1000);
             });
         },
 
@@ -99,7 +125,7 @@ define(function(require) {
         /**
          * Creates a new script and triggers saving to dropbox in given format
          */
-        initialise_saving_to_dropbox: function(format) {
+        initialise_saving_to_dropbox: function(format, callback) {
             var env = this.env;
 
             env.user.theme.open_plugin('open');
@@ -111,8 +137,12 @@ define(function(require) {
             else if (format === 'fountain') {
                 env.user.save.save_fountain_dropbox('save');
             }
+            
             env.dropbox.auth_dropbox();
-            env.browser.tick(3000);
+            env.browser.wait(function() {
+                env.browser.tick(3000);
+                callback();
+            }, 1000);
         }
         
     });

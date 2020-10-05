@@ -49,52 +49,68 @@ define(function(require) {
                 });
             });
             
-            it('WHEN save fountain to Dropbox is clicked THEN Dropbox save fountain dialog is displayed AND fountain and PDF files are listed AND search bar is not visible', function() {
+            it('WHEN save fountain to Dropbox is clicked THEN Dropbox save fountain dialog is displayed AND fountain and PDF files are listed AND search bar is not visible', function(done) {
                 // WHEN
-                env.scenarios.initialise_saving_to_dropbox('fountain');
+                env.scenarios.initialise_saving_to_dropbox('fountain', function() {
+    
+                    // THEN
+                    env.assert.popup.tree_node_visible('Dropbox', true);
+                    env.assert.popup.tree_node_visible('file.fountain', true);
+                    env.assert.popup.tree_node_visible('file.pdf', true);
+                    // AND
+                    env.assert.popup.search_bar_visible(false);
+                    done();
+                });
 
-                // THEN
-                env.assert.popup.tree_node_visible('Dropbox', true);
-                env.assert.popup.tree_node_visible('file.fountain', true);
-                env.assert.popup.tree_node_visible('file.pdf', true);
-                // AND
-                env.assert.popup.search_bar_visible(false);
             });
 
-            it('WHEN save pdf to Dropbox is clicked THEN Dropbox save PDF dialog is displayed AND only pdf files are listed', function() {
+            it('WHEN save pdf to Dropbox is clicked THEN Dropbox save PDF dialog is displayed AND only pdf files are listed', function(done) {
                 // WHEN
-                env.scenarios.initialise_saving_to_dropbox('pdf');
+                env.scenarios.initialise_saving_to_dropbox('pdf', function() {
+                    // THEN
+                    env.assert.popup.tree_node_visible('Dropbox', true);
+                    env.assert.popup.tree_node_visible('file.fountain', false);
+                    env.assert.popup.tree_node_visible('file.pdf', true);
+                    // AND
+                    env.assert.popup.search_bar_visible(false);
+                    
+                    done();
+                });
 
-                // THEN
-                env.assert.popup.tree_node_visible('Dropbox', true);
-                env.assert.popup.tree_node_visible('file.fountain', false);
-                env.assert.popup.tree_node_visible('file.pdf', true);
-                // AND
-                env.assert.popup.search_bar_visible(false);
             });
 
-            it('WHEN fountain is saved to Dropbox THEN confirmation message is displayed', function() {
+            it('WHEN fountain is saved to Dropbox THEN confirmation message is displayed', function(done) {
                 // WHEN
-                env.scenarios.initialise_saving_to_dropbox('fountain');
-                env.user.popup.select_file('file.fountain');
-                env.user.popup.save_popup();
+                env.scenarios.initialise_saving_to_dropbox('fountain', function() {
+                    env.user.popup.select_file('file.fountain');
+                    env.user.popup.save_popup();
 
-                // THEN
-                env.assert.dropbox.dropbox_saved(1);
-                env.assert.popup.dialog_message_is('File saved!');
+                    Promise.resolve().then(function() {
+                        // THEN
+                        env.browser.tick(1000);
+                        env.assert.dropbox.dropbox_saved(1);
+                        env.assert.popup.dialog_message_is('File saved!');
+                        done();
+                    });
+                });
             });
 
-            it('WHEN saving fountain file is rejected THEN rejection message is displayed', function() {
+            it('WHEN saving fountain file is rejected THEN rejection message is displayed', function(done) {
                 // WHEN
-                env.scenarios.initialise_saving_to_dropbox('fountain');
-                env.user.popup.select_file('file.fountain');
+                env.scenarios.initialise_saving_to_dropbox('fountain', function() {
+                    env.user.popup.select_file('file.fountain');
+    
+                    env.dropbox.disable();
+                    env.user.popup.save_popup();
 
-                env.dropbox.disable();
-                env.user.popup.save_popup();
-
-                // THEN
-                env.assert.dropbox.dropbox_saved(0);
-                env.assert.popup.dialog_message_is('Could not save the file. Try again later.');
+                    Promise.resolve().then(function() {
+                        // THEN
+                        env.browser.tick(1000);
+                        env.assert.dropbox.dropbox_saved(0);
+                        env.assert.popup.dialog_message_is('Could not save the file. Try again later.');
+                        done();
+                    });
+                });
             });
             
         });

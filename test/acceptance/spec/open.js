@@ -51,30 +51,25 @@ define(function(require) {
         it('WHEN a FinalDraft file is loaded THEN editor is set to its converted content', function(done) {
             // WHEN
             env.scenarios.load_local_file({
-                    name: 'test.fountain',
-                    content: '<?xml version="1.0" encoding="UTF-8"?><FinalDraft DocumentType="Script" Template="No" Version="1"><Content><Paragraph Type="Action"><Text>Action. Action.</Text></Paragraph></Content></FinalDraft>'
-                },
-                function() {
-                    env.user.theme.open_plugin('editor');
+                name: 'test.fountain',
+                content: '<?xml version="1.0" encoding="UTF-8"?><FinalDraft DocumentType="Script" Template="No" Version="1"><Content><Paragraph Type="Action"><Text>Action. Action.</Text></Paragraph></Content></FinalDraft>'
+            },
+            function() {
+                env.user.theme.open_plugin('editor');
 
-                    // THEN
-                    env.assert.editor.editor_content('\nAction. Action.\n');
-                    done();
-                }
-            );
+                // THEN
+                env.assert.editor.editor_content('\nAction. Action.\n');
+                done();
+            });
         });
 
-        it('WHEN open from Dropbox is clicked THEN list of files is displayed', function() {
-            // GIVE
-            env.user.theme.open_plugin('open');
+        it('WHEN open from Dropbox is clicked THEN list of files is displayed', function(done) {
 
-            // WHEN
-            env.user.open.open_from_dropbox();
-            env.dropbox.auth_dropbox();
-            env.browser.tick(1000);
-
-            // THEN
-            env.assert.popup.file_list_is_visible();
+            env.scenarios.list_dropbox_files(function() {
+                // THEN
+                env.assert.popup.file_list_is_visible();
+                done();
+            });
         });
 
         it('WHEN a Dropbox file is loaded THEN editor is set to its content', function(done) {
@@ -92,51 +87,46 @@ define(function(require) {
             });
         });
 
-        it('WHEN open dialog is displayed THEN search bar is visible', function() {
+        it('WHEN open dialog is displayed THEN search bar is visible', function(done) {
             // GIVEN
             env.dropbox.has_file({name: 'screenplay.fountain', content: 'test'});
             env.dropbox.has_file({name: 'script.fountain', content: 'test'});
-            env.user.theme.open_plugin('open');
-
+            
             // WHEN
-            env.user.open.open_from_dropbox();
-            env.dropbox.auth_dropbox();
-            env.browser.tick(3000);
-
-            // THEN
-            env.assert.popup.search_bar_visible(true);
+            env.scenarios.list_dropbox_files(function() {
+                // THEN
+                env.assert.popup.search_bar_visible(true);
+                done();
+            });
         });
 
-        it('WHEN open dialog is displayed AND at least 3 letters are typed to search THEN list is filtered', function() {
+        it('WHEN open dialog is displayed AND at least 3 letters are typed to search THEN list is filtered', function(done) {
             // GIVEN
             env.dropbox.has_file({name: 'screenplay.fountain', content: 'test'});
             env.dropbox.has_file({name: 'script.fountain', content: 'test'});
-            env.user.theme.open_plugin('open');
 
             // WHEN
-            env.user.open.open_from_dropbox();
-            env.dropbox.auth_dropbox();
-            env.browser.tick(3000);
-
-            env.assert.popup.tree_node_visible('screenplay.fountain', true);
-            env.assert.popup.tree_node_visible('script.fountain', true);
-
-            env.user.popup.type_in_search_bar('s');
-            env.assert.popup.tree_node_visible('screenplay.fountain', true);
-            env.assert.popup.tree_node_visible('script.fountain', true);
-
-            env.user.popup.type_in_search_bar('c');
-            env.assert.popup.tree_node_visible('screenplay.fountain', true);
-            env.assert.popup.tree_node_visible('script.fountain', true);
-
-            env.user.popup.type_in_search_bar('r');
-            env.assert.popup.tree_node_visible('screenplay.fountain', true);
-            env.assert.popup.tree_node_visible('script.fountain', true);
-
-            env.user.popup.type_in_search_bar('e');
-            env.assert.popup.tree_node_visible('screenplay.fountain', true);
-            env.assert.popup.tree_node_visible('script.fountain', false);
-
+            env.scenarios.list_dropbox_files(function() {
+                env.assert.popup.tree_node_visible('screenplay.fountain', true);
+                env.assert.popup.tree_node_visible('script.fountain', true);
+    
+                env.user.popup.type_in_search_bar('s');
+                env.assert.popup.tree_node_visible('screenplay.fountain', true);
+                env.assert.popup.tree_node_visible('script.fountain', true);
+    
+                env.user.popup.type_in_search_bar('c');
+                env.assert.popup.tree_node_visible('screenplay.fountain', true);
+                env.assert.popup.tree_node_visible('script.fountain', true);
+    
+                env.user.popup.type_in_search_bar('r');
+                env.assert.popup.tree_node_visible('screenplay.fountain', true);
+                env.assert.popup.tree_node_visible('script.fountain', true);
+    
+                env.user.popup.type_in_search_bar('e');
+                env.assert.popup.tree_node_visible('screenplay.fountain', true);
+                env.assert.popup.tree_node_visible('script.fountain', false);
+                done();
+            });
         });
 
         it('GIVEN Dropbox is available WHEN open plugin is opened THEN open from Dropbox link is visible', function() {

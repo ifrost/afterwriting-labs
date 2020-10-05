@@ -30,8 +30,10 @@
     "prepare": "npm run snyk-protect"
   },
   "devDependencies": {
+    "babel-polyfill": "^6.26.0",
     "chai": "^3.5.0",
     "docdash": "^0.4.0",
+    "dropbox": "^2.5.12",
     "eslint": "^4.18.2",
     "express": "^4.14.0",
     "findit": "^2.0.0",
@@ -70,9 +72,9 @@
     "jquery": "^3.5.0",
     "lodash": "^4.17.20",
     "protoplast": "2.0.3",
+    "snyk": "^1.319.0",
     "stdio": "^0.2.7",
-    "text": "requirejs/text",
-    "snyk": "^1.319.0"
+    "text": "github:requirejs/text"
   },
   "snyk": true
 }

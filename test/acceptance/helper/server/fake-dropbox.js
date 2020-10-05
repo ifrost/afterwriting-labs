@@ -32,12 +32,7 @@ define(function(require) {
             this.enabled = false;
         },
 
-        setup: function(proxy) {
-            this.DropboxRequest = Dropbox.Util.Xhr.Request;
-            sinon.stub(Dropbox.Util.Oauth, 'randomAuthStateParam', function() {
-                return 'oauth_state';
-            });
-            Dropbox.Util.Xhr.Request = proxy.xhr;
+        setup: function() {
             this.files = [];
             this.contents = {};
         },
@@ -45,35 +40,21 @@ define(function(require) {
         restore: function() {
             this.files = [];
             this.contents = {};
-            Dropbox.Util.Xhr.Request = this.DropboxRequest;
-            Dropbox.Util.Oauth.randomAuthStateParam.restore();
         },
         
         has_file: function(file) {
             this.contents[file.name] = file.content;
-            this.files.push([
-                '/' + file.name,
-                {
-                    bytes: file.content.length,
-                    client_mtime: 'Wed, 21 Nov 2012 18:26:43 +0000',
-                    icon: 'page_white_text',
-                    is_dir: false,
-                    mime_type: file.mime_type || 'text/plain',
-                    modified: 'Wed, 21 Nov 2012 18:26:43 +0000',
-                    modifier: null,
-                    path: '/' + file.name,
-                    read_only: false,
-                    rev: '1',
-                    revision: 1,
-                    root: 'dropbox',
-                    size: '1 KB',
-                    thumb_exists: false
-                }
-            ]);
+            this.files.push({
+                id: file.name,
+                '.tag': 'file',
+                path_lower: '/' + file.name,
+                name: file.name
+            });
         },
 
-        delta: {
-            url: /https:\/\/api\d*.dropbox.com\/1\/delta/,
+        list_folder: {
+            url: /https:\/\/api.dropboxapi.com\/2\/files\/list_folder/,
+            content_type: 'application/json',
             method: 'POST',
             value: function() {
                 return JSON.stringify({
@@ -85,16 +66,23 @@ define(function(require) {
             }
         },
 
-        file_content: {
-            url: /https:\/\/api-content.dropbox.com\/1\/files\/auto\/([0-9a-z.]+)/,
-            method: 'GET',
-            value: function(xhr, filename) {
-                return this.contents[filename];
+        download: {
+            url: /https:\/\/content.dropboxapi.com\/2\/files\/download/,
+            method: 'POST',
+            content_type: 'application/octet-stream',
+            value: function(xhr) {
+                var requestedFileName = JSON.parse(xhr.requestHeaders["Dropbox-API-Arg"]).path;
+                // strip "/"
+                
+                this.headers = {
+                    'dropbox-api-result': JSON.stringify(this.files[0])
+                };
+                return this.contents[requestedFileName.substr(1)];
             }
         },
 
         save_content: {
-            url: /https:\/\/api-content.dropbox.com\/1\/files\/auto\//,
+            url: /https:\/\/content.dropboxapi.com\/2\/files\/upload/,
             method: 'POST',
             value: function() {
                 if (!this.enabled) {
@@ -124,7 +112,7 @@ define(function(require) {
             var event = document.createEvent('CustomEvent');
             event.initEvent('message');
             event.origin = 'http://localhost:8000';
-            event.data = 'access_token=DROPBOX_TOKEN&uid=1&state=oauth_state';
+            event.data = 'access_token=DROPBOX_TOKEN&uid=1';
             window.dispatchEvent(event);
         },
 
