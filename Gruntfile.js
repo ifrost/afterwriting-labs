@@ -76,7 +76,7 @@ module.exports = function(grunt) {
                 options: {
                     separator: ';'
                 },
-                src: ['bundle/js/afterwriting.js', 'js/libs/codemirror/lib/codemirror.js', 'js/libs/pdfkit.js'],
+                src: ['bundle/js/afterwriting.js', 'js/libs/codemirror/lib/codemirror.js'],
                 dest: 'bundle/js/afterwriting.js'
             }
         },
@@ -111,6 +111,12 @@ module.exports = function(grunt) {
                 flatten: true,
                 src: ['js/libs/pdfjs/build/pdf.min.js', 'js/libs/pdfjs/build/pdf.min.worker.js'],
                 dest: 'bundle/js/pdfjs'
+            },
+            fonts: {
+                expand: true,
+                flatten: true,
+                src: ['js/fonts/*.js'],
+                dest: 'bundle/js/fonts'
             }
         },
         gitcheckout: {
