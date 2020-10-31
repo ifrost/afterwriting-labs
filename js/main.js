@@ -15,7 +15,7 @@
             saveAs: 'libs/FileSaver',
             d3: '../node_modules/d3/d3.min',
             modernizr: 'libs/modernizr',
-            pdfkit: 'libs/pdfkit',
+            pdfkit: '../node_modules/pdfkit/js/pdfkit.standalone',
             impromptu: 'libs/jquery-impromptu.min',
             jstree: 'libs/jstree.min',
             cookie: 'libs/jquery.cookie',

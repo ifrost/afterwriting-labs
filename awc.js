@@ -9,9 +9,9 @@ require = require('./js/client/awrequire.js');
 require.config({
     map: {
         'modernizr': {},
-        'pdfkit': 'libs/pdfkit'
+        'utils/fonts': 'utils/fonts-node',
     },
-    use_node_require: ['jquery', 'fs', 'd3', 'aw-parser', 'protoplast', 'lodash', 'aw-liner']
+    use_node_require: ['jquery', 'fs', 'd3', 'pdfkit', 'aw-parser', 'protoplast', 'lodash', 'aw-liner']
 });
 
 var Bootstrap = require('bootstrap');

@@ -61,10 +61,10 @@ define('utils/pdfmaker', function(require) {
         var doc = new PDFDocument(options);
 
         if (opts.config.fonts) {
-            doc.registerFont('ScriptNormal', fonts.normal.src, fonts.normal.family);
-            doc.registerFont('ScriptBold', fonts.bold.src, fonts.bold.family);
-            doc.registerFont('ScriptBoldOblique', fonts.bolditalic.src, fonts.bolditalic.family);
-            doc.registerFont('ScriptOblique', fonts.italic.src, fonts.italic.family);
+            doc.registerFont('ScriptNormal', fonts.regular);
+            doc.registerFont('ScriptBold', fonts.bold);
+            doc.registerFont('ScriptBoldOblique', fonts.bolditalic);
+            doc.registerFont('ScriptOblique', fonts.italic);
         }
         else {
             doc.registerFont('ScriptNormal', 'Courier');

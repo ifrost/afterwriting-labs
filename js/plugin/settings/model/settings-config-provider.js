@@ -27,7 +27,13 @@ define(function(require) {
             var printGroup = SettingsGroup.create('Print');
 
             printGroup.addEntry(this.createDropdown('print_profile', 'Page size', [{label: 'A4', value: 'a4'}, {label: 'US letter', value: 'usletter'}]));
-            printGroup.addEntry(this.createDropdown('font_family', 'Font', [{label: 'Courier Prime', value: 'CourierPrime'}, {label: 'Courier', value: 'Courier'}]));
+            printGroup.addEntry(this.createDropdown('font_family', 'Font', [
+                {label: 'Courier', value: 'Courier'},
+                {label: 'Courier Prime', value: 'CourierPrime'},
+                {label: 'Courier Prime (Cyrillic)', value: 'CourierPrimeCyrillic'},
+                {label: 'Noto Sans (Japanese)', value: 'NotoJP'},
+                {label: 'Noto Sans (Simplified Chinese)', value: 'NotoSC'}
+            ]));
             printGroup.addEntry(this.createCheckbox('print_title_page', 'Print title page'));
             printGroup.addEntry(this.createCheckbox('print_sections', 'Print sections'));
             printGroup.addEntry(this.createCheckbox('print_synopsis', 'Print synopsis'));
