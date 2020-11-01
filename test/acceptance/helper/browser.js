@@ -30,7 +30,7 @@ define(function(require) {
         
         open_local_file: function(name, node) {
             node.files.item = function() {
-                return this.files[name]
+                return this.files[name];
             }.bind(this);
             this.trigger(node, 'change');
         },

@@ -100,6 +100,7 @@ define(function(require) {
 
         createDropdown: function(key, label, options) {
             var dropdown = Dropdown.create();
+            dropdown.id = key;
             dropdown.options = options;
             return SettingsEntry.create(key, label, dropdown);
         },

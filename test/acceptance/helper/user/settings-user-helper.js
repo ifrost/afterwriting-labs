@@ -16,6 +16,10 @@ define(function(require) {
          */
         select_open_last_used_on_startup: function() {
             this.click(this.dom.settings.$load_last_opened);
+        },
+
+        change_font_family: function(font_family) {
+            this.set_value(this.dom.settings.$font_family, font_family);
         }
         
     });
