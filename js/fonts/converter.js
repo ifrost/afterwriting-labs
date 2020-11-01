@@ -39,8 +39,8 @@ function load(options, type, required) {
         return "fonts.regular;";
     }
     try {
-        const content = fs.readFileSync(path.join(name));
-        const buf = new Buffer(content);
+        var content = fs.readFileSync(path.join(name));
+        var buf = new Buffer(content);
         return '"' + buf.toString('base64') + '";';
     } catch (e) {
         if (!required) {
@@ -53,12 +53,12 @@ function load(options, type, required) {
     }
 }
 
-const regular = load(options, "regular", true);
-const bold = load(options, "bold");
-const italic = load(options, "italic");
-const bolditalic = load(options, "bolditalic");
+var regular = load(options, "regular", true);
+var bold = load(options, "bold");
+var italic = load(options, "italic");
+var bolditalic = load(options, "bolditalic");
 
-let output = `define(function(require){\n\n`;
+var output = `define(function(require){\n\n`;
 output += `    var fontUtils = require('utils/font-utils');\n\n`;
 output += `    var fonts = {};\n\n`;
 output += `    fonts.regular = ${regular}\n\n`;
