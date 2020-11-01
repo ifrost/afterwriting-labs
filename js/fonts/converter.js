@@ -29,11 +29,11 @@ var options = stdio.getopt({
     }
 });
 
-const fs = require("fs");
-const path = require("path");
+var fs = require("fs");
+var path = require("path");
 
 function load(options, type, required) {
-    const name = options[type];
+    var name = options[type];
     if (!name) {
         console.log(type + " font not specified. Regular font will be used instead.");
         return "fonts.regular;";
