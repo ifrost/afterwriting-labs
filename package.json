@@ -59,6 +59,7 @@
     "jsdoc": "^3.4.3",
     "mocha": "^6.2.0",
     "pdfkit": "^0.11.0",
+    "puppeteer": "^5.4.1",
     "sinon": "^1.14.0"
   },
   "engines": {

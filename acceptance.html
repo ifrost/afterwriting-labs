@@ -30,7 +30,7 @@
     <script type="text/javascript">
         mocha.setup({
             ui: 'bdd',
-            reporter: 'spec'
+            reporter: window.location.href.indexOf("reporter=json-stream") !== -1 ? 'json-stream' : 'spec'
         });
     </script>
 
