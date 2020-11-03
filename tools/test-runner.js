@@ -1,9 +1,13 @@
 const puppeteer = require('puppeteer');
+const fs = require('fs');
+
+const process = require('process');
+const PAGE = process.argv[2] || 'http://localhost:8000/acceptance.html?dev=true&reporter=json-stream';
+const DEBUG = !!process.argv[3];
 
 (async () => {
     const browser = await puppeteer.launch({
-        headless: true,
-        //defaultViewport: null,
+        headless: !DEBUG,
         args: [
             '--window-size=1200,800',
         ],
@@ -36,9 +40,19 @@ const puppeteer = require('puppeteer');
                     console.log("Failures: ", eventData.failures);
                     console.log("Duration: ", eventData.duration);
 
-                   await browser.close();
-                   process.exit(eventData.failures ? 1 : 0);
-                   resolve();
+                    var coverage = await page.evaluate(() => {
+                        return window.__coverage__;
+                    });
+
+                    if (coverage) {
+                        fs.writeFileSync('coverage.json', JSON.stringify(coverage));
+                    }
+
+                    if (!DEBUG) {
+                        await browser.close();
+                        process.exit(eventData.failures ? 1 : 0);
+                        resolve();
+                    }
                 } else if (eventName === "fail") {
                     console.log("fail", eventData.fullTitle);
                     console.log(eventData.err);
@@ -51,7 +65,7 @@ const puppeteer = require('puppeteer');
             }
 
         });
-        await page.goto('http://localhost:8001/acceptance.html?dev=true&reporter=json-stream');
+        await page.goto(PAGE);
     });
 
 })();

@@ -56,7 +56,7 @@
         require.config(config);
     }
     else if (typeof __COVERAGE !== 'undefined') {
-        config.baseUrl = '../coverage/js/';
+        config.baseUrl = '../coverage/';
         require.config(config);
     }
 })();

@@ -14,7 +14,10 @@
         
         <script type="text/javascript">
             __TEST = true;
-             mocha.setup('bdd');
+             mocha.setup({
+                 ui: 'bdd',
+                 reporter: new URL(window.location).searchParams.get('reporter')
+             });
         </script>
         <script src="../js/libs/pdfjs/build/pdf.js"></script>
         <script type="text/javascript">

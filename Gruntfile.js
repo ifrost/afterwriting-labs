@@ -273,14 +273,32 @@ module.exports = function(grunt) {
         },
 
         shell: {
+            unit: {
+                command: "node tools/test-runner.js http://localhost:8001/test/runner.html?reporter=json-stream"
+            },
+            "unit-debug": {
+                command: "node tools/test-runner.js http://localhost:8001/test/runner.html?reporter=html true"
+            },
+            integration: {
+                command: "node tools/test-runner.js http://localhost:8001/test/integration-runner.html?reporter=json-stream"
+            },
+            "integration-debug": {
+                command: "node tools/test-runner.js http://localhost:8001/test/integration-runner.html?reporter=html true"
+            },
+            acceptance: {
+                command: "node tools/test-runner.js http://localhost:8001/acceptance.html?reporter=json-stream"
+            },
+            "acceptance-debug": {
+                command: "node tools/test-runner.js http://localhost:8001/acceptance.html?reporter=spec true"
+            },
+            coverage: {
+                command: "node tools/test-runner.js http://localhost:8001/test/coverage.html?reporter=json-stream"
+            },
             istanbul_instrument: {
-                command: 'istanbul instrument --output coverage/js --no-impact js && istanbul instrument --output coverage/test/data --no-impact test/data'
+                command: 'istanbul instrument --output coverage --no-impact js && istanbul instrument --output coverage/test/data --no-impact test/data'
             },
             jsdoc: {
                 command: 'jsdoc -c jsdoc.conf.json -R README.md -P package.json -t node_modules/docdash -u docs/tutorials'
-            },
-            acceptance: {
-                command: 'node tools/atest.js'
             }
         },
 
@@ -348,10 +366,16 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-template');
 
-    grunt.registerTask('utest', ['handlebars:test', 'template:test', 'mocha:test']);
-    grunt.registerTask('itest', ['handlebars:test', 'template:integration', 'mocha:integration']);
+    grunt.registerTask('utest', ['express:server', 'handlebars:test', 'template:test', 'shell:unit', 'express:server:stop']);
+    grunt.registerTask('utest:debug', ['express:server', 'handlebars:test', 'template:test', 'shell:unit-debug']);
+
+    grunt.registerTask('itest', ['express:server', 'handlebars:test', 'template:integration', 'shell:integration', 'express:server:stop']);
+    grunt.registerTask('itest:debug', ['express:server', 'handlebars:test', 'template:integration', 'shell:integration-debug']);
+
     grunt.registerTask('atest', ['express:server', 'handlebars:test', 'template:acceptance', 'shell:acceptance', 'express:server:stop']);
-    grunt.registerTask('test', ['handlebars:test', 'template:test', 'template:integration', 'template:acceptance', 'mocha:test', 'mocha:integration', 'express:server', 'mocha:acceptance', 'express:server:stop']);
+    grunt.registerTask('atest:debug', ['express:server', 'handlebars:test', 'template:acceptance', 'shell:acceptance-debug']);
+
+    grunt.registerTask('test', ['utest', 'itest', 'atest']);
     grunt.registerTask('coverage', ['template:coverage', 'shell:istanbul_instrument', 'mocha:coverage']);
     grunt.registerTask('doc', ['shell:jsdoc']);
     
