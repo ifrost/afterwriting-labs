@@ -65,7 +65,10 @@ const DEBUG = !!process.argv[3];
             }
 
         });
-        await page.goto(PAGE);
+        await page.goto(PAGE).catch(function(e) {
+            console.error(e);
+            process.exit(1);
+        });
     });
 
 })();

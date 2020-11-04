@@ -10,7 +10,6 @@
         <script type="text/javascript" src="../js/libs/sinon.js"></script>
         <script type="text/javascript" src="../node_modules/chai/chai.js"></script>
         <script type="text/javascript" src="../node_modules/mocha/mocha.js"></script>
-        <script type="text/javascript" src="../test/phantomjs-polyfills.js"></script>
         
         <script type="text/javascript">
             <%= mode %> = true;

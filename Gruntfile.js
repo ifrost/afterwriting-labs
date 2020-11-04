@@ -297,6 +297,9 @@ module.exports = function(grunt) {
             istanbul_instrument: {
                 command: 'istanbul instrument --output coverage --no-impact js && istanbul instrument --output coverage/test/data --no-impact test/data'
             },
+            istanbul_report: {
+                command: 'istanbul report text'
+            },
             jsdoc: {
                 command: 'jsdoc -c jsdoc.conf.json -R README.md -P package.json -t node_modules/docdash -u docs/tutorials'
             }
@@ -307,44 +310,6 @@ module.exports = function(grunt) {
                 options: {
                     script: 'server.js',
                     node_env: 'test'
-                }
-            }
-        },
-
-        mocha: {
-            coverage: {
-                src: ['test/coverage.html'],
-                options: {
-                    run: false,
-                    coverage: {
-                        htmlReport: 'coverage/html'
-                    }
-                }
-            },
-            test: {
-                src: ['test/runner.html'],
-                options: {
-                    reporter: 'Spec'
-                }
-            },
-            integration: {
-                src: ['test/integration-runner.html'],
-                options: {
-                    reporter: 'Spec'
-                }
-            },
-            acceptance: {
-                options: {
-                    urls: ['http://localhost:8001/acceptance.html'],
-                    reporter: 'Spec',
-                    log: false,
-                    logErrors: true,
-                    page: {
-                        viewportSize: {
-                            width: 1200,
-                            height: 800
-                        }
-                    }
                 }
             }
         }
@@ -362,7 +327,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-git');
     grunt.loadNpmTasks('grunt-bumpup');
     grunt.loadNpmTasks('grunt-text-replace');
-    grunt.loadNpmTasks('grunt-mocha-phantom-istanbul');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-template');
 
@@ -376,7 +340,7 @@ module.exports = function(grunt) {
     grunt.registerTask('atest:debug', ['express:server', 'handlebars:test', 'template:acceptance', 'shell:acceptance-debug']);
 
     grunt.registerTask('test', ['utest', 'itest', 'atest']);
-    grunt.registerTask('coverage', ['template:coverage', 'shell:istanbul_instrument', 'mocha:coverage']);
+    grunt.registerTask('coverage', ['express:server', 'template:coverage', 'shell:istanbul_instrument', 'shell:coverage', 'shell:istanbul_report', 'express:server:stop']);
     grunt.registerTask('doc', ['shell:jsdoc']);
     
     grunt.registerTask('build', ['clean:prebuild', 'handlebars:compile', 'replace', 'concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'doc', 'clean:bootstrap']);
