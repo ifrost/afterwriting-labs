@@ -2,6 +2,7 @@ var Protoplast = require('protoplast');
 
 var fs = require('fs');
 var stdio = require('stdio');
+var path = require('path');
 
 var ClientController = Protoplast.Object.extend({
 
@@ -46,7 +47,11 @@ var ClientController = Protoplast.Object.extend({
 
                         var customFonts;
                         if (this.options.ops.fonts) {
-                            customFonts = this.awrequire(this.options.ops.fonts);
+                            var fileName = this.options.ops.fonts;
+                            if (!path.isAbsolute(fileName) && !fileName.startsWith('.')) {
+                                fileName = "." + path.sep + fileName;
+                            }
+                            customFonts = this.awrequire(fileName);
                         }
 
                         this.pdfController.getPdf(function () {
