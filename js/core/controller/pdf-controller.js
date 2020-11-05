@@ -19,21 +19,17 @@ define(function(require) {
         fontFixEnabled: false,
 
         getPdf: function(callback, filePath, customFonts) {
+            var loader;
 
-            // LOAD IN CUSTOM FONT PROFILE(S)
             if (customFonts) {
-                for (var fontName in customFonts) {
-                    fonts[fontName] = {};
-                    for (var fontType in customFonts[fontName]) {
-                        fonts[fontName][fontType] = {
-                            family: customFonts[fontName][fontType].family,
-                            src: fontUtils.convertBase64ToBinary(customFonts[fontName][fontType].src)
-                        };
-                    }
-                }
+                loader = function(callback) {
+                    callback(customFonts);
+                };
+            } else {
+                loader = fonts[this.settings.font_family];
             }
 
-            fonts[this.settings.font_family](function(font) {
+            loader(function(font) {
                 pdfmaker.get_pdf(
                     {
                         callback: callback,

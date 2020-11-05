@@ -31,8 +31,7 @@ define(function(require) {
                 {label: 'Courier', value: 'Courier'},
                 {label: 'Courier Prime', value: 'CourierPrime'},
                 {label: 'Courier Prime (Cyrillic)', value: 'CourierPrimeCyrillic'},
-                {label: 'Noto Sans (Japanese)', value: 'NotoJP'},
-                {label: 'Noto Sans (Simplified Chinese)', value: 'NotoSC'}
+                {label: 'Kosugi', value: 'Kosugi'}
             ]));
             printGroup.addEntry(this.createCheckbox('print_title_page', 'Print title page'));
             printGroup.addEntry(this.createCheckbox('print_sections', 'Print sections'));

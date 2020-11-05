@@ -17,4 +17,6 @@ require.config({
 var Bootstrap = require('bootstrap');
 var ClientConfig = require('client/client-config');
 
+ClientConfig.awrequire = require;
+
 Bootstrap.init(ClientConfig);

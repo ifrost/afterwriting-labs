@@ -25,6 +25,12 @@ var ClientController = Protoplast.Object.extend({
         inject: 'configLoader'
     },
 
+    awrequire: null,
+
+    $create: function(awrequire) {
+        this.awrequire = awrequire;
+    },
+
     init: function() {
 
         console.info('Loading script:', this.options.ops.source);
@@ -37,12 +43,17 @@ var ClientController = Protoplast.Object.extend({
                 if (this.options.ops.pdf) {
                     this._validatePdf(function () {
                         console.log('Generating PDF', this.options.ops.pdf);
-                        this.configLoader.loadFromFile(this.options.ops.fonts, null, function(customFonts) {
-                            this.pdfController.getPdf(function () {
-                                console.log('Done!');
-                                process.exit(0);
-                            }, this.options.ops.pdf, customFonts);
-                        }.bind(this));
+
+                        var customFonts;
+                        if (this.options.ops.fonts) {
+                            customFonts = this.awrequire(this.options.ops.fonts);
+                        }
+
+                        this.pdfController.getPdf(function () {
+                            console.log('Done!');
+                            process.exit(0);
+                        }, this.options.ops.pdf, customFonts);
+
                     }.bind(this));
                 }
             }.bind(this));

@@ -2,8 +2,7 @@ define(function (require) {
 
     var CourierPrime = require('fonts/courier-prime');
     var CourierPrimeCyrillic = require('fonts/courier-prime-cyrillic');
-    var NotoJP = require('fonts/noto-jp');
-    var NotoSC = require('fonts/noto-sc');
+    var Kosugi = require('fonts/kosugi');
 
     var fonts = {};
 
@@ -21,6 +20,10 @@ define(function (require) {
 
     fonts["NotoSC"] = function (callback) {
         callback(NotoSC);
+    };
+
+    fonts["Kosugi"] = function (callback) {
+        callback(Kosugi);
     };
 
     fonts["Courier"] = function (callback) {

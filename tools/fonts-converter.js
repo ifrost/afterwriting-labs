@@ -40,7 +40,7 @@ function load(options, type, required) {
     }
     try {
         var content = fs.readFileSync(path.join(name));
-        var buf = new Buffer(content);
+        var buf = Buffer.from(content);
         return '"' + buf.toString('base64') + '";';
     } catch (e) {
         if (!required) {

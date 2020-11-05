@@ -13,14 +13,8 @@ define(function(require){
         });
     };
 
-    fonts["NotoJP"] = function(callback) {
-        require(['js/fonts/noto-jp.js?callback=define'], function(fonts) {
-            callback(fonts);
-        });
-    };
-
-    fonts["NotoSC"] = function(callback) {
-        require(['js/fonts/noto-sc.js?callback=define'], function(fonts) {
+    fonts["Kosugi"] = function(callback) {
+        require(['js/fonts/kosugi.js?callback=define'], function(fonts) {
             callback(fonts);
         });
     };

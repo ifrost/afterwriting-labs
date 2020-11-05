@@ -31,7 +31,7 @@ define('utils/pdfmaker', function(require) {
                 });
                 stream.on('finish', this.callback);
                 simplestream.chunks.forEach(function(buffer) {
-                    stream.write(new Buffer(buffer.toString('base64'), 'base64'));
+                    stream.write(Buffer.from(buffer.toString('base64'), 'base64'));
                 });
                 stream.end();
             } else {
