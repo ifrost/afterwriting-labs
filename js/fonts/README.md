@@ -4,9 +4,7 @@
 2. Generate JSONP file with fonts using:
     cd afterwriting-labs/js/fonts
     node fonts-converter.js -r source/FolderWithMyFonts/MyFont-Regular.ttf -b source/FolderWithMyFonts/MyFont-Bold.ttf -i source/FolderWithMyFonts/MyFont-Italic.ttf -x source/FolderWithMyFonts/MyFont-Bold-Italic.ttf -o my-font.js
-3. Make font available for loading in: afterwriting-labs/js/utils/fonts.js
-4. Make font embedded in node.js: afterwriting-labs/js/utils/fonts-node.js
-5. Make new font available in settings. Add font_family entry in: afterwriting-labs/js/plugin/settings/model/settings-config-provider.js
+3. Add new font to the conifg: afterwriting-labs/js/fonts/fonts-loader.js
 
 # Sources:
 
@@ -24,3 +22,4 @@ node ../../fonts-converter.js -r source/Courier-Prime-Cyrillic/Courier-Prime.ttf
 # kosugi
 
 node ../../tools/fonts-converter.js -r source/Kosugi/Kosugi-Regular.otf -o kosugi.js
+

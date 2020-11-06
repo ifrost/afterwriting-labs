@@ -5,7 +5,8 @@ define(function(require) {
         Checkbox = require('core/view/control/checkbox'),
         Dropdown = require('core/view/control/dropdown'),
         SettingsGroup = require('plugin/settings/model/settings-group'),
-        SettingsEntry = require('plugin/settings/model/settings-entry');
+        SettingsEntry = require('plugin/settings/model/settings-entry'),
+        fontLoaders = require('fonts/font-loaders');
 
     var SettingsConfigProvider = Protoplast.Object.extend({
 
@@ -27,12 +28,12 @@ define(function(require) {
             var printGroup = SettingsGroup.create('Print');
 
             printGroup.addEntry(this.createDropdown('print_profile', 'Page size', [{label: 'A4', value: 'a4'}, {label: 'US letter', value: 'usletter'}]));
-            printGroup.addEntry(this.createDropdown('font_family', 'Font', [
-                {label: 'Courier', value: 'Courier'},
-                {label: 'Courier Prime', value: 'CourierPrime'},
-                {label: 'Courier Prime (Cyrillic)', value: 'CourierPrimeCyrillic'},
-                {label: 'Kosugi', value: 'Kosugi'}
-            ]));
+            printGroup.addEntry(this.createDropdown('font_family', 'Font', fontLoaders.fontsList.map(function(font) {
+                return {
+                    label: font.label,
+                    value: font.name
+                };
+            })));
             printGroup.addEntry(this.createCheckbox('print_title_page', 'Print title page'));
             printGroup.addEntry(this.createCheckbox('print_sections', 'Print sections'));
             printGroup.addEntry(this.createCheckbox('print_synopsis', 'Print synopsis'));

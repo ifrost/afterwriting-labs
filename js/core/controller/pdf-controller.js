@@ -1,8 +1,8 @@
 define(function(require) {
 
-    var Protoplast = require('protoplast'),
-        fonts = require('utils/fonts'),
-        fontUtils = require('utils/font-utils'),
+    var _ = require('lodash'),
+        Protoplast = require('protoplast'),
+        fontLoaders = require('fonts/font-loaders'),
         pdfmaker = require('utils/pdfmaker'),
         textstats = require('utils/textstats');
 
@@ -26,7 +26,7 @@ define(function(require) {
                     callback(customFonts);
                 };
             } else {
-                loader = fonts[this.settings.font_family];
+                loader = fontLoaders[this.settings.font_family];
             }
 
             loader(function(font) {

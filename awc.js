@@ -8,10 +8,9 @@ global.window = undefined;
 require = require('./js/client/awrequire.js');
 require.config({
     map: {
-        'modernizr': {},
-        'utils/fonts': 'utils/fonts-node',
+        'modernizr': {}
     },
-    use_node_require: ['jquery', 'fs', 'd3', 'pdfkit', 'aw-parser', 'protoplast', 'lodash', 'aw-liner']
+    use_node_require: ['jquery', 'fs', 'd3', 'pdfkit', 'aw-parser', 'protoplast', 'lodash']
 });
 
 var Bootstrap = require('bootstrap');

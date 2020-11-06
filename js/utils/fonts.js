@@ -1,4 +1,6 @@
 define(function(require){
+
+    throw new Error("Deprecated");
     var fonts = {};
 
     fonts["CourierPrime"] = function(callback) {
@@ -15,6 +17,12 @@ define(function(require){
 
     fonts["Kosugi"] = function(callback) {
         require(['js/fonts/kosugi.js?callback=define'], function(fonts) {
+            callback(fonts);
+        });
+    };
+
+    fonts["FreeMono"] = function(callback) {
+        require(['js/fonts/free-mono.js?callback=define'], function(fonts) {
             callback(fonts);
         });
     };

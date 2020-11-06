@@ -4,7 +4,7 @@ define(function(require) {
         fquery = require('utils/fountain/query'),
         fhelpers = require('utils/fountain/helpers'),
         fparser = require('aw-parser'),
-        fliner = require('aw-liner'),
+        fliner = require('utils/liner'),
         converter = require('utils/converters/scriptconverter'),
         preprocessor = require('utils/fountain/preprocessor');
 
@@ -29,7 +29,7 @@ define(function(require) {
         
         $create: function() {
             this.parser = fparser.parser;
-            this.liner = new fliner.Liner(fparser.helpers);
+            this.liner = new fliner(fparser.helpers);
         },
         
         parsed: {
