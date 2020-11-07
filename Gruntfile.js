@@ -47,7 +47,7 @@ module.exports = function(grunt) {
         requirejs: {
             compile: {
                 options: {
-                    optimize: "uglify",
+                    optimize: "none",
                     baseUrl: "js",
                     mainConfigFile: 'js/afterwriting-bootstrap.js',
                     include: ["libs/require", "afterwriting-bootstrap"],
@@ -302,6 +302,9 @@ module.exports = function(grunt) {
             },
             jsdoc: {
                 command: 'jsdoc -c jsdoc.conf.json -R README.md -P package.json -t node_modules/docdash -u docs/tutorials'
+            },
+            uglify: {
+                command: 'uglifyjs --compress --mangle --output bundle/js/afterwriting.js -- bundle/js/afterwriting.js'
             }
         },
 
@@ -343,6 +346,6 @@ module.exports = function(grunt) {
     grunt.registerTask('coverage', ['express:server', 'template:coverage', 'shell:istanbul_instrument', 'shell:coverage', 'shell:istanbul_report', 'express:server:stop']);
     grunt.registerTask('doc', ['shell:jsdoc']);
     
-    grunt.registerTask('build', ['clean:prebuild', 'handlebars:compile', 'replace', 'concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'doc', 'clean:bootstrap']);
+    grunt.registerTask('build', ['clean:prebuild', 'handlebars:compile', 'replace', 'concat:bootstrap', 'requirejs', 'shell:uglify', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'doc', 'clean:bootstrap']);
 
 };
