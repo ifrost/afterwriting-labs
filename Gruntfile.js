@@ -55,7 +55,7 @@ module.exports = function(grunt) {
                     onBuildWrite: function(moduleName, path, contents) {
                         if (moduleName === 'logger') {
                             contents = contents.replace(/\/\/invoke[\s\S]*\/\/\/invoke/g, '');
-                        } else if (moduleName === 'libs/codemirror/lib/codemirror' || moduleName === 'pdfkit') {
+                        } else if (moduleName === 'libs/codemirror/lib/codemirror') {
                             contents = '';
                         }
                         return contents;

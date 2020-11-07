@@ -12,11 +12,22 @@ define(function(require) {
         if (font.file) {
             if (window) {
                 // BROWSER LOADER
-                loaders[font.name] = function(callback) {
-                    require(['js/fonts/' + font.file + '.js?callback=define'], function (fonts) {
-                        callback(fonts);
-                    });
-                };
+                // LOCAL
+                if (window.location.protocol === "file:") {
+                    loaders[font.name] = function(callback) {
+                        require(['bundle/js/fonts/' + font.file + '.js?callback=define'], function (fonts) {
+                            callback(fonts);
+                        });
+                    };
+                }
+                // DYNAMIC
+                else {
+                    loaders[font.name] = function(callback) {
+                        require(['js/fonts/' + font.file + '.js?callback=define'], function (fonts) {
+                            callback(fonts);
+                        });
+                    };
+                }
             } else {
                 // NDOE.JS LOADER
                 loaders[font.name] = function(callback) {
