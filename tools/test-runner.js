@@ -1,7 +1,14 @@
+/**
+ * Simple test runner for mocha tests using puppeteer.
+ *
+ * Usage:
+ * node test-runner.js [PAGE=url] [DEBUG=true|false]
+ */
+
 const puppeteer = require('puppeteer');
 const fs = require('fs');
-
 const process = require('process');
+
 const PAGE = process.argv[2] || 'http://localhost:8000/acceptance.html?dev=true&reporter=json-stream';
 const DEBUG = !!process.argv[3];
 

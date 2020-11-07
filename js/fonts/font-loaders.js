@@ -3,8 +3,8 @@ define(function(require) {
     var config = [
         { name: "Courier", label: "Courier", file: "" },
         { name: "CourierPrime", label: "Courier Prime", file: "courier-prime" },
-        { name: "CourierPrimeCyrillic", label: "Courier Prime Cyrillic", file: "courier-prime-cyrillic" },
-        { name:"Kosugi", label: "Kosugi", file: "kosugi", "tmp-ratio": 0.62 }
+        { name: "CourierPrimeCyrillic", label: "Courier Prime Cyrillic", file: "courier-prime-cyrillic" }
+        // { name: "Kosugi", label: "Kosugi", file: "kosugi", "tmp-ratio": 0.62 }
     ];
 
     var loaders = {};

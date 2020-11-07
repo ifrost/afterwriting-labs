@@ -1,6 +1,7 @@
 define(function(require) {
 
-    var Protoplast = require('protoplast'),
+    var _ = require('lodash'),
+        Protoplast = require('protoplast'),
         fontLoaders = require('fonts/font-loaders'),
         print_profiles = require('utils/print-profiles');
 
