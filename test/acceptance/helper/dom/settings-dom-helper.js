@@ -16,6 +16,11 @@ define(function(require) {
         $load_last_opened: 'input[data-id="load_last_opened"]',
 
         /**
+         * Font dropdown
+         */
+        $font_family: 'select[data-id="font_family"]',
+
+        /**
          * JavaScript PDF Viewer checkbox
          */
         $js_pdf_viewer: 'input[data-id="pdfjs_viewer"]',
@@ -25,7 +30,7 @@ define(function(require) {
          * @returns {boolean}
          */
         js_pdf_viewer_is_checked: function() {
-            return $(this.$js_pdf_viewer).prop('checked')
+            return $(this.$js_pdf_viewer).prop('checked');
         }
 
     });

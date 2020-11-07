@@ -3,7 +3,7 @@ define(function(){
     var fontUtils = {};
 
     fontUtils.nodeAtob = function(b64string) {
-        return new Buffer(b64string, 'base64').toString('binary');
+        return Buffer.from(b64string, 'base64').toString('binary');
     };
 
     fontUtils.convertBase64ToBinary = function(base64) {

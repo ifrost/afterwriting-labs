@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="css/jquery-impromptu.min.css"/>
     <link rel="stylesheet" href="js/libs/codemirror/addon/hint/show-hint.css"/>
 
-    <!-- only for acceptance test purposes so far; sinon does not play well with PhantomJS's Blob -->
     <script type="text/javascript">
         var ACCEPTANCE = true;
 
@@ -24,13 +23,11 @@
     <script type="text/javascript" src="js/libs/sinon.js"></script>
     <script type="text/javascript" src="node_modules/chai/chai.js"></script>
     <script type="text/javascript" src="node_modules/mocha/mocha.js"></script>
-    <script type="text/javascript" src="test/phantomjs-polyfills.js"></script>
-    <script type="text/javascript" src="node_modules/babel-polyfill/dist/polyfill.js"></script>
 
     <script type="text/javascript">
         mocha.setup({
             ui: 'bdd',
-            reporter: 'spec'
+            reporter: window.location.href.indexOf("reporter=json-stream") !== -1 ? 'json-stream' : 'spec'
         });
     </script>
 

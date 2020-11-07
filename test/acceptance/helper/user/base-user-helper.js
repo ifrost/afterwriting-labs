@@ -28,7 +28,11 @@ define(function(require) {
                     throw new Error('Cannot click on selector "' + selector + '". Element not found.');
                 }
             }
-            this.browser.tick(20000);
+            // previously tick(20000), replaced with a series of ticks to fix loading fonts dynamically (too long
+            // single tick causes timeouts in requirejs()
+            for (var i=0; i<100; i++) {
+                this.browser.tick(20);
+            }
         },
         
         click_button: function(label) {
@@ -54,6 +58,11 @@ define(function(require) {
             options.which = options.which || 1;
 
             this.trigger_event(selector, type, options);
+        },
+
+        set_value: function(selector, value) {
+            $(selector).prop("value", value);
+            this.trigger_event(selector, "change");
         }
 
     });

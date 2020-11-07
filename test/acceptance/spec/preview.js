@@ -2,13 +2,16 @@ define(function(require) {
 
     var Env = require('acceptance/env');
 
-    describe('Preview', function() {
+    describe('Preview', function () {
 
         var env;
 
-        beforeEach(function() {
+        beforeEach(function () {
             env = Env.create();
             env.scenarios.create_new_script('test');
+
+            env.user.theme.open_plugin("settings");
+            env.user.settings.change_font_family("Courier");
         });
 
         afterEach(function() {
@@ -113,6 +116,20 @@ define(function(require) {
             env.assert.io.save_button_visible('dropbox', 'preview', 'pdf', false);
 
             env.dropbox.enable();
+        });
+
+        it('GIVEN embedded font is selected THEN the font is loaded dyamically', function (done) {
+
+            // GIVEN
+            env.user.theme.open_plugin('settings');
+            env.user.settings.change_font_family('CourierPrime');
+            env.user.theme.open_plugin('preview');
+
+            env.browser.wait(function() {
+                // THEN
+                env.assert.preview.preview_is_in_mode('embedded');
+                done();
+            }, 1000);
         });
 
     });

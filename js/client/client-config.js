@@ -12,14 +12,19 @@ define(function(require) {
      * @augments bootstrap/core-config
      */
     var ClientConfig = CoreConfig.extend({
-        
+
+        /**
+         * Passed in awc.js
+         */
+        awrequire: null,
+
         init: function(context) {
 
             CoreConfig.init.call(this, context);
 
             context.register('options', Options.create());
             context.register('configLoader', ConfigLoader.create());
-            context.register(ClientController.create());
+            context.register(ClientController.create(this.awrequire));
         }
         
     });

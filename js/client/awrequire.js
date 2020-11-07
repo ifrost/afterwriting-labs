@@ -1,5 +1,6 @@
 var path = require('path');
 var Module = require('module');
+var process = require('process');
 
 var _require = require;
 
@@ -11,7 +12,7 @@ var config = {};
 var resolve_module_name = function(name) {
     var root = __dirname,
         fragments = name.split('/'),
-        path_parts = [root, '..'].concat(fragments),
+        path_parts = path.isAbsolute(name) ? [name] : (name.startsWith('.') ? [process.cwd()].concat(fragments) : [root, '..'].concat(fragments)),
         module_path = path.join.apply(null, path_parts);
     return module_path + '.js';
 };

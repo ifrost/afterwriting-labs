@@ -1,8 +1,9 @@
 define(function(require) {
 
-    var Protoplast = require('protoplast');
+    var Protoplast = require('protoplast'),
+        BaseComponent = require('core/view/base-component');
 
-    var Dropdown = Protoplast.Component.extend({
+    var Dropdown = BaseComponent.extend({
 
         html: '<select/>',
 
@@ -15,6 +16,8 @@ define(function(require) {
         },
 
         init: function() {
+            BaseComponent.init.call(this);
+
             Protoplast.utils.bind(this, 'value', this.updateValue.bind(this));
             Protoplast.utils.bind(this, 'options', this.setOptions.bind(this));
 

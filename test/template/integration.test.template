@@ -10,11 +10,13 @@
         <script type="text/javascript" src="../js/libs/sinon.js"></script>
         <script type="text/javascript" src="../node_modules/chai/chai.js"></script>
         <script type="text/javascript" src="../node_modules/mocha/mocha.js"></script>
-        <script type="text/javascript" src="../test/phantomjs-polyfills.js"></script>
         
         <script type="text/javascript">
             <%= mode %> = true;
-             mocha.setup('bdd');
+             mocha.setup({
+                 ui: 'bdd',
+                 reporter: new URL(window.location).searchParams.get('reporter')
+             });
         </script>
         <script src="../js/libs/pdfjs/build/pdf.js"></script>
         <script type="text/javascript">

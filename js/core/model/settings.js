@@ -1,6 +1,8 @@
 define(function(require) {
 
-    var Protoplast = require('protoplast'),
+    var _ = require('lodash'),
+        Protoplast = require('protoplast'),
+        fontLoaders = require('fonts/font-loaders'),
         print_profiles = require('utils/print-profiles');
 
     // TODO: Decouple plugin-specific settings (+++)
@@ -229,7 +231,17 @@ define(function(require) {
 
         print: {
             get: function() {
-                return print_profiles[this.print_profile];
+                var tmpRatio = fontLoaders[this.font_family] && fontLoaders[this.font_family].config["tmp-ratio"];
+                var printProfile = print_profiles[this.print_profile];
+                if (tmpRatio) {
+                    printProfile = _.cloneDeep(print_profiles[this.print_profile]);
+                    Object.keys(printProfile).forEach(function(key) {
+                        if (typeof (printProfile[key]) === "object" && printProfile[key].max) {
+                            printProfile[key].max = Math.floor(printProfile[key].max * tmpRatio);
+                        }
+                    });
+                }
+                return printProfile;
             }
         },
 

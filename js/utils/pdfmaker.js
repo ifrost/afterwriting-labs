@@ -31,7 +31,7 @@ define('utils/pdfmaker', function(require) {
                 });
                 stream.on('finish', this.callback);
                 simplestream.chunks.forEach(function(buffer) {
-                    stream.write(new Buffer(buffer.toString('base64'), 'base64'));
+                    stream.write(Buffer.from(buffer.toString('base64'), 'base64'));
                 });
                 stream.end();
             } else {
@@ -61,10 +61,10 @@ define('utils/pdfmaker', function(require) {
         var doc = new PDFDocument(options);
 
         if (opts.config.fonts) {
-            doc.registerFont('ScriptNormal', fonts.normal.src, fonts.normal.family);
-            doc.registerFont('ScriptBold', fonts.bold.src, fonts.bold.family);
-            doc.registerFont('ScriptBoldOblique', fonts.bolditalic.src, fonts.bolditalic.family);
-            doc.registerFont('ScriptOblique', fonts.italic.src, fonts.italic.family);
+            doc.registerFont('ScriptNormal', fonts.regular);
+            doc.registerFont('ScriptBold', fonts.bold);
+            doc.registerFont('ScriptBoldOblique', fonts.bolditalic);
+            doc.registerFont('ScriptOblique', fonts.italic);
         }
         else {
             doc.registerFont('ScriptNormal', 'Courier');

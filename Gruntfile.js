@@ -47,7 +47,7 @@ module.exports = function(grunt) {
         requirejs: {
             compile: {
                 options: {
-                    optimize: "uglify",
+                    optimize: "none",
                     baseUrl: "js",
                     mainConfigFile: 'js/afterwriting-bootstrap.js',
                     include: ["libs/require", "afterwriting-bootstrap"],
@@ -55,7 +55,7 @@ module.exports = function(grunt) {
                     onBuildWrite: function(moduleName, path, contents) {
                         if (moduleName === 'logger') {
                             contents = contents.replace(/\/\/invoke[\s\S]*\/\/\/invoke/g, '');
-                        } else if (moduleName === 'libs/codemirror/lib/codemirror' || moduleName === 'pdfkit') {
+                        } else if (moduleName === 'libs/codemirror/lib/codemirror') {
                             contents = '';
                         }
                         return contents;
@@ -76,7 +76,7 @@ module.exports = function(grunt) {
                 options: {
                     separator: ';'
                 },
-                src: ['bundle/js/afterwriting.js', 'js/libs/codemirror/lib/codemirror.js', 'js/libs/pdfkit.js'],
+                src: ['bundle/js/afterwriting.js', 'js/libs/codemirror/lib/codemirror.js'],
                 dest: 'bundle/js/afterwriting.js'
             }
         },
@@ -111,6 +111,12 @@ module.exports = function(grunt) {
                 flatten: true,
                 src: ['js/libs/pdfjs/build/pdf.min.js', 'js/libs/pdfjs/build/pdf.min.worker.js'],
                 dest: 'bundle/js/pdfjs'
+            },
+            fonts: {
+                expand: true,
+                flatten: true,
+                src: ['js/fonts/*.js'],
+                dest: 'bundle/js/fonts'
             }
         },
         gitcheckout: {
@@ -267,11 +273,38 @@ module.exports = function(grunt) {
         },
 
         shell: {
+            unit: {
+                command: "node tools/test-runner.js http://localhost:8001/test/runner.html?reporter=json-stream"
+            },
+            "unit-debug": {
+                command: "node tools/test-runner.js http://localhost:8001/test/runner.html?reporter=html true"
+            },
+            integration: {
+                command: "node tools/test-runner.js http://localhost:8001/test/integration-runner.html?reporter=json-stream"
+            },
+            "integration-debug": {
+                command: "node tools/test-runner.js http://localhost:8001/test/integration-runner.html?reporter=html true"
+            },
+            acceptance: {
+                command: "node tools/test-runner.js http://localhost:8001/acceptance.html?reporter=json-stream"
+            },
+            "acceptance-debug": {
+                command: "node tools/test-runner.js http://localhost:8001/acceptance.html?reporter=spec true"
+            },
+            coverage: {
+                command: "node tools/test-runner.js http://localhost:8001/test/coverage.html?reporter=json-stream"
+            },
             istanbul_instrument: {
-                command: 'istanbul instrument --output coverage/js --no-impact js && istanbul instrument --output coverage/test/data --no-impact test/data'
+                command: 'istanbul instrument --output coverage --no-impact js && istanbul instrument --output coverage/test/data --no-impact test/data'
+            },
+            istanbul_report: {
+                command: 'istanbul report text'
             },
             jsdoc: {
                 command: 'jsdoc -c jsdoc.conf.json -R README.md -P package.json -t node_modules/docdash -u docs/tutorials'
+            },
+            uglify: {
+                command: 'uglifyjs --compress --mangle --output bundle/js/afterwriting.js -- bundle/js/afterwriting.js'
             }
         },
 
@@ -280,44 +313,6 @@ module.exports = function(grunt) {
                 options: {
                     script: 'server.js',
                     node_env: 'test'
-                }
-            }
-        },
-
-        mocha: {
-            coverage: {
-                src: ['test/coverage.html'],
-                options: {
-                    run: false,
-                    coverage: {
-                        htmlReport: 'coverage/html'
-                    }
-                }
-            },
-            test: {
-                src: ['test/runner.html'],
-                options: {
-                    reporter: 'Spec'
-                }
-            },
-            integration: {
-                src: ['test/integration-runner.html'],
-                options: {
-                    reporter: 'Spec'
-                }
-            },
-            acceptance: {
-                options: {
-                    urls: ['http://localhost:8001/acceptance.html'],
-                    reporter: 'Spec',
-                    log: false,
-                    logErrors: true,
-                    page: {
-                        viewportSize: {
-                            width: 1200,
-                            height: 800
-                        }
-                    }
                 }
             }
         }
@@ -335,17 +330,22 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-git');
     grunt.loadNpmTasks('grunt-bumpup');
     grunt.loadNpmTasks('grunt-text-replace');
-    grunt.loadNpmTasks('grunt-mocha-phantom-istanbul');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-template');
 
-    grunt.registerTask('utest', ['handlebars:test', 'template:test', 'mocha:test']);
-    grunt.registerTask('itest', ['handlebars:test', 'template:integration', 'mocha:integration']);
-    grunt.registerTask('atest', ['express:server', 'handlebars:test', 'template:acceptance', 'mocha:acceptance', 'express:server:stop']);
-    grunt.registerTask('test', ['handlebars:test', 'template:test', 'template:integration', 'template:acceptance', 'mocha:test', 'mocha:integration', 'express:server', 'mocha:acceptance', 'express:server:stop']);
-    grunt.registerTask('coverage', ['template:coverage', 'shell:istanbul_instrument', 'mocha:coverage']);
+    grunt.registerTask('utest', ['express:server', 'handlebars:test', 'template:test', 'shell:unit', 'express:server:stop']);
+    grunt.registerTask('utest:debug', ['express:server', 'handlebars:test', 'template:test', 'shell:unit-debug']);
+
+    grunt.registerTask('itest', ['express:server', 'handlebars:test', 'template:integration', 'shell:integration', 'express:server:stop']);
+    grunt.registerTask('itest:debug', ['express:server', 'handlebars:test', 'template:integration', 'shell:integration-debug']);
+
+    grunt.registerTask('atest', ['express:server', 'handlebars:test', 'template:acceptance', 'shell:acceptance', 'express:server:stop']);
+    grunt.registerTask('atest:debug', ['express:server', 'handlebars:test', 'template:acceptance', 'shell:acceptance-debug']);
+
+    grunt.registerTask('test', ['utest', 'itest', 'atest']);
+    grunt.registerTask('coverage', ['express:server', 'template:coverage', 'shell:istanbul_instrument', 'shell:coverage', 'shell:istanbul_report', 'express:server:stop']);
     grunt.registerTask('doc', ['shell:jsdoc']);
     
-    grunt.registerTask('build', ['clean:prebuild', 'handlebars:compile', 'replace', 'concat:bootstrap', 'requirejs', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'doc', 'clean:bootstrap']);
+    grunt.registerTask('build', ['clean:prebuild', 'handlebars:compile', 'replace', 'concat:bootstrap', 'requirejs', 'shell:uglify', 'concat:codemirror', 'cssmin', 'copy', 'compress', 'doc', 'clean:bootstrap']);
 
 };

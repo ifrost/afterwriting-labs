@@ -17,14 +17,7 @@ define(function(require) {
         },
 
         init: function(Config) {
-            try {
-                this._bootstrap(Config);
-            }
-            catch (e) {
-                // workaround for missing stack traces in PhantomJS
-                console.error('Bootstrap error: ', e.message, e.stack);
-                throw e;
-            }
+            this._bootstrap(Config);
         },
         
         destroy: function() {

@@ -8,13 +8,14 @@ global.window = undefined;
 require = require('./js/client/awrequire.js');
 require.config({
     map: {
-        'modernizr': {},
-        'pdfkit': 'libs/pdfkit'
+        'modernizr': {}
     },
-    use_node_require: ['jquery', 'fs', 'd3', 'aw-parser', 'protoplast', 'lodash', 'aw-liner']
+    use_node_require: ['jquery', 'fs', 'd3', 'pdfkit', 'aw-parser', 'protoplast', 'lodash']
 });
 
 var Bootstrap = require('bootstrap');
 var ClientConfig = require('client/client-config');
+
+ClientConfig.awrequire = require;
 
 Bootstrap.init(ClientConfig);
