@@ -1,7 +1,7 @@
 # How to add a new font?
 
 1. Copy font files (ttf/otf) to afterwriting-labs/js/fonts/source/FolderWithMyFonts
-2. Generate JSONP file with fonts using:
+2. Generate JS file with fonts using:
     cd afterwriting-labs/js/fonts
     node ../../tools/fonts-converter.js -r source/FolderWithMyFonts/MyFont-Regular.ttf -b source/FolderWithMyFonts/MyFont-Bold.ttf -i source/FolderWithMyFonts/MyFont-Italic.ttf -x source/FolderWithMyFonts/MyFont-Bold-Italic.ttf -o my-font.js
 3. Add new font to the config: afterwriting-labs/js/fonts/fonts-loader.js

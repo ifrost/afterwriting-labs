@@ -2,7 +2,7 @@
 # cd afterwriting-labs
 # ./test/client/manual.sh
 
-# Generate a PDF/JSONP with a custom font:
+# Generate a PDF with a custom font:
 node tools/fonts-converter --regular test/client/fonts/1942.ttf --output test/client/fonts/1942.js
 node awc.js --source test/data/screenplays/test.fountain --fonts ./test/client/fonts/1942 --overwrite --pdf test/client/pdf/1942.pdf
 
