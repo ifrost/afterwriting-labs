@@ -213,9 +213,9 @@ Only the regular style of the font is required so it's enough to pass:
 
     > node tools/fonts-converter.js -r ./RegularFont.ttf -o my-font.js
 
-The generated file (`my-font.js` in the example above) can be passed to CLI with `--fonts` param:
+The generated file (`my-font.js` in the example above) can be passed to CLI with `--fonts` param (without .js extension):
 
-    > node awc.js --source screenplay.fountain --pdf --fonts ./my-fonts.js
+    > node awc.js --source screenplay.fountain --pdf --fonts ./my-fonts
 
 Note: Monospaced fonts are recommended.  It is not guaranteed that all fonts will render equally well due to differences is character height and width, so please test your configuration prior to distribution or printing.
 
