@@ -1,3 +1,8 @@
+#!/usr/bin/env node
+
+console.info("'afterwriting fonts converter");
+console.info("www: http://afterwriting.com\n");
+
 var stdio = require('stdio');
 var options = stdio.getopt({
     'regular': {
@@ -75,3 +80,5 @@ output += `    };\n\n`;
 output += `});\n`;
 
 fs.writeFileSync(options.output, output, {encoding: "utf-8"});
+
+console.log('Done.');
