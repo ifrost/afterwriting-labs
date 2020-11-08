@@ -45,7 +45,7 @@ var Options = Protoplast.extend({
     
     _validateOptions: function() {
         if (this.ops.pdf === true) {
-            i = this.ops.source.lastIndexOf('.');
+            var i = this.ops.source.lastIndexOf('.');
             this.ops.pdf = this.ops.source.slice(0, i) + '.pdf';
         }
 

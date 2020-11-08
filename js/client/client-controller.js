@@ -51,6 +51,9 @@ var ClientController = Protoplast.Object.extend({
                             if (!path.isAbsolute(fileName) && !fileName.startsWith('.')) {
                                 fileName = "." + path.sep + fileName;
                             }
+                            if (fileName.endsWith('.js')) {
+                                fileName = fileName.slice(0, -3);
+                            }
                             customFonts = this.awrequire(fileName);
                         }
 

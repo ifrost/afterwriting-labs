@@ -13,7 +13,10 @@
     "email": "pm.jamroz@gmail.com",
     "url": "http://about.me/piotr.jamroz"
   },
-  "bin": "./awc.js",
+  "bin": {
+    "afterwriting": "./awc.js",
+    "afterwriting-fonts": "./tools/fonts-converter.js"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/ifrost/afterwriting-labs.git"
@@ -58,7 +61,6 @@
     "istanbul": "^0.4.5",
     "jsdoc": "^3.4.3",
     "mocha": "^6.2.0",
-    "pdfkit": "^0.11.0",
     "puppeteer": "^5.4.1",
     "sinon": "^1.14.0",
     "uglify-es": "^3.3.9"
@@ -74,6 +76,7 @@
     "handlebars": "^4.6.0",
     "jquery": "^3.5.0",
     "lodash": "^4.17.20",
+    "pdfkit": "^0.11.0",
     "protoplast": "2.0.3",
     "snyk": "^1.319.0",
     "stdio": "^0.2.7",
