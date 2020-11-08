@@ -217,7 +217,7 @@ Only the regular style of the font is required so it's enough to pass:
 
 The generated file (`my-font.js` in the example above) can be passed to CLI with `--fonts` param (can be without .js extension):
 
-    > node awc.js --source screenplay.fountain --pdf --fonts ./my-fonts.js
+    > node awc.js --source screenplay.fountain --pdf --fonts ./my-font.js
 
 Note: Monospaced fonts are recommended.  It is not guaranteed that all fonts will render equally well due to differences is character height and width, so please test your configuration prior to distribution or printing.
 
