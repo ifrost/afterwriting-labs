@@ -1,0 +1,86 @@
+{
+  "name": "afterwriting",
+  "version": "1.17.3",
+  "description": "Post-processing tools for Fountain screenplays",
+  "keywords": [
+    "screenwriting",
+    "screenplay",
+    "fountain",
+    "text analysis"
+  ],
+  "author": {
+    "name": "Piotr Jamroz",
+    "email": "pm.jamroz@gmail.com",
+    "url": "http://about.me/piotr.jamroz"
+  },
+  "bin": {
+    "afterwriting": "./awc.js",
+    "afterwriting-fonts": "./tools/fonts-converter.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ifrost/afterwriting-labs.git"
+  },
+  "scripts": {
+    "eslint": "node_modules/.bin/eslint js/**/*.js -c .eslintrc.json",
+    "debt": "node tools/debt",
+    "test": "npm run eslint && grunt test && git reset --hard",
+    "preversion": "git fetch --tags && node tools/changelog.js https://github.com/ifrost/afterwriting-labs console",
+    "build": "./node_modules/.bin/grunt build",
+    "version": "npm run build && git add .",
+    "postversion": "git push --follow-tags",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "devDependencies": {
+    "babel-polyfill": "^6.26.0",
+    "chai": "^3.5.0",
+    "docdash": "^0.4.0",
+    "dropbox": "^2.5.12",
+    "eslint": "^4.18.2",
+    "express": "^4.14.0",
+    "findit": "^2.0.0",
+    "grunt": "~1.0.1",
+    "grunt-bumpup": "^0.6.1",
+    "grunt-cli": "~1.2.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-compress": "^1.4.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^2.0.0",
+    "grunt-contrib-handlebars": "^1.0.0",
+    "grunt-contrib-requirejs": "^1.0.0",
+    "grunt-contrib-uglify": "^5.0.0",
+    "grunt-express-server": "^0.5.3",
+    "grunt-git": "^1.0.3",
+    "grunt-mocha-istanbul": "^5.0.2",
+    "grunt-shell": "^2.1.0",
+    "grunt-simple-mocha": "~0.4.0",
+    "grunt-template": "^1.0.0",
+    "grunt-text-replace": "^0.4.0",
+    "istanbul": "^0.4.5",
+    "jsdoc": "^3.4.3",
+    "mocha": "^6.2.0",
+    "puppeteer": "^5.4.1",
+    "sinon": "^1.14.0",
+    "uglify-es": "^3.3.9"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "aw-liner": "0.0.2",
+    "aw-parser": "0.1.1",
+    "d3": "^3.4.1",
+    "handlebars": "^4.6.0",
+    "jquery": "^3.5.0",
+    "lodash": "^4.17.20",
+    "pdfkit": "^0.11.0",
+    "protoplast": "2.0.3",
+    "requirejs-text": "^2.0.15",
+    "snyk": "^1.319.0",
+    "stdio": "^0.2.7"
+  },
+  "snyk": true
+}
