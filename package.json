@@ -78,9 +78,9 @@
     "lodash": "^4.17.20",
     "pdfkit": "^0.11.0",
     "protoplast": "2.0.3",
+    "requirejs-text": "^2.0.15",
     "snyk": "^1.319.0",
-    "stdio": "^0.2.7",
-    "text": "github:requirejs/text"
+    "stdio": "^0.2.7"
   },
   "snyk": true
 }
