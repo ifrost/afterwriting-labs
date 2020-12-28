@@ -24,7 +24,7 @@
             acceptance: '../test/acceptance',
             'aw-parser': '../node_modules/aw-parser/dist/aw-parser.amd',
             'aw-liner': '../node_modules/aw-liner/dist/aw-liner.amd',
-            text: '../node_modules/text/text',
+            text: '../node_modules/requirejs-text/text',
             Blob: 'libs/Blob'
         },
         shim: {
