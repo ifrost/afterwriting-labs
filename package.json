@@ -24,7 +24,8 @@
   "scripts": {
     "eslint": "node_modules/.bin/eslint js/**/*.js -c .eslintrc.json",
     "debt": "node tools/debt",
-    "test": "npm run eslint && grunt test && git reset --hard",
+    "test": "npm run eslint && grunt test",
+    "test:ci": "npm run test && git reset --hard",
     "preversion": "git fetch --tags && node tools/changelog.js https://github.com/ifrost/afterwriting-labs console",
     "build": "./node_modules/.bin/grunt build",
     "version": "npm run build && git add .",
@@ -40,7 +41,7 @@
     "eslint": "^4.18.2",
     "express": "^4.14.0",
     "findit": "^2.0.0",
-    "grunt": "~1.0.1",
+    "grunt": "^1.4.1",
     "grunt-bumpup": "^0.6.1",
     "grunt-cli": "~1.2.0",
     "grunt-contrib-clean": "^1.0.0",
@@ -63,6 +64,7 @@
     "mocha": "^6.2.0",
     "puppeteer": "^5.4.1",
     "sinon": "^1.14.0",
+    "snyk": "^1.618.0",
     "uglify-es": "^3.3.9"
   },
   "engines": {
@@ -79,7 +81,6 @@
     "pdfkit": "^0.11.0",
     "protoplast": "2.0.3",
     "requirejs-text": "^2.0.15",
-    "snyk": "^1.530.0",
     "stdio": "^0.2.7"
   },
   "snyk": true
