@@ -24,7 +24,8 @@
   "scripts": {
     "eslint": "node_modules/.bin/eslint js/**/*.js -c .eslintrc.json",
     "debt": "node tools/debt",
-    "test": "npm run eslint && grunt test && git reset --hard",
+    "test": "npm run eslint && grunt test",
+    "test:ci": "npm run test && git reset --hard",
     "preversion": "git fetch --tags && node tools/changelog.js https://github.com/ifrost/afterwriting-labs console",
     "build": "./node_modules/.bin/grunt build",
     "version": "npm run build && git add .",

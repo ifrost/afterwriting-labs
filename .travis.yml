@@ -3,8 +3,7 @@ node_js: 11
 branches:
   except: /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 script:
-  - npm run eslint
-  - npm test
+  - npm test:ci
 before_install:
   - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git checkout $TRAVIS_BRANCH; fi
 deploy:
