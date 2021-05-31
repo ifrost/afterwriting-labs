@@ -73,13 +73,13 @@
     "aw-liner": "0.0.2",
     "aw-parser": "0.1.1",
     "d3": "^3.4.1",
-    "handlebars": "^4.6.0",
+    "handlebars": "^4.7.7",
     "jquery": "^3.5.0",
     "lodash": "^4.17.21",
     "pdfkit": "^0.11.0",
     "protoplast": "2.0.3",
     "requirejs-text": "^2.0.15",
-    "snyk": "^1.319.0",
+    "snyk": "^1.530.0",
     "stdio": "^0.2.7"
   },
   "snyk": true
