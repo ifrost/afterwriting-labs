@@ -12,7 +12,7 @@ define('utils/fountain/helpers', function() {
     };
 
     operators.is_dialogue = function() {
-        return this.is('character', 'parenthetical', 'dialogue');
+        return this.is('character', 'parenthetical', 'dialogue', 'dialogue_double_line_break');
     };
 
     operators.name = function() {
