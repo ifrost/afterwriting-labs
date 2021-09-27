@@ -1,0 +1,76 @@
+name: a4
+default_max: &max 61
+paper_size: a4
+font_size: 12
+lines_per_page: 57
+top_margin: 1.0
+page_width: 8.27
+page_height: 11.7
+left_margin: 1.5
+right_margin: 1
+font_width: 0.1
+font_height: 0.1667
+line_spacing: 1
+page_number_top_margin: 0.5
+dual_max_factor: 0.75
+
+title_page: 
+    top_start: 3.5
+    left_side:
+      - notes
+      - copyright
+    right_side:
+      - draft date
+      - date
+      - contact    
+
+scene_heading: 
+    feed: 1.5
+    max: *max
+
+action: 
+    feed: 1.5
+    max: *max
+
+shot: 
+    feed: 1.5
+    max: *max
+
+character: 
+    feed: 3.5
+    max: 33
+
+parenthetical: 
+    feed: 3
+    max: 26
+
+dialogue: 
+    feed: 2.5
+    max: 36
+
+transition: 
+    feed: 0.0
+    max: *max
+
+centered: 
+    feed: 1.5
+    style: 'center'
+    max: *max
+
+synopsis: 
+    feed: 0.5
+    max: *max
+    italic: true
+    color: '#888888'
+    padding: 0
+    feed_with_last_section: true
+
+section: 
+    feed: 0.5
+    max: *max
+    color: '#555555'
+    level_indent: 0.2
+
+note: 
+    color: '#888888'
+    italic: true

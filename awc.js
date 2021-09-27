@@ -10,7 +10,7 @@ require.config({
     map: {
         'modernizr': {}
     },
-    use_node_require: ['jquery', 'fs', 'd3', 'pdfkit', 'aw-parser', 'protoplast', 'lodash']
+    use_node_require: ['path', 'jquery', 'fs', 'd3', 'pdfkit', 'aw-parser', 'protoplast', 'lodash', 'yamljs']
 });
 
 var Bootstrap = require('bootstrap');
