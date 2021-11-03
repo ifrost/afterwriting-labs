@@ -1,0 +1,12 @@
+number of words per sentence (speed)
+number of sentences per paragraph (speed)
+words variety
+avg lines per paragraph
+
+action vs dialgue
+
+what makes action blocks interesting?
+- using different length, variety, rhythm, words.
+
+what makes dialogue blocks interesting?
+- each character is different

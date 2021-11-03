@@ -1,7 +1,9 @@
 define(function(require) {
     var helper = require('utils/helper'),
         fquery = require('utils/fountain/query'),
-        fhelpers = require('utils/fountain/helpers');
+        fhelpers = require('utils/fountain/helpers'),
+        readabilityScore = require('readabilityScore'),
+        sentiment = require('text!utils/sentiwords.txt');
 
     var h = fhelpers.fq;
 
@@ -156,6 +158,60 @@ define(function(require) {
         });
         query.enter(h.is('scene_heading'), function(item, fq) {
             fq.select(item.location()).count++;
+        });
+        return query;
+    };
+
+    var create_readability = function() {
+        // console.log(sentiment);
+
+        var words = {};
+        sentiment.split('\n').filter((line) => {
+            return line.trim() && !line.startsWith('#')
+        }).map((line) => {
+            var [word, score] = line.split(',');
+            words[word] = parseFloat(score);
+        })
+        // console.log(words);
+
+        var query = fquery(undefined, { action: '', dialogue: '', all: '' });
+        query.enter(h.is('action'), function(item, fq) {
+            fq.select().action += item.text;
+            fq.select().all += item.text;
+        });
+        query.enter(h.is('character'), function(item, fq) {
+            var characterName = item.name();
+            fq.select()._current = characterName;
+            fq.select()[characterName] = fq.select()[characterName] || '';
+        });
+        query.enter(h.is('dialogue'), function(item, fq) {
+            var current = fq.select();
+            current.dialogue += item.text + ' ';
+            current.all += item.text + ' ';
+            current[current._current] += item.text + ' ';
+        });
+        query.end(function(result, fq) {
+            var result = fq.select();
+            Object.keys(result).forEach((key) => {
+                if (result[key] && result[key].length > 0) {
+                    var r = {
+                        readability: readabilityScore(result[key]),
+                    }
+                    var score = 0;
+                    var items = [];
+                    result[key].split(' ').forEach((word) => {
+                        word = word.trim().replace('.','').replace(',','');
+                        if (words[word]) {
+                            score += words[word];
+                            items.push([word, words[word]]);
+                        }
+                        r.sentiment = { score: items.length ? score / items.length : 0, items: items }
+                    })
+                    result[key] = r;
+                } else {
+                    delete result[key]
+                }
+            })
         });
         return query;
     };
@@ -382,6 +438,7 @@ define(function(require) {
     plugin.page_balance = create_page_balance();
     plugin.tempo = create_tempo();
     plugin.locationsBreakdown = create_locations_breakdown();
+    plugin.readability = create_readability();
 
     return plugin;
 

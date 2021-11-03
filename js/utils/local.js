@@ -12,6 +12,12 @@ define(function (require) {
             fileReader.onload = function () {
                 handler(this.result);
             };
+            fileReader.onerror = function (e) {
+                console.log(e);
+            }
+            fileReader.onabort = function(e) {
+                console.log('abort', e);
+            }
             fileReader.readAsText(module.local_file);
         }, interval);
     };

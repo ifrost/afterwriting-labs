@@ -117,6 +117,40 @@ p.error {
     margin: 4px;
 }
 
+.short-info-content {
+    color: #777777;
+    font-style: oblique;
+    display: inline;
+}
+
+.horizontal-bar--container {
+    position: relative;
+    display: inline-block;
+    padding: 0 4px;
+}
+
+.horizontal-bar--border {
+    border: 1px solid #777;
+    border-radius: 5px;
+    width: 100%;
+    height: 100%
+}
+
+.horizontal-bar--bar {
+    border: 1px solid #777;
+    background-color: #777;
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.horizontal-bar--label {
+    font-weight: normal;
+    color: #777;
+}
+
 ul.no-bullets {
     list-style-type: none;
     position: relative;

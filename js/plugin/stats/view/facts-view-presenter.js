@@ -33,7 +33,31 @@ define(function(require) {
 
             facts.characters = queries.characters.run(this.scriptModel.parsed_stats.tokens, basics, {sort_by: 'lines'});
             facts.locations = queries.locations.run(this.scriptModel.parsed_stats.tokens);
-            
+            facts.readability = queries.readability.run(this.scriptModel.parsed_stats.tokens);
+
+            console.log('FR: 70-80 is good');
+            console.log('SMOG: 9 is good, 15 is bad');
+
+            console.log(facts.readability);
+            // console.log('action:', 'FR =', facts.readability.scores.action.medianGrade);
+            // console.log('dialogue:', 'FR =', facts.readability.scores.dialogue.medianGrade);
+            // console.log('all:', 'FR =', facts.readability.scores.all.medianGrade);
+
+            // fleschReadingEase
+            // https://readable.com/features/readability-formulas/#flesch
+            // 1-100
+            // The average adult can read a text with a Reading Ease score of 70-80.
+
+
+
+
+            // smogIndex
+            // https://readable.com/features/readability-formulas/#smog
+            // It is a readability framework. It measures how many years of education the average person needs to have to understand a text.
+            // 9 - good (primary school)
+            // 12 - high school
+            // 15 - bad (uni)
+
             return facts;
         },
 

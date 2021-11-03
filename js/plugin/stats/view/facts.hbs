@@ -2,6 +2,11 @@
 	.plugin-content[plugin="facts"] li span {
 		font-weight: bold;
 	}
+
+    table.readability td {
+        text-align: center;
+        vertical-align: middle;
+    }
 	
 </style>
 <ul>
@@ -30,6 +35,31 @@
 		<span id="facts-secondary-characters"></span>
 	</li>
 </ul>
+<div id="readability">
+    <div data-comp="readabilityHeader"></div>
+    <div id="readability-content">
+        <table width="100%" class="readability">
+            <thead>
+                <tr>
+                    <th>Flesch-Kincaid Ease</th>
+                    <th>score</th>
+                    <th>description</th>
+                </tr>
+            </thead>
+            <tbody id="readability-table-body">
+<!--                <tr>-->
+<!--                    <td>Total script</td><td id="readability-fk-total"></td><td id="readability-fk-total-desc"></td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>Action</td><td id="readability-fk-action"></td><td id="readability-fk-action-desc"></td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>Dialogue</td><td id="readability-fk-dialogue"></td><td id="readability-fk-dialogue-desc"></td>-->
+<!--                </tr>-->
+            </tbody>
+        </table>
+    </div>
+</div>
 <div id="facts-time-of-speaking-container">
 <h2>Time of speaking</h2>
 <span class="content-expander expand-dialogue show-all-dialogues" data-prop="$expandDialogues" style="margin-left: 20px">Top 10 characters shown. Click here to show all&nbsp;

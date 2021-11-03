@@ -134,6 +134,43 @@ define('utils/helper', function(require) {
         return match ? match[0] : '';
     };
 
+    /**
+     * https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests#Flesch_reading_ease
+     * @param {number} score
+     * @returns {string}
+     */
+    module.flesch_reading_ease_to_text = function(score) {
+        if (score >= 90) return 'Very easy to read.<br/>Easily understood by an average 11-year-old student.';
+        if (score >= 80) return 'Easy to read.<br/>Conversational English for consumers.';
+        if (score >= 70) return 'Fairly easy to read.';
+        if (score >= 60) return 'Plain English.<br/>Easily understood by 13- to 15-year-old students.';
+        if (score >= 50) return 'Fairly difficult to read.';
+        if (score >= 30) return 'Difficult to read.';
+        if (score >= 10) return 'Very difficult to read.<br/>Best understood by university graduates.';
+        return 'Extremely difficult to read.<br/>Best understood by university graduates.';
+    }
+
+    module.flesch_reading_ease_to_short_text = function(score) {
+        if (score >= 90) return 'Very easy to read.';
+        if (score >= 80) return 'Easy to read.';
+        if (score >= 70) return 'Fairly easy to read.';
+        if (score >= 60) return 'Plain English.';
+        if (score >= 50) return 'Fairly difficult to read.';
+        if (score >= 30) return 'Difficult to read.';
+        if (score >= 10) return 'Very difficult to read.';
+        return 'Extremely difficult to read.';
+    }
+
+    module.flesch_reading_ease_to_dots = function(score, max) {
+        max = max || 10;
+        var full = Math.round(score / (100 / max));
+        var result = '';
+        for (var i=1; i<= max; i++) {
+            result += i <= full ? '●' : '○';
+        }
+        return result;
+    }
+
     return module;
 
 });
