@@ -1,7 +1,7 @@
 name: "Test"
 on:
   pull_request_target:
-    types: [ opened, synchronize ]
+    types: [ opened, reopened, ready_for_review, synchronize ]
 jobs:
   test:
     runs-on: ubuntu-latest
