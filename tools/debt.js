@@ -8,8 +8,8 @@ var path = require('path');
 
 var config = {
     excludeBase: ['.git', 'node_modules', 'coverage', 'docs', 'bundle', 'samples'],
-    excludeFolders: ['js\\libs'],
-    excludeFiles: ['js\\utils\\courier-prime-font.js']
+    excludeFolders: [path.join('js', 'libs'), path.join('js', 'fonts'), path.join('test', 'client', 'fonts')],
+    excludeFiles: [path.join('js','utils', 'courier-prime-font.js')],
 };
 
 var data = {
