@@ -81,7 +81,8 @@
     "pdfkit": "^0.11.0",
     "protoplast": "2.0.3",
     "requirejs-text": "^2.0.15",
-    "stdio": "^0.2.7"
+    "stdio": "^0.2.7",
+    "yamljs": "^0.3.0"
   },
   "snyk": true
 }

@@ -1,0 +1,116 @@
+# [Required] name: the internal name of this profile
+name: a4
+# default_max: a variable you can use in the template to specify the default max value for properties
+# &max will define the variable name as "max", 61 is the value
+# you can override this when using base and it will slug it into wherever the variable is used
+# to use the variable: prop_name: *max
+default_max: &max 61
+# paper_size: the dimensions of the paper, accepts values [a4, usletter]
+paper_size: a4
+# font_size: font size in pts at 72 dpi
+font_size: 12
+# lines_per_page: maximum lines on a page
+lines_per_page: 57
+# top_margin: top margin in inches
+top_margin: 1.0
+# page_width: the width of the content area of the page in inches
+page_width: 8.27
+# page_height: the height of the content area of the page in inches
+page_height: 11.7
+# left_margin: the default left margin for the page in inches
+left_margin: 1.5
+# right_margin: the default right margin for the page in inches
+right_margin: 1
+# font_width: the width of each character in inches
+font_width: 0.1
+# font_height: the height of each character in inches
+font_height: 0.1667
+# line_spacing: the spacing of the lines in count (1, 1.5, 2, etc.)
+line_spacing: 1
+# page_number_top_margin: the top margin of the page number in inches
+page_number_top_margin: 0.5
+# dual_max_factor: ??
+dual_max_factor: 0.75
+
+# === What follows is title page and line type specific ===
+
+# title_page
+title_page: 
+    # top margin in inches
+    top_start: 3.5
+    # left and right anchored fields.
+    # values: [notes, copyright, draft date, date, contact]
+    left_side:
+      - notes
+      - copyright
+    right_side:
+      - draft date
+      - date
+      - contact    
+
+# ===== For the line types the following properties are availabe =====
+# == Page Composition
+# feed: [float] the amount of space in inches from the edge of the page to the text start
+# feed_with_last_section: [bool] 
+# max: [float] the maximum number of characters on a line (multiplied by font size) 
+# level_indent [int] Only available to synopsis & section
+#     sets the indentation level for subsequent lines.
+# == Presentation
+# style: apply alignment [left, right, center]
+# italic: make this line italic
+# bold: make this line bold
+# underline: make this line underlined
+# override_color: override the normal color with this
+# color: the font color
+# padding: the padding around these lines
+# =====
+scene_heading: 
+    feed: 1.5
+    max: *max
+
+action: 
+    feed: 1.5
+    max: *max
+
+shot: 
+    feed: 1.5
+    max: *max
+
+character: 
+    feed: 3.5
+    max: 33
+
+parenthetical: 
+    feed: 3
+    max: 26
+
+dialogue: 
+    feed: 2.5
+    max: 36
+
+transition: 
+    feed: 0.0
+    max: *max
+
+centered: 
+    feed: 1.5
+    style: 'center'
+    max: *max
+
+synopsis: 
+    feed: 0.5
+    max: *max
+    italic: true
+    color: '#888888'
+    padding: 0
+    feed_with_last_section: true
+
+section: 
+    feed: 0.5
+    max: *max
+    color: '#555555'
+    level_indent: 0.2
+
+note: 
+    color: '#888888'
+    italic: true
