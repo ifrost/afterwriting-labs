@@ -387,7 +387,7 @@ define('utils/pdfmaker', function(require) {
                 print_header_and_footer(prev_scene_continuation_header);
                 prev_scene_continuation_header = '';
 
-            } else if (line.type === "separator") {
+            } else if (line.type === "separator" || line.type == "dialogue_double_line_break") {
                 y++;
             } else {
                 // formatting not supported yet
