@@ -21,6 +21,8 @@ define(function(require) {
                 return 'section';
             } else if (stream.match(/^  $/, true)) {
                 return 'force-blank-line';
+            } else if (stream.match(/^\s?\{\two spaces}\s?$/, true)) {
+                return 'dialogue-double-line-break';
             }
             stream.skipToEnd();
         };
