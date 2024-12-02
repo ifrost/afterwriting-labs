@@ -3,6 +3,9 @@ define(function(require) {
     var _ = require('lodash'),
         Protoplast = require('protoplast'),
         fontLoaders = require('fonts/font-loaders'),
+        PrintProfileUtil = require('utils/print-profile-util'),
+        fs = require("fs"),
+        path = require("path"),
         print_profiles = require('utils/print-profiles');
 
     // TODO: Decouple plugin-specific settings (+++)
@@ -231,7 +234,23 @@ define(function(require) {
 
         print: {
             get: function() {
-                var tmpRatio = fontLoaders[this.font_family] && fontLoaders[this.font_family].config["tmp-ratio"];
+                var tmpRatio = fontLoaders[this.font_family] && fontLoaders[this.font_family].config["tmp-ratio"];                            
+                var profileName;
+
+                // Load the profile file if it doesn't exist already
+                this.print_profile = this.print_profile.replace(/[",']/g, "");
+                profileName = path.basename(this.print_profile);
+
+                if (!print_profiles[profileName]) {
+                    var prf = PrintProfileUtil.loadProfile(this.print_profile);                    
+                    
+                    fs.copyFileSync(this.print_profile, 
+                        'print-profiles/' + profileName                
+                    );
+
+                    print_profiles[this.print_profile] = prf;
+                }
+
                 var printProfile = print_profiles[this.print_profile];
                 if (tmpRatio) {
                     printProfile = _.cloneDeep(print_profiles[this.print_profile]);

@@ -4,3 +4,5 @@ local/
 coverage/
 .idea/
 changes.log
+yarn.lock
+.vscode/launch.json

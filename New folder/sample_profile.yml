@@ -1,0 +1,7 @@
+name: test_profile
+default_max: 30
+base: a4
+paper_size: letter
+lines_per_page: 10
+page_width: 4
+page_height: 8  

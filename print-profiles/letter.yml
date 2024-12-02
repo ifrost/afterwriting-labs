@@ -1,0 +1,7 @@
+name: usletter
+default_max: 58
+base: a4
+paper_size: letter
+lines_per_page: 55
+page_width: 8.5
+page_height: 11  

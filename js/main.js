@@ -2,6 +2,7 @@
     var config = require.config({
         baseUrl: 'js',
         paths: {
+            print_profiles: '/print-profiles',
             samples: '../samples/compiled',
             templates: '../templates',
             test_screenplays: '../test/data/test_screenplays',
@@ -25,7 +26,8 @@
             'aw-parser': '../node_modules/aw-parser/dist/aw-parser.amd',
             'aw-liner': '../node_modules/aw-liner/dist/aw-liner.amd',
             text: '../node_modules/requirejs-text/text',
-            Blob: 'libs/Blob'
+            Blob: 'libs/Blob',
+            yamljs: '../node_modules/yamljs/yaml.min'
         },
         shim: {
             handlebars: {
