@@ -77,7 +77,7 @@
     "d3": "^3.4.1",
     "handlebars": "^4.7.7",
     "jquery": "^3.5.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "pdfkit": "^0.12.2",
     "protoplast": "2.0.3",
     "requirejs-text": "^2.0.15",
